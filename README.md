@@ -1,2 +1,5 @@
-pattern
+Pattern
 =======
+
+js pattern generator
+
