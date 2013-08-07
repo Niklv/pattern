@@ -1,0 +1,33 @@
+body {
+    overflow-x: hidden;
+}
+
+.part-img {
+    width: 100px;
+    height: 100px;
+    display: block;
+}
+
+.slider {
+    margin-top: 6px;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.pattern-part label {
+    margin-bottom: 0;
+}
+
+.tooltip-arrow {
+    display: none;
+}
+
+.slider .tooltip {
+    position:relative;
+    width:40px;
+    top: -3px !important;
+    left: 55px !important;
+    float:right;
+}
