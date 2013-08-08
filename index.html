@@ -27,122 +27,9 @@
             <canvas id="canvas"></canvas>
         </div>
     </div>
-    <div class="col-lg-6 col-sm-5">
+    <div class="col-lg-6 col-sm-5 control-panel">
         <div class="row">
             <h3>Control panel:</h3>
-        </div>
-        <div class="row">
-            <div class="pattern-part">
-                <div class="col-lg-4 col-sm-4">
-                    <img class="part-img"
-                         src="http://icons.iconarchive.com/icons/enhancedlabs/lha-objects/128/Filetype-IMG-icon.png">
-                </div>
-                <div class="col-lg-8 col-sm-8 form-horizontal pattern-part-controls">
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="angle-of-obj">Angle</label>
-
-                        <div class="col-lg-9">
-                            <input id="angle-of-obj" type="number" class="slider form-control" value=""
-                                   data-slider-min="0"
-                                   data-slider-max="360" data-slider-step="1" data-slider-value="0">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="opacity-of-obj">Opacity</label>
-
-                        <div class="col-lg-9">
-                            <input id="opacity-of-obj" type="number" class="slider form-control" value=""
-                                   data-slider-min="0"
-                                   data-slider-max="1" data-slider-step="0.01" data-slider-value="1">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="width-of-obj">Width</label>
-
-                        <div class="col-lg-9">
-                            <input id="width-of-obj" type="number" class="slider form-control" value=""
-                                   data-slider-min="0"
-                                   data-slider-max="5" data-slider-step="0.01" data-slider-value="1">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="height-of-obj">Height</label>
-
-                        <div class="col-lg-9">
-                            <input id="height-of-obj" type="number" class="slider form-control" value=""
-                                   data-slider-min="0"
-                                   data-slider-max="5" data-slider-step="0.01" data-slider-value="1">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Grid</label>
-
-                        <div class="col-lg-9">
-                            <div class="radio-inline">
-                                <label>
-                                    <input type="radio" name="gridsize" id="gridsize1" value="9" checked>
-                                    9
-                                </label>
-                            </div>
-                            <div class="radio-inline">
-                                <label>
-                                    <input type="radio" name="gridsize" id="gridsize2" value="25">
-                                    25
-                                </label>
-                            </div>
-                            <div class="radio-inline">
-                                <label>
-                                    <input type="radio" name="gridsize" id="gridsize3" value="49">
-                                    49
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="count-of-obj">Parts</label>
-
-                        <div class="col-lg-9">
-                            <input id="count-of-obj" type="number" class="slider form-control" value=""
-                                   data-slider-min="0"
-                                   data-slider-max="40" data-slider-step="1" data-slider-value="5">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Placement</label>
-
-                        <div class="col-lg-9">
-                            <div class="radio-inline">
-                                <label>
-                                    <input type="radio" name="gridsize-of-obj" id="placement1" value="random" checked>
-                                    Random
-                                </label>
-                            </div>
-                            <div class="radio-inline">
-                                <label>
-                                    <input type="radio" name="gridsize-of-obj" id="placement2" value="circle">
-                                    Circle
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label" for="color-of-obj">Color</label>
-
-                                <div class="col-lg-9">
-                                    <div class="input-append color" data-color-format="rgba">
-                                        <input id="color-of-obj" class="colorpicker input-sm" type="text" value="rgba(0, 0, 0, 0)" >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--
-                    color: null,
-                    overlay: null,
-                    angle_delta: 0,
-                    grid_type: 9, //9, 25, 49
-                    x: 0,
-                    y: 0-->
-            </div>
         </div>
         <div class="row">
             <input id="file-uploader" type="file" style="display:none;">
@@ -162,7 +49,156 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/bootstrap-slider.js"></script>
 <script src="js/bootstrap-colorpicker.js"></script>
+<script type="text/plain" id="part-settings-tmpl">
+    <div class="col-lg-12 col-sm-12 col-12">
+        <button type="button" class="close">&times;</button>
+    </div>
+    <div class="col-lg-4 col-sm-4 col-4">
+        <img class="part-img"
+             src="<%= img.src %>">
+    </div>
+    <div class="col-lg-8 col-sm-8 col-8 form-horizontal pattern-part-controls">
+        <div class="form-group angle">
+            <label class="col-lg-3 control-label" for="angle-of-obj">Angle</label>
 
+            <div class="col-lg-9">
+                <input id="angle-of-obj" type="number" class="slider form-control" value=""
+                       data-slider-min="0"
+                       data-slider-max="360" data-slider-step="1" data-slider-value="<%= angle %>">
+            </div>
+        </div>
+        <div class="form-group opacity">
+            <label class="col-lg-3 control-label" for="opacity-of-obj">Opacity</label>
+
+            <div class="col-lg-9">
+                <input id="opacity-of-obj" type="number" class="slider form-control" value=""
+                       data-slider-min="0"
+                       data-slider-max="1" data-slider-step="0.01" data-slider-value="<%= opacity %>">
+            </div>
+        </div>
+        <div class="form-group width">
+            <label class="col-lg-3 control-label" for="width-of-obj">Width</label>
+
+            <div class="col-lg-9">
+                <input id="width-of-obj" type="number" class="slider form-control" value=""
+                       data-slider-min="0"
+                       data-slider-max="5" data-slider-step="0.01" data-slider-value="<%= width %>">
+            </div>
+        </div>
+        <div class="form-group height">
+            <label class="col-lg-3 control-label" for="height-of-obj">Height</label>
+
+            <div class="col-lg-9">
+                <input id="height-of-obj" type="number" class="slider form-control" value=""
+                       data-slider-min="0"
+                       data-slider-max="5" data-slider-step="0.01" data-slider-value="<%= height %>">
+            </div>
+        </div>
+        <div class="form-group grid">
+            <label class="col-lg-3 control-label">Grid</label>
+
+            <div class="col-lg-9">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="grid-of-obj-<%=id%>" value="9" <% if (grid==9) { %> checked <% }
+                        %> >
+                        9
+                    </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="grid-of-obj-<%=id%>" value="25" <% if (grid==25) { %> checked <% }
+                        %> >
+                        25
+                    </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="grid-of-obj-<%=id%>" value="49" <% if (grid==49) { %> checked <% }
+                        %> >
+                        49
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group count">
+            <label class="col-lg-3 control-label" for="count-of-obj">Parts</label>
+
+            <div class="col-lg-9">
+                <input id="count-of-obj" type="number" class="slider form-control" value=""
+                       data-slider-min="0"
+                       data-slider-max="40" data-slider-step="1" data-slider-value="<%= count %>">
+            </div>
+        </div>
+        <div class="form-group x">
+            <label class="col-lg-3 control-label" for="x-of-obj">X</label>
+
+            <div class="col-lg-9">
+                <input id="x-of-obj" type="number" class="slider form-control" value=""
+                       data-slider-min="-300"
+                       data-slider-max="300" data-slider-step="1" data-slider-value="<%= x %>">
+            </div>
+        </div>
+        <div class="form-group y">
+            <label class="col-lg-3 control-label" for="y-of-obj">X</label>
+
+            <div class="col-lg-9">
+                <input id="y-of-obj" type="number" class="slider form-control" value=""
+                       data-slider-min="-300"
+                       data-slider-max="300" data-slider-step="1" data-slider-value="<%= y %>">
+            </div>
+        </div>
+        <div class="form-group placement">
+            <label class="col-lg-3 control-label">Placement</label>
+
+            <div class="col-lg-9">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="placement-of-obj-<%=id%>" value="random" <% if
+                        (placement=="random") { %> checked <% } %> >
+                        Random
+                    </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="placement-of-obj-<%=id%>" value="circle" <% if
+                        (placement=="circle") { %> checked <% } %> >
+                        Circle
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group angle-delta">
+            <label class="col-lg-3 control-label" for="angle-delta-of-obj">Angle+</label>
+
+            <div class="col-lg-9">
+                <input id="angle-delta-of-obj" type="number" class="slider form-control" value=""
+                       data-slider-min="0"
+                       data-slider-max="360" data-slider-step="1" data-slider-value="<%= angle_delta %>">
+            </div>
+        </div>
+        <div class="form-group radius">
+            <label class="col-lg-3 control-label" for="radius-of-obj">Radius</label>
+
+            <div class="col-lg-9">
+                <input id="radius-of-obj" type="number" class="slider form-control" value=""
+                       data-slider-min="0"
+                       data-slider-max="400" data-slider-step="1" data-slider-value="<%= radius %>">
+            </div>
+        </div>
+        <div class="form-group color">
+            <label class="col-lg-3 control-label" for="color-of-obj">Color</label>
+
+            <div class="col-lg-9">
+                <div class="input-append color" data-color-format="rgba">
+                    <input id="color-of-obj" class="colorpicker input-sm" type="text"
+                           value="<%= color %>">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--overlay: null-->
+</script>
 <script src="js/app.js"></script>
 
 </body>

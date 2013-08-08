@@ -3,8 +3,7 @@ body {
 }
 
 .part-img {
-    width: 100px;
-    height: 100px;
+    max-width: 100%;
     display: block;
 }
 
@@ -30,4 +29,21 @@ body {
     top: -3px !important;
     left: 55px !important;
     float:right;
+    display: none;
 }
+
+.slider.slider-horizontal{
+    width:100% !important;
+}
+
+.slider .slider-handle{
+    width:10px;
+    height:10px;
+    margin-left: -5px !important;
+    margin-top: 0 !important;
+}
+
+.pattern-part{
+    margin-bottom: 10px;
+}
+
