@@ -36,7 +36,7 @@ var PatternPartControlsView = Backbone.View.extend({
             $(this).slider('setValue', e.value);
         });
         this.$el.find('input[type="radio"]').change(_.bind(this.change_settings_order, this));
-        this.$el.find('.count .slider').on("slide", _.bind(this.change_settings_order, this));
+        //this.$el.find('.count .slider').on("slide", _.bind(this.change_settings_order, this));
         this.change_settings_order();
         return this;
     },
