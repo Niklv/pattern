@@ -36,14 +36,14 @@ var PatternPartControlsView = Backbone.View.extend({
             $(this).slider('setValue', e.value);
         });
         this.$el.find('input[type="radio"]').change(_.bind(this.change_settings_order, this));
-        //this.$el.find('.count .slider').on("slide", _.bind(this.change_settings_order, this));
+        this.$el.find('.count input').on("slide", _.bind(this.change_settings_order, this));
         this.change_settings_order();
         return this;
     },
     change_settings_order: function () {
         var isCircle = this.$el.find('.placement input:checked').val() == "circle";
         var isRandom = this.$el.find('.placement input:checked').val() == "random";
-        var isOneItem = this.$el.find('.count .slider').slider('getValue') == 1;
+        var isOneItem = this.$el.find('.count input').val() == 1;
         if (isCircle || isOneItem) {
             this.$el.find('.form-group.x').show(ANIM_TIME);
             this.$el.find('.form-group.y').show(ANIM_TIME);
@@ -78,7 +78,7 @@ var PatternPartControlsView = Backbone.View.extend({
         "change input[type=radio]": "radio_changed"
     },
     remove: function () {
-        this.$el.remove();
+        this.$el.hide(ANIM_TIME).remove();
     },
     slide: function (ev) {
         var p_name = $(ev.target).attr('id').replace("-of-obj", "").replace("-", "_");
