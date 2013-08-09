@@ -54,7 +54,7 @@
         <button type="button" class="close">&times;</button>
     </div>
     <div class="col-lg-4 col-sm-4 col-4">
-        <img class="part-img"
+        <img class="part-img img-responsive"
              src="<%= img.src %>">
     </div>
     <div class="col-lg-8 col-sm-8 col-8 form-horizontal pattern-part-controls">
@@ -100,21 +100,24 @@
             <div class="col-lg-9">
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="grid-of-obj-<%=id%>" value="9" <% if (grid==9) { %> checked <% }
+                        <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="9" <% if (grid==9) {
+                        %> checked <% }
                         %> >
                         9
                     </label>
                 </div>
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="grid-of-obj-<%=id%>" value="25" <% if (grid==25) { %> checked <% }
+                        <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="25" <% if (grid==25) {
+                        %> checked <% }
                         %> >
                         25
                     </label>
                 </div>
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="grid-of-obj-<%=id%>" value="49" <% if (grid==49) { %> checked <% }
+                        <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="49" <% if (grid==49) {
+                        %> checked <% }
                         %> >
                         49
                     </label>
@@ -135,8 +138,8 @@
 
             <div class="col-lg-9">
                 <input id="x-of-obj" type="number" class="slider form-control" value=""
-                       data-slider-min="-300"
-                       data-slider-max="300" data-slider-step="1" data-slider-value="<%= x %>">
+                       data-slider-min="-50"
+                       data-slider-max="50" data-slider-step="1" data-slider-value="<%= x %>">
             </div>
         </div>
         <div class="form-group y">
@@ -144,8 +147,8 @@
 
             <div class="col-lg-9">
                 <input id="y-of-obj" type="number" class="slider form-control" value=""
-                       data-slider-min="-300"
-                       data-slider-max="300" data-slider-step="1" data-slider-value="<%= y %>">
+                       data-slider-min="-50"
+                       data-slider-max="50" data-slider-step="1" data-slider-value="<%= y %>">
             </div>
         </div>
         <div class="form-group placement">
@@ -154,14 +157,16 @@
             <div class="col-lg-9">
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="placement-of-obj-<%=id%>" value="random" <% if
+                        <input type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>" value="random" <%
+                        if
                         (placement=="random") { %> checked <% } %> >
                         Random
                     </label>
                 </div>
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="placement-of-obj-<%=id%>" value="circle" <% if
+                        <input type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>" value="circle" <%
+                        if
                         (placement=="circle") { %> checked <% } %> >
                         Circle
                     </label>
@@ -195,6 +200,11 @@
                            value="<%= color %>">
                 </div>
             </div>
+        </div>
+        <div class="form-group color">
+            <button type="button" class="random btn btn-default btn-xs pull-right"><span
+                    class="glyphicon glyphicon-refresh"></span> Random changes
+            </button>
         </div>
     </div>
     <!--overlay: null-->

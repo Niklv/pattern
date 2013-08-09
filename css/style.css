@@ -2,11 +2,6 @@ body {
     overflow-x: hidden;
 }
 
-.part-img {
-    max-width: 100%;
-    display: block;
-}
-
 .slider {
     margin-top: 6px;
 }

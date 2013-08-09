@@ -3,26 +3,90 @@ var CANVAS_HEIGHT = 300;
 var ANIM_TIME = 100;
 var canvas;
 
+
+//////MODEL
+
 var PatternPart = Backbone.Model.extend({
+        fabric_obj: null,
+        initialize: function () {
+            this.set({
+                id: Math.round(Math.random() * 1000000),
+                angle: 0,
+                color: "rgba(0, 0, 0, 0)",
+                opacity: 1,
+                width: 1,
+                height: 1,
+                overlay: null,
+                count: 5,
+                placement: "random", //random, circle
+                angle_delta: 50,
+                grid: 9, //9, 25, 49
+                x: 0,
+                y: 0,
+                radius: 100
+            });
+            this.on("change", this.update_fabric);
+        },
+        fabric: function () {
+            this.fabric_obj = new fabric.Image(this.get("img"));
+            this.update_fabric();
+            canvas.add(this.fabric_obj);
+        },
+        update_fabric: function () {
+            console.log(fabric.Color.fromRgba(this.get("color")));
+            this.fabric_obj.set({
+                left: canvas.getWidth() / 2 + canvas.getWidth() * this.get("x") / 100,
+                top: canvas.getHeight() / 2 + canvas.getHeight() * this.get("y") / 100,
+                width: this.get("img").width * this.get("width"),
+                height: this.get("img").height * this.get("height"),
+                angle: this.get("angle"),
+                opacity: this.get("opacity"),
+                overlayFill: this.get("color")
+            });
+            canvas.renderAll();
+        },
+        remove: function () {
+            canvas.fxRemove(this.fabric_obj);
+        }
+    })
+    ;
+
+
+//////COLLECTION
+
+var PatternPartCollection = Backbone.Collection.extend({
+    model: PatternPart,
+    rendering: true,
     initialize: function () {
-        this.set({
-            id: Math.round(Math.random() * 1000000),
-            angle: 0,
-            color: "rgba(0, 0, 0, 0)",
-            opacity: 1,
-            width: 1,
-            height: 1,
-            overlay: null,
-            count: 5,
-            placement: "random", //random, circle
-            angle_delta: 50,
-            grid: 9, //9, 25, 49
-            x: 0,
-            y: 0,
-            radius: 100
-        });
+        this.on("add", this.add_model);
+        this.on("remove", this.remove_model);
+        //this.on("change", this.render);
+    },
+    add_model: function (model) {
+        var view = new PatternPartControlsView({model: model});
+        view.render().place().init_controls();
+        model.fabric();
+    },
+    remove_model: function (model) {
+        model.remove();
+    },
+    enable_render: function () {
+        this.rendering = true
+    },
+    disable_render: function () {
+        this.rendering = false
     }
+    /*,
+     render: function () {
+     if (!this.rendering)
+     return;
+     console.log("render started");
+
+     }  */
 });
+
+
+//////VIEW
 
 var PatternPartControlsView = Backbone.View.extend({
     tagName: "div",
@@ -75,10 +139,16 @@ var PatternPartControlsView = Backbone.View.extend({
     events: {
         "click button.close": "remove",
         "slide input": "slide",
-        "change input[type=radio]": "radio_changed"
+        "change input[type=radio]": "radio_changed",
+        "changeColor input.colorpicker": "color_changed",
+        "click btn.random": "random"
+    },
+    random: function () {
+
     },
     remove: function () {
         this.$el.hide(ANIM_TIME).remove();
+        parts.remove(this.model);
     },
     slide: function (ev) {
         var p_name = $(ev.target).attr('id').replace("-of-obj", "").replace("-", "_");
@@ -86,11 +156,15 @@ var PatternPartControlsView = Backbone.View.extend({
         //console.log(this.model.attributes);
     },
     radio_changed: function (ev) {
-        var p_name = $(ev.target).attr('name').replace("-of-obj", "").replace("-", "_");
+        var p_name = $(ev.target).attr("class").replace("-of-obj", "").replace("-", "_");
         if (p_name == "grid")
             this.model.set(p_name, parseInt($(ev.target).val()));
         else if (p_name == "placement")
             this.model.set(p_name, $(ev.target).val());
+        //console.log(this.model.attributes);
+    },
+    color_changed: function (ev) {
+        this.model.set("color", $(ev.target).val());
         //console.log(this.model.attributes);
     }
 });
@@ -105,7 +179,7 @@ function init() {
 }
 
 function init_canvas() {
-    canvas = new fabric.Canvas("canvas");
+    canvas = new fabric.StaticCanvas("canvas");
     canvas.setWidth(CANVAS_WIDTH);
     canvas.setHeight(CANVAS_HEIGHT);
     canvas.setBackgroundColor("#FFF");
@@ -120,22 +194,19 @@ function handle_image(e) {
     reader.onload = function (event) {
         var imgObj = new Image();
         imgObj.src = event.target.result;
-        var model = new PatternPart({type: "img", img: imgObj});
-        var view = new PatternPartControlsView({model: model});
-        view.render().place().init_controls();
-
-        imgObj.onload = function () {
-            /*
-             var image = new fabric.Image(imgObj);
-             image.set({
-             left: 250,
-             top: 250,
-             angle: 20,
-             padding: 10,
-             cornersize: 10
-             });
-             canvas.add(image);*/
-        };
+        parts.add({type: "img", img: imgObj});
+        /*
+         imgObj.onload = function () {
+         var image = new fabric.Image(imgObj);
+         image.set({
+         left: 250,
+         top: 250,
+         angle: 20,
+         padding: 10,
+         cornersize: 10
+         });
+         canvas.add(image);
+         };*/
         $(e.target).val("");
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -152,4 +223,6 @@ function render() {
     canvas.renderAll();
 }
 
+
+var parts = new PatternPartCollection();
 init();
