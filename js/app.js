@@ -41,6 +41,7 @@ var PatternPart = Backbone.Model.extend({
                 height: this.get("img").height * this.get("height"),
                 angle: this.get("angle"),
                 opacity: this.get("opacity"),
+                fill: this.get("color"),
                 overlayFill: this.get("color")
             });
             canvas.renderAll();
