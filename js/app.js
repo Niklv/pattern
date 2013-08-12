@@ -1,6 +1,6 @@
 var CANVAS_WIDTH = 300;
 var CANVAS_HEIGHT = 300;
-var ANIM_TIME = 100;
+var ANIM_TIME = 200;
 var canvas;
 
 
@@ -8,23 +8,73 @@ var canvas;
 
 var PatternPart = Backbone.Model.extend({
         fabric_obj: null,
+        default: {
+            angle: 0,
+            color: "rgba(0, 0, 0, 0)",
+            opacity: 1,
+            width: 1,
+            height: 1,
+            overlay: null,
+            count: 5,
+            placement: "random", //random, circle
+            angle_delta: 50,
+            grid: 9, //9, 25, 49
+            x: 0,
+            y: 0,
+            radius: 100
+        },
+
+        range: {
+            angle: {
+                min: 0,
+                step: 1,
+                max: 360
+            },
+            opacity: {
+                min: 0,
+                step: 0.01,
+                max: 1
+            },
+            width: {
+                min: 0,
+                step: 1
+            },
+            height: {
+                min: 0,
+                step: 1
+            },
+            count: {
+                min: 0,
+                step: 1,
+                max: 40
+            },
+            placement: {
+                values: ["random", "circle"]
+            },
+            angle_delta: {
+                min: 0,
+                step: 1,
+                max: 360
+            },
+            grid: {
+                values: [9, 25, 49, 81]
+            },
+            x: {
+                min: 0,
+                step: 1
+            },
+            y: {
+                min: 0,
+                step: 1
+            },
+            radius: {
+                min: 0,
+                step: 1
+            }
+        },
         initialize: function () {
-            this.set({
-                id: Math.round(Math.random() * 1000000),
-                angle: 0,
-                color: "rgba(0, 0, 0, 0)",
-                opacity: 1,
-                width: 1,
-                height: 1,
-                overlay: null,
-                count: 5,
-                placement: "random", //random, circle
-                angle_delta: 50,
-                grid: 9, //9, 25, 49
-                x: 0,
-                y: 0,
-                radius: 100
-            });
+            this.set({id: Math.round(Math.random() * 1000000)});
+            this.set(this.default);
             this.on("change", this.update_fabric);
         },
         fabric: function () {
@@ -70,12 +120,6 @@ var PatternPartCollection = Backbone.Collection.extend({
     },
     remove_model: function (model) {
         model.remove();
-    },
-    enable_render: function () {
-        this.rendering = true
-    },
-    disable_render: function () {
-        this.rendering = false
     }
     /*,
      render: function () {
@@ -95,14 +139,23 @@ var PatternPartControlsView = Backbone.View.extend({
     template: _.template($("#part-settings-tmpl").html()),
     init_controls: function () {
         //console.log(this.model.attributes);
-        this.$el.find('.colorpicker').colorpicker({format: "rgba"});
-        this.$el.find('.slider').slider().on('slide', function (e) {
-            e.value = e.value.toFixed(2);
-            $(this).slider('setValue', e.value);
+        /*this.$el.find('.colorpicker').colorpicker({format: "rgba"});
+         this.$el.find('.slider').slider().on('slide', function (e) {
+         e.value = e.value.toFixed(2);
+         $(this).slider('setValue', e.value);
+         });
+         this.$el.find('input[type="radio"]').change(_.bind(this.change_settings_order, this));
+         this.$el.find('.count input').on("slide", _.bind(this.change_settings_order, this));
+         this.change_settings_order();*/
+        this.$el.find(".angle div.slider").slider({
+            animate: ANIM_TIME,
+            min: 0,
+            max: 360,
+            step: 1,
+            value: 100,
+            range: "min"
         });
-        this.$el.find('input[type="radio"]').change(_.bind(this.change_settings_order, this));
-        this.$el.find('.count input').on("slide", _.bind(this.change_settings_order, this));
-        this.change_settings_order();
+        this.$el.find(".angle input").val(100);
         return this;
     },
     change_settings_order: function () {
@@ -138,11 +191,34 @@ var PatternPartControlsView = Backbone.View.extend({
         return this;
     },
     events: {
-        "click button.close": "remove",
-        "slide input": "slide",
-        "change input[type=radio]": "radio_changed",
-        "changeColor input.colorpicker": "color_changed",
-        "click btn.random": "random"
+        //"click button.close": "remove",
+        //"slide input": "slide",
+        //"change input[type=radio]": "radio_changed",
+        //"changeColor input.colorpicker": "color_changed",
+        //"click btn.random": "random"
+        "slide .slider": "sliderchanged",
+        "input input": "setslider"
+    },
+    sliderchanged: function (e, o) {
+        $(e.target).parent().parent().find("input").val(o.value);
+    },
+    setslider: function (e) {
+        var slider = $(e.target).parent().find(".slider");
+        var opt = slider.slider("option");
+        var value = $(e.target).val();
+        if (value == "") value = 0;
+        if (isInt(opt.step))
+            value = parseInt(value);
+        else
+            value = parseFloat(value);
+        if (isNaN(value)) {
+            event.preventDefault();
+            return;
+        }
+        value = Math.max(value, opt.min);
+        value = Math.min(opt.max, value);
+        $(e.target).parent().find(".slider").slider("value", value);
+        //$(e.target).val(value);
     },
     random: function () {
 
@@ -211,6 +287,10 @@ function handle_image(e) {
         $(e.target).val("");
     };
     reader.readAsDataURL(e.target.files[0]);
+}
+
+function isInt(n) {
+    return n % 1 === 0;
 }
 
 function render() {

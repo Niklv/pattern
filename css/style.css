@@ -2,43 +2,55 @@ body {
     overflow-x: hidden;
 }
 
-.slider {
-    margin-top: 6px;
-}
-
-.form-group {
-    margin-bottom: 0;
-}
-
-.pattern-part label {
-    margin-bottom: 0;
-}
-
-.tooltip-arrow {
-    display: none;
-}
-
-.slider .tooltip {
-    position:relative;
-    width:40px;
-    top: -3px !important;
-    left: 55px !important;
-    float:right;
-    display: none;
-}
-
-.slider.slider-horizontal{
-    width:100% !important;
-}
-
-.slider .slider-handle{
-    width:10px;
-    height:10px;
-    margin-left: -5px !important;
-    margin-top: 0 !important;
-}
-
-.pattern-part{
+.pattern-part {
     margin-bottom: 10px;
 }
+
+.controls .form-group input{
+    margin-top: 2px;
+}
+
+/*slider css*/
+
+.ui-slider {
+    margin-top: 10px;
+    height: 10px;
+    position: relative;
+    text-align: left;
+    background-color: #fafafa;
+    border: #EBEBEB 1px solid;
+    border-radius: 5px;
+}
+
+.ui-slider-range {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    border: 0;
+    background-color: #25c5ff;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+}
+
+.ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+    background-color: white;
+    top: -1px;
+    margin-left: -5px;
+    border-radius: 5px;
+    border: 2px solid #858585;
+}
+
+
+.ui-slider-handle:focus {
+    outline: none;
+    border: 2px solid black;
+}
+
 
