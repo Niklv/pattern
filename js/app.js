@@ -137,6 +137,7 @@ var PatternPartControlsView = Backbone.View.extend({
     tagName: "div",
     className: "row pattern-part thumbnail",
     template: _.template($("#part-settings-tmpl").html()),
+    allowed_keys: [],
     init_controls: function () {
         //console.log(this.model.attributes);
         /*this.$el.find('.colorpicker').colorpicker({format: "rgba"});
@@ -147,11 +148,12 @@ var PatternPartControlsView = Backbone.View.extend({
          this.$el.find('input[type="radio"]').change(_.bind(this.change_settings_order, this));
          this.$el.find('.count input').on("slide", _.bind(this.change_settings_order, this));
          this.change_settings_order();*/
+        this.setup_allowed_keys();
         this.$el.find(".angle div.slider").slider({
             animate: ANIM_TIME,
             min: 0,
             max: 360,
-            step: 1,
+            step: 0.1,
             value: 100,
             range: "min"
         });
@@ -197,7 +199,50 @@ var PatternPartControlsView = Backbone.View.extend({
         //"changeColor input.colorpicker": "color_changed",
         //"click btn.random": "random"
         "slide .slider": "sliderchanged",
-        "input input": "setslider"
+        "input input": "inpt",
+        "keypress input": "filter_number",
+        "keydown input": "up_and_down"
+
+    },
+    setup_allowed_keys: function () {
+        this.allowed_keys.push(45, 46); //minus and dot
+        this.allowed_keys.push(48, 49, 50, 51, 52, 53, 54, 55, 56, 57); //0-9
+    },
+    up_and_down: function (e) {
+        var key = e.keyCode;
+        if (key != 38 && key != 40)
+            return;
+        var val = parseInt($(e.target).val() * 10000);
+        var slider = $(e.target).parent().find(".slider");
+        var slider_options = slider.slider("option");
+        var step = slider_options.step * 10000;
+        var ost = val % step;
+        if (key == 38) { //key up
+            if (ost)
+                val += step - Math.abs(ost);
+            else
+                val += step;
+        } else if (key == 40) {  //key down
+            if (ost)
+                val -= ost;
+            else
+                val -= step;
+        }
+        val /= 10000;
+        val = Math.max(val, slider_options.min);
+        val = Math.min(val, slider_options.max);
+        $(e.target).val(val);
+        slider.slider("value", val);
+    },
+    filter_number: function (e) {
+        var key = e.keyCode;
+        if (!_.contains(this.allowed_keys, key))
+            e.preventDefault();
+        else if (key == 46 && $(e.target).val().match(/\./g))
+            e.preventDefault();
+        else if (key == 45 && $(e.target).val().match(/[-]/g))
+            e.preventDefault();
+
     },
     sliderchanged: function (e, o) {
         $(e.target).parent().parent().find("input").val(o.value);
