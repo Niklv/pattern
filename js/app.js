@@ -83,17 +83,24 @@ var PatternPart = Backbone.Model.extend({
             canvas.add(this.fabric_obj);
         },
         update_fabric: function () {
-            console.log(fabric.Color.fromRgba(this.get("color")));
+            //console.log(fabric.Color.fromRgba(this.get("color")));
+
+
             this.fabric_obj.set({
                 left: canvas.getWidth() / 2 + canvas.getWidth() * this.get("x") / 100,
                 top: canvas.getHeight() / 2 + canvas.getHeight() * this.get("y") / 100,
                 width: this.get("img").width * this.get("width"),
                 height: this.get("img").height * this.get("height"),
                 angle: this.get("angle"),
-                opacity: this.get("opacity"),
-                fill: this.get("color"),
-                overlayFill: this.get("color")
+                opacity: this.get("opacity")//,
+                //fill: this.get("color"),
+                //overlayFill: this.get("color")
             });
+            //this.fabric_obj.animate("angle", this.get("angle"), {
+            //    onChange: canvas.renderAll.bind(canvas),
+            //    duration: ANIM_TIME,
+            //    easing: fabric.util.ease.easeInOutCubic
+            //});
             canvas.renderAll();
         },
         remove: function () {
@@ -140,17 +147,17 @@ var PatternPartControlsView = Backbone.View.extend({
     allowed_keys: [],
     init_controls: function () {
         //console.log(this.model.attributes);
-        /*this.$el.find('.colorpicker').colorpicker({format: "rgba"});
-         this.$el.find('.slider').slider().on('slide', function (e) {
-         e.value = e.value.toFixed(2);
-         $(this).slider('setValue', e.value);
-         });
-         this.$el.find('input[type="radio"]').change(_.bind(this.change_settings_order, this));
-         this.$el.find('.count input').on("slide", _.bind(this.change_settings_order, this));
-         this.change_settings_order();*/
+        this.$el.find('.colorpicker').colorpicker({format: "rgba"});
+        this.$el.find('input.grid-of-obj[value='+this.model.get('grid')+']').attr('checked',true);
+        this.$el.find('input.placement-of-obj[value='+this.model.get('placement')+']').attr('checked',true);
+        this.$el.find('input[type="radio"]').change(_.bind(this.change_settings_order, this));
+        //this.$el.find('.count input').on("input", _.bind(this.change_settings_order, this));
+        this.change_settings_order();
+
         this.setup_allowed_keys();
         this.$el.find("div.slider").each(_.bind(function (n, slider) {
             var p_name = $(slider).attr("data-option");
+            $(slider).parent().parent().find("input").val(this.get(p_name));
             $(slider).slider({
                 animate: ANIM_TIME,
                 min: this.range[p_name].min,
@@ -160,13 +167,13 @@ var PatternPartControlsView = Backbone.View.extend({
                 range: "min"
             });
         }, this.model));
-        this.$el.find(".angle input").val(100);
         return this;
     },
     change_settings_order: function () {
         var isCircle = this.$el.find('.placement input:checked').val() == "circle";
         var isRandom = this.$el.find('.placement input:checked').val() == "random";
         var isOneItem = this.$el.find('.count input').val() == 1;
+        console.log(isOneItem);
         if (isCircle || isOneItem) {
             this.$el.find('.form-group.x').show(ANIM_TIME);
             this.$el.find('.form-group.y').show(ANIM_TIME);
@@ -197,9 +204,9 @@ var PatternPartControlsView = Backbone.View.extend({
     },
     events: {
         "click button.close": "remove",
-        //"change input[type=radio]": "radio_changed",
-        //"changeColor input.colorpicker": "color_changed",
-        //"click btn.random": "random"
+        "change input[type=radio]": "radio_changed",
+        "changeColor input.colorpicker": "color_changed",
+        "click btn.random": "random",
         "slide .slider": "onslide",
         "input input": "oninput",
         "keypress input": "filter_number",
@@ -273,10 +280,6 @@ var PatternPartControlsView = Backbone.View.extend({
     random: function () {
 
     },
-    remove: function () {
-        this.$el.hide(ANIM_TIME).remove();
-        parts.remove(this.model);
-    },
     onslide: function (e, o) {
         $(e.target).parent().parent().find("input").val(o.value);
         this.save($(e.target).attr("data-option"));
@@ -285,7 +288,11 @@ var PatternPartControlsView = Backbone.View.extend({
         var val = this.$el.find("input[data-option=" + p_name + "]").val();
         if (val == "") val = this.model.default[p_name];
         this.model.set(p_name, parseFloat(val));
-        console.log(this.model.attributes);
+        //console.log(this.model.attributes);
+    },
+    remove: function () {
+        this.$el.hide(ANIM_TIME).remove();
+        parts.remove(this.model);
     },
     radio_changed: function (ev) {
         var p_name = $(ev.target).attr("class").replace("-of-obj", "").replace("-", "_");
