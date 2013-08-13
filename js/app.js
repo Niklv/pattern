@@ -149,14 +149,17 @@ var PatternPartControlsView = Backbone.View.extend({
          this.$el.find('.count input').on("slide", _.bind(this.change_settings_order, this));
          this.change_settings_order();*/
         this.setup_allowed_keys();
-        this.$el.find(".angle div.slider").slider({
-            animate: ANIM_TIME,
-            min: 0,
-            max: 360,
-            step: 0.1,
-            value: 100,
-            range: "min"
-        });
+        this.$el.find("div.slider").each(_.bind(function (n, slider) {
+            var p_name = $(slider).attr("data-option");
+            $(slider).slider({
+                animate: ANIM_TIME,
+                min: this.range[p_name].min,
+                max: this.range[p_name].max,
+                step: this.range[p_name].step,
+                value: this.get(p_name),
+                range: "min"
+            });
+        }, this.model));
         this.$el.find(".angle input").val(100);
         return this;
     },
@@ -193,13 +196,12 @@ var PatternPartControlsView = Backbone.View.extend({
         return this;
     },
     events: {
-        //"click button.close": "remove",
-        //"slide input": "slide",
+        "click button.close": "remove",
         //"change input[type=radio]": "radio_changed",
         //"changeColor input.colorpicker": "color_changed",
         //"click btn.random": "random"
-        "slide .slider": "sliderchanged",
-        "input input": "inpt",
+        "slide .slider": "onslide",
+        "input input": "oninput",
         "keypress input": "filter_number",
         "keydown input": "up_and_down"
 
@@ -233,6 +235,7 @@ var PatternPartControlsView = Backbone.View.extend({
         val = Math.min(val, slider_options.max);
         $(e.target).val(val);
         slider.slider("value", val);
+        this.save(slider.attr("data-option"));
     },
     filter_number: function (e) {
         var key = e.keyCode;
@@ -244,10 +247,7 @@ var PatternPartControlsView = Backbone.View.extend({
             e.preventDefault();
 
     },
-    sliderchanged: function (e, o) {
-        $(e.target).parent().parent().find("input").val(o.value);
-    },
-    setslider: function (e) {
+    oninput: function (e) {
         var slider = $(e.target).parent().find(".slider");
         var opt = slider.slider("option");
         var value = $(e.target).val();
@@ -260,10 +260,15 @@ var PatternPartControlsView = Backbone.View.extend({
             event.preventDefault();
             return;
         }
-        value = Math.max(value, opt.min);
-        value = Math.min(opt.max, value);
-        $(e.target).parent().find(".slider").slider("value", value);
-        //$(e.target).val(value);
+        if (value < opt.min) {
+            slider.slider("value", opt.min);
+            $(e.target).val(opt.min);
+        } else if (value > opt.max) {
+            slider.slider("value", opt.max);
+            $(e.target).val(opt.max);
+        } else
+            slider.slider("value", value);
+        this.save(slider.attr("data-option"));
     },
     random: function () {
 
@@ -272,10 +277,15 @@ var PatternPartControlsView = Backbone.View.extend({
         this.$el.hide(ANIM_TIME).remove();
         parts.remove(this.model);
     },
-    slide: function (ev) {
-        var p_name = $(ev.target).attr('id').replace("-of-obj", "").replace("-", "_");
-        this.model.set(p_name, parseFloat(ev.value));
-        //console.log(this.model.attributes);
+    onslide: function (e, o) {
+        $(e.target).parent().parent().find("input").val(o.value);
+        this.save($(e.target).attr("data-option"));
+    },
+    save: function (p_name) {
+        var val = this.$el.find("input[data-option=" + p_name + "]").val();
+        if (val == "") val = this.model.default[p_name];
+        this.model.set(p_name, parseFloat(val));
+        console.log(this.model.attributes);
     },
     radio_changed: function (ev) {
         var p_name = $(ev.target).attr("class").replace("-of-obj", "").replace("-", "_");
