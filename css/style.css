@@ -6,8 +6,12 @@ body {
     margin-bottom: 10px;
 }
 
-.controls .form-group input{
+.controls .form-group input {
     margin-top: 2px;
+}
+
+.controls .form-group {
+    margin-bottom: 0;
 }
 
 /*slider css*/
@@ -46,7 +50,6 @@ body {
     border-radius: 5px;
     border: 2px solid #858585;
 }
-
 
 .ui-slider-handle:focus {
     outline: none;
