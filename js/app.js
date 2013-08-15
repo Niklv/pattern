@@ -7,7 +7,7 @@ var canvas;
 //////MODELS
 
 var Settings = Backbone.Model.extend({
-    fabric_obj: null,
+    //fabric_obj: null,
     objects: null,
     default: {
         angle: 0,
@@ -76,10 +76,12 @@ var Settings = Backbone.Model.extend({
         console.log(this.get("img").width, this.get("img").height);
         this.set({width: this.get("img").width, height: this.get("img").height});
         this.set(this.default);
-        this.objects = new Grids([],{global_settings:this});
+        this.objects = new Backbone.Collection([], {model: GridSettings});
+        this.objects.add(new GridSettings);
+        //this.objects.add(new Grid);
         //this.on("change", this.update);
-        this.on("change:placement", this.new_layout);
-        //this.on("change:[count]", this.new_layout);
+        this.bind("change:placement", this.layout);
+        this.bind("change:count", this.layout);
     },
     set_range: function () {
         this.range.width.max = canvas.getWidth() * 2;
@@ -91,22 +93,24 @@ var Settings = Backbone.Model.extend({
         this.range.radius.max = Math.min(canvas.getHeight(), canvas.getWidth()) * 2;
     },
     fabric: function () {
-        this.fabric_obj = new fabric.Image(this.get("img"));
+        //this.fabric_obj = new fabric.Image(this.get("img"));
         //this.update();
         //canvas.add(this.fabric_obj);
     },
-    new_layout: function () {
+    layout: function () {
         console.log("placement changed");
-        console.log(arguments);
+        //console.log(arguments);
         var count = this.get("count");
         console.log(this.objects.length, this.get("count"));
-        /*while (this.objects.length > this.get("count")){
-            this.objects.pop();
-        } */
+        console.log(this.objects);
 
-        /*while (this.objects.length > this.get("count"))
-            this.objects.add(new GridSettings(this));*/
+        /*while (this.objects.length > this.get("count")) {
+         this.objects.pop();
+         }
 
+         while (this.objects.length > this.get("count"))
+         this.objects.add(new GridSettings(this));
+         */
     },
     update: function () {
         console.log(arguments);
@@ -136,19 +140,21 @@ var Settings = Backbone.Model.extend({
 
 var GridSettings = Backbone.Model.extend({ //must render grid
     grid: null,
-    initialize: function (settings) {
-        console.log("INIT GRIDSETTINGS COLLECTION", settings);
-        this.set("grid", settings.get("grid"));
-        this.set("x", settings.get("x"));
-        this.set("y", settings.get("y"));
-        this.set("angle", settings.get("angle"));
-        this.set("opacity", settings.get("opacity"));
-        this.grid = new Grid();
-        settings.on("change", this.update());
-        this.grid.add([new FabricObject, new FabricObject, new FabricObject]);
-    },
-    update: function () {
-        console.log("GridSettings UPDATE");
+    initialize: function () {
+        this.grid = new Backbone.Collection([], {model: FabricObject});
+        console.log("INIT GRIDSETTINGS COLLECTION");
+        this.grid.add({});
+        //console.log("INIT GRIDSETTINGS COLLECTION", options.global_settings);
+        /*this.set("grid", options.global_settings.get("grid"));
+         this.set("x", options.global_settings.get("x"));
+         this.set("y", options.global_settings.get("y"));
+         this.set("angle", options.global_settings.get("angle"));
+         this.set("opacity", options.global_settings.get("opacity"));
+
+         console.log(this.attributes);
+         //settings.on("change", this.update());
+         for (var i = 0; i < this.get("grid"); i++)
+         this.grid.add({});*/
     }
 });
 
@@ -156,12 +162,6 @@ var FabricObject = Backbone.Model.extend({ //must render grid
     fabric_obj: null,
     initialize: function () {
         console.log("FO INIT");
-    },
-    render: function () {
-        console.log("FO RENDER");
-    },
-    remove: function () {
-        console.log("FO REMOVE");
     }
 });
 
@@ -170,8 +170,8 @@ var FabricObject = Backbone.Model.extend({ //must render grid
 var SettingsCollection = Backbone.Collection.extend({
     model: Settings,
     initialize: function () {
-        this.on("add", this.add_model);
-        this.on("remove", this.remove_model);
+        this.bind("add", this.add_model);
+        this.bind("remove", this.remove_model);
         //this.on("change", this.render);
     },
     add_model: function (model) {
@@ -182,35 +182,6 @@ var SettingsCollection = Backbone.Collection.extend({
     remove_model: function (model) {
         model.remove();
     }
-});
-
-var Grids = Backbone.Collection.extend({
-    model: GridSettings,
-    initialize: function (models, options) {
-        console.log("INIT GRIDS COLLECTION", options.global_settings);
-        for(var i = 0; i<options.global_settings.get("count"); i++)
-            this.add(new GridSettings(options.global_settings));
-        console.log(this.models);
-        //this.
-    }
-});
-
-var Grid = Backbone.Collection.extend({
-    model: FabricObject
-    //,
-    //initialize: function () {
-    //console.log("GRID OF FabricObject INIT");
-    //this.add([new FabricObject, new FabricObject, new FabricObject, new FabricObject]);
-    //},
-    //update_grid_size: function () {
-    //    console.log("GRID OF FabricObject UPDATE_SIZE");
-    //},
-    /*render: function () {
-     console.log("GRID OF FabricObject RENDER");
-     _.each(this.models, function (fo) {
-     fo.render()
-     });
-     } */
 });
 
 //////VIEW
