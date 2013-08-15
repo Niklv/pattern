@@ -10,20 +10,26 @@ var Settings = Backbone.Model.extend({
     //fabric_obj: null,
     objects: null,
     default: {
+        count: 10,
+        placement: "random", //random, circle
         angle: 0,
         color: "rgba(0, 0, 0, 0)",
         opacity: 1,
         overlay: null,
-        count: 5,
-        placement: "random", //random, circle
-        angle_delta: 50,
+        angle_delta: 0,
+        offset: 0,
         grid: 9, //9, 25, 49
         x: 0,
         y: 0,
-        radius: 100
+        radius: 40
     },
     range: {
         angle: {
+            min: 0,
+            step: 1,
+            max: 360
+        },
+        offset: {
             min: 0,
             step: 1,
             max: 360
@@ -72,16 +78,27 @@ var Settings = Backbone.Model.extend({
     },
     initialize: function () {
         this.set_range();
+        this.objects = new Backbone.Collection([], {model: GridSettings});
+        //this.bind("change", this.update);
         this.set({id: _.random(0, 1000000)});
-        console.log(this.get("img").width, this.get("img").height);
         this.set({width: this.get("img").width, height: this.get("img").height});
         this.set(this.default);
-        this.objects = new Backbone.Collection([], {model: GridSettings});
-        this.objects.add(new GridSettings);
-        //this.objects.add(new Grid);
-        //this.on("change", this.update);
-        this.bind("change:placement", this.layout);
-        this.bind("change:count", this.layout);
+        this.count_changed();
+        this.circle_layout();
+        //this.bind("change:count", this.count_changed);
+        //this.bind("change:placement", this.layout_changed);
+        /*this.bind("change:angle " +
+            "change:color " +
+            "change:opacity " +
+            "change:overlay  " +
+            "change:angle_delta " +
+            "change:offset " +
+            "change:grid " +
+            "change:x " +
+            "change:y " +
+            "change:width " +
+            "change:height " +
+            "change:radius", this.change_options); */
     },
     set_range: function () {
         this.range.width.max = canvas.getWidth() * 2;
@@ -97,12 +114,23 @@ var Settings = Backbone.Model.extend({
         //this.update();
         //canvas.add(this.fabric_obj);
     },
-    layout: function () {
-        console.log("placement changed");
-        //console.log(arguments);
-        var count = this.get("count");
+    count_changed: function () {
         console.log(this.objects.length, this.get("count"));
-        console.log(this.objects);
+        var x = 0;
+        while (this.objects.length > this.get("count"))
+            this.objects.remove(this.objects.last());
+
+        while (this.objects.length < this.get("count"))
+            this.objects.add({
+                width: this.get("width"),
+                height: this.get("height"),
+                img: this.get("img")
+            });
+    },
+    layout_changed: function () {
+        console.log("layout changed");
+        //console.log(arguments);
+        //var count = this.get("count");
 
         /*while (this.objects.length > this.get("count")) {
          this.objects.pop();
@@ -112,8 +140,42 @@ var Settings = Backbone.Model.extend({
          this.objects.add(new GridSettings(this));
          */
     },
+    circle_layout: function () {
+        var count = this.get("count"),
+            delta = 360 / count,
+            offset = this.get("offset"),
+            radius = this.get("radius"),
+            x = this.get("x"),
+            y = this.get("y"),
+            angle = this.get("angle"),
+            angle_delta = this.get("angle_delta"),
+            opacity = this.get("opacity"),
+            grid = this.get("grid"),
+            height = this.get("height"),
+            width = this.get("width"),
+            img = this.get("img");
+        for (var i = 0; i < count; i++) {
+            this.objects.at(i).set({
+                x: x + radius * Math.sin(offset + delta * i),
+                y: y + radius * Math.cos(offset + delta * i),
+                angle: angle + angle_delta * i,
+                opacity: opacity,
+                grid: grid,
+                height: height,
+                width: width,
+                img: img
+            });
+        }
+    },
+    random_layout: function () {
+    },
+    change_options: function () {
+        //console.log("CHANGE OPTIONS FOR ALL");
+        //this.circle_layout();
+        //console.log(arguments);
+    },
     update: function () {
-        console.log(arguments);
+        console.log("UPDATE");
 
 
         //console.log("UPDATE");
@@ -139,11 +201,21 @@ var Settings = Backbone.Model.extend({
 });
 
 var GridSettings = Backbone.Model.extend({ //must render grid
-    grid: null,
+    fabric_objects: null,
+    default: {
+        grid: 9,
+        x: 0,
+        y: 0,
+        opacity: 1,
+        angle: 0
+    },
     initialize: function () {
-        this.grid = new Backbone.Collection([], {model: FabricObject});
+        this.fabric_objects = new Backbone.Collection([], {model: FabricObject});
+        this.bind("change", this.calculate_grid);
         console.log("INIT GRIDSETTINGS COLLECTION");
-        this.grid.add({});
+        console.log(this.attributes);
+        this.calculate_grid();
+        //this.grid.add({});
         //console.log("INIT GRIDSETTINGS COLLECTION", options.global_settings);
         /*this.set("grid", options.global_settings.get("grid"));
          this.set("x", options.global_settings.get("x"));
@@ -155,13 +227,57 @@ var GridSettings = Backbone.Model.extend({ //must render grid
          //settings.on("change", this.update());
          for (var i = 0; i < this.get("grid"); i++)
          this.grid.add({});*/
+    },
+    calculate_grid: function () {
+        var g = this.get("grid"),
+            x = this.get("x"),
+            y = this.get("y"),
+            len = Math.sqrt(g),
+            step_x = canvas.getWidth() / (len - 1),
+            step_y = canvas.getHeight() / (len - 1);
+        while (this.fabric_objects.length > g)
+            this.fabric_objects.pop();
+        while (this.fabric_objects.length < g)
+            this.fabric_objects.add(this.attributes, {ignore: true});
+        for (var i = 0; i < len; i++)
+            for (var j = 0; j < len; j++) {
+                this.fabric_objects.at(i * len + j).set(this.attributes, {ignore: true});
+                this.fabric_objects.at(i * len + j).set({
+                    x: x - canvas.getWidth() + j * step_x,
+                    y: y - canvas.getHeight() + i * step_y
+                });
+            }
     }
 });
 
 var FabricObject = Backbone.Model.extend({ //must render grid
     fabric_obj: null,
     initialize: function () {
-        console.log("FO INIT");
+        console.log("FO INIT EVENT");
+        this.fabric_obj = new fabric.Image(this.get("img"));
+        this.render();
+        canvas.add(this.fabric_obj);
+
+
+        this.bind("change", this.render);
+        this.bind("remove", this.remove);
+    },
+    render: function () {
+        console.log("FO RENDER EVENT");
+        this.fabric_obj.set({
+            left: canvas.getWidth() / 2 + this.get("x"),
+            top: canvas.getHeight() / 2 - this.get("y"),
+            width: this.get("width")/10,
+            height: this.get("height")/10,
+            angle: this.get("angle"),
+            opacity: this.get("opacity")
+        });
+        //console.log(arguments);
+    },
+    remove: function () {
+        console.log("FO REMOVE EVENT");
+        canvas.fxRemove(this.fabric_obj);
+        //console.log(arguments);
     }
 });
 
@@ -227,9 +343,11 @@ var SettingsView = Backbone.View.extend({
         }
 
         if (isCircle) {
+            this.$el.find('.form-group.offset').show(ANIM_TIME);
             this.$el.find('.form-group.angle-delta').show(ANIM_TIME);
             this.$el.find('.form-group.radius').show(ANIM_TIME);
         } else if (isRandom) {
+            this.$el.find('.form-group.offset').hide(ANIM_TIME);
             this.$el.find('.form-group.angle-delta').hide(ANIM_TIME);
             this.$el.find('.form-group.radius').hide(ANIM_TIME);
         }
