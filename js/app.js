@@ -295,15 +295,17 @@ var FabricObject = Backbone.Model.extend({ //must render grid
     },
     initialize: function () {
         this._fabric = new fabric.Image(this.get("img"));
+        this._fabric.set("visible", false);
+        this.add();
         this.bind("change", this.render);
         this.bind("change:show", this.show);
         this.bind("remove reset", this.remove);
     },
     show: function () {
         if (this.get("show"))
-            this.add();
+            this._fabric.set("visible", true);
         else
-            this.remove();
+            this._fabric.set("visible", false);
     },
     add: function () {
         canvas.add(this._fabric);
