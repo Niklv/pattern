@@ -230,7 +230,7 @@ var GridSettings = Backbone.Model.extend({ //must render grid
     },
     initialize: function () {
         this.fabric_objects = new Backbone.Collection([], {model: FabricObject});
-        //TODO:remove hardcoded value
+        //TODO:remove hardcoded value 81
         for (var i = 0; i < 81; i++)
             this.fabric_objects.add(this.attributes);
         this.bind("change", this.calculate_grid);
@@ -357,7 +357,25 @@ var SettingsView = Backbone.View.extend({
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
         this.model.on("change", this.change_settings_order, this);
-        this.change_settings_order();
+        var isCircle = this.$el.find('.placement input:checked').val() == "circle";
+        var isRandom = this.$el.find('.placement input:checked').val() == "random";
+        var isOneItem = this.$el.find('.count input').val() == 1;
+        if (isCircle || isOneItem) {
+            this.$el.find('.form-group.x').show();
+            this.$el.find('.form-group.y').show();
+        } else {
+            this.$el.find('.form-group.x').hide();
+            this.$el.find('.form-group.y').hide();
+        }
+        if (isCircle) {
+            this.$el.find('.form-group.offset').show();
+            this.$el.find('.form-group.angle-delta').show();
+            this.$el.find('.form-group.radius').show();
+        } else if (isRandom) {
+            this.$el.find('.form-group.offset').hide();
+            this.$el.find('.form-group.angle-delta').hide();
+            this.$el.find('.form-group.radius').hide();
+        }
 
         this.setup_allowed_keys();
         this.$el.find("div.slider").each(_.bind(function (n, slider) {
@@ -397,11 +415,13 @@ var SettingsView = Backbone.View.extend({
         }
     },
     place: function () {
-        var last = $('.control-panel .row.pattern-part:last-child');
+        var last = $('.control-panel > .row.pattern-part').last();
+        this.$el.hide();
         if (last.length > 0)
             last.after(this.$el);
         else
-            $('.control-panel .row:first-child').after(this.$el);
+            $('.control-panel > .row:first-child').after(this.$el);
+        this.$el.slideDown(ANIM_TIME);
         return this;
     },
     render: function () {
@@ -497,12 +517,9 @@ var SettingsView = Backbone.View.extend({
         //console.log(this.model.attributes);
     },
     remove: function () {
-        console.log("here");
         parts.remove(this.model);
-        this.$el.find("div.image").slideUp(ANIM_TIME);
-        this.$el.find("div.controls").slideUp(ANIM_TIME);
-        this.$el.find("div:first-child").slideUp(ANIM_TIME, function () {
-            $(this).parent().remove()
+        this.$el.slideUp(ANIM_TIME, function () {
+            $(this).remove()
         });
 
         /*this.$el.slideUp(50 * ANIM_TIME, function () {
