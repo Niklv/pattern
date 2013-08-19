@@ -397,21 +397,21 @@ var SettingsView = Backbone.View.extend({
         var isRandom = this.$el.find('.placement input:checked').val() == "random";
         var isOneItem = this.$el.find('.count input').val() == 1;
         if (isCircle || isOneItem) {
-            this.$el.find('.form-group.x').show(ANIM_TIME);
-            this.$el.find('.form-group.y').show(ANIM_TIME);
+            this.$el.find('.form-group.x').slideDown(ANIM_TIME);
+            this.$el.find('.form-group.y').slideDown(ANIM_TIME);
         } else {
-            this.$el.find('.form-group.x').hide(ANIM_TIME);
-            this.$el.find('.form-group.y').hide(ANIM_TIME);
+            this.$el.find('.form-group.x').slideUp(ANIM_TIME);
+            this.$el.find('.form-group.y').slideUp(ANIM_TIME);
         }
 
         if (isCircle) {
-            this.$el.find('.form-group.offset').show(ANIM_TIME);
-            this.$el.find('.form-group.angle-delta').show(ANIM_TIME);
-            this.$el.find('.form-group.radius').show(ANIM_TIME);
+            this.$el.find('.form-group.offset').slideDown(ANIM_TIME);
+            this.$el.find('.form-group.angle-delta').slideDown(ANIM_TIME);
+            this.$el.find('.form-group.radius').slideDown(ANIM_TIME);
         } else if (isRandom) {
-            this.$el.find('.form-group.offset').hide(ANIM_TIME);
-            this.$el.find('.form-group.angle-delta').hide(ANIM_TIME);
-            this.$el.find('.form-group.radius').hide(ANIM_TIME);
+            this.$el.find('.form-group.offset').slideUp(ANIM_TIME);
+            this.$el.find('.form-group.angle-delta').slideUp(ANIM_TIME);
+            this.$el.find('.form-group.radius').slideUp(ANIM_TIME);
         }
     },
     place: function () {
