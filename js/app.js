@@ -348,7 +348,7 @@ var SettingsCollection = Backbone.Collection.extend({
 
 var SettingsView = Backbone.View.extend({
     tagName: "div",
-    className: "row pattern-part thumbnail",
+    className: "row pattern-part",
     template: _.template($("#part-settings-tmpl").html()),
     allowed_keys: [],
     init_controls: function () {
@@ -409,7 +409,7 @@ var SettingsView = Backbone.View.extend({
         return this;
     },
     events: {
-        "click button.close": "remove",
+        "click button.delete": "remove",
         "change input[type=radio]": "radio_changed",
         "changeColor input.colorpicker": "color_changed",
         "click button.random": "random",

@@ -5,45 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="css/bootstrap.css" rel="stylesheet" media="screen"/>
     <link href="css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
-    <!--<link href="css/bootstrap-glyphicons.css" rel="stylesheet" media="screen"/>-->
     <link href="css/bootstrap-colorpicker.css" rel="stylesheet" media="screen"/>
     <link href="css/style.css" rel="stylesheet" media="screen"/>
 </head>
 <body>
-
-<div class="row">
-    <div class="col-lg-10 col-sm-10 col-sm-offset-1 col-lg-offset-1">
-        <div class="well-sm">
-            <h1><strong>Awesome generator</strong></h1>
+<div class="container">
+    <div class="row well-sm text-center">
+        <h1><strong>Awesome generator</strong></h1>
+    </div>
+    <div class="row well-sm">
+        <div class="col-sm-5">
+            <div class="row text-center">
+                <h3>Result</h3>
+            </div>
+            <div class="row text-center">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+        <div class="col-sm-7 control-panel">
+            <div class="row text-center">
+                <h3>Control panel</h3>
+            </div>
+            <div class="row">
+                <input id="file-uploader" type="file" style="display:none;">
+                <button type="button" id="upload" class="btn btn-default">Upload part</button>
+            </div>
+            <div class="row">
+                <button type="button" id="render" class="btn btn-primary">Render new</button>
+            </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-4 col-sm-5 col-lg-offset-1 col-sm-offset-1">
-        <div class="row">
-            <h3>Result:</h3>
-        </div>
-        <div class="row">
-            <canvas id="canvas"></canvas>
-        </div>
-    </div>
-    <div class="col-lg-6 col-sm-5 control-panel">
-        <div class="row">
-            <h3>Control panel:</h3>
-        </div>
-        <div class="row">
-            <!--<div id="slider-test"></div>-->
-        </div>
-        <div class="row">
-            <input id="file-uploader" type="file" style="display:none;">
-            <button type="button" id="upload" class="btn btn-default">Upload part</button>
-        </div>
-        <div class="row">
-            <button type="button" id="render" class="btn btn-primary">Render new</button>
-        </div>
-    </div>
-</div>
-
 
 <script src="js/async.js"></script>
 <script src="js/fabric.js"></script>
@@ -58,192 +50,200 @@
 <!-- TEMPLATE -->
 
 <script type="text/html" id="part-settings-tmpl">
-    <div class="col-lg-12 col-sm-12 col-12">
-        <button type="button" class="close">&times;</button>
-    </div>
-    <div class="col-lg-3 col-sm-3 col-3 image">
-        <img class="part-img img-responsive"
-             src="<%= img.src %>">
-    </div>
-    <div class="col-lg-9 col-sm-9 col-9 form-horizontal controls">
-        <div class="form-group angle">
-            <label class="col-lg-2 control-label" for="part-angle">Angle</label>
-
-            <div class="col-lg-10">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <div class="slider" data-option="angle"></div>
-                </div>
-                <input id="part-angle"
-                       class="input-sm col-lg-2 col-sm-2 col-2" data-option="angle"/>
+    <div class="col-sm-12">
+        <div class="row well-sm">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 image">
+                <img class="part-img img-responsive"
+                     src="<%= img.src %>">
             </div>
-        </div>
-        <div class="form-group opacity">
-            <label class="col-lg-2 control-label" for="part-opacity">Opacity</label>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 form-horizontal controls">
+                <div class="form-group angle">
+                    <label class="col-lg-2 col-md-2 control-label" for="part-angle">Angle</label>
 
-            <div class="col-lg-10">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <div class="slider" data-option="opacity"></div>
-                </div>
-                <input id="part-opacity"
-                       class="input-sm col-lg-2 col-sm-2 col-2" data-option="opacity"/>
-            </div>
-        </div>
-        <div class="form-group width">
-            <label class="col-lg-2 control-label" for="part-width">Width</label>
-
-            <div class="col-lg-10">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <div class="slider" data-option="width"></div>
-                </div>
-                <input id="part-width"
-                       class="input-sm col-lg-2 col-sm-2 col-2" data-option="width"/>
-            </div>
-        </div>
-        <div class="form-group height">
-            <label class="col-lg-2 control-label" for="part-width">Height</label>
-
-            <div class="col-lg-10">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <div class="slider" data-option="height"></div>
-                </div>
-                <input id="part-height"
-                       class="input-sm col-lg-2 col-sm-2 col-2" data-option="height"/>
-            </div>
-        </div>
-        <div class="form-group grid">
-            <label class="col-lg-2 control-label">Grid</label>
-
-            <div class="col-lg-10">
-                <div class="col-lg-10">
-                    <div class="radio-inline">
-                        <label>
-                            <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="9">
-                            9
-                        </label>
-                    </div>
-                    <div class="radio-inline">
-                        <label>
-                            <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="25">
-                            25
-                        </label>
-                    </div>
-                    <div class="radio-inline">
-                        <label>
-                            <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="49">
-                            49
-                        </label>
-                    </div>
-                    <div class="radio-inline">
-                        <label>
-                            <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="81">
-                            81
-                        </label>
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="slider" data-option="angle"></div>
+                        </div>
+                        <input id="part-angle"
+                               class="input-sm col-lg-2 col-md-2 col-sm-2 col-xs-2" data-option="angle"/>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="form-group count">
-            <label class="col-lg-2 control-label" for="part-count">Count</label>
+                <div class="form-group opacity">
+                    <label class="col-lg-2 col-md-2 control-label" for="part-opacity">Opacity</label>
 
-            <div class="col-lg-10">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <div class="slider" data-option="count"></div>
-                </div>
-                <input id="part-count"
-                       class="input-sm col-lg-2 col-sm-2 col-2" data-option="count"/>
-            </div>
-        </div>
-        <div class="form-group x">
-            <label class="col-lg-2 control-label" for="part-x">X</label>
-
-            <div class="col-lg-10">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <div class="slider" data-option="x"></div>
-                </div>
-                <input id="part-x"
-                       class="input-sm col-lg-2 col-sm-2 col-2" data-option="x"/>
-            </div>
-        </div>
-        <div class="form-group y">
-            <label class="col-lg-2 control-label" for="part-y">Y</label>
-
-            <div class="col-lg-10">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <div class="slider" data-option="y"></div>
-                </div>
-                <input id="part-y"
-                       class="input-sm col-lg-2 col-sm-2 col-2" data-option="y"/>
-            </div>
-        </div>
-        <div class="form-group placement">
-            <label class="col-lg-2 control-label">Type</label>
-
-            <div class="col-lg-10">
-                <div class="col-lg-10">
-                    <div class="radio-inline">
-                        <label>
-                            <input type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>" value="random">
-                            Random
-                        </label>
-                    </div>
-                    <div class="radio-inline">
-                        <label>
-                            <input type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>" value="circle">
-                            Circle
-                        </label>
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="slider" data-option="opacity"></div>
+                        </div>
+                        <input id="part-opacity"
+                               class="input-sm col-lg-2 col-md-2 col-sm-2 col-xs-2" data-option="opacity"/>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="form-group radius">
-            <label class="col-lg-2 control-label" for="part-radius">Radius</label>
+                <div class="form-group width">
+                    <label class="col-lg-2 col-md-2 control-label" for="part-width">Width</label>
 
-            <div class="col-lg-10">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <div class="slider" data-option="radius"></div>
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="slider" data-option="width"></div>
+                        </div>
+                        <input id="part-width"
+                               class="input-sm col-lg-2 col-md-2 col-sm-2 col-xs-2" data-option="width"/>
+                    </div>
                 </div>
-                <input id="part-radius"
-                       class="input-sm col-lg-2 col-sm-2 col-2" data-option="radius"/>
-            </div>
-        </div>
-        <div class="form-group offset">
-            <label class="col-lg-2 control-label" for="part-offset">Offset</label>
+                <div class="form-group height">
+                    <label class="col-lg-2 col-md-2 control-label" for="part-width">Height</label>
 
-            <div class="col-lg-10">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <div class="slider" data-option="offset"></div>
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="slider" data-option="height"></div>
+                        </div>
+                        <input id="part-height"
+                               class="input-sm col-lg-2 col-md-2 col-sm-2 col-xs-2" data-option="height"/>
+                    </div>
                 </div>
-                <input id="part-offset"
-                       class="input-sm col-lg-2 col-sm-2 col-2" data-option="offset"/>
-            </div>
-        </div>
-        <div class="form-group angle-delta">
-            <label class="col-lg-2 control-label" for="part-angle-delta">Angle+</label>
+                <div class="form-group grid">
+                    <label class="col-lg-2 col-md-2 control-label">Grid</label>
 
-            <div class="col-lg-10">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <div class="slider" data-option="angle_delta"></div>
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10">
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="9">
+                                    9
+                                </label>
+                            </div>
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="25">
+                                    25
+                                </label>
+                            </div>
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="49">
+                                    49
+                                </label>
+                            </div>
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="81">
+                                    81
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <input id="part-angle-delta"
-                       class="input-sm col-lg-2 col-sm-2 col-2" data-option="angle_delta"/>
-            </div>
-        </div>
-        <!--<div class="form-group color">
-            <label class="col-lg-2 control-label" for="color-of-obj">Color</label>
+                <div class="form-group count">
+                    <label class="col-lg-2 col-md-2 control-label" for="part-count">Count</label>
 
-            <div class="col-lg-10">
-                <div class="col-lg-10">
-                    <div class="input-append color" data-color-format="rgba">
-                        <input id="color-of-obj" class="colorpicker input-sm" type="text"
-                               value="<%= color %>">
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="slider" data-option="count"></div>
+                        </div>
+                        <input id="part-count"
+                               class="input-sm col-lg-2 col-md-2 col-sm-2 col-xs-2" data-option="count"/>
+                    </div>
+                </div>
+                <div class="form-group x">
+                    <label class="col-lg-2 col-md-2 control-label" for="part-x">X</label>
+
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="slider" data-option="x"></div>
+                        </div>
+                        <input id="part-x"
+                               class="input-sm col-lg-2 col-md-2 col-sm-2 col-xs-2" data-option="x"/>
+                    </div>
+                </div>
+                <div class="form-group y">
+                    <label class="col-lg-2 col-md-2 control-label" for="part-y">Y</label>
+
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="slider" data-option="y"></div>
+                        </div>
+                        <input id="part-y"
+                               class="input-sm col-lg-2 col-md-2 col-sm-2 col-xs-2" data-option="y"/>
+                    </div>
+                </div>
+                <div class="form-group placement">
+                    <label class="col-lg-2 col-md-2 control-label">Type</label>
+
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10">
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>"
+                                           value="random">
+                                    Random
+                                </label>
+                            </div>
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>"
+                                           value="circle">
+                                    Circle
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group radius">
+                    <label class="col-lg-2 col-md-2 control-label" for="part-radius">Radius</label>
+
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="slider" data-option="radius"></div>
+                        </div>
+                        <input id="part-radius"
+                               class="input-sm col-lg-2 col-md-2 col-sm-2 col-xs-2" data-option="radius"/>
+                    </div>
+                </div>
+                <div class="form-group offset">
+                    <label class="col-lg-2 col-md-2 control-label" for="part-offset">Offset</label>
+
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="slider" data-option="offset"></div>
+                        </div>
+                        <input id="part-offset"
+                               class="input-sm col-lg-2 col-md-2 col-sm-2 col-xs-2" data-option="offset"/>
+                    </div>
+                </div>
+                <div class="form-group angle-delta">
+                    <label class="col-lg-2 col-md-2 control-label" for="part-angle-delta">Angle+</label>
+
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="slider" data-option="angle_delta"></div>
+                        </div>
+                        <input id="part-angle-delta"
+                               class="input-sm col-lg-2 col-md-2 col-sm-2 col-xs-2" data-option="angle_delta"/>
+                    </div>
+                </div>
+                <!--<div class="form-group color">
+                    <label class="col-lg-2 col-md-2 control-label" for="color-of-obj">Color</label>
+
+                    <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-10 col-md-10">
+                            <div class="input-append color" data-color-format="rgba">
+                                <input id="color-of-obj" class="colorpicker input-sm" type="text"
+                                       value="<%= color %>">
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="form-group buttons">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="random btn btn-default btn-xs "><span
+                                class="glyphicon glyphicon-refresh"></span> Random changes
+                        </button>
+                        <button type="button" class="delete btn btn-danger btn-xs"><span
+                                class="glyphicon glyphicon-trash"></span> Delete
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>-->
-        <div class="form-group random-button">
-            <button type="button" class="random btn btn-default btn-xs pull-right"><span
-                    class="glyphicon glyphicon-refresh"></span> Random changes
-            </button>
         </div>
     </div>
     <!--overlay: null-->
