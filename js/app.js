@@ -9,8 +9,8 @@ var canvas;
 var Settings = Backbone.Model.extend({
     objects: null,
     default: {
-        count: 1,
-        placement: "random", //random, circle
+        count: 5,
+        placement: "circle", //one, random, circle
         angle: 0,
         color: "rgba(0, 0, 0, 0)",
         opacity: 1,
@@ -49,10 +49,10 @@ var Settings = Backbone.Model.extend({
         count: {
             min: 1,
             step: 1,
-            max: 40
+            max: 20
         },
         placement: {
-            values: ["random", "circle"]
+            values: ["one", "random", "circle"]
         },
         angle_delta: {
             min: 0,
@@ -86,7 +86,8 @@ var Settings = Backbone.Model.extend({
             r = w / h;
         this.set({width: Math.min(w, h * r), height: Math.min(h, w / r)});
         this.set(this.default);
-        this.bind("change", this.random_layout);
+        this.bind("change", this.circle_layout);
+        this.circle_layout();
         //this.count_changed();
         //this.circle_layout();
         //this.bind("change:count", this.count_changed);
@@ -140,6 +141,7 @@ var Settings = Backbone.Model.extend({
          */
     },
     circle_layout: function () {
+        console.log("Circle started");
         var count = this.get("count"),
             delta = 360 / count,
             offset = this.get("offset"),
@@ -152,11 +154,32 @@ var Settings = Backbone.Model.extend({
             grid = this.get("grid"),
             height = this.get("height"),
             width = this.get("width"),
-            img = this.get("img");
-        for (var i = 0; i < count; i++) {
-            var data = {
-                x: x + radius * Math.sin(offset + delta * i),
-                y: y + radius * Math.cos(offset + delta * i),
+            img = this.get("img"),
+            i;
+        /*
+         var data = {
+         x: x + radius * Math.sin(Math.PI * (offset + delta * 7) / 360),
+         y: y + radius * Math.cos(Math.PI * (offset + delta * 7) / 360),
+         angle: angle,
+         opacity: opacity,
+         grid: grid,
+         height: 100,
+         width: 100,
+         img: img
+         };
+         console.log(data);
+         if (this.objects.length > 0)
+         this.objects.at(0).set(data);
+         else
+         this.objects.add(data);
+         canvas.renderAll();
+         */
+
+        var data = [];
+        for (i = 0; i < count; i++)
+            data[i] = {
+                x: x + radius * Math.sin(Math.PI * (offset + delta * i) / 180),
+                y: y + radius * Math.cos(Math.PI * (offset + delta * i) / 180),
                 angle: angle + angle_delta * i,
                 opacity: opacity,
                 grid: grid,
@@ -164,8 +187,14 @@ var Settings = Backbone.Model.extend({
                 width: width,
                 img: img
             };
-            this.objects.at(i).set(data);
-        }
+        for (i = 0; i < this.objects.length; i++)
+            this.objects.at(i).set(data[i]).visible(true);
+        for (i = this.objects.length; i < count; i++)
+            this.objects.add(data[i]);
+        for (i = count; i < this.objects.length; i++)
+            this.objects.at(i).visible(false);
+
+        canvas.renderAll();
     },
     random_layout: function () {
         //this.count_changed();
@@ -181,7 +210,6 @@ var Settings = Backbone.Model.extend({
             x: x,
             y: y,
             angle: angle,
-            opacity: opacity,
             grid: grid,
             height: height,
             width: width,
@@ -233,58 +261,57 @@ var GridSettings = Backbone.Model.extend({ //must render grid
         //TODO:remove hardcoded value 81
         for (var i = 0; i < 81; i++)
             this.fabric_objects.add(this.attributes);
-        this.bind("change", this.calculate_grid);
+        this.grid_size();
+        this.grid_position();
+        //this.grid_position();
+        this.bind("change:grid", this.grid_size);
+        this.bind("change:grid change:x change:y", this.grid_position);
+        this.bind("change:grid change:width change:height change:angle change:opacity", this.params_change);
         this.bind("remove", this.remove);
-
-        //console.log("INIT GRIDSETTINGS COLLECTION");
-        //console.log(this.attributes);
-        this.calculate_grid();
-        //this.grid.add({});
-        //console.log("INIT GRIDSETTINGS COLLECTION", options.global_settings);
-        /*this.set("grid", options.global_settings.get("grid"));
-         this.set("x", options.global_settings.get("x"));
-         this.set("y", options.global_settings.get("y"));
-         this.set("angle", options.global_settings.get("angle"));
-         this.set("opacity", options.global_settings.get("opacity"));
-
-         console.log(this.attributes);
-         //settings.on("change", this.update());
-         for (var i = 0; i < this.get("grid"); i++)
-         this.grid.add({});*/
     },
-    calculate_grid: function () {
+    params_change: function () {
+        var data = {}, i, size = this.get("grid");
+        data.width = this.get("width");
+        data.height = this.get("height");
+        data.opacity = this.get("opacity");
+        data.angle = this.get("angle");
+        for (i = 0; i < size; i++)
+            this.fabric_objects.at(i).set(data);
+    },
+    grid_position: function () {
         var g = this.get("grid"),
             x = this.get("x"),
             y = this.get("y"),
             len = Math.sqrt(g),
             step_x = canvas.getWidth() / ((len - 1) / 2),
-            step_y = canvas.getHeight() / ((len - 1) / 2);
-
-
-        var i;
-        for (i = 0; i < g; i++)
-            this.fabric_objects.at(i).set("show", true);
-
-        for (i = g; i < this.fabric_objects.length; i++)
-            this.fabric_objects.at(i).set("show", false);
-
+            step_y = canvas.getHeight() / ((len - 1) / 2), i;
         for (i = 0; i < len; i++)
-            for (var j = 0; j < len; j++) {
-                this.fabric_objects.at(i * len + j).set(this.attributes, {ignore: true});
+            for (var j = 0; j < len; j++)
                 this.fabric_objects.at(i * len + j).set({
                     x: x - canvas.getWidth() + j * step_x,
                     y: y - canvas.getHeight() + i * step_y
                 });
-            }
+    },
+    grid_size: function () {
+        var g = this.get("grid"), i;
+        for (i = 0; i < g; i++)
+            this.fabric_objects.at(i).set({show: true});
+        for (i = g; i < this.fabric_objects.length; i++)
+            this.fabric_objects.at(i).set({show: false});
+    },
+    visible: function (isVisible) {
+        var g = this.get("grid"), i;
+        for (i = 0; i < g; i++)
+            this.fabric_objects.at(i).set({show: isVisible});
     },
     remove: function () {
         //while (this.fabric_objects.length)
         //    this.fabric_objects.remove(this.fabric_objects.at(0));
-        console.log(this.fabric_objects.length);
+        //console.log(this.fabric_objects.length);
         for (i = 0; i < this.fabric_objects.length; i++)
             this.fabric_objects.at(i).remove();
         this.fabric_objects.reset();
-        console.log(this.fabric_objects.length);
+        //console.log(this.fabric_objects.length);
     }
 });
 
@@ -294,21 +321,14 @@ var FabricObject = Backbone.Model.extend({ //must render grid
         show: false
     },
     initialize: function () {
-        this._fabric = new fabric.Image(this.get("img"));
-        this._fabric.set("visible", false);
-        this.add();
+        this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show")});
+        canvas.add(this._fabric);
         this.bind("change", this.render);
         this.bind("change:show", this.show);
         this.bind("remove reset", this.remove);
     },
     show: function () {
-        if (this.get("show"))
-            this._fabric.set("visible", true);
-        else
-            this._fabric.set("visible", false);
-    },
-    add: function () {
-        canvas.add(this._fabric);
+        this._fabric.set("visible", this.get("show"));
     },
     render: function () {
         this._fabric.set({
@@ -357,24 +377,31 @@ var SettingsView = Backbone.View.extend({
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
         this.model.on("change", this.change_settings_order, this);
-        var isCircle = this.$el.find('.placement input:checked').val() == "circle";
-        var isRandom = this.$el.find('.placement input:checked').val() == "random";
-        var isOneItem = this.$el.find('.count input').val() == 1;
-        if (isCircle || isOneItem) {
-            this.$el.find('.form-group.x').show();
-            this.$el.find('.form-group.y').show();
-        } else {
-            this.$el.find('.form-group.x').hide();
-            this.$el.find('.form-group.y').hide();
-        }
-        if (isCircle) {
-            this.$el.find('.form-group.offset').show();
-            this.$el.find('.form-group.angle-delta').show();
-            this.$el.find('.form-group.radius').show();
-        } else if (isRandom) {
-            this.$el.find('.form-group.offset').hide();
-            this.$el.find('.form-group.angle-delta').hide();
-            this.$el.find('.form-group.radius').hide();
+        switch (this.$el.find('.placement input:checked').val()) {
+            case "one":
+                this.$el.find('.form-group.x').show();
+                this.$el.find('.form-group.y').show();
+                this.$el.find('.form-group.count').hide();
+                this.$el.find('.form-group.offset').hide();
+                this.$el.find('.form-group.angle-delta').hide();
+                this.$el.find('.form-group.radius').hide();
+                break;
+            case "random":
+                this.$el.find('.form-group.x').hide();
+                this.$el.find('.form-group.y').hide();
+                this.$el.find('.form-group.count').show();
+                this.$el.find('.form-group.offset').hide();
+                this.$el.find('.form-group.angle-delta').hide();
+                this.$el.find('.form-group.radius').hide();
+                break;
+            case "circle":
+                this.$el.find('.form-group.x').show();
+                this.$el.find('.form-group.y').show();
+                this.$el.find('.form-group.count').show();
+                this.$el.find('.form-group.offset').show();
+                this.$el.find('.form-group.angle-delta').show();
+                this.$el.find('.form-group.radius').show();
+                break;
         }
 
         this.setup_allowed_keys();
@@ -393,25 +420,31 @@ var SettingsView = Backbone.View.extend({
         return this;
     },
     change_settings_order: function () {
-        var isCircle = this.$el.find('.placement input:checked').val() == "circle";
-        var isRandom = this.$el.find('.placement input:checked').val() == "random";
-        var isOneItem = this.$el.find('.count input').val() == 1;
-        if (isCircle || isOneItem) {
-            this.$el.find('.form-group.x').slideDown(ANIM_TIME);
-            this.$el.find('.form-group.y').slideDown(ANIM_TIME);
-        } else {
-            this.$el.find('.form-group.x').slideUp(ANIM_TIME);
-            this.$el.find('.form-group.y').slideUp(ANIM_TIME);
-        }
-
-        if (isCircle) {
-            this.$el.find('.form-group.offset').slideDown(ANIM_TIME);
-            this.$el.find('.form-group.angle-delta').slideDown(ANIM_TIME);
-            this.$el.find('.form-group.radius').slideDown(ANIM_TIME);
-        } else if (isRandom) {
-            this.$el.find('.form-group.offset').slideUp(ANIM_TIME);
-            this.$el.find('.form-group.angle-delta').slideUp(ANIM_TIME);
-            this.$el.find('.form-group.radius').slideUp(ANIM_TIME);
+        switch (this.$el.find('.placement input:checked').val()) {
+            case "one":
+                this.$el.find('.form-group.x').slideDown(ANIM_TIME);
+                this.$el.find('.form-group.y').slideDown(ANIM_TIME);
+                this.$el.find('.form-group.count').slideUp(ANIM_TIME);
+                this.$el.find('.form-group.offset').slideUp(ANIM_TIME);
+                this.$el.find('.form-group.angle-delta').slideUp(ANIM_TIME);
+                this.$el.find('.form-group.radius').slideUp(ANIM_TIME);
+                break;
+            case "random":
+                this.$el.find('.form-group.x').slideUp(ANIM_TIME);
+                this.$el.find('.form-group.y').slideUp(ANIM_TIME);
+                this.$el.find('.form-group.count').slideDown(ANIM_TIME);
+                this.$el.find('.form-group.offset').slideUp(ANIM_TIME);
+                this.$el.find('.form-group.angle-delta').slideUp(ANIM_TIME);
+                this.$el.find('.form-group.radius').slideUp(ANIM_TIME);
+                break;
+            case "circle":
+                this.$el.find('.form-group.x').slideDown(ANIM_TIME);
+                this.$el.find('.form-group.y').slideDown(ANIM_TIME);
+                this.$el.find('.form-group.count').slideDown(ANIM_TIME);
+                this.$el.find('.form-group.offset').slideDown(ANIM_TIME);
+                this.$el.find('.form-group.angle-delta').slideDown(ANIM_TIME);
+                this.$el.find('.form-group.radius').slideDown(ANIM_TIME);
+                break;
         }
     },
     place: function () {
