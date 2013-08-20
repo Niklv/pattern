@@ -75,6 +75,9 @@ var Settings = Backbone.Model.extend({
     },
     initialize: function () {
         this.set_range();
+        _.each(this.layout, function (v, k) {
+            this.layout[k] = _.bind(v, this);
+        }, this);
         this.objects = new Backbone.Collection([], {model: GridSettings});
         //this.bind("change", this.update);
         this.set({id: _.random(0, 1000000)});
@@ -86,8 +89,12 @@ var Settings = Backbone.Model.extend({
             r = w / h;
         this.set({width: Math.min(w, h * r), height: Math.min(h, w / r)});
         this.set(this.default);
-        this.bind("change", this.circle_layout);
-        this.circle_layout();
+        this.bind("change", this.layout[this.get("placement")]);
+        this.bind("all", function (e) {
+            console.log(e, this);
+        });
+        this.layout[this.get("placement")]();
+        //this.circle_layout();
         //this.count_changed();
         //this.circle_layout();
         //this.bind("change:count", this.count_changed);
@@ -119,110 +126,72 @@ var Settings = Backbone.Model.extend({
         //this.update();
         //canvas.add(this.fabric_obj);
     },
-    count_changed: function (init_with_this_data) {
-        console.log(this.objects.length, this.get("count"));
-        while (this.objects.length > this.get("count"))
-            this.objects.remove(this.objects.last());
+    change_layout: function () {
 
-        while (this.objects.length < this.get("count"))
-            this.objects.add(init_with_this_data);
     },
-    layout_changed: function () {
-        console.log("layout changed");
-        //console.log(arguments);
-        //var count = this.get("count");
-
-        /*while (this.objects.length > this.get("count")) {
-         this.objects.pop();
-         }
-
-         while (this.objects.length > this.get("count"))
-         this.objects.add(new GridSettings(this));
-         */
-    },
-    circle_layout: function () {
-        console.log("Circle started");
-        var count = this.get("count"),
-            delta = 360 / count,
-            offset = this.get("offset"),
-            radius = this.get("radius"),
-            x = this.get("x"),
-            y = this.get("y"),
-            angle = this.get("angle"),
-            angle_delta = this.get("angle_delta"),
-            opacity = this.get("opacity"),
-            grid = this.get("grid"),
-            height = this.get("height"),
-            width = this.get("width"),
-            img = this.get("img"),
-            i;
-        /*
-         var data = {
-         x: x + radius * Math.sin(Math.PI * (offset + delta * 7) / 360),
-         y: y + radius * Math.cos(Math.PI * (offset + delta * 7) / 360),
-         angle: angle,
-         opacity: opacity,
-         grid: grid,
-         height: 100,
-         width: 100,
-         img: img
-         };
-         console.log(data);
-         if (this.objects.length > 0)
-         this.objects.at(0).set(data);
-         else
-         this.objects.add(data);
-         canvas.renderAll();
-         */
-
-        var data = [];
-        for (i = 0; i < count; i++)
-            data[i] = {
-                x: x + radius * Math.sin(Math.PI * (offset + delta * i) / 180),
-                y: y + radius * Math.cos(Math.PI * (offset + delta * i) / 180),
-                angle: angle + angle_delta * i,
-                opacity: opacity,
+    layout: {
+        one: function () {
+            var x = this.get("x"),
+                y = this.get("y"),
+                angle = this.get("angle"),
+                opacity = this.get("opacity"),
+                grid = this.get("grid"),
+                height = this.get("height"),
+                width = this.get("width"),
+                img = this.get("img");
+            var data = {
+                x: x,
+                y: y,
+                angle: angle,
                 grid: grid,
                 height: height,
                 width: width,
                 img: img
             };
-        for (i = 0; i < this.objects.length; i++)
-            this.objects.at(i).set(data[i]).visible(true);
-        for (i = this.objects.length; i < count; i++)
-            this.objects.add(data[i]);
-        for (i = count; i < this.objects.length; i++)
-            this.objects.at(i).visible(false);
+            if (this.objects.length > 0)
+                this.objects.at(0).set(data);
+            else
+                this.objects.add(data);
+            canvas.renderAll();
+        },
+        random: function () {
 
-        canvas.renderAll();
-    },
-    random_layout: function () {
-        //this.count_changed();
-        var x = this.get("x"),
-            y = this.get("y"),
-            angle = this.get("angle"),
-            opacity = this.get("opacity"),
-            grid = this.get("grid"),
-            height = this.get("height"),
-            width = this.get("width"),
-            img = this.get("img");
-        var data = {
-            x: x,
-            y: y,
-            angle: angle,
-            grid: grid,
-            height: height,
-            width: width,
-            img: img
-        };
-        if (this.objects.length > 0)
-            this.objects.at(0).set(data);
-        else
-            this.objects.add(data);
-        canvas.renderAll();
-    },
-    change_options: function () {
-        //this.circle_layout();
+        },
+        circle: function () {
+            var count = this.get("count"),
+                delta = 360 / count,
+                offset = this.get("offset"),
+                radius = this.get("radius"),
+                x = this.get("x"),
+                y = this.get("y"),
+                angle = this.get("angle"),
+                angle_delta = this.get("angle_delta"),
+                opacity = this.get("opacity"),
+                grid = this.get("grid"),
+                height = this.get("height"),
+                width = this.get("width"),
+                img = this.get("img"),
+                i, data = [];
+            for (i = 0; i < count; i++)
+                data[i] = {
+                    x: x + radius * Math.sin(Math.PI * (offset + delta * i) / 180),
+                    y: y + radius * Math.cos(Math.PI * (offset + delta * i) / 180),
+                    angle: angle + angle_delta * i,
+                    opacity: opacity,
+                    grid: grid,
+                    height: height,
+                    width: width,
+                    img: img
+                };
+            for (i = 0; i < this.objects.length; i++)
+                this.objects.at(i).set(data[i]).visible(true);
+            for (i = this.objects.length; i < count; i++)
+                this.objects.add(data[i]);
+            for (i = count; i < this.objects.length; i++)
+                this.objects.at(i).visible(false);
+
+            canvas.renderAll();
+        }
     },
     update: function () {
         /*this.fabric_obj.set({
@@ -240,10 +209,17 @@ var Settings = Backbone.Model.extend({
         console.log("RANDOMIZE!");
     },
     remove: function () {
-        for (var i = 0; i < this.objects.length; i++)
-            this.objects.at(i).remove();
-        this.objects.reset();
+        console.log("delete");
+        //console.log(canvas._objects);
+        canvas._objects = [];
         canvas.renderAll();
+        //canvas.forEachObject(function (o) {
+        //    o.remove();
+        //}, this);
+        /*for (var i = 0; i < this.objects.length; i++)
+         this.objects.at(i).remove();
+         this.objects.reset();
+         canvas.renderAll();*/
     }
 });
 
@@ -361,6 +337,8 @@ var SettingsCollection = Backbone.Collection.extend({
     },
     remove_model: function (model) {
         model.remove();
+        for (var i = 0; i < this.lenght; i++)
+            this.at(i).trigger("changed")
     }
 });
 
