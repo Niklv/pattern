@@ -210,7 +210,6 @@ var Settings = Backbone.Model.extend({
     },
     randomize: function () {
         console.log("RANDOMIZE!");
-        this.objects.at(0).group_test();
     },
     remove: function () {
         for (var i = 0; i < this.objects.length; i++)
@@ -277,19 +276,6 @@ var GridSettings = Backbone.Model.extend({ //must render grid
                     y: y - canvas.getHeight() + i * step_y
                 });
             }
-    },
-    group_test: function () {
-        console.log("GROUP RENDER TEST");
-        var arr = [];
-        for (var i = 0; i < this.fabric_objects.length; i++)
-            arr[i] = this.fabric_objects.at(i)._fabric;
-        var g = new fabric.Group(arr);
-        var start_time = new Date();
-        var t = g.cloneAsImage(function (e) {
-            console.log(new Date() - start_time);
-            //console.log(e._element.src);
-        });
-
     },
     remove: function () {
         //while (this.fabric_objects.length)
