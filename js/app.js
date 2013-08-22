@@ -110,13 +110,25 @@ var Settings = Backbone.Model.extend({
         this.range.radius.max = Math.min(canvas.getHeight(), canvas.getWidth()) * 2;
     },
     change_layout: function () {
+        var i;
         this.layout = this.layouts[this.get("placement")];
         //specific preparations
         switch (this.get("placement")) {
             case "one":
                 this.objects.at(0).visible(true);
-                for (var i = 1; i < this.objects.length; i++)
+                for (i = 1; i < this.objects.length; i++)
                     this.objects.at(i).visible(false);
+                break;
+            case "random":
+                var data = [], r = this.range;
+                for (i = 0; i < this.objects.length; i++)
+                    data[i] = {
+                        x: _.random(r.x.min, r.x.max),
+                        y: _.random(r.y.min, r.y.max),
+                        angle: _.random(r.angle.min, r.angle.max)
+                    };
+                for (i = 0; i < this.objects.length; i++)
+                    this.objects.at(i).set(data[i]);
                 break;
         }
         this.unbind("change");
@@ -130,8 +142,7 @@ var Settings = Backbone.Model.extend({
                 opacity = this.get("opacity"),
                 grid = this.get("grid"),
                 height = this.get("height"),
-                width = this.get("width"),
-                img = this.get("img");
+                width = this.get("width");
             var data = {
                 x: x,
                 y: y,
@@ -139,34 +150,25 @@ var Settings = Backbone.Model.extend({
                 opacity: opacity,
                 grid: grid,
                 height: height,
-                width: width,
-                img: img
+                width: width
             };
             this.objects.at(0).set(data);
             canvas.renderAll();
         },
         random: function () {
             var count = this.get("count"),
-                angle = this.get("angle"),
                 opacity = this.get("opacity"),
                 grid = this.get("grid"),
                 height = this.get("height"),
                 width = this.get("width"),
-                x = this.get("x"),
-                y = this.get("y"),
-                img = this.get("img"),
                 i, data = [];
             var r = this.range;
             for (i = 0; i < count; i++)
                 data[i] = {
-                    x: _.random(r.x.min, r.x.max),
-                    y: _.random(r.y.min, r.y.max),
-                    angle: _.random(r.angle.min, r.angle.max),
                     opacity: opacity,
                     grid: grid,
                     height: height,
-                    width: width,
-                    img: img
+                    width: width
                 };
             for (i = 0; i < this.objects.length; i++)
                 this.objects.at(i).set(data[i]).visible(true);
@@ -188,7 +190,6 @@ var Settings = Backbone.Model.extend({
                 grid = this.get("grid"),
                 height = this.get("height"),
                 width = this.get("width"),
-                img = this.get("img"),
                 i, data = [];
             for (i = 0; i < count; i++)
                 data[i] = {
@@ -198,8 +199,7 @@ var Settings = Backbone.Model.extend({
                     opacity: opacity,
                     grid: grid,
                     height: height,
-                    width: width,
-                    img: img
+                    width: width
                 };
             for (i = 0; i < this.objects.length; i++)
                 this.objects.at(i).set(data[i]).visible(true);
@@ -210,7 +210,17 @@ var Settings = Backbone.Model.extend({
         }
     },
     randomize: function () {
-        console.log("RANDOMIZE!");
+        var r = this.range;
+        this.set("count", _.random(r.count.min, r.count.max));
+        this.set("placement", r.placement.values[_.random(0, r.placement.values.length-1)]);
+        this.set("angle", _.random(r.angle.min, r.angle.max));
+        this.set("opacity", _.random(r.opacity.min / r.opacity.step, r.angle.max / r.opacity.step) * r.opacity.step);
+        this.set("angle_delta", _.random(r.angle_delta.min, r.angle_delta.max));
+        this.set("offset", _.random(r.offset.min, r.offset.max));
+        this.set("grid", r.grid.values[_.random(0, r.grid.values.length-1)]);
+        this.set("x", _.random(r.x.min, r.x.max));
+        this.set("y", _.random(r.y.min, r.y.max));
+        this.set("radius", _.random(r.radius.min, r.radius.max));
     },
     reinitialize: function () {
         for (var i = 0; i < this.objects.length; i++)
@@ -520,8 +530,9 @@ var SettingsView = Backbone.View.extend({
             slider.slider("value", value);
         this.save(slider.attr("data-option"));
     },
-    generate_random_layout: function(){
-        this.model.layout();
+    generate_random_layout: function () {
+        this.model.change_layout();
+        canvas.renderAll();
     },
     random: function () {
         this.model.randomize();
