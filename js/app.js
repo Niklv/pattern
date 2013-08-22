@@ -75,42 +75,18 @@ var Settings = Backbone.Model.extend({
     },
     initialize: function () {
         this.set_range();
-        _.each(this.layout, function (v, k) {
-            this.layout[k] = _.bind(v, this);
-        }, this);
         this.objects = new Backbone.Collection([], {model: GridSettings});
-        //this.bind("change", this.update);
         this.set({id: _.random(0, 1000000)});
-
         /*ratio height witdh init*/
-        //TODO: find bug with get width and height
         var w = Math.min(this.get("img").width, this.range.width.max),
             h = Math.min(this.get("img").height, this.range.height.max),
             r = w / h;
         this.set({width: Math.min(w, h * r), height: Math.min(h, w / r)});
         this.set(this.default);
-        this.bind("change", this.layout[this.get("placement")]);
-        this.bind("all", function (e) {
-            console.log(e, this);
-        });
-        this.layout[this.get("placement")]();
-        //this.circle_layout();
-        //this.count_changed();
-        //this.circle_layout();
-        //this.bind("change:count", this.count_changed);
-        //this.bind("change:placement", this.layout_changed);
-        /*this.bind("change:angle " +
-         "change:color " +
-         "change:opacity " +
-         "change:overlay  " +
-         "change:angle_delta " +
-         "change:offset " +
-         "change:grid " +
-         "change:x " +
-         "change:y " +
-         "change:width " +
-         "change:height " +
-         "change:radius", this.change_options); */
+        this.change_layout();
+        this.layout();
+        this.bind("change", this.layout);
+        this.bind("change:placement", this.change_layout);
     },
     set_range: function () {
         this.range.width.max = canvas.getWidth() * 2;
@@ -121,15 +97,12 @@ var Settings = Backbone.Model.extend({
         this.range.y.min = -Math.round(canvas.getHeight() / 2);
         this.range.radius.max = Math.min(canvas.getHeight(), canvas.getWidth()) * 2;
     },
-    fabric: function () {
-        //this.fabric_obj = new fabric.Image(this.get("img"));
-        //this.update();
-        //canvas.add(this.fabric_obj);
-    },
     change_layout: function () {
-
+        this.layout = this.layouts[this.get("placement")];
+        this.unbind("change");
+        this.bind("change", this.layouts[this.get("placement")]);
     },
-    layout: {
+    layouts: {
         one: function () {
             var x = this.get("x"),
                 y = this.get("y"),
@@ -143,15 +116,18 @@ var Settings = Backbone.Model.extend({
                 x: x,
                 y: y,
                 angle: angle,
+                opacity: opacity,
                 grid: grid,
                 height: height,
                 width: width,
                 img: img
             };
             if (this.objects.length > 0)
-                this.objects.at(0).set(data);
+                this.objects.at(0).set(data).visible(true);
             else
                 this.objects.add(data);
+            for (var i = 1; i < this.objects.length; i++)
+                this.objects.at(i).visible(false);
             canvas.renderAll();
         },
         random: function () {
@@ -192,18 +168,6 @@ var Settings = Backbone.Model.extend({
 
             canvas.renderAll();
         }
-    },
-    update: function () {
-        /*this.fabric_obj.set({
-         left: canvas.getWidth() / 2 + canvas.getWidth() * this.get("x") / 100,
-         top: canvas.getHeight() / 2 + canvas.getHeight() * this.get("y") / 100,
-         width: this.get("width"),
-         height: this.get("height"),
-         angle: this.get("angle"),
-         opacity: this.get("opacity")
-         });
-         this.fabric_clones.update();
-         canvas.renderAll();*/
     },
     randomize: function () {
         console.log("RANDOMIZE!");
@@ -333,7 +297,6 @@ var SettingsCollection = Backbone.Collection.extend({
     add_model: function (model) {
         var view = new SettingsView({model: model});
         view.render().place().init_controls();
-        model.fabric();
     },
     remove_model: function (model) {
         model.remove();
@@ -354,7 +317,7 @@ var SettingsView = Backbone.View.extend({
         this.$el.find('.colorpicker').colorpicker({format: "rgba"});
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
-        this.model.on("change", this.change_settings_order, this);
+        //this.model.on("change", this.change_settings_order, this);
         switch (this.$el.find('.placement input:checked').val()) {
             case "one":
                 this.$el.find('.form-group.x').show();
@@ -442,6 +405,7 @@ var SettingsView = Backbone.View.extend({
     events: {
         "click button.delete": "remove",
         "change input[type=radio]": "radio_changed",
+        "change input.placement-of-obj": "change_settings_order",
         "changeColor input.colorpicker": "color_changed",
         "click button.random": "random",
         "slide .slider": "onslide",
@@ -578,19 +542,9 @@ function handle_image(e) {
     reader.onload = function (event) {
         var imgObj = new Image();
         imgObj.src = event.target.result;
-        parts.add({type: "img", img: imgObj});
-        /*
-         imgObj.onload = function () {
-         var image = new fabric.Image(imgObj);
-         image.set({
-         left: 250,
-         top: 250,
-         angle: 20,
-         padding: 10,
-         cornersize: 10
-         });
-         canvas.add(image);
-         };*/
+        imgObj.onload = function () {
+            parts.add({type: "img", img: imgObj});
+        };
         $(e.target).val("");
     };
     reader.readAsDataURL(e.target.files[0]);
