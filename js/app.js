@@ -210,17 +210,18 @@ var Settings = Backbone.Model.extend({
         }
     },
     randomize: function () {
-        var r = this.range;
-        this.set("count", _.random(r.count.min, r.count.max));
-        this.set("placement", r.placement.values[_.random(0, r.placement.values.length-1)]);
-        this.set("angle", _.random(r.angle.min, r.angle.max));
-        this.set("opacity", _.random(r.opacity.min / r.opacity.step, r.angle.max / r.opacity.step) * r.opacity.step);
-        this.set("angle_delta", _.random(r.angle_delta.min, r.angle_delta.max));
-        this.set("offset", _.random(r.offset.min, r.offset.max));
-        this.set("grid", r.grid.values[_.random(0, r.grid.values.length-1)]);
-        this.set("x", _.random(r.x.min, r.x.max));
-        this.set("y", _.random(r.y.min, r.y.max));
-        this.set("radius", _.random(r.radius.min, r.radius.max));
+        var r = this.range, data = {};
+        data.count = _.random(r.count.min, r.count.max);
+        data.placement = r.placement.values[_.random(0, r.placement.values.length - 1)];
+        data.angle = _.random(r.angle.min, r.angle.max);
+        data.opacity = _.random(r.opacity.min / r.opacity.step, r.angle.max / r.opacity.step) * r.opacity.step;
+        data.angle_delta = _.random(r.angle_delta.min, r.angle_delta.max);
+        data.offset = _.random(r.offset.min, r.offset.max);
+        data.grid = r.grid.values[_.random(0, r.grid.values.length - 1)];
+        data.x = _.random(r.x.min, r.x.max);
+        data.y = _.random(r.y.min, r.y.max);
+        data.radius = _.random(r.radius.min, r.radius.max);
+        this.set(data);
     },
     reinitialize: function () {
         for (var i = 0; i < this.objects.length; i++)
