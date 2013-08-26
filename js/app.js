@@ -136,6 +136,7 @@ var Settings = Backbone.Model.extend({
     },
     layouts: {
         one: function () {
+            console.log("one");
             var x = this.get("x"),
                 y = this.get("y"),
                 angle = this.get("angle"),
@@ -153,9 +154,11 @@ var Settings = Backbone.Model.extend({
                 width: width
             };
             this.objects.at(0).set(data);
-            canvas.renderAll();
+            //canvas.renderAll();
+            $('body').css('background-image', 'url(' + canvas.toDataURL({format: "png", quality: 1}) + ')');
         },
         random: function () {
+            console.log("random");
             var count = this.get("count"),
                 opacity = this.get("opacity"),
                 grid = this.get("grid"),
@@ -174,10 +177,11 @@ var Settings = Backbone.Model.extend({
                 this.objects.at(i).set(data[i]).visible(true);
             for (i = count; i < this.objects.length; i++)
                 this.objects.at(i).visible(false);
-
-            canvas.renderAll();
+            //canvas.renderAll();
+            $('body').css('background-image', 'url(' + canvas.toDataURL({format: "png", quality: 1}) + ')');
         },
         circle: function () {
+            console.log("circle");
             var count = this.get("count"),
                 delta = 360 / count,
                 offset = this.get("offset"),
@@ -206,7 +210,8 @@ var Settings = Backbone.Model.extend({
             for (i = count; i < this.objects.length; i++)
                 this.objects.at(i).visible(false);
 
-            canvas.renderAll();
+            //canvas.renderAll();
+            $('body').css('background-image', 'url(' + canvas.toDataURL({format: "png", quality: 1}) + ')');
         }
     },
     randomize: function () {
@@ -214,14 +219,18 @@ var Settings = Backbone.Model.extend({
         data.count = _.random(r.count.min, r.count.max);
         data.placement = r.placement.values[_.random(0, r.placement.values.length - 1)];
         data.angle = _.random(r.angle.min, r.angle.max);
-        data.opacity = _.random(r.opacity.min / r.opacity.step, r.angle.max / r.opacity.step) * r.opacity.step;
+        data.opacity = _.random(r.opacity.min / r.opacity.step, r.opacity.max / r.opacity.step) * r.opacity.step;
         data.angle_delta = _.random(r.angle_delta.min, r.angle_delta.max);
         data.offset = _.random(r.offset.min, r.offset.max);
         data.grid = r.grid.values[_.random(0, r.grid.values.length - 1)];
+        data.width = _.random(r.width.min, r.width.max);
+        data.height = _.random(r.height.min, r.height.max);
         data.x = _.random(r.x.min, r.x.max);
         data.y = _.random(r.y.min, r.y.max);
         data.radius = _.random(r.radius.min, r.radius.max);
-        this.set(data);
+        this.set(data, {silent: true});
+        this.change_layout();
+        this.layout();
     },
     reinitialize: function () {
         for (var i = 0; i < this.objects.length; i++)
@@ -441,12 +450,9 @@ var SettingsView = Backbone.View.extend({
         }
     },
     place: function () {
-        var last = $('.control-panel > .row.pattern-part').last();
+        //var last = $('.control-panel > .row.pattern-part').last();
         this.$el.hide();
-        if (last.length > 0)
-            last.after(this.$el);
-        else
-            $('.control-panel > .row:first-child').after(this.$el);
+        $('.control-panel > .row:first-child').after(this.$el);
         this.$el.slideDown(ANIM_TIME);
         return this;
     },
@@ -536,7 +542,34 @@ var SettingsView = Backbone.View.extend({
         canvas.renderAll();
     },
     random: function () {
+        this.$el.find("button.random").attr("disabled", true);
         this.model.randomize();
+        var v = this.model.attributes;
+        this.$el.find('.form-group.angle .slider').slider("option", "value", v.angle);
+        this.$el.find('.form-group.angle input').val(v.angle);
+        this.$el.find('.form-group.opacity .slider').slider("option", "value", v.opacity);
+        this.$el.find('.form-group.opacity input').val(v.opacity);
+        this.$el.find('.form-group.width .slider').slider("option", "value", v.width);
+        this.$el.find('.form-group.width input').val(v.width);
+        this.$el.find('.form-group.height .slider').slider("option", "value", v.height);
+        this.$el.find('.form-group.height input').val(v.height);
+        this.$el.find('.form-group.count .slider').slider("option", "value", v.count);
+        this.$el.find('.form-group.count input').val(v.count);
+        this.$el.find('.form-group.x .slider').slider("option", "value", v.x);
+        this.$el.find('.form-group.x input').val(v.x);
+        this.$el.find('.form-group.y .slider').slider("option", "value", v.y);
+        this.$el.find('.form-group.y input').val(v.y);
+        this.$el.find('.form-group.radius .slider').slider("option", "value", v.radius);
+        this.$el.find('.form-group.radius input').val(v.radius);
+        this.$el.find('.form-group.offset .slider').slider("option", "value", v.offset);
+        this.$el.find('.form-group.offset input').val(v.offset);
+        this.$el.find('.form-group.angle-delta .slider').slider("option", "value", v.angle_delta);
+        this.$el.find('.form-group.angle-delta input').val(v.angle_delta);
+        this.$el.find('.form-group.placement input[value=' + v.placement + ']').prop('checked', true);
+        this.$el.find('.form-group.grid input[value=' + v.grid + ']').prop('checked', true);
+        this.change_settings_order();
+        //  canvas.renderAll();
+        this.$el.find("button.random").attr("disabled", false);
     },
     onslide: function (e, o) {
         $(e.target).parent().parent().find("input").val(o.value);
@@ -575,6 +608,10 @@ function init() {
     $('#render.btn').click(render);
     $('#file-uploader').change(handle_image);
     init_canvas();
+    var off = $('canvas').offset();
+    console.log(off);
+    $('body').css('background-position-x', off.left);
+    $('body').css('background-position-y', off.top);
 }
 
 function init_canvas() {
@@ -583,6 +620,9 @@ function init_canvas() {
     canvas.setHeight(CANVAS_HEIGHT);
     canvas.setBackgroundColor("#FFF");
     canvas.renderOnAddition = false;
+    /*canvas.on("after:render", function () {
+     console.log();
+     });*/
     //canvas.renderAll = _.debounce(canvas.renderAll, 1);
 }
 
