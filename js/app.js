@@ -155,7 +155,7 @@ var Settings = Backbone.Model.extend({
             };
             this.objects.at(0).set(data);
             //canvas.renderAll();
-            $('body').css('background-image', 'url(' + canvas.toDataURL({format: "png", quality: 1}) + ')');
+            update_canvas();
         },
         random: function () {
             console.log("random");
@@ -165,7 +165,6 @@ var Settings = Backbone.Model.extend({
                 height = this.get("height"),
                 width = this.get("width"),
                 i, data = [];
-            var r = this.range;
             for (i = 0; i < count; i++)
                 data[i] = {
                     opacity: opacity,
@@ -178,7 +177,8 @@ var Settings = Backbone.Model.extend({
             for (i = count; i < this.objects.length; i++)
                 this.objects.at(i).visible(false);
             //canvas.renderAll();
-            $('body').css('background-image', 'url(' + canvas.toDataURL({format: "png", quality: 1}) + ')');
+            update_canvas();
+
         },
         circle: function () {
             console.log("circle");
@@ -211,7 +211,7 @@ var Settings = Backbone.Model.extend({
                 this.objects.at(i).visible(false);
 
             //canvas.renderAll();
-            $('body').css('background-image', 'url(' + canvas.toDataURL({format: "png", quality: 1}) + ')');
+            update_canvas();
         }
     },
     randomize: function () {
@@ -316,10 +316,13 @@ var FabricObject = Backbone.Model.extend({ //must render grid
         canvas.add(this._fabric);
     },
     show: function () {
+        //TODO: strange optimization think about it
+        /*
         if (this.get("show") && this._fabric.intersectsWithRect(new fabric.Point(0, 0), new fabric.Point(canvas.width, canvas.height)))
             this._fabric.set("visible", this.get("show"));
         else
-            this._fabric.set("visible", false);
+            this._fabric.set("visible", false);*/
+        this._fabric.set("visible", this.get("show"));
     },
     render: function () {
         this._fabric.set({
@@ -350,7 +353,7 @@ var SettingsCollection = Backbone.Collection.extend({
         canvas._objects = [];
         for (var i = 0; i < this.length; i++)
             this.at(i).trigger("reinitialize");
-        canvas.renderAll();
+        update_canvas();
 
     }
 });
@@ -539,7 +542,7 @@ var SettingsView = Backbone.View.extend({
     },
     generate_random_layout: function () {
         this.model.change_layout();
-        canvas.renderAll();
+        update_canvas();
     },
     random: function () {
         this.$el.find("button.random").attr("disabled", true);
@@ -605,7 +608,8 @@ var SettingsView = Backbone.View.extend({
 function init() {
     console.log("init app and controls");
     $('#upload.btn').click(upload);
-    $('#render.btn').click(render);
+    $('button.upload-file').click(upload_file);
+    $('button.upload-buffer').click(upload_buffer);
     $('#file-uploader').change(handle_image);
     init_canvas();
     var off = $('canvas').offset();
@@ -620,14 +624,23 @@ function init_canvas() {
     canvas.setHeight(CANVAS_HEIGHT);
     canvas.setBackgroundColor("#FFF");
     canvas.renderOnAddition = false;
-    /*canvas.on("after:render", function () {
-     console.log();
-     });*/
-    //canvas.renderAll = _.debounce(canvas.renderAll, 1);
+}
+
+function update_canvas(){
+    //canvas.renderAll(false);
+    $('body').css('background-image', 'url(' + canvas.toDataURL({format: "png", quality: 1}) + ')');
 }
 
 function upload() {
     $('#file-uploader').click();
+}
+
+function upload_file() {
+    $('#file-uploader').click();
+}
+
+function upload_buffer() {
+    $('.input-for-paste-link').slideToggle(ANIM_TIME);
 }
 
 function handle_image(e) {
@@ -637,6 +650,7 @@ function handle_image(e) {
         imgObj.src = event.target.result;
         imgObj.onload = function () {
             parts.add({type: "img", img: imgObj});
+            $('#source_chooser').modal('hide');
         };
         $(e.target).val("");
     };
@@ -645,10 +659,6 @@ function handle_image(e) {
 
 function isInt(n) {
     return n % 1 === 0;
-}
-
-function render() {
-    canvas.renderAll();
 }
 
 var parts = new SettingsCollection();

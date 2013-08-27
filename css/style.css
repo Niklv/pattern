@@ -3,7 +3,11 @@
 }
 
 canvas{
-    border:1px solid black;
+    /*border:1px solid black;*/
+}
+
+.input-for-paste-link{
+    margin-top: 10px;
 }
 
 .radio-inline label {

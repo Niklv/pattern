@@ -31,12 +31,37 @@
                 <button type="button" id="upload" class="btn btn-default">Upload part</button>
             </div>
             <div class="row">
-                <button type="button" id="render" class="btn btn-primary">Render new</button>
+                <button data-toggle="modal" href="#source_chooser" type="button" id="render" class="btn btn-primary">New
+                    upload button
+                </button>
             </div>
         </div>
     </div>
 </div>
 
+
+<!-- MODAL -->
+<div class="modal fade" id="source_chooser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <div class="col-xs-12">
+                    <button type="button" class="upload-file btn btn-primary">Upload your</button>
+                    or
+                    <button type="button" class="upload-buffer btn btn-primary">Paste the link</button>
+                    or
+                    <button type="button" class="btn btn-primary disabled">Get our sample</button>
+                </div>
+                <input type="text" class="input-for-paste-link form-control col-xs-12" style="display:none;"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- SCRIPTS -->
 <script src="js/async.js"></script>
 <script src="js/fabric.js"></script>
 <script src="js/jquery.js"></script>
@@ -48,7 +73,6 @@
 
 
 <!-- TEMPLATE -->
-
 <script type="text/html" id="part-settings-tmpl">
 <div class="col-sm-12">
 <div class="row well-sm">
