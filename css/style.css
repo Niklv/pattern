@@ -120,7 +120,29 @@ button.rndmz {
 }
 
 /*the grid*/
+.box {
+    width: 16.66666666666%;
+    padding-bottom: 16.66666666666%;
+    background: #d3d3d3;
+    position: relative;
+    float: left;
+    overflow: hidden;
+}
 
+.innerContent {
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    background: #808080;
+}
+
+.innerContent img {
+    width: 100%;
+    height: auto;
+    display: inline-block;
+}
 
 
 
