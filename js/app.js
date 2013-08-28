@@ -318,10 +318,10 @@ var FabricObject = Backbone.Model.extend({ //must render grid
     show: function () {
         //TODO: strange optimization think about it
         /*
-        if (this.get("show") && this._fabric.intersectsWithRect(new fabric.Point(0, 0), new fabric.Point(canvas.width, canvas.height)))
-            this._fabric.set("visible", this.get("show"));
-        else
-            this._fabric.set("visible", false);*/
+         if (this.get("show") && this._fabric.intersectsWithRect(new fabric.Point(0, 0), new fabric.Point(canvas.width, canvas.height)))
+         this._fabric.set("visible", this.get("show"));
+         else
+         this._fabric.set("visible", false);*/
         this._fabric.set("visible", this.get("show"));
     },
     render: function () {
@@ -607,15 +607,13 @@ var SettingsView = Backbone.View.extend({
 
 function init() {
     console.log("init app and controls");
-    $('#upload.btn').click(upload);
     $('button.upload-file').click(upload_file);
-    $('button.upload-buffer').click(upload_buffer);
     $('#file-uploader').change(handle_image);
+    $('a[data-toggle="tab"]').on('shown.bs.tab', update_dropdown_caption);
     init_canvas();
     var off = $('canvas').offset();
     console.log(off);
-    $('body').css('background-position-x', off.left);
-    $('body').css('background-position-y', off.top);
+    $('body').css('background-position-x', off.left).css('background-position-y', off.top);
 }
 
 function init_canvas() {
@@ -626,22 +624,19 @@ function init_canvas() {
     canvas.renderOnAddition = false;
 }
 
-function update_canvas(){
+function update_canvas() {
     //canvas.renderAll(false);
     $('body').css('background-image', 'url(' + canvas.toDataURL({format: "png", quality: 1}) + ')');
-}
-
-function upload() {
-    $('#file-uploader').click();
 }
 
 function upload_file() {
     $('#file-uploader').click();
 }
 
-function upload_buffer() {
-    $('.input-for-paste-link').slideToggle(ANIM_TIME);
+function update_dropdown_caption(e) {
+    $(e.target).parent().parent().parent().find("a h4").html($(e.target).text() + " <b class='caret'></b></h4>");
 }
+
 
 function handle_image(e) {
     var reader = new FileReader();

@@ -2,11 +2,7 @@
     padding-right: 0;
 }
 
-canvas{
-    /*border:1px solid black;*/
-}
-
-.input-for-paste-link{
+.input-for-paste-link {
     margin-top: 10px;
 }
 
@@ -78,5 +74,61 @@ button.rndmz {
     outline: none;
     border: 2px solid black;
 }
+
+/*modal css*/
+.modal-content {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    overflow: hidden;
+}
+
+#sample-tabs {
+    width: 200px;
+}
+
+.modal-content .modal-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 10px;
+    margin-top: 0;
+}
+
+.modal-content .modal-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: 0;
+}
+
+.modal-content .modal-header button.close {
+    padding: 5px;
+}
+
+.modal-content .modal-body {
+    position: absolute;
+    top: 46px;
+    right: 0;
+    left: 0;
+    bottom: 54px;
+    overflow-y: auto;
+}
+
+/*the grid*/
+
+
+
+
+
+
+
+
+
+
 
 

@@ -9,60 +9,152 @@
     <link href="css/style.css" rel="stylesheet" media="screen"/>
 </head>
 <body>
-<div class="container">
-    <div class="row well-sm text-center">
-        <h1><strong>Awesome generator</strong></h1>
-    </div>
-    <div class="row well-sm">
-        <div class="col-sm-5">
-            <div class="row text-center">
-                <h3>Result</h3>
-            </div>
-            <div class="row text-center">
-                <canvas id="canvas"></canvas>
-            </div>
+<div class="page-container">
+    <div class="container">
+        <div class="row well-sm text-center">
+            <h1><strong>Awesome generator</strong></h1>
         </div>
-        <div class="col-sm-7 control-panel">
-            <div class="row text-center">
-                <h3>Control panel</h3>
+        <div class="row well-sm">
+            <div class="col-sm-5">
+                <div class="row text-center">
+                    <h3>Result</h3>
+                </div>
+                <div class="row text-center">
+                    <canvas id="canvas"></canvas>
+                </div>
             </div>
-            <div class="row">
-                <input id="file-uploader" type="file" style="display:none;">
-                <button type="button" id="upload" class="btn btn-default">Upload part</button>
-            </div>
-            <div class="row">
-                <button data-toggle="modal" href="#source_chooser" type="button" id="render" class="btn btn-primary">New
-                    upload button
-                </button>
+            <div class="col-sm-7 control-panel">
+                <div class="row text-center">
+                    <h3>Control panel</h3>
+                </div>
+                <div class="row well-sm text-center">
+                    <input id="file-uploader" type="file" style="display:none;">
+                    <button type="button" class="upload-file btn btn-primary">Upload your</button>
+                    or
+                    <button type="button" data-toggle="modal" href="#myModal" class="show-samples btn btn-primary">
+                        Get our sample
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
 <!-- MODAL -->
-<div class="modal fade" id="source_chooser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body text-center">
-                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-                <div class="col-xs-12">
-                    <button type="button" class="upload-file btn btn-primary">Upload your</button>
-                    or
-                    <button type="button" class="upload-buffer btn btn-primary">Paste the link</button>
-                    or
-                    <button type="button" class="btn btn-primary disabled">Get our sample</button>
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <ul id="sample-tabs" class="nav">
+                <li class="dropdown open active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <h4 class="modal-title">Geometric <b class="caret"></b></h4>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="active"><a href="#geometric" tabindex="-1" data-toggle="tab">Geometric</a></li>
+                        <li><a href="#animals" tabindex="-1" data-toggle="tab">Animals</a></li>
+                        <li><a href="#abstraction" tabindex="-1" data-toggle="tab">Abstraction</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-body">
+            <div id="sample-tabs-content" class="tab-content">
+                <div class="tab-pane fade in active" id="geometric">
+                    <ul class="cbp-rfgrid">
+                        <li><a href="#"><img src="img/samples/controls.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/lfm_Logo.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/vk_logo.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/controls.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/lfm_Logo.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/vk_logo.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/controls.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/lfm_Logo.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/vk_logo.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/controls.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/lfm_Logo.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/vk_logo.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/controls.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/lfm_Logo.png" /><div><h3>Felis catus</h3></div></a></li>
+                        <li><a href="#"><img src="img/samples/vk_logo.png" /><div><h3>Felis catus</h3></div></a></li>
+                    </ul>
                 </div>
-                <input type="text" class="input-for-paste-link form-control col-xs-12" style="display:none;"/>
+                <div class="tab-pane fade" id="animals">
+                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+                        master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan
+                        DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                        PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf
+                        viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan,
+                        sartorial keffiyeh echo park vegan.</p>
+                </div>
+                <div class="tab-pane fade" id="abstraction">
+                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+                        master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan
+                        DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                        PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf
+                        viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan,
+                        sartorial keffiyeh echo park vegan.</p>
+
+                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+                        master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan
+                        DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                        PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf
+                        viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan,
+                        sartorial keffiyeh echo park vegan.</p>
+
+                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+                        master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan
+                        DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                        PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf
+                        viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan,
+                        sartorial keffiyeh echo park vegan.</p>
+
+                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+                        master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan
+                        DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                        PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf
+                        viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan,
+                        sartorial keffiyeh echo park vegan.</p>
+
+                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+                        master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan
+                        DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                        PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf
+                        viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan,
+                        sartorial keffiyeh echo park vegan.</p>
+
+                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+                        master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan
+                        DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                        PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf
+                        viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan,
+                        sartorial keffiyeh echo park vegan.</p>
+
+                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+                        master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan
+                        DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                        PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf
+                        viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan,
+                        sartorial keffiyeh echo park vegan.</p>
+
+                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+                        master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan
+                        DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                        PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf
+                        viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan,
+                        sartorial keffiyeh echo park vegan.</p>
+                </div>
             </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
         </div>
     </div>
 </div>
 
 
 <!-- SCRIPTS -->
-<script src="js/async.js"></script>
 <script src="js/fabric.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/jquery-ui-1.10.3.custom.js"></script>
@@ -286,6 +378,7 @@
 <!--overlay: null-->
 </script>
 <script src="js/app.js"></script>
+
 
 </body>
 </html>
