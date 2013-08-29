@@ -87,6 +87,13 @@ button.rndmz {
 
 #sample-tabs {
     width: 200px;
+    float: left;
+}
+
+.modal-content .modal-header h5 {
+    padding: 11px 15px;
+    margin:0;
+    line-height: 23px;
 }
 
 .modal-content .modal-footer {
@@ -96,6 +103,7 @@ button.rndmz {
     left: 0;
     padding: 10px;
     margin-top: 0;
+    z-index: 1101;
 }
 
 .modal-content .modal-header {
@@ -104,6 +112,9 @@ button.rndmz {
     right: 0;
     left: 0;
     padding: 0;
+    z-index: 1101;
+    background-color: #fff;
+    text-align: center;
 }
 
 .modal-content .modal-header button.close {
@@ -117,32 +128,105 @@ button.rndmz {
     left: 0;
     bottom: 54px;
     overflow-y: auto;
+    background: linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */ radial-gradient(50% 0, farthest-side, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)), radial-gradient(50% 100%, farthest-side, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%;
+    background: linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+    background-attachment: local, local, scroll, scroll;
+    z-index: 1100;
 }
 
 /*the grid*/
 .box {
-    width: 16.66666666666%;
-    padding-bottom: 16.66666666666%;
-    background: #d3d3d3;
+    width: 50%;
+    padding-bottom: 50%;
     position: relative;
     float: left;
     overflow: hidden;
 }
 
+@media (min-width: 400px) {
+    .box {
+        width: 33.333333333333%;
+        padding-bottom: 33.333333333333%;
+    }
+}
+
+@media (min-width: 600px) {
+    .box {
+        width: 25%;
+        padding-bottom: 25%;
+    }
+}
+
+@media (min-width: 800px) {
+    .box {
+        width: 20%;
+        padding-bottom: 20%;
+    }
+}
+
+@media (min-width: 1000px) {
+    .box {
+        width: 16.66666666666%;
+        padding-bottom: 16.66666666666%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .box {
+        width: 14.2857142857%;
+        padding-bottom: 14.2857142857%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .box {
+        width: 12.5%;
+        padding-bottom: 12.5%;
+    }
+}
+
 .innerContent {
     position: absolute;
-    left: 5px;
-    right: 5px;
-    top: 5px;
-    bottom: 5px;
-    background: #808080;
+    left: 10px;
+    right: 10px;
+    top: 10px;
+    bottom: 10px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 0;
+    border-radius: 5px;
+    border: solid 1px #D6D6D6;
+    -webkit-transition-duration: .3s;
+    -moz-transition-duration: .3s;
+    -o-transition-duration: .3s;
+    transition-duration: .3s;
+    /*background-color: #fff;*/
+}
+
+.innerContent:before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
 }
 
 .innerContent img {
-    width: 100%;
+    max-width: 90%;
     height: auto;
     display: inline-block;
+    vertical-align: middle;
 }
+
+.innerContent:hover {
+    border-color: rgba(31, 147, 255, 0.50);
+    -moz-box-shadow: 0 0 10px rgba(31, 147, 255, 0.50);
+    -webkit-box-shadow: 0 0 10px rgba(31, 147, 255, 0.50);
+    box-shadow: 0 0 10px rgba(31, 147, 255, 0.50);
+}
+
 
 
 
