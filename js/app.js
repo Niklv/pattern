@@ -1,5 +1,3 @@
-var CANVAS_WIDTH = 300;
-var CANVAS_HEIGHT = 300;
 var ANIM_TIME = 200;
 var canvas;
 
@@ -571,7 +569,6 @@ var SettingsView = Backbone.View.extend({
         this.$el.find('.form-group.placement input[value=' + v.placement + ']').prop('checked', true);
         this.$el.find('.form-group.grid input[value=' + v.grid + ']').prop('checked', true);
         this.change_settings_order();
-        //  canvas.renderAll();
         this.$el.find("button.random").attr("disabled", false);
     },
     onslide: function (e, o) {
@@ -605,27 +602,189 @@ var SettingsView = Backbone.View.extend({
 });
 
 
+var CanvasSettingsView = Backbone.View.extend({
+    range: {
+        canvas: {
+            width: {
+                min: 10,
+                step: 1,
+                default: 300,
+                max: 400
+            },
+            height: {
+                min: 10,
+                step: 1,
+                default: 300,
+                max: 400
+            }
+        }
+    },
+    canvas: null,
+    allowed_keys: [],
+    initialize: function () {
+        canvas = new fabric.StaticCanvas("canvas");
+        canvas.setWidth(this.range.canvas.width.default);
+        canvas.setHeight(this.range.canvas.height.default);
+        canvas.setBackgroundColor("#FFF");
+        canvas.renderOnAddition = false;
+        canvas.renderOnPageBg = false;
+        this.calculate_bg_offset();
+        $(window).resize(this.calculate_bg_offset);
+        this.setup_allowed_keys();
+        this.$el = $('.canvas-options');
+        this.$el.find('.colorpicker').colorpicker({format: "hex"});
+        this.$el.find("div.slider[data-option=width]").slider({
+            animate: ANIM_TIME,
+            min: this.range.canvas.width.min,
+            max: this.range.canvas.width.max,
+            step: this.range.canvas.width.step,
+            value: this.range.canvas.width.default,
+            range: "min"
+        });
+        this.$el.find('input#canvas-width').val(this.range.canvas.width.default);
+        this.$el.find("div.slider[data-option=height]").slider({
+            animate: ANIM_TIME,
+            min: this.range.canvas.height.min,
+            max: this.range.canvas.height.max,
+            step: this.range.canvas.height.step,
+            value: this.range.canvas.height.default,
+            range: "min"
+        });
+        this.$el.find('input#canvas-height').val(this.range.canvas.height.default);
+
+    },
+    events: {
+        "changeColor input.colorpicker": "color_changed",
+        "slide .slider": "onslide",
+        "input input": "oninput",
+        "keypress input": "filter_number",
+        "keydown input": "up_and_down",
+        "change #autoupdate-checkbox": "autoupdate",
+        "click button.download": "download_image"
+    },
+    setup_allowed_keys: function () {
+        this.allowed_keys.push(45, 46); //minus and dot
+        this.allowed_keys.push(48, 49, 50, 51, 52, 53, 54, 55, 56, 57); //0-9
+    },
+    onslide: function (e, o) {
+        $(e.target).parent().parent().find("input").val(o.value);
+        this.update($(e.target).attr("data-option"));
+    },
+    up_and_down: function (e) {
+        var key = e.keyCode;
+        if (key != 38 && key != 40)
+            return;
+        var val = parseInt($(e.target).val() * 10000);
+        var slider = $(e.target).parent().find(".slider");
+        var slider_options = slider.slider("option");
+        var step = slider_options.step * 10000;
+        var ost = val % step;
+        if (key == 38) { //key up
+            if (ost)
+                val += step - Math.abs(ost);
+            else
+                val += step;
+        } else if (key == 40) {  //key down
+            if (ost)
+                val -= ost;
+            else
+                val -= step;
+        }
+        val /= 10000;
+        val = Math.max(val, slider_options.min);
+        val = Math.min(val, slider_options.max);
+        $(e.target).val(val);
+        slider.slider("value", val);
+        this.update(slider.attr("data-option"));
+    },
+    filter_number: function (e) {
+        var key = e.keyCode;
+        if (!_.contains(this.allowed_keys, key))
+            e.preventDefault();
+        else if (key == 46 && $(e.target).val().match(/\./g))
+            e.preventDefault();
+        else if (key == 45 && $(e.target).val().match(/[-]/g))
+            e.preventDefault();
+
+    },
+    oninput: function (e) {
+        var slider = $(e.target).parent().find(".slider");
+        var opt = slider.slider("option");
+        var value = $(e.target).val();
+        if (value == "") value = 0;
+        if (isInt(opt.step))
+            value = parseInt(value);
+        else
+            value = parseFloat(value);
+        if (isNaN(value)) {
+            event.preventDefault();
+            return;
+        }
+        if (value < opt.min) {
+            slider.slider("value", opt.min);
+            $(e.target).val(opt.min);
+        } else if (value > opt.max) {
+            slider.slider("value", opt.max);
+            $(e.target).val(opt.max);
+        } else
+            slider.slider("value", value);
+        this.update(slider.attr("data-option"));
+    },
+    update: function (param) {
+        var val = this.$el.find("input[data-option=" + param + "]").val();
+        if (!val || val == "") val = 300;
+        switch (param) {
+            case "width":
+                canvas.setWidth(val);
+                break;
+            case "height":
+                canvas.setHeight(val);
+                break;
+        }
+        update_canvas();
+    },
+    color_changed: function (ev) {
+        canvas.setBackgroundColor($(ev.target).val());
+        update_canvas();
+    },
+    calculate_bg_offset: function () {
+        var off = $('canvas').offset();
+        $('body').css('background-position-x', off.left).css('background-position-y', off.top);
+    },
+    autoupdate: function (e) {
+        canvas.renderOnPageBg = $(e.target).prop("checked");
+    },
+    download_image: function () {
+        //var bb = new BlobBuilder();
+
+        var data = canvas.toDataURL({format: "png", quality: 1});
+        var b64 = data.split(',')[1];
+        var blob = b64toBlob(b64, "image/png");
+        saveAs(blob, "awesome-pattern_" + _.random(100000, 200000) + ".png");
+
+    }
+});
+
+
 function init() {
     console.log("init app and controls");
     $('button.upload-file').click(upload_file);
     $('#file-uploader').change(handle_image);
+    $('a.innerContent').click(select_from_library);
+    $('button.preview-button').click(render_to_background);
     $('a[data-toggle="tab"]').on('shown.bs.tab', update_dropdown_caption);
-    init_canvas();
-    var off = $('canvas').offset();
-    console.log(off);
-    $('body').css('background-position-x', off.left).css('background-position-y', off.top);
-}
-
-function init_canvas() {
-    canvas = new fabric.StaticCanvas("canvas");
-    canvas.setWidth(CANVAS_WIDTH);
-    canvas.setHeight(CANVAS_HEIGHT);
-    canvas.setBackgroundColor("#FFF");
-    canvas.renderOnAddition = false;
+    new CanvasSettingsView();
 }
 
 function update_canvas() {
-    //canvas.renderAll(false);
+    if (canvas.renderOnPageBg)
+        render_to_background();
+    else
+        canvas.renderAll(true);
+}
+
+function render_to_background() {
+    $(window).resize();
     $('body').css('background-image', 'url(' + canvas.toDataURL({format: "png", quality: 1}) + ')');
 }
 
@@ -637,6 +796,15 @@ function update_dropdown_caption(e) {
     $(e.target).parent().parent().parent().find("a h4").html($(e.target).text() + " <b class='caret'></b></h4>");
 }
 
+function select_from_library(e) {
+    var img = new Image();
+    img.src = $(e.currentTarget).find('img').attr('src');
+    img.onload = function () {
+        parts.add({type: "img", img: img});
+        $('#collections_modal').modal('hide');
+    };
+    return 0;
+}
 
 function handle_image(e) {
     var reader = new FileReader();
@@ -645,7 +813,6 @@ function handle_image(e) {
         imgObj.src = event.target.result;
         imgObj.onload = function () {
             parts.add({type: "img", img: imgObj});
-            $('#source_chooser').modal('hide');
         };
         $(e.target).val("");
     };
@@ -655,6 +822,30 @@ function handle_image(e) {
 function isInt(n) {
     return n % 1 === 0;
 }
+
+function b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 1024;
+
+    function charCodeFromCharacter(c) {
+        return c.charCodeAt(0);
+    }
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = Array.prototype.map.call(slice, charCodeFromCharacter);
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+}
+
 
 var parts = new SettingsCollection();
 init();

@@ -1,3 +1,7 @@
+.control-panel, .canvas-panel {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 .controls .form-group > div.col-md-10 {
     padding-right: 0;
 }
@@ -31,6 +35,20 @@ button.rndmz {
 
 .controls .form-group {
     margin-bottom: 0;
+}
+
+.preview-button {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    height: 25px;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 500;
 }
 
 /*slider css*/
@@ -92,7 +110,7 @@ button.rndmz {
 
 .modal-content .modal-header h5 {
     padding: 11px 15px;
-    margin:0;
+    margin: 0;
     line-height: 23px;
 }
 

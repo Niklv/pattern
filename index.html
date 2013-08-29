@@ -11,16 +11,62 @@
 <body>
 <div class="page-container">
     <div class="container">
+        <button class="preview-button">Preview</button>
         <div class="row well-sm text-center">
             <h1><strong>Awesome generator</strong></h1>
         </div>
         <div class="row well-sm">
-            <div class="col-sm-5">
+            <div class="col-sm-5 canvas-panel">
                 <div class="row text-center">
                     <h3>Result</h3>
                 </div>
                 <div class="row text-center">
                     <canvas id="canvas"></canvas>
+                </div>
+                <div class="row well-sm canvas-options form-horizontal">
+                    <div class="form-group autoupdate-checkbox">
+                        <div class="col-md-offset-2 col-md-10">
+                            <label class="col-md-10 checkbox">
+                                <input id="autoupdate-checkbox" type="checkbox"> Autoupdate
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group color">
+                        <label class="col-md-2 control-label" for="canvas-bg-color">Color</label>
+
+                        <div class="col-md-10">
+                            <div class="col-md-12">
+                                <div class="input-append color" data-color-format="rgba">
+                                    <input id="canvas-bg-color" class="colorpicker input-sm" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group width">
+                        <label class="col-md-2 control-label" for="canvas-width">Width</label>
+
+                        <div class="col-md-10">
+                            <div class="col-xs-10">
+                                <div class="slider" data-option="width"></div>
+                            </div>
+                            <input id="canvas-width" class="input-sm col-xs-2" data-option="width"/>
+                        </div>
+                    </div>
+                    <div class="form-group height">
+                        <label class="col-md-2 control-label" for="canvas-height">Height</label>
+
+                        <div class="col-md-10">
+                            <div class="col-xs-10">
+                                <div class="slider" data-option="height"></div>
+                            </div>
+                            <input id="canvas-height" class="input-sm col-xs-2" data-option="height"/>
+                        </div>
+                    </div>
+                    <div class="form-group download-image well-sm">
+                        <button class="col-md-12 btn btn-primary download well-sm">
+                            <span class="glyphicon glyphicon-download-alt"></span> Download pattern!
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-7 control-panel">
@@ -29,9 +75,12 @@
                 </div>
                 <div class="row well-sm text-center">
                     <input id="file-uploader" type="file" style="display:none;">
-                    <button type="button" class="upload-file btn btn-primary">Upload your</button>
+                    <button type="button" class="upload-file btn btn-primary"><span
+                            class="glyphicon glyphicon-upload"></span> Upload your
+                    </button>
                     or
-                    <button type="button" data-toggle="modal" href="#myModal" class="show-samples btn btn-primary">
+                    <button type="button" data-toggle="modal" href="#collections_modal"
+                            class="show-samples btn btn-primary">
                         Get our sample
                     </button>
                 </div>
@@ -41,483 +90,483 @@
 </div>
 
 <!-- MODAL -->
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <ul id="sample-tabs" class="nav">
-                <li class="dropdown open active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <h4 class="modal-title">Geometric <b class="caret"></b></h4>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li class="active"><a href="#geometric" tabindex="-1" data-toggle="tab">Geometric</a></li>
-                        <li><a href="#animals" tabindex="-1" data-toggle="tab">Animals</a></li>
-                        <li><a href="#abstraction" tabindex="-1" data-toggle="tab">Abstraction</a></li>
-                    </ul>
-                </li>
+<div class="modal" id="collections_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-content">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <ul id="sample-tabs" class="nav">
+        <li class="dropdown open active">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <h4 class="modal-title">Geometric <b class="caret"></b></h4>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li class="active"><a href="#geometric" tabindex="-1" data-toggle="tab">Geometric</a></li>
+                <li><a href="#animals" tabindex="-1" data-toggle="tab">Animals</a></li>
+                <li><a href="#abstraction" tabindex="-1" data-toggle="tab">Abstraction</a></li>
             </ul>
-            <h5>Click to choose</h5>
-        </div>
-        <div class="modal-body">
-            <div id="sample-tabs-content" class="tab-content">
-                <div class="tab-pane fade in active" id="geometric">
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/controls.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/controls.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/controls.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/controls.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/controls.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/controls.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/controls.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/controls.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="animals">
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/vk_logo.png"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="abstraction">
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a class="innerContent" href="#">
-                            <img src="img/samples/lfm_Logo.png"/>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+        </li>
+    </ul>
+    <h5>Click to choose</h5>
+</div>
+<div class="modal-body">
+<div id="sample-tabs-content" class="tab-content">
+<div class="tab-pane fade in active" id="geometric">
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="data:image/png;base64,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"/>
+        </a>
     </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/controls.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/controls.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/controls.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/controls.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/controls.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/controls.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/controls.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+</div>
+<div class="tab-pane fade" id="animals">
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+<div class="box">
+    <a class="innerContent" href="#">
+        <img src="img/samples/vk_logo.png"/>
+    </a>
+</div>
+</div>
+<div class="tab-pane fade" id="abstraction">
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/lfm_Logo.png"/>
+        </a>
+    </div>
+</div>
+</div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
 </div>
 
 
@@ -525,6 +574,7 @@
 <script src="js/fabric.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/jquery-ui-1.10.3.custom.js"></script>
+<script src="js/FileSaver.js"></script>
 <script src="js/underscore.js"></script>
 <script src="js/backbone.js"></script>
 <script src="js/bootstrap.js"></script>
