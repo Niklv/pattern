@@ -606,20 +606,19 @@ var CanvasSettingsView = Backbone.View.extend({
     range: {
         canvas: {
             width: {
-                min: 10,
+                min: 0,
                 step: 1,
                 default: 300,
                 max: 400
             },
             height: {
-                min: 10,
+                min: 0,
                 step: 1,
                 default: 300,
                 max: 400
             }
         }
     },
-    canvas: null,
     allowed_keys: [],
     initialize: function () {
         canvas = new fabric.StaticCanvas("canvas");
@@ -655,10 +654,11 @@ var CanvasSettingsView = Backbone.View.extend({
     },
     events: {
         "changeColor input.colorpicker": "color_changed",
+        "input input.colorpicker": "color_changed",
         "slide .slider": "onslide",
-        "input input": "oninput",
-        "keypress input": "filter_number",
-        "keydown input": "up_and_down",
+        "input .filter-field": "oninput",
+        "keypress .filter-field": "filter_number",
+        "keydown .filter-field": "up_and_down",
         "change #autoupdate-checkbox": "autoupdate",
         "click button.download": "download_image"
     },
@@ -741,6 +741,11 @@ var CanvasSettingsView = Backbone.View.extend({
                 canvas.setHeight(val);
                 break;
         }
+        // update all ranges in models params
+        for(var i=0; i<parts.length; i++){
+            parts.at(i).set_range();
+        }
+        //
         update_canvas();
     },
     color_changed: function (ev) {
@@ -753,10 +758,9 @@ var CanvasSettingsView = Backbone.View.extend({
     },
     autoupdate: function (e) {
         canvas.renderOnPageBg = $(e.target).prop("checked");
+        update_canvas();
     },
     download_image: function () {
-        //var bb = new BlobBuilder();
-
         var data = canvas.toDataURL({format: "png", quality: 1});
         var b64 = data.split(',')[1];
         var blob = b64toBlob(b64, "image/png");
@@ -793,7 +797,7 @@ function upload_file() {
 }
 
 function update_dropdown_caption(e) {
-    $(e.target).parent().parent().parent().find("a h4").html($(e.target).text() + " <b class='caret'></b></h4>");
+    $(e.target).parent().parent().parent().find("a h4").html($(e.target).text() + " <b class='caret'></b>");
 }
 
 function select_from_library(e) {
@@ -842,8 +846,7 @@ function b64toBlob(b64Data, contentType, sliceSize) {
         byteArrays.push(byteArray);
     }
 
-    var blob = new Blob(byteArrays, {type: contentType});
-    return blob;
+    return new Blob(byteArrays, {type: contentType});
 }
 
 
