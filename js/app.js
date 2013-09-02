@@ -1,10 +1,9 @@
 var ANIM_TIME = 200;
 var canvas;
 
-
 //////MODELS
 
-var Settings = Backbone.Model.extend({
+var Settings =  Backbone.Model.extend({
     objects: null,
     view: null,
     default: {
@@ -72,68 +71,20 @@ var Settings = Backbone.Model.extend({
             }
         }
     },
-    range: {
-        angle: {
-            min: -180,
-            step: 1,
-            max: 180
-        },
-        offset: {
-            min: 0,
-            step: 1,
-            max: 360
-        },
-        opacity: {
-            min: 0,
-            step: 0.01,
-            max: 1
-        },
-        width: {
-            min: 0,
-            step: 1
-        },
-        height: {
-            min: 0,
-            step: 1
-        },
-        count: {
-            min: 1,
-            step: 1,
-            max: 20
-        },
-        placement: {
-            values: ["one", "random", "circle"]
-        },
-        angle_delta: {
-            min: 0,
-            step: 1,
-            max: 360
-        },
-        grid: {
-            values: [9, 25, 49, 81]
-        },
-        x: {
-            step: 1
-        },
-        y: {
-            step: 1
-        },
-        radius: {
-            min: 0,
-            step: 1
-        }
-    },
     initialize: function () {
-        this.set_range();
         this.objects = new Backbone.Collection([], {model: GridSettings});
-        this.set({id: _.random(0, 1000000)});
-        /*ratio height witdh init*/
-        var w = Math.min(this.get("img").width, this.range.width.max / 2),
-            h = Math.min(this.get("img").height, this.range.height.max / 2),
-            r = this.get("img").width / this.get("img").height;
-        this.set({width: Math.min(w, h * r), height: Math.min(h, w / r)});
+        this.set({id: _.random(0, 100000000)});
         this.set(this.default);
-        for (var i = 0; i < this.range.count.max; i++)
+        this.set_range();
+        var range = this.get("range"), img = this.get("img");
+        /*init height and width*/
+        var w = Math.min(img.width, range.width.max / 2),
+            h = Math.min(img.height, range.height.max / 2),
+            r = img.width / img.height;
+        this.set({width: Math.min(w, h * r), height: Math.min(h, w / r)});
+
+
+        for (var i = 0; i < range.count.max; i++)
             this.objects.add({
                 x: this.get("x"),
                 y: this.get("y"),
@@ -152,13 +103,15 @@ var Settings = Backbone.Model.extend({
     },
     set_range: function () {
         console.log("Set range");
-        this.range.width.max = canvas.getWidth() * 2;
-        this.range.height.max = canvas.getHeight() * 2;
-        this.range.x.max = Math.round(canvas.getWidth() / 2);
-        this.range.x.min = -Math.round(canvas.getWidth() / 2);
-        this.range.y.max = Math.round(canvas.getHeight() / 2);
-        this.range.y.min = -Math.round(canvas.getHeight() / 2);
-        this.range.radius.max = Math.min(canvas.getHeight(), canvas.getWidth()) * 2;
+        var range = this.get("range");
+        range.width.max = canvas.getWidth() * 2;
+        range.height.max = canvas.getHeight() * 2;
+        range.x.max = Math.round(canvas.getWidth() / 2);
+        range.x.min = -Math.round(canvas.getWidth() / 2);
+        range.y.max = Math.round(canvas.getHeight() / 2);
+        range.y.min = -Math.round(canvas.getHeight() / 2);
+        range.radius.max = Math.min(canvas.getHeight(), canvas.getWidth());
+        this.set({range: range});
     },
     change_layout: function () {
         var i;
@@ -171,7 +124,7 @@ var Settings = Backbone.Model.extend({
                     this.objects.at(i).visible(false);
                 break;
             case "random":
-                var data = [], r = this.range;
+                var data = [], r = this.get("range");
                 for (i = 0; i < this.objects.length; i++)
                     data[i] = {
                         x: _.random(r.x.min, r.x.max),
@@ -263,7 +216,7 @@ var Settings = Backbone.Model.extend({
         }
     },
     randomize: function () {
-        var r = this.range, data = {};
+        var r = this.get("range"), data = {};
         data.count = _.random(r.count.min, r.count.max);
         data.placement = r.placement.values[_.random(0, r.placement.values.length - 1)];
         data.angle = _.random(r.angle.min, r.angle.max);
@@ -464,11 +417,12 @@ var SettingsView = Backbone.View.extend({
         this.$el.find("div.slider").each(_.bind(function (n, slider) {
             var p_name = $(slider).attr("data-option");
             $(slider).parent().parent().find("input").val(this.get(p_name));
+            var range = this.get("range");
             $(slider).slider({
                 animate: ANIM_TIME,
-                min: this.range[p_name].min,
-                max: this.range[p_name].max,
-                step: this.range[p_name].step,
+                min: range[p_name].min,
+                max: range[p_name].max,
+                step: range[p_name].step,
                 value: this.get(p_name),
                 range: "min"
             });
@@ -515,10 +469,11 @@ var SettingsView = Backbone.View.extend({
             slider = $(slider);
             var p_name = slider.attr("data-option");
             var opt = slider.slider("option");
-            var val = Math.min(opt.value, this.range[p_name].max);
+            var range = this.get("range");
+            var val = Math.min(opt.value, range[p_name].max);
             slider.slider({
-                min: this.range[p_name].min,
-                max: this.range[p_name].max,
+                min: range[p_name].min,
+                max: range[p_name].max,
                 value: val
             });
             slider.parent().parent().find("input").val(val);
