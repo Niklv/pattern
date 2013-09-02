@@ -6,19 +6,71 @@ var canvas;
 
 var Settings = Backbone.Model.extend({
     objects: null,
+    view: null,
     default: {
         count: 5,
-        placement: "circle", //one, random, circle
+        placement: "one", //one, random, circle
         angle: 0,
         color: "rgba(0, 0, 0, 0)",
         opacity: 1,
         overlay: null,
         angle_delta: 0,
         offset: 0,
-        grid: 9, //9, 25, 49
+        grid: 81, //9, 25, 49, 81
         x: 0,
         y: 0,
-        radius: 40
+        radius: 40,
+        range: {
+            angle: {
+                min: -180,
+                step: 1,
+                max: 180
+            },
+            offset: {
+                min: 0,
+                step: 1,
+                max: 360
+            },
+            opacity: {
+                min: 0,
+                step: 0.01,
+                max: 1
+            },
+            width: {
+                min: 0,
+                step: 1
+            },
+            height: {
+                min: 0,
+                step: 1
+            },
+            count: {
+                min: 1,
+                step: 1,
+                max: 20
+            },
+            placement: {
+                values: ["one", "random", "circle"]
+            },
+            angle_delta: {
+                min: 0,
+                step: 1,
+                max: 360
+            },
+            grid: {
+                values: [9, 25, 49, 81]
+            },
+            x: {
+                step: 1
+            },
+            y: {
+                step: 1
+            },
+            radius: {
+                min: 0,
+                step: 1
+            }
+        }
     },
     range: {
         angle: {
@@ -99,6 +151,7 @@ var Settings = Backbone.Model.extend({
         this.bind("reinitialize", this.reinitialize);
     },
     set_range: function () {
+        console.log("Set range");
         this.range.width.max = canvas.getWidth() * 2;
         this.range.height.max = canvas.getHeight() * 2;
         this.range.x.max = Math.round(canvas.getWidth() / 2);
@@ -152,7 +205,6 @@ var Settings = Backbone.Model.extend({
                 width: width
             };
             this.objects.at(0).set(data);
-            //canvas.renderAll();
             update_canvas();
         },
         random: function () {
@@ -174,7 +226,6 @@ var Settings = Backbone.Model.extend({
                 this.objects.at(i).set(data[i]).visible(true);
             for (i = count; i < this.objects.length; i++)
                 this.objects.at(i).visible(false);
-            //canvas.renderAll();
             update_canvas();
 
         },
@@ -208,7 +259,6 @@ var Settings = Backbone.Model.extend({
             for (i = count; i < this.objects.length; i++)
                 this.objects.at(i).visible(false);
 
-            //canvas.renderAll();
             update_canvas();
         }
     },
@@ -233,6 +283,13 @@ var Settings = Backbone.Model.extend({
     reinitialize: function () {
         for (var i = 0; i < this.objects.length; i++)
             this.objects.at(i).trigger("reinitialize");
+    },
+    update_grid_settings: function () {
+        for (var i = 0; i < this.objects.length; i++) {
+            this.objects.at(i).params_change();
+            this.objects.at(i).grid_size();
+            this.objects.at(i).grid_position();
+        }
     }
 });
 
@@ -307,6 +364,7 @@ var FabricObject = Backbone.Model.extend({ //must render grid
         this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show")});
         this.add();
         this.bind("change", this.render);
+        //this.bind("all", function(name){console.log(name)});
         this.bind("change:show", this.show);
         this.bind("reinitialize", this.add);
     },
@@ -345,6 +403,7 @@ var SettingsCollection = Backbone.Collection.extend({
     },
     add_model: function (model) {
         var view = new SettingsView({model: model});
+        model.view = view;
         view.render().place().init_controls();
     },
     remove_model: function (model) {
@@ -449,6 +508,26 @@ var SettingsView = Backbone.View.extend({
                 this.$el.find('.form-group.placement button.rndmz').hide();
                 break;
         }
+    },
+    update_controls: function () {
+        console.log("UPDATE controls");
+        this.$el.find("div.slider").each(_.bind(function (n, slider) {
+            slider = $(slider);
+            var p_name = slider.attr("data-option");
+            var opt = slider.slider("option");
+            var val = Math.min(opt.value, this.range[p_name].max);
+            slider.slider({
+                min: this.range[p_name].min,
+                max: this.range[p_name].max,
+                value: val
+            });
+            slider.parent().parent().find("input").val(val);
+            this.set(p_name, val);
+        }, this.model));
+        this.model.update_grid_settings();
+        //this.model.change_layout();
+        this.model.layout();
+
     },
     place: function () {
         //var last = $('.control-panel > .row.pattern-part').last();
@@ -741,12 +820,15 @@ var CanvasSettingsView = Backbone.View.extend({
                 canvas.setHeight(val);
                 break;
         }
+
         // update all ranges in models params
-        for(var i=0; i<parts.length; i++){
+        for (var i = 0; i < parts.length; i++) {
             parts.at(i).set_range();
+            parts.at(i).view.update_controls();
         }
         //
         update_canvas();
+
     },
     color_changed: function (ev) {
         canvas.setBackgroundColor($(ev.target).val());
