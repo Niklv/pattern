@@ -36,6 +36,10 @@ var Canvas = Backbone.Model.extend({
         this.color();
         this.height();
         this.width();
+        this.getWidth = _.bind(this.canvas.getWidth, this.canvas);
+        this.getHeight = _.bind(this.canvas.getHeight, this.canvas);
+        this.getCenter = _.bind(this.canvas.getCenter, this.canvas);
+        this.add = _.bind(this.canvas.add, this.canvas);
     },
     color: function () {
         this.canvas.setBackgroundColor(this.get("color"));
@@ -45,6 +49,9 @@ var Canvas = Backbone.Model.extend({
     },
     height: function () {
         this.canvas.setHeight(this.get("height"));
+    },
+    removeAll: function () {
+        this.canvas._objects = [];
     },
     update: function () {
         if (this.get("autoupdate")) {

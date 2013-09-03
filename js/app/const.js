@@ -1,0 +1,1 @@
+var ANIM_TIME = 100;

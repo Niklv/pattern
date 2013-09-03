@@ -10,20 +10,32 @@ var Slider = Backbone.View.extend({
         this.$slider = this.$el.find(".slider");
         this.$input.val(this.model.get(opt.name));
         this.$slider.slider({
-            animate: 100,
+            animate: ANIM_TIME,
             min: range.min,
             max: range.max,
             step: range.step,
             value: this.model.get(opt.name),
             range: "min"
         });
-        this.delegateEvents();
+        this.model.bind("change:range", this.setNewRange, this)
+        this.model.bind("change:" + opt.name, this.setNewValue, this);
     },
     events: {
         "slide .slider": "onslide",
         "input input": "oninput",
         "keypress input": "filter_number",
         "keydown input": "up_and_down"
+    },
+    setNewValue: function () {
+        console.log("value");
+        var val = this.model.get(this.name);
+        this.$slider.slider("value", val);
+        this.$input.val(val);
+    },
+    setNewRange: function () {
+        console.log("range");
+        this.range = this.model.get("range")[this.name];
+        this.$slider.slider("option", {min: this.range.min, max: this.range.max});
     },
     up_and_down: function (e) {
         var key = e.keyCode;
