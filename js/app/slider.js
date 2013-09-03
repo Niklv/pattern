@@ -27,15 +27,14 @@ var Slider = Backbone.View.extend({
         "keydown input": "up_and_down"
     },
     setNewValue: function () {
-        console.log("value");
         var val = this.model.get(this.name);
         this.$slider.slider("value", val);
         this.$input.val(val);
     },
     setNewRange: function () {
-        console.log("range");
         this.range = this.model.get("range")[this.name];
-        this.$slider.slider("option", {min: this.range.min, max: this.range.max});
+        this.$slider.slider("option", "min", this.range.min);
+        this.$slider.slider("option", "max", this.range.max);
     },
     up_and_down: function (e) {
         var key = e.keyCode;

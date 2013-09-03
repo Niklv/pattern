@@ -87,15 +87,14 @@ var Part = Backbone.Model.extend({
                 height: this.get("height"),
                 width: this.get("width"),
                 img: this.get("img")
-            });
-            //this.objects.add(null, {model:this});
+            }, {model: this});
+
 
         this.change_layout();
         this.layout();
         this.bind("change", this.layout);
         this.bind("change:range", this.update_to_range);
         this.bind("change:placement", this.change_layout);
-        this.bind("reinitialize", this.reinitialize);
         canvas.bind("change:width change:height", this.canvas_size_changed, this);
     },
     set_range: function () {
@@ -139,7 +138,10 @@ var Part = Backbone.Model.extend({
                     this.objects.at(i).set(data[i]);
                 break;
         }
-        this.unbind("change");
+
+        _.each(this.get("range").placement.values, function (func) {
+            this.unbind("change", this.layouts[func]);
+        }, this);
         this.bind("change", this.layouts[this.get("placement")]);
     },
     layouts: {
@@ -240,10 +242,6 @@ var Part = Backbone.Model.extend({
         var r = this.get("range");
         return _.random(r[p].min / r[p].step, r[p].max / r[p].step) * r[p].step;
     },
-    reinitialize: function () {
-        for (var i = 0; i < this.objects.length; i++)
-            this.objects.at(i).trigger("reinitialize");
-    },
     canvas_size_changed: function () {
         this.set_range();
         this.trigger("change:range");
@@ -251,26 +249,22 @@ var Part = Backbone.Model.extend({
     }
 });
 
+
+//TODO: 3x grid from prev-prev and next-next img
 var Grid = Backbone.Model.extend({
     objects: null,
-    defaults: {
-        grid: 9,
-        x: 0,
-        y: 0,
-        opacity: 1,
-        angle: 0
-    },
-    initialize: function () {
+    model: null,
+    initialize: function (attr, opt) {
         this.objects = new Backbone.Collection([], {model: Fabric});
+        this.model = opt.model;
         //TODO:remove hardcoded value 81
         for (var i = 0; i < 81; i++)
-            this.objects.add(this.attributes);
+            this.objects.add(this.attributes, opt);
         this.grid_size();
         this.grid_position();
         this.bind("change:grid", this.grid_size);
         this.bind("change:grid change:x change:y", this.grid_position);
         this.bind("change:grid change:width change:height change:angle change:opacity", this.params_change);
-        this.bind("reinitialize", this.reinitialize);
         canvas.bind("change:width change:height", this.grid_position, this);
     },
     params_change: function () {
@@ -290,11 +284,13 @@ var Grid = Backbone.Model.extend({
             step_x = canvas.getWidth() / ((len - 1) / 2),
             step_y = canvas.getHeight() / ((len - 1) / 2), i;
         for (i = 0; i < len; i++)
-            for (var j = 0; j < len; j++)
+            for (var j = 0; j < len; j++) {
                 this.objects.at(i * len + j).set({
                     x: x - canvas.getWidth() + j * step_x,
                     y: y - canvas.getHeight() + i * step_y
-                });
+                }, {silent: true});
+                this.objects.at(i * len + j).trigger("change");
+            }
     },
     grid_size: function () {
         var g = this.get("grid"), i;
@@ -307,10 +303,6 @@ var Grid = Backbone.Model.extend({
         var g = this.get("grid"), i;
         for (i = 0; i < g; i++)
             this.objects.at(i).set({show: isVisible});
-    },
-    reinitialize: function () {
-        for (var i = 0; i < this.objects.length; i++)
-            this.objects.at(i).trigger("reinitialize");
     }
 });
 
@@ -320,13 +312,13 @@ var Fabric = Backbone.Model.extend({
     defaults: {
         show: false
     },
-    initialize: function () {
+    initialize: function (attr, opt) {
         this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show")});
+        this.model = opt.model;
         this.add();
         this.bind("change", this.render);
-        //this.bind("all", function(name){console.log(name)});
         this.bind("change:show", this.show);
-        this.bind("reinitialize", this.add);
+        this.model.bind("reinitialize", this.add, this);
     },
     add: function () {
         canvas.add(this._fabric);
@@ -442,28 +434,6 @@ var PartView = Backbone.View.extend({
                 this.$el.find('.form-group.placement button.rndmz').hide();
                 break;
         }
-    },
-    update_controls: function () {
-        /*
-         console.log("UPDATE controls");
-         this.$el.find("div.slider").each(_.bind(function (n, slider) {
-         slider = $(slider);
-         var p_name = slider.attr("data-option");
-         var opt = slider.slider("option");
-         var range = this.get("range");
-         var val = Math.min(opt.value, range[p_name].max);
-         slider.slider({
-         min: range[p_name].min,
-         max: range[p_name].max,
-         value: val
-         });
-         slider.parent().parent().find("input").val(val);
-         this.set(p_name, val);
-         }, this.model));
-         this.model.update_grid_settings();
-         //this.model.change_layout();
-         this.model.layout();
-         */
     },
     place: function () {
         this.$el.hide();
