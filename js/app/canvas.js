@@ -55,10 +55,13 @@ var Canvas = Backbone.Model.extend({
     },
     update: function () {
         if (this.get("autoupdate")) {
-            $(window).resize();
-            $('body').css('background-image', 'url(' + this.canvas.toDataURL({format: "png", quality: 1}) + ')');
+            this.render_to_bg();
         } else
             this.canvas.renderAll(true);
+    },
+    render_to_bg: function(){
+        $(window).resize();
+        $('body').css('background-image', 'url(' + this.canvas.toDataURL({format: "png", quality: 1}) + ')');
     },
     download_image: function () {
         var data = this.canvas.toDataURL({format: "png", quality: 1});

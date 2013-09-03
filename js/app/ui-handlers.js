@@ -28,3 +28,12 @@ function handle_image(e) {
     };
     reader.readAsDataURL(e.target.files[0]);
 }
+
+function hide_controls_and_show_bg(){
+    canvas.render_to_bg();
+    $(".page-container").hide();
+}
+
+function show_controls(){
+    $(".page-container").show();
+}
