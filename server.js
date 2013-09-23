@@ -1,18 +1,49 @@
+var env = process.env;
 var express = require('express');
 var app = express();
-var api = require('api');
+var utils = require('./utils');
 
-app.configure(function(){
-
-});
+console.log("Starting patter.net server");
 
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/convertToB64', function (req, res) {
-    loadBase64Image("http://2.bp.blogspot.com/-TltX5DwBl7o/UEulpNr4JuI/AAAAAAAAABI/lPg1R1GUbeM/s1600/bunny.jpg", function (image, prefix) {
-        res.send('<img src="' + prefix + image + '" />');
-    });
+app.all('/imgtob64', function (req, res) {
+    var url = req.param("img_url");
+    if (url != null) {
+        try {
+            utils.imgtob64(url, function (image, prefix) {
+                res.json({image: image, prefix: prefix, err:null});
+            });
+        } catch (err){
+            res.json({err:err.message});
+        }
+    } else {
+        res.json({err:"check parameters"});
+    }
 });
 
-app.listen(15155);
+/*app.get('/library', function (req, res) {
+    var id = req.param("id");
+    if (id != null) {
+
+        try {
+            utils.imgtob64(url, function (image, prefix) {
+                res.json({image: image, prefix: prefix, err:null});
+            });
+        } catch (err){
+            res.json({err:err.message});
+        }
+    } else {
+        res.send(500);
+    }
+});*/
+
+app.configure("production", function () {
+    app.listen(15100);
+});
+
+app.configure("development", function () {
+    app.listen(15155);
+});
+

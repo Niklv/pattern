@@ -1,6 +1,6 @@
 var request = require('request');
 
-var loadBase64Image = function (url, callback) {
+var imgtob64 = function (url, callback) {
     request({url: url, encoding: null}, function (err, res, body) {
         if (!err && res.statusCode == 200) {
             var base64prefix = 'data:' + res.headers['content-type'] + ';base64,'
@@ -14,4 +14,4 @@ var loadBase64Image = function (url, callback) {
     });
 };
 
-module.exports = loadBase64Image;
+module.exports.imgtob64 = imgtob64;

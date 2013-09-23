@@ -146,7 +146,6 @@ var Part = Backbone.Model.extend({
     },
     layouts: {
         one: function () {
-            console.log("one");
             var x = this.get("x"),
                 y = this.get("y"),
                 angle = this.get("angle"),
@@ -168,7 +167,6 @@ var Part = Backbone.Model.extend({
             this.trigger("render");
         },
         random: function () {
-            console.log("random");
             var count = this.get("count"),
                 opacity = this.get("opacity"),
                 grid = this.get("grid"),
@@ -190,7 +188,6 @@ var Part = Backbone.Model.extend({
             this.trigger("render");
         },
         circle: function () {
-            console.log("circle");
             var count = this.get("count"),
                 delta = 360 / count,
                 offset = this.get("offset"),
