@@ -7,14 +7,60 @@ function update_dropdown_caption(e) {
 }
 
 function select_from_library(e) {
-    var img = new Image();
-    img.src = $(e.currentTarget).find('img').attr('src');
-    img.onload = function () {
-        parts.add({type: "img", img: img});
-        $('#collections_modal').modal('hide');
-    };
+    var src = $(e.currentTarget).find('img').attr('src');
+    src = src.split("/");
+    src = _.last(src);
+    $.ajax({
+        url: "img/calculated/" + src + ".json",
+        success: function (data) {
+            var img = new Image();
+            img.src = data.prefix + data.image;
+            img.onload = function () {
+                parts.add({type: "img", img: img});
+                $('#collections_modal').modal('hide');
+            };
+        },
+        error: function () {
+            console.log("error!");
+            console.log(arguments);
+        }
+    });
     return 0;
 }
+
+function select_from_internet(e) {
+    var src = $(e.currentTarget).val();
+    $.ajax({
+        url: "/imgtob64?img_url=" + src,
+        success: function (data) {
+            if(data.err!=null){
+                $(e.currentTarget).addClass("text-danger");
+                console.log("error!");
+                console.log(arguments);
+                return;
+            }
+            $(e.currentTarget).removeClass("text-danger");
+            var img = new Image();
+            img.src = data.prefix + data.image;
+            img.onload = function () {
+                parts.add({type: "img", img: img});
+                $('#paste_link_modal').modal('hide');
+            };
+        },
+        error: function () {
+            $(e.currentTarget).addClass("text-danger");
+            console.log("error!");
+            console.log(arguments);
+        }
+    });
+    return 0;
+}
+
+function on_modal_paste_link_hide(e){
+    $(e.target).find("input").val("").removeClass("text-danger");;
+}
+
+
 
 function handle_image(e) {
     var reader = new FileReader();
@@ -29,11 +75,11 @@ function handle_image(e) {
     reader.readAsDataURL(e.target.files[0]);
 }
 
-function hide_controls_and_show_bg(){
+function hide_controls_and_show_bg() {
     canvas.render_to_bg();
     $(".page-container").hide();
 }
 
-function show_controls(){
+function show_controls() {
     $(".page-container").show();
 }

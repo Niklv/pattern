@@ -6,10 +6,6 @@
     padding-right: 0;
 }
 
-.input-for-paste-link {
-    margin-top: 10px;
-}
-
 .radio-inline label {
     margin-bottom: 0;
 }
@@ -93,8 +89,43 @@ button.rndmz {
     border: 2px solid black;
 }
 
-/*modal css*/
-.modal-content {
+/*modal-pate-link css*/
+#paste_link_modal .form-group {
+    position: relative;
+    margin: 0;
+    height: 30px;
+}
+
+#paste_link_modal #input-link.text-danger {
+    border-color: #FFBEBE;
+}
+
+#paste_link_modal .form-group label {
+    position: absolute;
+    top: 5px;
+}
+
+#paste_link_modal .form-group div {
+    position: absolute;
+    top: 0;
+    left: 114px;
+    right: 46px;
+}
+
+#paste_link_modal .form-group div input {
+    width: 100%;
+}
+
+#paste_link_modal .form-group button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+/*modal-collection css*/
+#collections_modal .modal-content {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -103,18 +134,18 @@ button.rndmz {
     overflow: hidden;
 }
 
-#sample-tabs {
+#collections_modal #sample-tabs {
     width: 200px;
     float: left;
 }
 
-.modal-content .modal-header h5 {
+#collections_modal .modal-content .modal-header h5 {
     padding: 11px 15px;
     margin: 0;
     line-height: 23px;
 }
 
-.modal-content .modal-footer {
+#collections_modal .modal-content .modal-footer {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -124,7 +155,7 @@ button.rndmz {
     z-index: 1101;
 }
 
-.modal-content .modal-header {
+#collections_modal .modal-content .modal-header {
     position: absolute;
     top: 0;
     right: 0;
@@ -135,11 +166,11 @@ button.rndmz {
     text-align: center;
 }
 
-.modal-content .modal-header button.close {
+#collections_modal .modal-content .modal-header button.close {
     padding: 5px;
 }
 
-.modal-content .modal-body {
+#collections_modal .modal-content .modal-body {
     position: absolute;
     top: 46px;
     right: 0;
