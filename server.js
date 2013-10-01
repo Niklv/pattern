@@ -40,10 +40,10 @@ app.all('/imgtob64', function (req, res) {
 });*/
 
 app.configure("production", function () {
-    app.listen(15100);
+    app.listen(20200);
 });
 
 app.configure("development", function () {
-    app.listen(15155);
+    app.listen(20201);
 });
 
