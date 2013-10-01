@@ -16,7 +16,7 @@
         "url": "https://github.com/Niklv/pattern.git"
     },
     "scripts": {
-        "start": "forever start server.js"
+        "start": "node server.js"
     },
     "dependencies": {
         "express": "3.*.*",
