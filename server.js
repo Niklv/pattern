@@ -41,11 +41,11 @@ app.all('/imgtob64', function (req, res) {
 
 app.configure("production", function () {
     app.listen(20200);
-    console.log("Listen on 20200");
+    console.log("Listen on 20200!");
 });
 
 app.configure("development", function () {
     app.listen(20201);
-    console.log("Listen on 20201");
+    console.log("Listen on 20201!");
 });
 
