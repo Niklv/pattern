@@ -13,6 +13,8 @@ function select_from_library(e) {
     $.ajax({
         url: "img/calculated/" + src + ".json",
         success: function (data) {
+            if(typeof data == "string")
+                data = JSON.parse(data);
             var img = new Image();
             img.src = data.prefix + data.image;
             img.onload = function () {
