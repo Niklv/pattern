@@ -92,7 +92,7 @@ var Part = Backbone.Model.extend({
 
         this.change_layout();
         this.layout();
-        this.bind("all", this.analytics);
+        this.bind("all", _.debounce(this.analytics, 400));
         this.bind("change", this.layout);
         this.bind("change:range", this.update_to_range);
         this.bind("change:placement", this.change_layout);
