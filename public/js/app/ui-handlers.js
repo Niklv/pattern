@@ -80,6 +80,7 @@ function handle_image(e) {
 function hide_controls_and_show_bg() {
     canvas.render_to_bg();
     $(".page-container").hide();
+    ga('send', 'event', 'preview-button', 'click');
 }
 
 function show_controls() {
