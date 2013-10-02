@@ -43,6 +43,7 @@ var Canvas = Backbone.Model.extend({
     },
     color: function () {
         this.canvas.setBackgroundColor(this.get("color"));
+        ga('send', 'event', 'pattern_bg_color', 'set', this.get("color"));
     },
     width: function () {
         this.canvas.setWidth(this.get("width"));
@@ -68,6 +69,9 @@ var Canvas = Backbone.Model.extend({
         var b64 = data.split(',')[1];
         var blob = b64toBlob(b64, "image/png");
         saveAs(blob, "awesome-pattern_" + _.random(100000, 200000) + ".png");
+        ga('send', 'event', 'download_pattern', 'download');
+        ga('send', 'event', 'download_pattern', 'width', this.get("width"));
+        ga('send', 'event', 'download_pattern', 'height', this.get("height"));
     }
 });
 

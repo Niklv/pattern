@@ -10,6 +10,7 @@ function select_from_library(e) {
     var src = $(e.currentTarget).find('img').attr('src');
     src = src.split("/");
     src = _.last(src);
+    ga('send', 'event', 'select_from_library', 'select', src);
     $.ajax({
         url: "img/calculated/" + src + ".json",
         success: function (data) {
@@ -25,6 +26,7 @@ function select_from_library(e) {
         error: function () {
             console.log("error!");
             console.log(arguments);
+            ga('send', 'event', 'select_from_library', 'error', arguments);
         }
     });
     return 0;
@@ -32,6 +34,7 @@ function select_from_library(e) {
 
 function select_from_internet(e) {
     var src = $(e.currentTarget).val();
+    ga('send', 'event', 'select_from_internet', 'select', src);
     $.ajax({
         url: "/imgtob64?img_url=" + src,
         success: function (data) {
@@ -53,6 +56,7 @@ function select_from_internet(e) {
             $(e.currentTarget).addClass("text-danger");
             console.log("error!");
             console.log(arguments);
+            ga('send', 'event', 'select_from_internet', 'error', arguments);
         }
     });
     return 0;
@@ -75,6 +79,7 @@ function handle_image(e) {
         $(e.target).val("");
     };
     reader.readAsDataURL(e.target.files[0]);
+    ga('send', 'event', 'select_from_pc', 'select');
 }
 
 function hide_controls_and_show_bg() {
