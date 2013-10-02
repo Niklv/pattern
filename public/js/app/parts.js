@@ -98,46 +98,10 @@ var Part = Backbone.Model.extend({
         this.bind("change:placement", this.change_layout);
         canvas.bind("change:width change:height", this.canvas_size_changed, this);
     },
-    analytics: function (type, child, value) {
-        switch (type) {
-            case "change:placement":
-                ga('send', 'event', 'part_settings_change', 'placement', value);
-                break;
-            case "change:angle":
-                ga('send', 'event', 'part_settings_change', 'angle', value);
-                break;
-            case "change:x":
-                ga('send', 'event', 'part_settings_change', 'x', value);
-                break;
-            case "change:y":
-                ga('send', 'event', 'part_settings_change', 'y', value);
-                break;
-            case "change:height":
-                ga('send', 'event', 'part_settings_change', 'height', value);
-                break;
-            case "change:width":
-                ga('send', 'event', 'part_settings_change', 'width', value);
-                break;
-            case "change:angle_delta":
-                ga('send', 'event', 'part_settings_change', 'angle_delta', value);
-                break;
-            case "change:grid":
-                ga('send', 'event', 'part_settings_change', 'grid', value);
-                break;
-            case "change:opacity":
-                ga('send', 'event', 'part_settings_change', 'opacity', value);
-                break;
-            case "change:count":
-                ga('send', 'event', 'part_settings_change', 'count', value);
-                break;
-            case "change:offset":
-                ga('send', 'event', 'part_settings_change', 'offset', value);
-                break;
-            case "change:radius":
-                ga('send', 'event', 'part_settings_change', 'radius', value);
-                break;
-        }
-        console.log(type);
+    analytics: function (diff) {
+        for(var key in diff.changed)
+            if(diff.changed.hasOwnProperty(key))
+                ga('send', 'event', 'part_settings_change', key, diff.changed[key]);
     },
     set_range: function () {
         var range = this.get("range");
