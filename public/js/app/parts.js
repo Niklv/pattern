@@ -92,14 +92,14 @@ var Part = Backbone.Model.extend({
 
         this.change_layout();
         this.layout();
-        this.bind("all", _.debounce(this.analytics, 400));
+        this.bind("change:placement change:angle change:x change:y change:height change:width change:angle_delta change:grid change:opacity change:count change:offset change:radius", _.debounce(this.analytics, 400));
         this.bind("change", this.layout);
         this.bind("change:range", this.update_to_range);
         this.bind("change:placement", this.change_layout);
         canvas.bind("change:width change:height", this.canvas_size_changed, this);
     },
-    analytics:function(type, child, value){
-        switch(type){
+    analytics: function (type, child, value) {
+        switch (type) {
             case "change:placement":
                 ga('send', 'event', 'part_settings_change', 'placement', value);
                 break;
