@@ -43,8 +43,10 @@ button.rndmz {
     padding: 0;
     margin: 0;
     height: 25px;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #34495E;
     z-index: 500;
+    color: white;
+    outline: none;
 }
 
 /*slider css*/
@@ -277,8 +279,96 @@ button.rndmz {
 }
 
 
+/*NEW SECTION*/
 
+.controls-section-container {
+    height: 380px;
+    background-color: #95A5A6;
+    position: fixed;
+    left: -30px;
+    right: -30px;
+    bottom: 0;
+    -webkit-transition-duration: .5s;
+    -moz-transition-duration: .5s;
+    -o-transition-duration: .5s;
+    transition-duration: .5s;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
 
+.controls-section {
+    margin: 0 30px;
+}
+
+.sample-tabs {
+    border-bottom: none;
+    background-color: #BDC3C7;
+}
+
+.sample-tabs li {
+    background-color: #C5CBCF;
+    margin-bottom: 0;
+    margin-right: 1px;
+}
+
+.sample-tabs li a {
+    margin-right: 0;
+    border: none;
+    border-radius: 0;
+    height: 72px;
+    width: 100px;
+    padding: 0;
+    outline: none;
+}
+
+.sample-tabs li a div {
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 72px;
+}
+
+.sample-tabs li a div img {
+    padding: 11px;
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+.sample-tabs li a div button.close, .sample-tabs li a div:hover button.close{
+    position: absolute;
+    right: 3px;
+    text-shadow: none;
+    visibility: hidden;
+    outline: none;
+}
+
+.sample-tabs li a div:hover button.close{
+    visibility: visible;
+}
+
+.sample-tabs li a div button.close:hover{
+    color:red;
+}
+
+.sample-tabs li.add-new-sample a div {
+    font-size: 72px;
+}
+
+.sample-tabs li a:hover {
+    border: none;
+    background: none;
+}
+
+.sample-tabs li.active a, .sample-tabs li.active a:hover, .sample-tabs li.active a:focus {
+    border: none;
+    background-color: #95A5A6;
+}
+
+body {
+    background-color: #a6c77d;
+}
 
 
 

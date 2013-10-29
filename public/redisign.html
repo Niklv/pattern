@@ -1,0 +1,741 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Pattern generator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="css/bootstrap.css" rel="stylesheet" media="screen"/>
+        <link href="css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
+        <link href="css/bootstrap-colorpicker.css" rel="stylesheet" media="screen"/>
+        <link href="css/style.css" rel="stylesheet" media="screen"/>
+    </head>
+    <body>
+    <button class="preview-button">Preview</button>
+    <div class="controls-section-container">
+        <div class="controls-section">
+            <ul class="nav nav-tabs sample-tabs">
+                <li class="active"><a href="#add_new" data-toggle="tab"><div><img src="img/samples/vk_logo.png"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div></a></li>
+                <li><a href="#add_new" data-toggle="tab"><div><img src="img/samples/vk_logo.png"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div></a></li>
+                <li><a href="#add_new" data-toggle="tab"><div><img src="img/samples/lfm_Logo.png"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div></a></li>
+                <li><a href="#add_new" data-toggle="tab"><div><img src="img/samples/controls.png"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div></a></li>
+                <li><a href="#add_new" data-toggle="tab"><div><img src="img/samples/vk_logo.png"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div></a></li>
+                <li><a href="#add_new" data-toggle="tab"><div><img src="img/samples/lfm_Logo.png"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div></a></li>
+                <li><a href="#add_new" data-toggle="tab"><div><img src="img/samples/controls.png"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div></a></li>
+                <li class="add-new-sample"><a href="#add_new" data-toggle="tab"><div>+</div></a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- COLLECTION MODAL -->
+    <div class="modal" id="collections_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <ul id="sample-tabs" class="nav">
+            <li class="dropdown open active">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <h4 class="modal-title">Geometric <b class="caret"></b></h4>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="active"><a href="#geometric" tabindex="-1" data-toggle="tab">Geometric</a></li>
+                    <li><a href="#animals" tabindex="-1" data-toggle="tab">Animals</a></li>
+                    <li><a href="#abstraction" tabindex="-1" data-toggle="tab">Abstraction</a></li>
+                </ul>
+            </li>
+        </ul>
+        <h5>Click to choose</h5>
+    </div>
+    <div class="modal-body">
+    <div id="sample-tabs-content" class="tab-content">
+    <div class="tab-pane fade in active" id="geometric">
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/vk_logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/controls.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/vk_logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/controls.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/vk_logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/controls.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/vk_logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/controls.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/vk_logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/controls.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/vk_logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/controls.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/vk_logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/controls.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/vk_logo.png"/>
+            </a>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="animals">
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    <div class="box">
+        <a class="innerContent" href="#">
+            <img src="img/samples/vk_logo.png"/>
+        </a>
+    </div>
+    </div>
+    <div class="tab-pane fade" id="abstraction">
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+        <div class="box">
+            <a class="innerContent" href="#">
+                <img src="img/samples/lfm_Logo.png"/>
+            </a>
+        </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+    </div>
+
+
+    <!-- SCRIPTS -->
+    <script src="js/fabric.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui-1.10.3.custom.js"></script>
+    <script src="js/FileSaver.js"></script>
+    <script src="js/json2.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/backbone.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap-colorpicker.js"></script>
+
+
+    <!-- TEMPLATE -->
+    <script type="text/html" id="part-settings-tmpl">
+    <div class="col-sm-12">
+    <div class="row well-sm">
+    <div class="col-sm-3 image">
+        <img class="part-img img-responsive"
+             src="<%= img.src %>">
+        <button type="button" class="random btn btn-default btn-xs col-sm-12"><span
+                class="glyphicon glyphicon-refresh"></span> Random
+        </button>
+    </div>
+    <div class="col-sm-9 form-horizontal controls">
+        <div class="form-group placement">
+            <label class="col-md-2 control-label">Type</label>
+
+            <div class="col-md-10">
+                <div class="col-md-10">
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>"
+                                   value="one">
+                            One
+                        </label>
+                    </div>
+                    <div class="radio-inline">
+
+                        <label>
+                            <input type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>"
+                                   value="random">
+                            Random
+                        </label>
+                        <button class="btn btn-default btn-xs rndmz"><span class="glyphicon glyphicon-refresh"></span>
+                        </button>
+                    </div>
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>"
+                                   value="circle">
+                            Circle
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group angle">
+            <label class="col-md-2 control-label" for="part-angle">Angle</label>
+
+            <div class="col-md-10">
+                <div class="col-xs-10">
+                    <div class="slider" data-option="angle"></div>
+                </div>
+                <input id="part-angle"
+                       class="input-sm col-xs-2" data-option="angle"/>
+            </div>
+        </div>
+        <div class="form-group opacity">
+            <label class="col-md-2 control-label" for="part-opacity">Opacity</label>
+
+            <div class="col-md-10">
+                <div class="col-xs-10">
+                    <div class="slider" data-option="opacity"></div>
+                </div>
+                <input id="part-opacity"
+                       class="input-sm col-xs-2" data-option="opacity"/>
+            </div>
+        </div>
+        <div class="form-group width">
+            <label class="col-md-2 control-label" for="part-width">Width</label>
+
+            <div class="col-md-10">
+                <div class="col-xs-10">
+                    <div class="slider" data-option="width"></div>
+                </div>
+                <input id="part-width"
+                       class="input-sm col-xs-2" data-option="width"/>
+            </div>
+        </div>
+        <div class="form-group height">
+            <label class="col-md-2 control-label" for="part-width">Height</label>
+
+            <div class="col-md-10">
+                <div class="col-xs-10">
+                    <div class="slider" data-option="height"></div>
+                </div>
+                <input id="part-height"
+                       class="input-sm col-xs-2" data-option="height"/>
+            </div>
+        </div>
+        <div class="form-group grid">
+            <label class="col-md-2 control-label">Grid</label>
+
+            <div class="col-md-10">
+                <div class="col-md-10">
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="9">
+                            9
+                        </label>
+                    </div>
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="25">
+                            25
+                        </label>
+                    </div>
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="49">
+                            49
+                        </label>
+                    </div>
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" class="grid-of-obj" name="grid-of-obj-<%=id%>" value="81">
+                            81
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group count">
+            <label class="col-md-2 control-label" for="part-count">Count</label>
+
+            <div class="col-md-10">
+                <div class="col-xs-10">
+                    <div class="slider" data-option="count"></div>
+                </div>
+                <input id="part-count"
+                       class="input-sm col-xs-2" data-option="count"/>
+            </div>
+        </div>
+        <div class="form-group x">
+            <label class="col-md-2 control-label" for="part-x">X</label>
+
+            <div class="col-md-10">
+                <div class="col-xs-10">
+                    <div class="slider" data-option="x"></div>
+                </div>
+                <input id="part-x"
+                       class="input-sm col-xs-2" data-option="x"/>
+            </div>
+        </div>
+        <div class="form-group y">
+            <label class="col-md-2 control-label" for="part-y">Y</label>
+
+            <div class="col-md-10">
+                <div class="col-xs-10">
+                    <div class="slider" data-option="y"></div>
+                </div>
+                <input id="part-y"
+                       class="input-sm col-xs-2" data-option="y"/>
+            </div>
+        </div>
+        <div class="form-group radius">
+            <label class="col-md-2 control-label" for="part-radius">Radius</label>
+
+            <div class="col-md-10">
+                <div class="col-xs-10">
+                    <div class="slider" data-option="radius"></div>
+                </div>
+                <input id="part-radius"
+                       class="input-sm col-xs-2" data-option="radius"/>
+            </div>
+        </div>
+        <div class="form-group offset">
+            <label class="col-md-2 control-label" for="part-offset">Offset</label>
+
+            <div class="col-md-10">
+                <div class="col-xs-10">
+                    <div class="slider" data-option="offset"></div>
+                </div>
+                <input id="part-offset"
+                       class="input-sm col-xs-2" data-option="offset"/>
+            </div>
+        </div>
+        <div class="form-group angle-delta">
+            <label class="col-md-2 control-label" for="part-angle-delta">Angle+</label>
+
+            <div class="col-md-10">
+                <div class="col-xs-10">
+                    <div class="slider" data-option="angle_delta"></div>
+                </div>
+                <input id="part-angle-delta"
+                       class="input-sm col-xs-2" data-option="angle_delta"/>
+            </div>
+        </div>
+        <!--<div class="form-group color">
+            <label class="col-md-2 control-label" for="color-of-obj">Color</label>
+
+            <div class="col-md-10">
+                <div class="col-md-10">
+                    <div class="input-append color" data-color-format="rgba">
+                        <input id="color-of-obj" class="colorpicker input-sm" type="text"
+                               value="<%= color %>">
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <div class="form-group buttons">
+            <div class="btn-group pull-right">
+                <!--<button type="button" class="random btn btn-default btn-xs "><span
+                        class="glyphicon glyphicon-refresh"></span> Random changes
+                </button>-->
+                <button type="button" class="delete btn btn-danger btn-xs"><span
+                        class="glyphicon glyphicon-trash"></span> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <!--overlay: null-->
+    </script>
+
+    <script src="js/app/const.js"></script>
+    <script src="js/app/utils.js"></script>
+    <script src="js/app/slider.js"></script>
+    <script src="js/app/canvas.js"></script>
+    <script src="js/app/parts.js"></script>
+    <script src="js/app/ui-handlers.js"></script>
+    <script src="js/app/app.js"></script>
+
+
+    </body>
+    </html>
