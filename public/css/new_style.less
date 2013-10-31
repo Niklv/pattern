@@ -1,0 +1,237 @@
+//GOOGLE FONTS
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300&subset=latin,cyrillic);
+//LESSHAT properties
+@import "lib/lesshat.less";
+
+@w3c: true;
+@webkit: true;
+@moz: true;
+@opera: true;
+@ms: true;
+@oldWebkit: true;
+
+//TAB SETTINGS
+@controls_bg: #ffffff;
+@tab_space_bg: #95A5A6;
+@tab_active: @controls_bg;
+@tab_unactive: #BDC3C7;
+@tab_unactive_hover: #dee4e8;
+@plus_color: #000000;
+@tab_height: 50px;
+@tab_width: 135px;
+@tab_spacing: 1px;
+
+//CONTROLS SETTINGS
+@download_button: #2ECC71;
+@input_bg: #ECF0F1;
+@slider_bg: #7F8C8D;
+@slider_handle: #BDC3C7;
+@slider_range: #7F8C8D;
+
+
+//SLIDERS
+
+.ui-slider {
+  margin-top: 10px;
+  height: 5px;
+  position: relative;
+  text-align: left;
+  background-color: @slider_bg;
+  border: #EBEBEB 1px solid;
+  .border-radius(5px);
+  .ui-slider-range {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    border: 0;
+    background-color: @slider_range;
+    height: 100%;
+    top: 0;
+    left: 0;
+    .border-radius(5px);
+  }
+  .ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: 6px;
+    height: 12px;
+    cursor: pointer;
+    background-color: @slider_handle;
+    top: -4.5px;
+    margin-left: -3px;
+    .border-radius(3px);
+    //border: 2px solid #858585;
+    &:focus {
+      outline: none;
+      border: 1px solid gray;
+    }
+  }
+}
+
+
+//CHECKBOX
+
+input[type="checkbox"] {
+  display:none;
+  + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:-2px 0 0 0;
+    vertical-align:middle;
+    background:url("/img/check_radio_sheet.png") left top no-repeat;
+    cursor:pointer;
+    .user-select(none);
+  }
+  &:checked + label span {
+    background:url("/img/check_radio_sheet.png") -19px top no-repeat;
+  }
+}
+
+
+
+//TABS
+.controls-section {
+  background-color: @controls_bg;
+  height: 380px;
+  position: fixed;
+  left: -30px;
+  right: -30px;
+  bottom: 0;
+  .box-shadow(~"0 0 25px rgba(0, 0, 0, 0.4)");
+  .transition-duration(.5s);
+  .tab-wrapper {
+    margin: 0 30px;
+    .sample-tabs {
+      border-bottom: none;
+      background-color: @tab_space_bg;
+      > li {
+        background-color: @tab_unactive;
+        margin-right: @tab_spacing;
+        margin-bottom: 0;
+        &:hover {
+          background-color: @tab_unactive_hover;
+        }
+        &.active {
+          > a, > a:hover, > a:focus {
+            border: none;
+            background-color: @tab_active;
+          }
+        }
+        > a {
+          .size(@tab_width, @tab_height);
+          .border-radius(0);
+          margin-right: 0;
+          padding: 0;
+          border-radius: 0;
+          border: none;
+          outline: none;
+          &:hover {
+            background-color: @tab_unactive_hover;
+          }
+          > div {
+            min-width: 100%;
+            max-width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: @tab_height;
+            > img {
+              padding: 5px 11px;
+              max-height: 100%;
+              max-width: 100%;
+              height: auto;
+              box-sizing: border-box;
+            }
+            button.close, &:hover button.close {
+              position: absolute;
+              top: -1px;
+              right: 3px;
+              text-shadow: none;
+              visibility: hidden;
+              outline: none;
+              &:hover {
+                color: red;
+              }
+            }
+            &:hover button.close {
+              visibility: visible;
+            }
+          }
+        }
+        &.add-new-sample > a {
+          width:@tab_height;
+          > div {
+            font-size: 60px;
+            font-family: sans-serif;
+            font-weight: 100;
+            padding-top:1px;
+            color: @plus_color;
+          }
+        }
+      }
+    }
+  }
+}
+
+//TAB STYLE
+.settings-wrapper {
+  //global
+  input:not([type]), input[type='text'] {
+    border: none;
+    .border-radius(0);
+    background-color: @input_bg;
+    outline: none;
+    height: 27px;
+  }
+}
+
+//CANVAS SETTINGS
+.canvas-options {
+  #autoupdate-checkbox {
+    margin-right: 5px;
+    margin-left: 0;
+  }
+  .download-image {
+    padding-left: 15px;
+    padding-right: 15px;
+    .download {
+      background-color: @download_button;
+      background-image: none;
+      .border-radius(0);
+      border: none;
+      height: 34px;
+    }
+  }
+}
+
+//PREVIEW BUTTON
+.preview-button {
+  .size(100%, 25px);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background-color: #34495E;
+  z-index: 500;
+  color: white;
+  outline: none;
+}
+
+//DEBUG
+body {
+  background-color: #269abc;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+}
+
+h1, h2, h3, h4, h5, h6, input, label {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+}
+
+#canvas {
+  margin:0 490px;
+}

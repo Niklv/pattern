@@ -84,10 +84,10 @@ function handle_image(e) {
 
 function hide_controls_and_show_bg() {
     //canvas.render_to_bg();
-    $('.controls-section-container').css('bottom', '-300px');
+    $('.controls-section').css('bottom', '-300px');
     ga('send', 'event', 'preview-button', 'click');
 }
 
 function show_controls() {
-    $('.controls-section-container').css('bottom', '0');
+    $('.controls-section').css('bottom', '0');
 }

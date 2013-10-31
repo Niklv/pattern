@@ -25,7 +25,7 @@ function init() {
     $('a[data-toggle="tab"]').on('shown.bs.tab', update_dropdown_caption);
 }
 
-//var canvas = new Canvas;
+var canvas = new Canvas;
 //var parts = new PartCollection();
 init();
 
