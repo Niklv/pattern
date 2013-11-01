@@ -47,7 +47,7 @@
 }
 .ui-slider .ui-slider-handle:focus {
   outline: none;
-  border: 1px solid gray;
+  background-color: #91989c;
 }
 input[type="checkbox"] {
   display: none;
@@ -81,6 +81,9 @@ input[type="checkbox"]:checked + label span {
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
   transition-duration: 0.5s;
+}
+.controls-section.flow-down {
+  bottom: -300px;
 }
 .controls-section .tab-wrapper {
   margin: 0 30px;
@@ -153,12 +156,18 @@ input[type="checkbox"]:checked + label span {
 .controls-section .tab-wrapper .sample-tabs > li.add-new-sample > a {
   width: 50px;
 }
+.controls-section .tab-wrapper .sample-tabs > li.add-new-sample > a:hover {
+  cursor: pointer;
+}
 .controls-section .tab-wrapper .sample-tabs > li.add-new-sample > a > div {
   font-size: 60px;
   font-family: sans-serif;
   font-weight: 100;
   padding-top: 1px;
   color: #000000;
+}
+.controls-section .tab-wrapper .sample-tabs > li.add-new-sample > .dropdown-menu {
+  left: -1px;
 }
 .settings-wrapper input:not([type]),
 .settings-wrapper input[type='text'] {
@@ -207,6 +216,191 @@ input[type="checkbox"]:checked + label span {
   z-index: 500;
   color: white;
   outline: none;
+}
+#paste_link_modal .form-group {
+  position: relative;
+  margin: 0;
+  height: 30px;
+}
+#paste_link_modal #input-link.text-danger {
+  border-color: #FFBEBE;
+}
+#paste_link_modal .form-group label {
+  position: absolute;
+  top: 5px;
+}
+#paste_link_modal .form-group div {
+  position: absolute;
+  top: 0;
+  left: 114px;
+  right: 46px;
+}
+#paste_link_modal .form-group div input {
+  width: 100%;
+}
+#paste_link_modal .form-group button {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding-bottom: 4px;
+  padding-top: 4px;
+}
+#collections_modal .modal-content {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  overflow: hidden;
+}
+#collections_modal .modal-content .modal-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 0;
+  z-index: 1101;
+  background-color: #fff;
+  text-align: center;
+}
+#collections_modal .modal-content .modal-header button.close {
+  padding: 5px;
+}
+#collections_modal .modal-content .modal-header h5 {
+  padding: 11px 15px;
+  margin: 0;
+  line-height: 23px;
+}
+#collections_modal .modal-content .modal-footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 10px;
+  margin-top: 0;
+  z-index: 1101;
+}
+#collections_modal .modal-content .modal-body {
+  position: absolute;
+  top: 46px;
+  right: 0;
+  left: 0;
+  bottom: 54px;
+  overflow-y: auto;
+  background: linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
+  -webkit-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+  -moz-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+  background-attachment: local, local, scroll, scroll;
+  background-repeat: no-repeat;
+  background-color: white;
+  z-index: 1100;
+}
+#collections_modal #sample-collections-tabs {
+  width: 200px;
+  float: left;
+}
+/*the grid*/
+.box {
+  width: 50%;
+  padding-bottom: 50%;
+  position: relative;
+  float: left;
+  overflow: hidden;
+}
+.box .innerContent {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
+  overflow: hidden;
+  text-align: center;
+  font-size: 0;
+  border: solid 1px #D6D6D6;
+  -webkit-border-radius: 5px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -moz-background-clip: padding;
+  border-radius: 5px;
+  background-clip: padding-box;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  /*background-color: #fff;*/
+}
+.box .innerContent img {
+  max-width: 90%;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+.box .innerContent:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.box .innerContent:hover {
+  border-color: rgba(31, 147, 255, 0.5);
+  -webkit-box-shadow: 0 0 10px rgba(31, 147, 255, 0.50);
+  -moz-box-shadow: 0 0 10px rgba(31, 147, 255, 0.50);
+  box-shadow: 0 0 10px rgba(31, 147, 255, 0.50);
+}
+@media (min-width: 200px) {
+  .box {
+    width: 100%;
+    padding-bottom: 100%;
+  }
+}
+@media (min-width: 400px) {
+  .box {
+    width: 33.333333333333336%;
+    padding-bottom: 33.333333333333336%;
+  }
+}
+@media (min-width: 600px) {
+  .box {
+    width: 25%;
+    padding-bottom: 25%;
+  }
+}
+@media (min-width: 800px) {
+  .box {
+    width: 20%;
+    padding-bottom: 20%;
+  }
+}
+@media (min-width: 1000px) {
+  .box {
+    width: 16.666666666666668%;
+    padding-bottom: 16.666666666666668%;
+  }
+}
+@media (min-width: 1200px) {
+  .box {
+    width: 14.285714285714286%;
+    padding-bottom: 14.285714285714286%;
+  }
+}
+@media (min-width: 1400px) {
+  .box {
+    width: 12.5%;
+    padding-bottom: 12.5%;
+  }
+}
+@media (min-width: 1600px) {
+  .box {
+    width: 11.11111111111111%;
+    padding-bottom: 11.11111111111111%;
+  }
+}
+@media (min-width: 1800px) {
+  .box {
+    width: 10%;
+    padding-bottom: 10%;
+  }
 }
 body {
   background-color: #269abc;

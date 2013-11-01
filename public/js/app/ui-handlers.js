@@ -19,8 +19,8 @@ function select_from_library(e) {
             var img = new Image();
             img.src = data.prefix + data.image;
             img.onload = function () {
-                parts.add({type: "img", img: img});
                 $('#collections_modal').modal('hide');
+                parts.add({type: "img", img: img});
             };
         },
         error: function () {
@@ -84,10 +84,14 @@ function handle_image(e) {
 
 function hide_controls_and_show_bg() {
     //canvas.render_to_bg();
-    $('.controls-section').css('bottom', '-300px');
+    //$('.controls-section').css('bottom', '-300px');
+    $('.controls-section').addClass("flow-down");
     ga('send', 'event', 'preview-button', 'click');
 }
 
 function show_controls() {
-    $('.controls-section').css('bottom', '0');
+    $('.controls-section').removeClass("flow-down");//css('bottom', '0');
 }
+
+
+

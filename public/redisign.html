@@ -14,48 +14,31 @@
 <div class="controls-section">
     <div class="tab-wrapper">
         <ul class="nav nav-tabs sample-tabs">
-            <li class="active"><a href="#add_new1" data-toggle="tab">
+            <!--<li class="active"><a href="#add_new1" data-toggle="tab">
                 <div><img src="img/samples/vk_logo.png">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-            </a></li>
-            <li><a href="#add_new2" data-toggle="tab">
-                <div><img src="img/samples/vk_logo.png">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-            </a></li>
-            <li><a href="#add_new3" data-toggle="tab">
-                <div><img src="img/samples/lfm_Logo.png">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-            </a></li>
-            <li><a href="#add_new4" data-toggle="tab">
-                <div><img src="img/samples/controls.png">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-            </a></li>
-            <li><a href="#add_new5" data-toggle="tab">
-                <div><img src="img/samples/vk_logo.png">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-            </a></li>
-            <li><a href="#add_new6" data-toggle="tab">
-                <div><img src="img/samples/lfm_Logo.png">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-            </a></li>
-            <li><a href="#add_new7" data-toggle="tab">
-                <div><img src="img/samples/controls.png">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-            </a></li>
-            <li class="add-new-sample"><a href="#add_new" data-toggle="tab">
-                <div>+</div>
-            </a></li>
+            </a></li>-->
+            <li class="add-new-sample dropdown">
+                <a class="dropdown-toggle" id="add_new_menu" data-toggle="dropdown">
+                    <div>+</div>
+                </a>
+                <input id="file-uploader" type="file" style="display:none;">
+                <ul class="dropdown-menu" role="menu" aria-labelledby="add_new_menu">
+                    <li role="presentation"><a class="upload-file" role="menuitem" tabindex="-1" href="#"><span
+                            class="glyphicon glyphicon-upload"></span> Upload</a></li>
+                    <li role="presentation"><a class="show-samples" role="menuitem" tabindex="-1" data-toggle="modal"
+                                               href="#collections_modal"><span
+                            class="glyphicon glyphicon-star"></span> Choose from collection</a></li>
+                    <li role="presentation"><a class="show-paste-link" role="menuitem" tabindex="-1" data-toggle="modal"
+                                               href="#paste_link_modal"><span
+                            class="glyphicon glyphicon-file"></span> Paste Link</a></li>
+                </ul>
+            </li>
         </ul>
         <div class="settings-wrapper">
             <div class="tab-content col-sm-8">
-                <div class="tab-pane fade in active" id="add_new1">
+                <!--<div class="tab-pane fade in active" id="add_new1">
                     <div class="col-sm-12"><h3>Пше-Пше</h3></div>
                     <div class="col-sm-6">egsgzsgh
                     zsehzshezshzseh
@@ -63,14 +46,7 @@
                     <div class="col-sm-6">egsgzsgh
                         zsehzshezshzseh
                         zsehzse</div>
-                </div>
-                <div class="tab-pane fade" id="add_new2">.2135125..</div>
-                <div class="tab-pane fade" id="add_new3">.235..</div>
-                <div class="tab-pane fade" id="add_new4">.1235..</div>
-                <div class="tab-pane fade" id="add_new5">.235125123.</div>
-                <div class="tab-pane fade" id="add_new6">.1235125..</div>
-                <div class="tab-pane fade" id="add_new7">..1235312512.</div>
-                <div class="tab-pane fade" id="add_new">..123512351235512512.</div>
+                </div>-->
             </div>
             <div class="canvas-options form-horizontal col-sm-4">
                 <h3>Pattern settings panel</h3>
@@ -121,12 +97,35 @@
 </div>
 
 
+<!-- PASTE LINK MODAL -->
+<div class="modal fade" id="paste_link_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="input-link">Paste link here:</label>
+
+                        <div>
+                            <input id="input-link" type="text" class="input-sm"/>
+                        </div>
+                        <button id="paste-link-button" type="button" class="btn btn-success"><span
+                                class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- COLLECTION MODAL -->
 <div class="modal" id="collections_modal" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-content">
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <ul id="sample-tabs" class="nav">
+    <ul id="sample-collections-tabs" class="nav">
         <li class="dropdown open active">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <h4 class="modal-title">Geometric <b class="caret"></b></h4>
@@ -609,7 +608,16 @@
 <script src="js/bootstrap-colorpicker.js"></script>
 
 
-<!-- TEMPLATE -->
+<!-- SETTINGS TAB TEMPLATE -->
+<script type="text/html" id="part-settings-tab-header-tmpl">
+    <li><a href="#settings-panel-<%=id%>" data-toggle="tab">
+        <div><img src="<%= img.src %>">
+            <button type="button" class="close" aria-hidden="true">&times;</button>
+        </div>
+    </a></li>
+</script>
+
+<!-- SETTINGS TEMPLATE -->
 <script type="text/html" id="part-settings-tmpl">
 <div class="col-sm-12">
 <div class="row well-sm">

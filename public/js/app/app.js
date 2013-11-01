@@ -8,7 +8,7 @@ ga('send', 'pageview');
 
 function init() {
     console.log("init app and controls");
-    $('button.upload-file').click(upload_file);
+    $('.upload-file').click(upload_file);
     $('#file-uploader').change(handle_image);
     $('a.innerContent').click(select_from_library);
     $('#input-link').change(select_from_internet);
@@ -26,6 +26,6 @@ function init() {
 }
 
 var canvas = new Canvas;
-//var parts = new PartCollection();
+var parts = new PartCollection();
 init();
 

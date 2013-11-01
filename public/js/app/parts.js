@@ -99,8 +99,8 @@ var Part = Backbone.Model.extend({
         canvas.bind("change:width change:height", this.canvas_size_changed, this);
     },
     analytics: function (diff) {
-        for(var key in diff.changed)
-            if(diff.changed.hasOwnProperty(key))
+        for (var key in diff.changed)
+            if (diff.changed.hasOwnProperty(key))
                 ga('send', 'event', 'part_settings_change', key, diff.changed[key]);
     },
     set_range: function () {
@@ -349,12 +349,15 @@ var Fabric = Backbone.Model.extend({
 });
 
 var PartView = Backbone.View.extend({
+    $tabHeader: null,
     tagName: "div",
-    className: "row pattern-part",
+    className: "tab-pane fade",
     template: _.template($("#part-settings-tmpl").html()),
+    tabHeaderTemplate: _.template($("#part-settings-tab-header-tmpl").html()),
     allowed_keys: [],
     init_controls: function () {
         //console.log(this.model.attributes);
+        this.$tabHeader.find('button.close').click(_.bind(this.remove, this));
         this.$el.find('.colorpicker').colorpicker({format: "rgba"});
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
@@ -439,17 +442,32 @@ var PartView = Backbone.View.extend({
         }
     },
     place: function () {
-        this.$el.hide();
-        $('.control-panel > .row:first-child').after(this.$el);
-        this.$el.slideDown(ANIM_TIME);
+        //this.$el.hide();
+        //$('.control-panel > .row:first-child').after(this.$el);
+        //1 create tab+
+        $('.controls-section .sample-tabs .active').removeClass('active').removeClass('in');
+        $('.controls-section .tab-content .active').removeClass('active');
+        $('.controls-section .add-new-sample').before(this.$tabHeader);
+        $('.controls-section .tab-content').append(this.$el);
+        this.$tabHeader.find('a').tab('show');
+
+        //this.$tabHeader.find('a').tab('show');
+        //2 paste tab content
+
+        //3 focus to tab
+
+        //this.$el.slideDown(ANIM_TIME);
+        //$('li.active').removeClass('active');
+        //this.$tabHeader.addClass('active');
         return this;
     },
     render: function () {
         this.$el.html(this.template(this.model.attributes));
+        this.$el.attr('id', "settings-panel-" + this.model.get("id"));
+        this.$tabHeader = $(this.tabHeaderTemplate(this.model.attributes));
         return this;
     },
     events: {
-        "click button.delete": "remove",
         "click button.rndmz": "generate_random_layout",
         "change input[type=radio]": "radio_changed",
         "change input.placement-of-obj": "change_settings_order",
@@ -480,9 +498,14 @@ var PartView = Backbone.View.extend({
     },
     remove: function () {
         parts.remove(this.model);
-        this.$el.slideUp(ANIM_TIME, function () {
-            $(this).remove()
+        //this.$el.animate({width: "0px"}, ANIM_TIME*10, function(){
+            //this.remove()
+        //});
+        this.$el.remove();
+        this.$tabHeader.animate({width: "0px"}, ANIM_TIME*10, function(){
+            this.remove()
         });
+        //this.$tabHeader.remove();
     },
     radio_changed: function (ev) {
         var p_name = $(ev.target).attr("class").replace("-of-obj", "").replace("-", "_");
