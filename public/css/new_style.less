@@ -22,21 +22,27 @@
 @tab_spacing: 1px;
 
 //CONTROLS SETTINGS
-@download_button: #2ECC71;
+@button_color: #2ECC71;
+@download_button: @button_color;
 @input_bg: #ECF0F1;
 @slider_bg: #7F8C8D;
 @slider_handle: #BDC3C7;
 @slider_handle_active: #91989c;
 @slider_range: #7F8C8D;
+@slider_side_margin: 7px;
+@slider_heigth: 5px;
+@input_len: 62px;
+@label_len: 62px;
+@controls_row: 27px;
+@controls_bot_margin: 5px;
 
 //IMG
 @check_box_img: "/img/check_radio_sheet.png";
 
 //SLIDERS
-
 .ui-slider {
-  margin-top: 10px;
-  height: 5px;
+  margin-top: 11px;
+  height: @slider_heigth;
   position: relative;
   text-align: left;
   background-color: @slider_bg;
@@ -72,9 +78,8 @@
   }
 }
 
-//CHECKBOX
-
-input[type="checkbox"] {
+//CHECKBOX AND RADIO
+input[type="checkbox"], input[type="radio"] {
   display: none;
   + label span {
     display: inline-block;
@@ -82,19 +87,40 @@ input[type="checkbox"] {
     height: 19px;
     margin: -2px 0 0 0;
     vertical-align: middle;
-    background: url(@check_box_img) left top no-repeat;
     cursor: pointer;
     .user-select(none);
   }
-  &:checked + label span {
-    background: url(@check_box_img) -19px top no-repeat;
+  &[type="checkbox"] {
+    + label span {
+      background: url(@check_box_img) left top no-repeat;
+    }
+    &:checked + label span {
+      background: url(@check_box_img) -19px top no-repeat;
+    }
+  }
+  &[type="radio"] {
+    + label span:first-child {
+      background: url(@check_box_img) -38px top no-repeat;
+    }
+    &:checked + label span {
+      background: url(@check_box_img) -57px top no-repeat;
+    }
   }
 }
 
-//TABS
+//BUTTONS
+.green-button {
+  background-color: @download_button;
+  background-image: none;
+  .border-radius(0);
+  border: none;
+  color: white;
+}
+
+//CONTROLS SECTION
 .controls-section {
   background-color: @controls_bg;
-  height: 380px;
+  height: 310px;
   position: fixed;
   left: -30px;
   right: -30px;
@@ -190,33 +216,68 @@ input[type="checkbox"] {
   }
 }
 
-//TAB STYLE
+//TAB CONTENT STYLE
 .settings-wrapper {
-  //global
   input:not([type]), input[type='text'] {
     border: none;
     .border-radius(0);
     background-color: @input_bg;
     outline: none;
     height: 27px;
+    padding: 0px 3px 0px 3px;
   }
-}
-
-//CANVAS SETTINGS
-.canvas-options {
-  #autoupdate-checkbox {
-    margin-right: 5px;
-    margin-left: 0;
+  .tab-content .tab-pane {
+    > div {
+      padding-left: 0;
+    }
+    button.random {
+      font-size: 10px;
+    }
   }
-  .download-image {
-    padding-left: 15px;
-    padding-right: 15px;
-    .download {
-      background-color: @download_button;
-      background-image: none;
-      .border-radius(0);
-      border: none;
-      height: 34px;
+  .canvas-options {
+    padding-left: 0;
+    .autoupdate-checkbox label {
+      padding-left: 0;
+    }
+    .download-image {
+      .download {
+        background-color: @download_button;
+        background-image: none;
+        .border-radius(0);
+        border: none;
+        height: 34px;
+      }
+    }
+  }
+  .control {
+    width: 100%;
+    height: @controls_row;
+    margin-bottom: @controls_bot_margin;
+    position: relative;
+    > label {
+      padding-top: 3px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      margin: 0;
+    }
+    > div {
+      position: absolute;
+      left: @label_len + @slider_side_margin;
+      right: @input_len + @slider_side_margin;
+      &.radio-case {
+        padding-top: 4px;
+        label {
+          margin-right: 7px;
+        }
+      }
+    }
+    > input, > button {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: @input_len;
+      height: 100%;
     }
   }
 }

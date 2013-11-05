@@ -352,8 +352,9 @@ var PartView = Backbone.View.extend({
     $tabHeader: null,
     tagName: "div",
     className: "tab-pane fade",
-    template: _.template($("#part-settings-tmpl").html()),
-    tabHeaderTemplate: _.template($("#part-settings-tab-header-tmpl").html()),
+    template: _.template($("#part-settings-tmpl").remove().text()),
+    tabHeaderTemplate: _.template($("#part-settings-tab-header-tmpl").remove().text()),
+    controlTemplate: _.template($("#part-settings-control").remove().text()),
     allowed_keys: [],
     init_controls: function () {
         //console.log(this.model.attributes);
@@ -363,81 +364,81 @@ var PartView = Backbone.View.extend({
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
         switch (this.$el.find('.placement input:checked').val()) {
             case "one":
-                this.$el.find('.form-group.x').show();
-                this.$el.find('.form-group.y').show();
-                this.$el.find('.form-group.angle').show();
-                this.$el.find('.form-group.count').hide();
-                this.$el.find('.form-group.offset').hide();
-                this.$el.find('.form-group.angle-delta').hide();
-                this.$el.find('.form-group.radius').hide();
-                this.$el.find('.form-group.placement button.rndmz').hide();
+                this.$el.find('.x').show();
+                this.$el.find('.y').show();
+                this.$el.find('.angle').show();
+                this.$el.find('.count').hide();
+                this.$el.find('.offset').hide();
+                this.$el.find('.angle-delta').hide();
+                this.$el.find('.radius').hide();
+                this.$el.find('.placement button.rndmz').hide();
                 break;
             case "random":
-                this.$el.find('.form-group.x').hide();
-                this.$el.find('.form-group.y').hide();
-                this.$el.find('.form-group.angle').hide();
-                this.$el.find('.form-group.count').show();
-                this.$el.find('.form-group.offset').hide();
-                this.$el.find('.form-group.angle-delta').hide();
-                this.$el.find('.form-group.radius').hide();
-                this.$el.find('.form-group.placement button.rndmz').show();
+                this.$el.find('.x').hide();
+                this.$el.find('.y').hide();
+                this.$el.find('.angle').hide();
+                this.$el.find('.count').show();
+                this.$el.find('.offset').hide();
+                this.$el.find('.angle-delta').hide();
+                this.$el.find('.radius').hide();
+                this.$el.find('.placement button.rndmz').show();
                 break;
             case "circle":
-                this.$el.find('.form-group.x').show();
-                this.$el.find('.form-group.y').show();
-                this.$el.find('.form-group.angle').show();
-                this.$el.find('.form-group.count').show();
-                this.$el.find('.form-group.offset').show();
-                this.$el.find('.form-group.angle-delta').show();
-                this.$el.find('.form-group.radius').show();
-                this.$el.find('.form-group.placement button.rndmz').hide();
+                this.$el.find('.x').show();
+                this.$el.find('.y').show();
+                this.$el.find('.angle').show();
+                this.$el.find('.count').show();
+                this.$el.find('.offset').show();
+                this.$el.find('.angle-delta').show();
+                this.$el.find('.radius').show();
+                this.$el.find('.placement button.rndmz').hide();
                 break;
         }
 
-        new Slider({model: this.model, name: "angle", jquery_object: this.$el.find(".form-group.angle")});
-        new Slider({model: this.model, name: "opacity", jquery_object: this.$el.find(".form-group.opacity")});
-        new Slider({model: this.model, name: "width", jquery_object: this.$el.find(".form-group.width")});
-        new Slider({model: this.model, name: "height", jquery_object: this.$el.find(".form-group.height")});
-        new Slider({model: this.model, name: "count", jquery_object: this.$el.find(".form-group.count")});
-        new Slider({model: this.model, name: "x", jquery_object: this.$el.find(".form-group.x")});
-        new Slider({model: this.model, name: "y", jquery_object: this.$el.find(".form-group.y")});
-        new Slider({model: this.model, name: "radius", jquery_object: this.$el.find(".form-group.radius")});
-        new Slider({model: this.model, name: "angle_delta", jquery_object: this.$el.find(".form-group.angle-delta")});
-        new Slider({model: this.model, name: "offset", jquery_object: this.$el.find(".form-group.offset")});
+        new Slider({model: this.model, name: "angle", jquery_object: this.$el.find(".angle")});
+        new Slider({model: this.model, name: "opacity", jquery_object: this.$el.find(".opacity")});
+        new Slider({model: this.model, name: "width", jquery_object: this.$el.find(".width")});
+        new Slider({model: this.model, name: "height", jquery_object: this.$el.find(".height")});
+        new Slider({model: this.model, name: "count", jquery_object: this.$el.find(".count")});
+        new Slider({model: this.model, name: "x", jquery_object: this.$el.find(".x")});
+        new Slider({model: this.model, name: "y", jquery_object: this.$el.find(".y")});
+        new Slider({model: this.model, name: "radius", jquery_object: this.$el.find(".radius")});
+        new Slider({model: this.model, name: "angle_delta", jquery_object: this.$el.find(".angle-delta")});
+        new Slider({model: this.model, name: "offset", jquery_object: this.$el.find(".offset")});
 
         return this;
     },
     change_settings_order: function () {
         switch (this.$el.find('.placement input:checked').val()) {
             case "one":
-                this.$el.find('.form-group.x').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.y').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.angle').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.count').slideUp(ANIM_TIME);
-                this.$el.find('.form-group.offset').slideUp(ANIM_TIME);
-                this.$el.find('.form-group.angle-delta').slideUp(ANIM_TIME);
-                this.$el.find('.form-group.radius').slideUp(ANIM_TIME);
-                this.$el.find('.form-group.placement button.rndmz').hide();
+                this.$el.find('.x').slideDown(ANIM_TIME);
+                this.$el.find('.y').slideDown(ANIM_TIME);
+                this.$el.find('.angle').slideDown(ANIM_TIME);
+                this.$el.find('.count').slideUp(ANIM_TIME);
+                this.$el.find('.offset').slideUp(ANIM_TIME);
+                this.$el.find('.angle-delta').slideUp(ANIM_TIME);
+                this.$el.find('.radius').slideUp(ANIM_TIME);
+                this.$el.find('.placement button.rndmz').hide();
                 break;
             case "random":
-                this.$el.find('.form-group.x').slideUp(ANIM_TIME);
-                this.$el.find('.form-group.y').slideUp(ANIM_TIME);
-                this.$el.find('.form-group.angle').slideUp(ANIM_TIME);
-                this.$el.find('.form-group.count').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.offset').slideUp(ANIM_TIME);
-                this.$el.find('.form-group.angle-delta').slideUp(ANIM_TIME);
-                this.$el.find('.form-group.radius').slideUp(ANIM_TIME);
-                this.$el.find('.form-group.placement button.rndmz').show();
+                this.$el.find('.x').slideUp(ANIM_TIME);
+                this.$el.find('.y').slideUp(ANIM_TIME);
+                this.$el.find('.angle').slideUp(ANIM_TIME);
+                this.$el.find('.count').slideDown(ANIM_TIME);
+                this.$el.find('.offset').slideUp(ANIM_TIME);
+                this.$el.find('.angle-delta').slideUp(ANIM_TIME);
+                this.$el.find('.radius').slideUp(ANIM_TIME);
+                this.$el.find('.placement button.rndmz').show();
                 break;
             case "circle":
-                this.$el.find('.form-group.x').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.y').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.angle').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.count').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.offset').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.angle-delta').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.radius').slideDown(ANIM_TIME);
-                this.$el.find('.form-group.placement button.rndmz').hide();
+                this.$el.find('.x').slideDown(ANIM_TIME);
+                this.$el.find('.y').slideDown(ANIM_TIME);
+                this.$el.find('.angle').slideDown(ANIM_TIME);
+                this.$el.find('.count').slideDown(ANIM_TIME);
+                this.$el.find('.offset').slideDown(ANIM_TIME);
+                this.$el.find('.angle-delta').slideDown(ANIM_TIME);
+                this.$el.find('.radius').slideDown(ANIM_TIME);
+                this.$el.find('.placement button.rndmz').hide();
                 break;
         }
     },
@@ -462,7 +463,7 @@ var PartView = Backbone.View.extend({
         return this;
     },
     render: function () {
-        this.$el.html(this.template(this.model.attributes));
+        this.$el.html(this.template(_.extend(this.model.attributes, {control: this.controlTemplate})));
         this.$el.attr('id', "settings-panel-" + this.model.get("id"));
         this.$tabHeader = $(this.tabHeaderTemplate(this.model.attributes));
         return this;
@@ -482,8 +483,8 @@ var PartView = Backbone.View.extend({
         this.$el.find("button.random").attr("disabled", true);
         this.model.randomize();
         var v = this.model.attributes;
-        this.$el.find('.form-group.placement input[value=' + v.placement + ']').prop('checked', true);
-        this.$el.find('.form-group.grid input[value=' + v.grid + ']').prop('checked', true);
+        this.$el.find('.placement input[value=' + v.placement + ']').prop('checked', true);
+        this.$el.find('.grid input[value=' + v.grid + ']').prop('checked', true);
         this.change_settings_order();
         this.$el.find("button.random").attr("disabled", false);
     },
@@ -499,13 +500,12 @@ var PartView = Backbone.View.extend({
     remove: function () {
         parts.remove(this.model);
         //this.$el.animate({width: "0px"}, ANIM_TIME*10, function(){
-            //this.remove()
+        //this.remove()
         //});
         this.$el.remove();
-        this.$tabHeader.animate({width: "0px"}, ANIM_TIME*10, function(){
+        this.$tabHeader.animate({width: "0px"}, ANIM_TIME * 2, function () {
             this.remove()
         });
-        //this.$tabHeader.remove();
     },
     radio_changed: function (ev) {
         var p_name = $(ev.target).attr("class").replace("-of-obj", "").replace("-", "_");

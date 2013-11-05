@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300&subset=latin,cyrillic);
 .ui-slider {
-  margin-top: 10px;
+  margin-top: 11px;
   height: 5px;
   position: relative;
   text-align: left;
@@ -49,27 +49,53 @@
   outline: none;
   background-color: #91989c;
 }
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
   display: none;
 }
-input[type="checkbox"] + label span {
+input[type="checkbox"] + label span,
+input[type="radio"] + label span {
   display: inline-block;
   width: 19px;
   height: 19px;
   margin: -2px 0 0 0;
   vertical-align: middle;
-  background: url("/img/check_radio_sheet.png") left top no-repeat;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
 }
-input[type="checkbox"]:checked + label span {
+input[type="checkbox"][type="checkbox"] + label span,
+input[type="radio"][type="checkbox"] + label span {
+  background: url("/img/check_radio_sheet.png") left top no-repeat;
+}
+input[type="checkbox"][type="checkbox"]:checked + label span,
+input[type="radio"][type="checkbox"]:checked + label span {
   background: url("/img/check_radio_sheet.png") -19px top no-repeat;
+}
+input[type="checkbox"][type="radio"] + label span:first-child,
+input[type="radio"][type="radio"] + label span:first-child {
+  background: url("/img/check_radio_sheet.png") -38px top no-repeat;
+}
+input[type="checkbox"][type="radio"]:checked + label span,
+input[type="radio"][type="radio"]:checked + label span {
+  background: url("/img/check_radio_sheet.png") -57px top no-repeat;
+}
+.green-button {
+  background-color: #2ecc71;
+  background-image: none;
+  -webkit-border-radius: 0;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 0;
+  -moz-background-clip: padding;
+  border-radius: 0;
+  background-clip: padding-box;
+  border: none;
+  color: white;
 }
 .controls-section {
   background-color: #ffffff;
-  height: 380px;
+  height: 310px;
   position: fixed;
   left: -30px;
   right: -30px;
@@ -181,16 +207,21 @@ input[type="checkbox"]:checked + label span {
   background-color: #ecf0f1;
   outline: none;
   height: 27px;
+  padding: 0px 3px 0px 3px;
 }
-.canvas-options #autoupdate-checkbox {
-  margin-right: 5px;
-  margin-left: 0;
+.settings-wrapper .tab-content .tab-pane > div {
+  padding-left: 0;
 }
-.canvas-options .download-image {
-  padding-left: 15px;
-  padding-right: 15px;
+.settings-wrapper .tab-content .tab-pane button.random {
+  font-size: 10px;
 }
-.canvas-options .download-image .download {
+.settings-wrapper .canvas-options {
+  padding-left: 0;
+}
+.settings-wrapper .canvas-options .autoupdate-checkbox label {
+  padding-left: 0;
+}
+.settings-wrapper .canvas-options .download-image .download {
   background-color: #2ecc71;
   background-image: none;
   -webkit-border-radius: 0;
@@ -201,6 +232,38 @@ input[type="checkbox"]:checked + label span {
   background-clip: padding-box;
   border: none;
   height: 34px;
+}
+.settings-wrapper .control {
+  width: 100%;
+  height: 27px;
+  margin-bottom: 5px;
+  position: relative;
+}
+.settings-wrapper .control > label {
+  padding-top: 3px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin: 0;
+}
+.settings-wrapper .control > div {
+  position: absolute;
+  left: 69px;
+  right: 69px;
+}
+.settings-wrapper .control > div.radio-case {
+  padding-top: 4px;
+}
+.settings-wrapper .control > div.radio-case label {
+  margin-right: 7px;
+}
+.settings-wrapper .control > input,
+.settings-wrapper .control > button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 62px;
+  height: 100%;
 }
 .preview-button {
   width: 100%;
