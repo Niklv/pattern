@@ -32,14 +32,14 @@
 @slider_side_margin: 7px;
 @slider_heigth: 5px;
 @input_len: 62px;
-@label_len: 62px;
+@label_len: 55px;
 @controls_row: 27px;
 @controls_bot_margin: 5px;
 
 //IMG
 @check_box_img: "/img/check_radio_sheet.png";
 
-//SLIDERS
+//SLIDER
 .ui-slider {
   margin-top: 11px;
   height: @slider_heigth;
@@ -78,7 +78,7 @@
   }
 }
 
-//CHECKBOX AND RADIO
+//CHECKBOX AND RADIO DESIGN
 input[type="checkbox"], input[type="radio"] {
   display: none;
   + label span {
@@ -89,6 +89,9 @@ input[type="checkbox"], input[type="radio"] {
     vertical-align: middle;
     cursor: pointer;
     .user-select(none);
+  }
+  + label {
+    padding-left: 0;
   }
   &[type="checkbox"] {
     + label span {
@@ -108,7 +111,17 @@ input[type="checkbox"], input[type="radio"] {
   }
 }
 
-//BUTTONS
+//INPUT DESIGN
+input:not([type]), input[type='text'] {
+  border: none;
+  .border-radius(0);
+  background-color: @input_bg;
+  outline: none;
+  height: 27px;
+  padding: 3px;
+}
+
+//BUTTON DESIGN
 .green-button {
   background-color: @download_button;
   background-image: none;
@@ -120,19 +133,19 @@ input[type="checkbox"], input[type="radio"] {
 //CONTROLS SECTION
 .controls-section {
   background-color: @controls_bg;
-  height: 310px;
   position: fixed;
   left: -30px;
   right: -30px;
   bottom: 0;
   .box-shadow(~"0 0 25px rgba(0, 0, 0, 0.4)");
   .transition-duration(.5s);
+  height: 320px;
   &.flow-down {
-    bottom: -300px;
-
+    bottom: -300px; //hide panel
   }
   .tab-wrapper {
     margin: 0 30px;
+    //TABS
     .sample-tabs {
       border-bottom: none;
       background-color: @tab_space_bg;
@@ -213,71 +226,55 @@ input[type="checkbox"], input[type="radio"] {
         }
       }
     }
-  }
-}
-
-//TAB CONTENT STYLE
-.settings-wrapper {
-  input:not([type]), input[type='text'] {
-    border: none;
-    .border-radius(0);
-    background-color: @input_bg;
-    outline: none;
-    height: 27px;
-    padding: 0px 3px 0px 3px;
-  }
-  .tab-content .tab-pane {
-    > div {
-      padding-left: 0;
-    }
-    button.random {
-      font-size: 10px;
-    }
-  }
-  .canvas-options {
-    padding-left: 0;
-    .autoupdate-checkbox label {
-      padding-left: 0;
-    }
-    .download-image {
-      .download {
-        background-color: @download_button;
-        background-image: none;
-        .border-radius(0);
-        border: none;
-        height: 34px;
-      }
-    }
-  }
-  .control {
-    width: 100%;
-    height: @controls_row;
-    margin-bottom: @controls_bot_margin;
-    position: relative;
-    > label {
-      padding-top: 3px;
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      margin: 0;
-    }
-    > div {
-      position: absolute;
-      left: @label_len + @slider_side_margin;
-      right: @input_len + @slider_side_margin;
-      &.radio-case {
-        padding-top: 4px;
-        label {
-          margin-right: 7px;
+    //TAB CONTENT
+    .settings-wrapper {
+      .tab-content .tab-pane {
+        > div {
+          padding-left: 0;
+        }
+        button.random {
+          font-size: 10px;
         }
       }
-    }
-    > input, > button {
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      width: @input_len;
-      height: 100%;
+      .canvas-options {
+        padding-left: 0;
+        .download-image {
+          .download {
+            height: 34px;
+          }
+        }
+      }
+      .control {
+        width: 100%;
+        height: @controls_row;
+        margin-bottom: @controls_bot_margin;
+        position: relative;
+        > label {
+          padding-top: 3px;
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          margin: 0;
+        }
+        > div {
+          position: absolute;
+          left: @label_len + @slider_side_margin;
+          right: @input_len + @slider_side_margin;
+          &.radio-case {
+            padding-top: 4px;
+            label {
+              margin-right: 7px;
+            }
+          }
+        }
+        > input, > button {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          width: @input_len;
+          height: 100%;
+        }
+      }
     }
   }
 }
