@@ -213,14 +213,8 @@ input[type='text'] {
 .controls-section .tab-wrapper .sample-tabs > li.add-new-sample > .dropdown-menu {
   left: -1px;
 }
-.controls-section .tab-wrapper .settings-wrapper .tab-content .tab-pane > div {
-  padding-left: 0;
-}
 .controls-section .tab-wrapper .settings-wrapper .tab-content .tab-pane button.random {
   font-size: 10px;
-}
-.controls-section .tab-wrapper .settings-wrapper .canvas-options {
-  padding-left: 0;
 }
 .controls-section .tab-wrapper .settings-wrapper .canvas-options .download-image .download {
   height: 34px;
