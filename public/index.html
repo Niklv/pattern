@@ -36,9 +36,9 @@
             <div class="canvas-options controls col-sm-4">
                 <h3>Pattern settings panel</h3>
 
-                <div class="autoupdate-checkbox">
-                    <input id="autoupdate-checkbox" type="checkbox">
-                    <label class="checkbox" for="autoupdate-checkbox"><span></span> Autoupdate</label>
+                <div class="autofill-checkbox">
+                    <input id="autofill-checkbox" type="checkbox">
+                    <label class="checkbox" for="autofill-checkbox"><span></span> Autofill</label>
                 </div>
                 <div class="color">
                     <label for="canvas-bg-color">Color</label>
@@ -73,6 +73,9 @@
                         <span class="glyphicon glyphicon-download-alt"></span> Download pattern!
                     </button>
                 </div>
+            </div>
+            <div class="col-sm-12 infolinks text-right">
+                Developed by <a href="http://purplelemon.ru" target="_blank">PurpleLemon</a> and <a href="http://niklv.ru" target="_blank">Niklv</a>.
             </div>
         </div>
     </div>
@@ -578,16 +581,7 @@
 </div>
 
 
-<!-- SCRIPTS -->
-<script src="js/fabric.js"></script>
-<script src="js/jquery.js"></script>
-<script src="js/jquery-ui-1.10.3.custom.js"></script>
-<script src="js/FileSaver.js"></script>
-<script src="js/json2.js"></script>
-<script src="js/underscore.js"></script>
-<script src="js/backbone.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/bootstrap-colorpicker.js"></script>
+
 
 
 <!-- SETTINGS TAB TEMPLATE -->
@@ -613,7 +607,7 @@
 
 <!-- SETTINGS TEMPLATE -->
 <script type="text/html" id="part-settings-tmpl">
-    <h3>Control panel
+    <h3 class="col-sm-12">Control panel
         <button type="button" class="random green-button">Random?</button>
     </h3>
     <div class="col-lg-6">
@@ -665,6 +659,20 @@
     </div>
 </script>
 
+
+<!-- SCRIPTS -->
+<!-- LIBS -->
+
+<script src="js/jquery.js"></script>
+<script src="js/jquery-ui-1.10.3.custom.js"></script>
+<script src="js/FileSaver.js"></script>
+<script src="js/json2.js"></script>
+<script src="js/underscore.js"></script>
+<script src="js/backbone.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-colorpicker.js"></script>
+<script src="js/fabric_new.js"></script>
+<!-- APP -->
 <script src="js/app/const.js"></script>
 <script src="js/app/utils.js"></script>
 <script src="js/app/slider.js"></script>

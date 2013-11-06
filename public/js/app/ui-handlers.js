@@ -85,11 +85,13 @@ function handle_image(e) {
 function hide_controls_and_show_bg() {
     //canvas.render_to_bg();
     //$('.controls-section').css('bottom', '-300px');
+    $('#canvas').addClass("preview");
     $('.controls-section').addClass("flow-down");
     ga('send', 'event', 'preview-button', 'click');
 }
 
 function show_controls() {
+    $('#canvas').removeClass("preview");
     $('.controls-section').removeClass("flow-down");//css('bottom', '0');
 }
 

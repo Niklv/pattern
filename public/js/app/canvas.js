@@ -32,7 +32,7 @@ var Canvas = Backbone.Model.extend({
     },
     canvas: function () {
         this.canvas = new fabric.StaticCanvas("canvas");
-        this.canvas.renderOnAddition = false;
+        this.canvas.renderOnAddRemove = false;
         this.color();
         this.height();
         this.width();
@@ -85,7 +85,7 @@ var CanvasView = Backbone.View.extend({
     events: {
         "changeColor .colorpicker": "color_changed",
         "input .colorpicker": "color_changed",
-        "change #autoupdate-checkbox": "autoupdate_changed",
+        "change #autofill-checkbox": "autoupdate_changed",
         "click .download": "download_image"
     },
     color_changed: function (ev) {

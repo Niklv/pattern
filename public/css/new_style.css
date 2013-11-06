@@ -124,10 +124,13 @@ input[type='text'] {
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
   transition-duration: 0.5s;
-  height: 320px;
+  height: auto;
 }
 .controls-section.flow-down {
-  bottom: -300px;
+  bottom: -240px;
+  -webkit-opacity: 0.3;
+  -moz-opacity: 0.3;
+  opacity: 0.3;
 }
 .controls-section .tab-wrapper {
   margin: 0 30px;
@@ -213,8 +216,14 @@ input[type='text'] {
 .controls-section .tab-wrapper .sample-tabs > li.add-new-sample > .dropdown-menu {
   left: -1px;
 }
+.controls-section .tab-wrapper .settings-wrapper .tab-content {
+  padding: 0;
+}
 .controls-section .tab-wrapper .settings-wrapper .tab-content .tab-pane button.random {
   font-size: 10px;
+}
+.controls-section .tab-wrapper .settings-wrapper .canvas-options .download-image {
+  margin-bottom: 5px;
 }
 .controls-section .tab-wrapper .settings-wrapper .canvas-options .download-image .download {
   height: 34px;
@@ -250,6 +259,13 @@ input[type='text'] {
   right: 0px;
   width: 62px;
   height: 100%;
+}
+.controls-section .tab-wrapper .settings-wrapper .infolinks {
+  color: #bcbcbc;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 15px;
+  display: inline-block;
 }
 .preview-button {
   width: 100%;
@@ -451,6 +467,28 @@ input[type='text'] {
     padding-bottom: 10%;
   }
 }
+#canvas {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-property: -webkit-box-shadow;
+  -moz-transition-property: -moz-box-shadow;
+  -o-transition-property: box-shadow;
+  -ms-transition-property: box-shadow;
+  transition-property: box-shadow;
+}
+#canvas.preview {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
 body {
   background-color: #269abc;
   font-family: 'Open Sans', sans-serif;
@@ -466,7 +504,4 @@ input,
 label {
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
-}
-#canvas {
-  margin: 0 490px;
 }

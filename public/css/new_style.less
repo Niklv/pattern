@@ -139,9 +139,10 @@ input:not([type]), input[type='text'] {
   bottom: 0;
   .box-shadow(~"0 0 25px rgba(0, 0, 0, 0.4)");
   .transition-duration(.5s);
-  height: 320px;
+  height: auto;
   &.flow-down {
-    bottom: -300px; //hide panel
+    bottom: -240px; //hide panel
+    .opacity(0.3);
   }
   .tab-wrapper {
     margin: 0 30px;
@@ -228,11 +229,17 @@ input:not([type]), input[type='text'] {
     }
     //TAB CONTENT
     .settings-wrapper {
-      .tab-content .tab-pane button.random {
-        font-size: 10px;
+      .tab-content {
+        padding: 0;
+        .tab-pane button.random {
+          font-size: 10px;
+        }
       }
-      .canvas-options .download-image .download {
-        height: 34px;
+      .canvas-options .download-image {
+        margin-bottom: @controls_bot_margin;
+        .download {
+          height: 34px;
+        }
       }
       .control {
         width: 100%;
@@ -264,6 +271,13 @@ input:not([type]), input[type='text'] {
           width: @input_len;
           height: 100%;
         }
+      }
+      .infolinks {
+        color: #bcbcbc;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-right: 15px;
+        display: inline-block;
       }
     }
   }
@@ -438,6 +452,21 @@ input:not([type]), input[type='text'] {
   }
 }
 
+//CANVAS
+#canvas {
+  margin-left: auto;
+  margin-right: auto;
+  display:block;
+  //border: 1px solid rgba(0, 0, 0, 0.2);
+  .box-shadow(~"0 0 25px rgba(0, 0, 0, 0.6)");
+  .transition-duration(.5s);
+  .transition-property(~"box-shadow");
+  &.preview{
+    .box-shadow();
+  }
+}
+
+
 //DEBUG
 body {
   background-color: #269abc;
@@ -450,6 +479,3 @@ h1, h2, h3, h4, h5, h6, input, label {
   font-weight: bold;
 }
 
-#canvas {
-  margin: 0 490px;
-}
