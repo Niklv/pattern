@@ -2187,7 +2187,13 @@ fabric.Collection = {
                 callback && callback.call(context, null, true);
                 img = img.onload = img.onerror = null;
             };
-            img.crossOrigin = crossOrigin || '';
+            // data-urls appear to be buggy with crossOrigin
+            // https://github.com/kangax/fabric.js/commit/d0abb90f1cd5c5ef9d2a94d3fb21a22330da3e0a#commitcomment-4513767
+            // see https://code.google.com/p/chromium/issues/detail?id=315152
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=935069
+            if (url.indexOf('data') !== 0) {
+                img.crossOrigin = crossOrigin || '';
+            }
             img.src = url;
         }
         else {
@@ -3768,34 +3774,37 @@ fabric.Collection = {
      */
     function animate(options) {
 
-        options || (options = { });
+        requestAnimFrame(function(timestamp) {
+            options || (options = { });
 
-        var start = +new Date(),
-            duration = options.duration || 500,
-            finish = start + duration, time,
-            onChange = options.onChange || function() { },
-            abort = options.abort || function() { return false; },
-            easing = options.easing || function(t, b, c, d) {return -c * Math.cos(t/d * (Math.PI/2)) + c + b;},
-            startValue = 'startValue' in options ? options.startValue : 0,
-            endValue = 'endValue' in options ? options.endValue : 100,
-            byValue = options.byValue || endValue - startValue;
+            var start = timestamp || +new Date(),
+                duration = options.duration || 500,
+                finish = start + duration, time,
+                onChange = options.onChange || function() { },
+                abort = options.abort || function() { return false; },
+                easing = options.easing || function(t, b, c, d) {return -c * Math.cos(t/d * (Math.PI/2)) + c + b;},
+                startValue = 'startValue' in options ? options.startValue : 0,
+                endValue = 'endValue' in options ? options.endValue : 100,
+                byValue = options.byValue || endValue - startValue;
 
-        options.onStart && options.onStart();
+            options.onStart && options.onStart();
 
-        (function tick() {
-            time = +new Date();
-            var currentTime = time > finish ? duration : (time - start);
-            if (abort()) {
-                options.onComplete && options.onComplete();
-                return;
-            }
-            onChange(easing(currentTime, startValue, byValue, duration));
-            if (time > finish) {
-                options.onComplete && options.onComplete();
-                return;
-            }
-            requestAnimFrame(tick);
-        })();
+            (function tick(ticktime) {
+                time = ticktime || +new Date();
+                var currentTime = time > finish ? duration : (time - start);
+                if (abort()) {
+                    options.onComplete && options.onComplete();
+                    return;
+                }
+                onChange(easing(currentTime, startValue, byValue, duration));
+                if (time > finish) {
+                    options.onComplete && options.onComplete();
+                    return;
+                }
+                requestAnimFrame(tick);
+            })(start);
+        });
+
     }
 
     var _requestAnimFrame = fabric.window.requestAnimationFrame ||
@@ -3808,6 +3817,7 @@ fabric.Collection = {
         };
     /**
      * requestAnimationFrame polyfill based on http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+     * In order to get a precise start time, `requestAnimFrame` should be called as an entry into the method
      * @memberOf fabric.util
      * @param {Function} callback Callback to invoke
      * @param {DOMElement} element optional Element to associate with animation
@@ -8824,7 +8834,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
          * @type Boolean
          * @default
          */
-        centeredScaling: true,
+        centeredScaling: false,
 
         /**
          * When true, objects use center point as the origin of rotate transformation.
@@ -8833,7 +8843,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
          * @type Boolean
          * @default
          */
-        centeredRotation: true,
+        centeredRotation: false,
 
         /**
          * Indicates that canvas is interactive. This property should not be changed.
@@ -9100,14 +9110,15 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
             var activeGroup = this.getActiveGroup();
 
             return (
-                !target || (
-                    target &&
+                !target
+                    ||
+                    (target &&
                         activeGroup &&
                         !activeGroup.contains(target) &&
                         activeGroup !== target &&
-                        !e.shiftKey) || (
-                    target &&
-                        (!target.evented && !target.selectable))
+                        !e.shiftKey)
+                    ||
+                    (target && !target.evented)
                 );
         },
 
@@ -9265,7 +9276,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
 
                 if (activeGroup.size() === 1) {
                     // remove group alltogether if after removal it only contains 1 object
-                    this.discardActiveGroup();
+                    this.discardActiveGroup(e);
                     // activate last remaining object
                     this.setActiveObject(activeGroup.item(0));
                     return;
@@ -9580,7 +9591,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
             }
             else if (group.length > 1) {
                 group = new fabric.Group(group.reverse());
-                this.setActiveGroup(group);
+                this.setActiveGroup(group, e);
                 group.saveCoords();
                 this.fire('selection:created', { target: group });
                 this.renderAll();
@@ -9788,6 +9799,18 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
         },
 
         /**
+         * @private
+         * @param {Object} object
+         */
+        _setActiveObject: function(object) {
+            if (this._activeObject) {
+                this._activeObject.set('active', false);
+            }
+            this._activeObject = object;
+            object.set('active', true);
+        },
+
+        /**
          * Sets given object as the only active object on canvas
          * @param {fabric.Object} object Object to set as an active one
          * @param {Event} [e] Event (passed along when firing "object:selected")
@@ -9795,14 +9818,8 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
          * @chainable
          */
         setActiveObject: function (object, e) {
-            if (this._activeObject) {
-                this._activeObject.set('active', false);
-            }
-            this._activeObject = object;
-            object.set('active', true);
-
+            this._setActiveObject(object);
             this.renderAll();
-
             this.fire('object:selected', { target: object, e: e });
             object.fire('selected', { e: e });
             return this;
@@ -9817,16 +9834,37 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
         },
 
         /**
-         * Discards currently active object
-         * @return {fabric.Canvas} thisArg
-         * @chainable
+         * @private
          */
-        discardActiveObject: function () {
+        _discardActiveObject: function() {
             if (this._activeObject) {
                 this._activeObject.set('active', false);
             }
             this._activeObject = null;
+        },
+
+        /**
+         * Discards currently active object
+         * @return {fabric.Canvas} thisArg
+         * @chainable
+         */
+        discardActiveObject: function (e) {
+            this._discardActiveObject();
+            this.renderAll();
+            this.fire('selection:cleared', { e: e });
             return this;
+        },
+
+        /**
+         * @private
+         * @param {fabric.Group} group
+         */
+        _setActiveGroup: function(group) {
+            this._activeGroup = group;
+            if (group) {
+                group.canvas = this;
+                group.set('active', true);
+            }
         },
 
         /**
@@ -9835,11 +9873,11 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
          * @return {fabric.Canvas} thisArg
          * @chainable
          */
-        setActiveGroup: function (group) {
-            this._activeGroup = group;
+        setActiveGroup: function (group, e) {
+            this._setActiveGroup(group);
             if (group) {
-                group.canvas = this;
-                group.set('active', true);
+                this.fire('object:selected', { target: group, e: e });
+                group.fire('selected', { e: e });
             }
             return this;
         },
@@ -9853,15 +9891,24 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
         },
 
         /**
-         * Removes currently active group
-         * @return {fabric.Canvas} thisArg
+         * @private
          */
-        discardActiveGroup: function () {
+        _discardActiveGroup: function() {
             var g = this.getActiveGroup();
             if (g) {
                 g.destroy();
             }
-            return this.setActiveGroup(null);
+            this.setActiveGroup(null);
+        },
+
+        /**
+         * Discards currently active group
+         * @return {fabric.Canvas} thisArg
+         */
+        discardActiveGroup: function (e) {
+            this._discardActiveGroup();
+            this.fire('selection:cleared', { e: e });
+            return this;
         },
 
         /**
@@ -9875,8 +9922,8 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
             for ( ; i < len; i++) {
                 allObjects[i].set('active', false);
             }
-            this.discardActiveGroup();
-            this.discardActiveObject();
+            this._discardActiveGroup();
+            this._discardActiveObject();
             return this;
         },
 
@@ -9884,14 +9931,14 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
          * Deactivates all objects and dispatches appropriate events
          * @return {fabric.Canvas} thisArg
          */
-        deactivateAllWithDispatch: function () {
+        deactivateAllWithDispatch: function (e) {
             var activeObject = this.getActiveGroup() || this.getActiveObject();
             if (activeObject) {
-                this.fire('before:selection:cleared', { target: activeObject });
+                this.fire('before:selection:cleared', { target: activeObject, e: e });
             }
             this.deactivateAll();
             if (activeObject) {
-                this.fire('selection:cleared');
+                this.fire('selection:cleared', { e: e });
             }
             return this;
         },
@@ -10157,6 +10204,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
             }
             else {
                 pointer = this.getPointer(e);
+                target = this.findTarget(e, true);
             }
 
             render = this._shouldRender(target, pointer);
@@ -10246,7 +10294,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
          */
         _onMouseDownInDrawingMode: function(e) {
             this._isCurrentlyDrawing = true;
-            this.discardActiveObject().renderAll();
+            this.discardActiveObject(e).renderAll();
             if (this.clipTo) {
                 fabric.util.clipContext(this, this.contextTop);
             }
@@ -10317,7 +10365,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
                 this._handleGroupLogic(e, target);
                 target = this.getActiveGroup();
             }
-            else {
+            else if (target && target.selectable) {
                 this._beforeTransform(e, target);
                 this._setupCurrentTransform(e, target);
             }
@@ -10359,7 +10407,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
                     left: 0
                 };
             }
-            this.deactivateAllWithDispatch();
+            this.deactivateAllWithDispatch(e);
             target && target.selectable && this.setActiveObject(target, e);
         },
 
@@ -11470,7 +11518,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
          * @type Boolean
          * @default
          */
-        centeredScaling: true,
+        centeredScaling: false,
 
         /**
          * When true, this object will use center point as the origin of transformation
@@ -19771,6 +19819,9 @@ fabric.util.object.extend(fabric.Text.prototype, {
      * Delete word: alt + backspace
      * Delete line: cmd + backspace
      * Forward delete: delete
+     * Copy text: ctrl/cmd + c
+     * Paste text: ctrl/cmd + v
+     * Cut text: ctrl/cmd + x
      * </pre>
      */
     fabric.IText = fabric.util.createClass(fabric.Text, fabric.Observable, /** @lends fabric.IText.prototype */ {
@@ -20852,6 +20903,7 @@ fabric.util.object.extend(fabric.Text.prototype, {
          */
         initMousedownHandler: function() {
             this.on('mousedown', function(options) {
+
                 var pointer = this.canvas.getPointer(options.e);
 
                 this.__mousedownX = pointer.x;
@@ -20873,6 +20925,7 @@ fabric.util.object.extend(fabric.Text.prototype, {
          */
         initMousemoveHandler: function() {
             this.on('mousemove', function() {
+
                 if (this.__isMousedown && this.isEditing) {
                     console.log('mousemove: need to select text');
                 }
@@ -20913,7 +20966,7 @@ fabric.util.object.extend(fabric.Text.prototype, {
                 if (!this._hasClearSelectionListener) {
                     this.canvas.on('selection:cleared', function(options) {
                         // do not exit editing if event fired when clicking on an object again (in editing mode)
-                        if (options.e && _this.canvas.findTarget(options.e)) return;
+                        if (options.e && _this.canvas.containsPoint(options.e, _this)) return;
                         _this.exitEditing();
                     });
 
