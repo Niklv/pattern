@@ -83,8 +83,7 @@ function handle_image(e) {
 }
 
 function hide_controls_and_show_bg() {
-    //canvas.render_to_bg();
-    //$('.controls-section').css('bottom', '-300px');
+    canvas.render_to_bg();
     $('#canvas').addClass("preview");
     $('.controls-section').addClass("flow-down");
     ga('send', 'event', 'preview-button', 'click');
@@ -92,8 +91,7 @@ function hide_controls_and_show_bg() {
 
 function show_controls() {
     $('#canvas').removeClass("preview");
-    $('.controls-section').removeClass("flow-down");//css('bottom', '0');
+    $('.controls-section').removeClass("flow-down");
 }
-
 
 
