@@ -316,9 +316,7 @@ var Fabric = Backbone.Model.extend({
         show: false
     },
     initialize: function (attr, opt) {
-        this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show")});
-        this._fabric.centeredRotation = true;
-        this._fabric.centeredScaling = true;
+        this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center"});
         this.model = opt.model;
         this.add();
         this.bind("change", this.render);
