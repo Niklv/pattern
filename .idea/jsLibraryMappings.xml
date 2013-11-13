@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$" libraries="{HTML, HTML5 / EcmaScript 5, Node.js Dependencies for pattern, Node.js Globals}" />
-    <file url="PROJECT" libraries="{Node.js Dependencies for pattern, Node.js v0.10.18 Core Modules, express-DefinitelyTyped}" />
-    <includedPredefinedLibrary name="Node.js Globals" />
-  </component>
-</project>
-
