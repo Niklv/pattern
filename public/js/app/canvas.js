@@ -84,7 +84,8 @@ var Canvas = Backbone.Model.extend({
 var CanvasView = Backbone.View.extend({
     initialize: function () {
         this.$el = $('.canvas-options');
-        this.$el.find('.colorpicker').colorpicker({format: "hex"}).colorpicker('setValue', this.model.get("color"));
+        //this.$el.find('.colorpicker').colorpicker({format: "hex"}).colorpicker('setValue', this.model.get("color"));
+        this.$el.find('.colorpicker').colorPicker().colorPicker("setHEX", this.model.get("color"));
         new Slider({model: this.model, name: "width", jquery_object: this.$el.find(".width")});
         new Slider({model: this.model, name: "height", jquery_object: this.$el.find(".height")});
     },
