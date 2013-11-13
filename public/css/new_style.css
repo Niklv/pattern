@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300&subset=latin,cyrillic);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400&subset=latin,cyrillic);
 .ui-slider {
   margin-top: 11px;
   height: 5px;
@@ -64,6 +64,7 @@ input[type="radio"] + label span {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  user-select: none;
 }
 input[type="checkbox"] + label,
 input[type="radio"] + label {
@@ -88,11 +89,11 @@ input[type="radio"][type="radio"]:checked + label span {
 input:not([type]),
 input[type='text'] {
   border: none;
-  -webkit-border-radius: 0;
+  -webkit-border-radius: 0px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 0;
+  -moz-border-radius: 0px;
   -moz-background-clip: padding;
-  border-radius: 0;
+  border-radius: 0px;
   background-clip: padding-box;
   background-color: #ecf0f1;
   outline: none;
@@ -102,14 +103,17 @@ input[type='text'] {
 .green-button {
   background-color: #2ecc71;
   background-image: none;
-  -webkit-border-radius: 0;
+  -webkit-border-radius: 0px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 0;
+  -moz-border-radius: 0px;
   -moz-background-clip: padding;
-  border-radius: 0;
+  border-radius: 0px;
   background-clip: padding-box;
   border: none;
   color: white;
+}
+.picker {
+  height: 140px;
 }
 .controls-section {
   background-color: #ffffff;
@@ -117,9 +121,9 @@ input[type='text'] {
   left: -30px;
   right: -30px;
   bottom: 0;
-  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -156,10 +160,11 @@ input[type='text'] {
 .controls-section .tab-wrapper .sample-tabs > li > a {
   width: 135px;
   height: 50px;
-  -webkit-border-radius: 0;
+  -webkit-border-radius: 0px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 0;
+  -moz-border-radius: 0px;
   -moz-background-clip: padding;
+  border-radius: 0px;
   background-clip: padding-box;
   margin-right: 0;
   padding: 0;
@@ -353,10 +358,10 @@ input[type='text'] {
   bottom: 54px;
   overflow-y: auto;
   background: linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
+  background-attachment: local, local, scroll, scroll;
   -webkit-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
   -moz-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
   background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-  background-attachment: local, local, scroll, scroll;
   background-repeat: no-repeat;
   background-color: white;
   z-index: 1100;
@@ -409,9 +414,9 @@ input[type='text'] {
 }
 .box .innerContent:hover {
   border-color: rgba(31, 147, 255, 0.5);
-  -webkit-box-shadow: 0 0 10px rgba(31, 147, 255, 0.50);
-  -moz-box-shadow: 0 0 10px rgba(31, 147, 255, 0.50);
-  box-shadow: 0 0 10px rgba(31, 147, 255, 0.50);
+  -webkit-box-shadow: 0px 0px 10px rgba(31, 147, 255, 0.5);
+  -moz-box-shadow: 0px 0px 10px rgba(31, 147, 255, 0.5);
+  box-shadow: 0px 0px 10px rgba(31, 147, 255, 0.5);
 }
 @media (min-width: 200px) {
   .box {
@@ -471,9 +476,9 @@ input[type='text'] {
   margin-left: auto;
   margin-right: auto;
   display: block;
-  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -481,7 +486,6 @@ input[type='text'] {
   -webkit-transition-property: -webkit-box-shadow;
   -moz-transition-property: -moz-box-shadow;
   -o-transition-property: box-shadow;
-  -ms-transition-property: box-shadow;
   transition-property: box-shadow;
 }
 #canvas.preview {
@@ -503,5 +507,5 @@ h6,
 input,
 label {
   font-family: 'Open Sans', sans-serif;
-  font-weight: bold;
+  font-weight: normal;
 }

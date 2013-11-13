@@ -1,5 +1,5 @@
 //GOOGLE FONTS
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300&subset=latin,cyrillic);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400&subset=latin,cyrillic);
 //LESSHAT properties
 @import "lib/lesshat.less";
 
@@ -130,6 +130,11 @@ input:not([type]), input[type='text'] {
   color: white;
 }
 
+//COLORPICKER DESIGN
+.picker {
+  height: 140px;
+}
+
 //CONTROLS SECTION
 .controls-section {
   background-color: @controls_bg;
@@ -137,7 +142,7 @@ input:not([type]), input[type='text'] {
   left: -30px;
   right: -30px;
   bottom: 0;
-  .box-shadow(~"0 0 25px rgba(0, 0, 0, 0.4)");
+  .box-shadow(0 0 25px rgba(0, 0, 0, 0.4));
   .transition-duration(.5s);
   height: auto;
   &.flow-down {
@@ -382,8 +387,8 @@ input:not([type]), input[type='text'] {
       //.gradient(~"linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%");
       //background: linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */ radial-gradient(50% 0, farthest-side, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)), radial-gradient(50% 100%, farthest-side, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%;
       background: linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%;
-      .background-size(~"100% 40px, 100% 40px, 100% 14px, 100% 14px");
       background-attachment: local, local, scroll, scroll;
+      .background-size(100% 40px, 100% 40px, 100% 14px, 100% 14px);
       background-repeat: no-repeat;
       background-color: white;
       z-index: 1100;
@@ -429,7 +434,7 @@ input:not([type]), input[type='text'] {
     }
     &:hover {
       border-color: rgba(31, 147, 255, 0.50);
-      .box-shadow(~"0 0 10px rgba(31, 147, 255, 0.50)");
+      .box-shadow(0 0 10px rgba(31, 147, 255, 0.50));
     }
   }
   .box-grid(200px, 1);
@@ -458,11 +463,11 @@ input:not([type]), input[type='text'] {
   margin-right: auto;
   display:block;
   //border: 1px solid rgba(0, 0, 0, 0.2);
-  .box-shadow(~"0 0 25px rgba(0, 0, 0, 0.6)");
+  .box-shadow(0 0 25px rgba(0, 0, 0, 0.6));
   .transition-duration(.5s);
-  .transition-property(~"box-shadow");
+  .transition-property(box-shadow);
   &.preview{
-    .box-shadow();
+    .box-shadow(none);
   }
 }
 
@@ -476,6 +481,6 @@ body {
 
 h1, h2, h3, h4, h5, h6, input, label {
   font-family: 'Open Sans', sans-serif;
-  font-weight: bold;
+  font-weight: normal;
 }
 
