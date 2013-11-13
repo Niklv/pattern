@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="051d91a8-3561-43e3-8703-bef101260cea" name="Default" comment="refactor and add GA">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/app/app.js" afterPath="$PROJECT_DIR$/public/js/app/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/request/package.json" afterPath="$PROJECT_DIR$/node_modules/request/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/request/node_modules/mime/package.json" afterPath="$PROJECT_DIR$/node_modules/request/node_modules/mime/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/request/node_modules/qs/package.json" afterPath="$PROJECT_DIR$/node_modules/request/node_modules/qs/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/app/ui-handlers.js" afterPath="$PROJECT_DIR$/public/js/app/ui-handlers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    <list default="true" id="051d91a8-3561-43e3-8703-bef101260cea" name="Default" comment="rm useles files">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Node_js_Dependencies_for_pattern.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/pattern.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="pattern.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -19,7 +24,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
-    <option name="PATCH_PATH" value="" />
+    <option name="PATCH_PATH" value="Z:\pattern" />
   </component>
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
@@ -30,73 +35,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="server.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server.js">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="33" selection-start="1189" selection-end="1189" vertical-scroll-proportion="0.0" vertical-offset="379" max-vertical-offset="969">
+            <state line="678" column="22" selection-start="21170" selection-end="21170" vertical-scroll-proportion="-12.576923" vertical-offset="11199" max-vertical-offset="11849">
+              <folding>
+                <element signature="n#style#0;n#input#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1384340410000" expanded="true" signature="17371:17576" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="17423:17571" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="17437:17562" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="17713:17965" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="17780:17864" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="18080:18178" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="18205:20369" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="18245:19092" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="18315:18977" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="18426:18461" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="18624:18662" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="18848:18886" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="19310:20154" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="19380:20139" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="20251:20358" placeholder="..." />
+                <marker date="1384340410000" expanded="true" signature="20396:20756" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="new_style.less" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/css/new_style.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="62" selection-start="77" selection-end="77" vertical-scroll-proportion="-0.65384614" vertical-offset="0" max-vertical-offset="8364">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/utils.js">
+      <file leaf-file-name="workspace.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="77" selection-end="77" vertical-scroll-proportion="0.086440675" vertical-offset="0" max-vertical-offset="590">
+            <state line="11" column="0" selection-start="877" selection-end="877" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="15419">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/app/app.js">
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="14" selection-start="938" selection-end="952" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="package.json" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="27" selection-start="73" selection-end="73" vertical-scroll-proportion="-0.7692308" vertical-offset="31" max-vertical-offset="595">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="parts.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/app/parts.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="168" column="29" selection-start="5519" selection-end="5519" vertical-scroll-proportion="0.0" vertical-offset="2856" max-vertical-offset="8840">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="utils.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/app/utils.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="1" selection-start="703" selection-end="703" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ui-handlers.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/app/ui-handlers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="51" selection-start="2370" selection-end="2417" vertical-scroll-proportion="0.0" vertical-offset="940" max-vertical-offset="1598">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="26" selection-start="1684" selection-end="1684" vertical-scroll-proportion="0.0" vertical-offset="1683" max-vertical-offset="5015">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="583">
               <folding />
             </state>
           </provider>
@@ -122,22 +109,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/api.js" />
-        <option value="$PROJECT_DIR$/public/img/calculated/vk_logo.png.json.js" />
-        <option value="$PROJECT_DIR$/public/img/calculated/vk_logo.png.json" />
-        <option value="$PROJECT_DIR$/public/img/calculated/lfm_Logo.png.json" />
-        <option value="$PROJECT_DIR$/public/img/calculated/controls.png.json" />
-        <option value="$PROJECT_DIR$/public/js/app/parts.js" />
         <option value="$PROJECT_DIR$/public/css/style.css" />
-        <option value="$PROJECT_DIR$/prepare_start.sh" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/public/js/app/utils.js" />
-        <option value="$PROJECT_DIR$/public/js/app/app_refactor.js" />
-        <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/public/js/app/app.js" />
+        <option value="$PROJECT_DIR$/public/css/new_style.css" />
+        <option value="$PROJECT_DIR$/public/redisign.html" />
+        <option value="$PROJECT_DIR$/public/js/fabric_new.js" />
         <option value="$PROJECT_DIR$/public/js/app/ui-handlers.js" />
+        <option value="$PROJECT_DIR$/public/js/app/app.js" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/public/js/app/canvas.js" />
+        <option value="$PROJECT_DIR$/public/js/colorpicker.js" />
+        <option value="$PROJECT_DIR$/public/css/colorpicker.css" />
+        <option value="$PROJECT_DIR$/public/js/app/parts.js" />
+        <option value="$PROJECT_DIR$/public/js/fabric.js" />
+        <option value="$PROJECT_DIR$/public/css/lib/lesshat.less" />
+        <option value="$PROJECT_DIR$/public/css/new_style.less" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -155,24 +142,36 @@
             <id />
           </State>
           <State>
-            <id>DOM issuesJavaScript</id>
+            <id>Bitwise operation issuesJavaScript</id>
           </State>
           <State>
-            <id>HTML</id>
+            <id>CSS</id>
+          </State>
+          <State>
+            <id>Control flow issuesJavaScript</id>
+          </State>
+          <State>
+            <id>GeneralJavaScript</id>
+          </State>
+          <State>
+            <id>Invalid elementsCSS</id>
           </State>
           <State>
             <id>JavaScript</id>
           </State>
           <State>
-            <id>Node.jsJavaScript</id>
+            <id>LESS</id>
           </State>
           <State>
-            <id>XPath</id>
+            <id>Potentially confusing code constructsJavaScript</id>
+          </State>
+          <State>
+            <id>SASS/SCSS</id>
           </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>HtmlFormInputWithoutLabel</id>
+            <id>CssShorthandPropertyValue</id>
           </State>
         </selected-state>
       </profile-state>
@@ -222,79 +221,27 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pattern" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pattern" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pattern" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pattern" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pattern" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pattern" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="63" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="93" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="81" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="97" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="recentsLimit" value="5" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="96" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="50" />
+    <property name="recentsLimit" value="5" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/server.js" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="69" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="446" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="371" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="50" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="50" />
+    <property name="last_opened_file_path" value="$USER_HOME$/AppData/Roaming/npm/lessc.cmd" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="113" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="489" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="492" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="96" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="96" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
@@ -304,9 +251,12 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="options.lastSelected" value="JavaScript.Libraries" />
+    <property name="options.lastSelected" value="preferences.sourceCode.LESS" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="options.searchVisible" value="true" />
   </component>
   <component name="PublishConfig">
@@ -329,22 +279,14 @@
       <recent name="Z:\pattern" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="Z:\pattern\public" />
-      <recent name="Z:\pattern\js\app" />
-      <recent name="Z:\pattern\img\samples" />
-      <recent name="Z:\pattern\css" />
-      <recent name="Z:\pattern\js" />
+      <recent name="Z:\pattern\public\js" />
+      <recent name="Z:\pattern\public\css" />
+      <recent name="Z:\pattern\public\fonts" />
+      <recent name="Z:\pattern\public\img" />
+      <recent name="Z:\pattern\public\css\lib" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.Patternet">
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -355,12 +297,16 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
-      <envs />
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
       <method />
     </configuration>
-    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
-      <node-js-remote-debug />
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="NodeunitConfigurationType" factoryName="Nodeunit">
@@ -371,6 +317,10 @@
       <setting name="workingDirectory" value="$PROJECT_DIR$" />
       <setting name="testType" value="JS_FILE" />
       <setting name="jsFile" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
+      <node-js-remote-debug />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
@@ -619,7 +569,107 @@
       <created>1380709252495</created>
       <updated>1380709252495</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="add test event">
+      <created>1380711408884</created>
+      <updated>1380711408884</updated>
+    </task>
+    <task id="LOCAL-00051" summary="add more analytics">
+      <created>1380713765626</created>
+      <updated>1380713765626</updated>
+    </task>
+    <task id="LOCAL-00052" summary="add debounce">
+      <created>1380714384618</created>
+      <updated>1380714384618</updated>
+    </task>
+    <task id="LOCAL-00053" summary="fix error in analytics">
+      <created>1380714807890</created>
+      <updated>1380714807891</updated>
+    </task>
+    <task id="LOCAL-00054" summary="new try with ga events">
+      <created>1380715284488</created>
+      <updated>1380715284488</updated>
+    </task>
+    <task id="LOCAL-00055" summary="start with new design">
+      <created>1383058424432</created>
+      <updated>1383058424433</updated>
+    </task>
+    <task id="LOCAL-00056" summary="add less lib">
+      <created>1383232194341</created>
+      <updated>1383232194341</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Proceed with a new design&#10;start rewriting code at less&#10;customize checkbox and tabs&#10;add google font Open Sans&#10;add watcher for less compilation to css">
+      <created>1383232322120</created>
+      <updated>1383232322120</updated>
+    </task>
+    <task id="LOCAL-00058" summary="add functionality&#10;add popup to upload plus&#10;upload now working&#10;add style for collection modal&#10;add style for paste link&#10;move from js to css hiding controls panel&#10;edit js files for new style&#10;">
+      <created>1383318853883</created>
+      <updated>1383318853883</updated>
+    </task>
+    <task id="LOCAL-00059" summary="new tab design&#10;remove some comments&#10;create nested template for controls&#10;remove col-sm-XX from controls layout&#10;add checkbox style&#10;add controls style&#10;">
+      <created>1383663858791</created>
+      <updated>1383663858791</updated>
+    </task>
+    <task id="LOCAL-00060" summary="move new design to index&#10;separate controls style in less">
+      <created>1383730876211</created>
+      <updated>1383730876211</updated>
+    </task>
+    <task id="LOCAL-00061" summary="update bootstrap from 3.0.0 to 3.0.1">
+      <created>1383731599894</created>
+      <updated>1383731599894</updated>
+    </task>
+    <task id="LOCAL-00062" summary="remove strange paddings on tab">
+      <created>1383732014038</created>
+      <updated>1383732014038</updated>
+    </task>
+    <task id="LOCAL-00063" summary="update underscore from 1.5.1 to 1.5.2">
+      <created>1383745003813</created>
+      <updated>1383745003813</updated>
+    </task>
+    <task id="LOCAL-00064" summary="update backbone from 1.0.0 to 1.1.0">
+      <created>1383745403347</created>
+      <updated>1383745403348</updated>
+    </task>
+    <task id="LOCAL-00065" summary="update fabric.js and design&#10;update fabric from 1.2.0 to 1.3.9, now we have lot of bugs&#10;replace renderOnAddition with renderOnAddRemove&#10;rename Autoupdate to Autofill&#10;try center new samples&#10;add showing and hidding shadow for canvas&#10;bottom panel now has auto height and opacity when hidding&#10;add infolink below download button&#10;perfectly center canvas horizontaly">
+      <created>1383751094896</created>
+      <updated>1383751094896</updated>
+    </task>
+    <task id="LOCAL-00066" summary="update bootstrap from 3.0.1 to 3.0.2">
+      <created>1383813935593</created>
+      <updated>1383813935593</updated>
+    </task>
+    <task id="LOCAL-00067" summary="update fabric.js to lastest in repository">
+      <created>1383815185768</created>
+      <updated>1383815185768</updated>
+    </task>
+    <task id="LOCAL-00068" summary="finish updating fabric to lastest version&#10;fix centering position and rotation">
+      <created>1383819348928</created>
+      <updated>1383819348928</updated>
+    </task>
+    <task id="LOCAL-00069" summary="center canvas verticaly on window resize">
+      <created>1383823085545</created>
+      <updated>1383823085545</updated>
+    </task>
+    <task id="LOCAL-00070" summary="start with color overlay">
+      <created>1383836845942</created>
+      <updated>1383836845942</updated>
+    </task>
+    <task id="LOCAL-00071" summary="update fabric.js to latest">
+      <created>1384346532172</created>
+      <updated>1384346532172</updated>
+    </task>
+    <task id="LOCAL-00072" summary="add colorpicker.js">
+      <created>1384346593835</created>
+      <updated>1384346593835</updated>
+    </task>
+    <task id="LOCAL-00073" summary="update lesshat from 1.1.2 to 2.0.4">
+      <created>1384348968920</created>
+      <updated>1384348968920</updated>
+    </task>
+    <task id="LOCAL-00074" summary="little update for colorpicker and font style">
+      <created>1384350321717</created>
+      <updated>1384350321717</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -646,64 +696,65 @@
     <frame x="-8" y="-8" width="1296" height="1040" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23841059" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3200883" sideWeight="0.528125" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291714" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31030577" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19026047" sideWeight="0.52755266" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32842582" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6715742" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18828125" sideWeight="0.6799117" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.6806342" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22447325" sideWeight="0.6896942" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39955848" sideWeight="0.74921876" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3200883" sideWeight="0.471875" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26821193" sideWeight="0.4984375" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31898454" sideWeight="0.5445312" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31030577" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26387316" sideWeight="0.49837926" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3091733" sideWeight="0.6572123" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32671082" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5492188" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39955848" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32616082" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5492188" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39955848" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="new modal with selection upload source" />
-    <MESSAGE value="new modal design, upload sample images" />
-    <MESSAGE value="start with responsive grid with media query" />
-    <MESSAGE value="finally center images!&#10;add scroll shadows&#10;remove useless button&#10;add help text&#10;" />
-    <MESSAGE value="add file save feature&#10;autopreview&#10;remove global var for canvas size&#10;smart init canvas settings view&#10;add filesaver.js" />
-    <MESSAGE value="bugfix" />
-    <MESSAGE value="REFACTORING WILL START!" />
-    <MESSAGE value="REFACTORING 1" />
-    <MESSAGE value="refactoring" />
-    <MESSAGE value="refactor finished, fix some bugs and find new one" />
-    <MESSAGE value="add inteface hide button" />
-    <MESSAGE value="add node server" />
-    <MESSAGE value="remove deps" />
-    <MESSAGE value="recreate package file" />
-    <MESSAGE value="add .idea settings,&#10;switch to none super stable packages,  add api file&#10;" />
-    <MESSAGE value="add help for express library&#10;" />
-    <MESSAGE value="add paste link modal" />
-    <MESSAGE value="add some precompiled b64 and little refactor" />
-    <MESSAGE value="add start script" />
-    <MESSAGE value="modify start script" />
-    <MESSAGE value="remove useless deps" />
-    <MESSAGE value="new launcher" />
-    <MESSAGE value="add log and revert some changes" />
-    <MESSAGE value="add node_modules to VCS" />
-    <MESSAGE value="refactor and add GA" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor and add GA" />
+    <MESSAGE value="add test event" />
+    <MESSAGE value="add more analytics" />
+    <MESSAGE value="add debounce" />
+    <MESSAGE value="fix error in analytics" />
+    <MESSAGE value="new try with ga events" />
+    <MESSAGE value="start with new design" />
+    <MESSAGE value="add less lib" />
+    <MESSAGE value="Proceed with a new design&#10;start rewriting code at less&#10;customize checkbox and tabs&#10;add google font Open Sans&#10;add watcher for less compilation to css" />
+    <MESSAGE value="add functionality&#10;add popup to upload plus&#10;upload now working&#10;add style for collection modal&#10;add style for paste link&#10;move from js to css hiding controls panel&#10;edit js files for new style&#10;" />
+    <MESSAGE value="new tab design&#10;remove some comments&#10;create nested template for controls&#10;remove col-sm-XX from controls layout&#10;add checkbox style&#10;add controls style&#10;" />
+    <MESSAGE value="move new design to index&#10;separate controls style in less" />
+    <MESSAGE value="update bootstrap from 3.0.0 to 3.0.1" />
+    <MESSAGE value="remove strange paddings on tab" />
+    <MESSAGE value="update underscore from 1.5.1 to 1.5.2" />
+    <MESSAGE value="update backbone from 1.0.0 to 1.1.0" />
+    <MESSAGE value="update fabric.js and design&#10;update fabric from 1.2.0 to 1.3.9, now we have lot of bugs&#10;replace renderOnAddition with renderOnAddRemove&#10;rename Autoupdate to Autofill&#10;try center new samples&#10;add showing and hidding shadow for canvas&#10;bottom panel now has auto height and opacity when hidding&#10;add infolink below download button&#10;perfectly center canvas horizontaly" />
+    <MESSAGE value="update bootstrap from 3.0.1 to 3.0.2" />
+    <MESSAGE value="update fabric.js to lastest in repository" />
+    <MESSAGE value="finish updating fabric to lastest version&#10;fix centering position and rotation" />
+    <MESSAGE value="center canvas verticaly on window resize" />
+    <MESSAGE value="start with color overlay" />
+    <MESSAGE value="update fabric.js to latest" />
+    <MESSAGE value="add colorpicker.js" />
+    <MESSAGE value="update lesshat from 1.1.2 to 2.0.4" />
+    <MESSAGE value="little update for colorpicker and font style" />
+    <option name="LAST_COMMIT_MESSAGE" value="little update for colorpicker and font style" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -715,104 +766,132 @@
     <find-history />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/css/style.css">
+    <entry file="file://$PROJECT_DIR$/public/js/FileSaver.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="26" selection-start="1684" selection-end="1684" vertical-scroll-proportion="0.0" vertical-offset="1683" max-vertical-offset="5015">
+        <state line="13" column="12" selection-start="294" selection-end="326" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3655" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/jquery-ui-1.10.3.custom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="9" selection-start="46" selection-end="54" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="27965">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/img/calculated/vk_logo.png.json">
+    <entry file="file://$PROJECT_DIR$/public/js/json2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="1" selection-start="26880" selection-end="26880" vertical-scroll-proportion="0.14166667" vertical-offset="0" max-vertical-offset="480" />
+        <state line="4" column="4" selection-start="36" selection-end="49" vertical-scroll-proportion="0.12099644" vertical-offset="0" max-vertical-offset="8364" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/img/calculated/lfm_Logo.png.json">
+    <entry file="file://$PROJECT_DIR$/public/js/fabric.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="1" selection-start="8408" selection-end="8408" vertical-scroll-proportion="0.14977974" vertical-offset="0" max-vertical-offset="454" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/img/calculated/controls.png.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="1" selection-start="4156" selection-end="4156" vertical-scroll-proportion="0.14977974" vertical-offset="0" max-vertical-offset="454" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3961" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/bootstrap.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2369" column="0" selection-start="40112" selection-end="40121" vertical-scroll-proportion="0.0" vertical-offset="39385" max-vertical-offset="115770">
-          <folding />
+        <state line="471" column="16" selection-start="15525" selection-end="15525" vertical-scroll-proportion="0.33208254" vertical-offset="7830" max-vertical-offset="381990">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/style.css">
+    <entry file="file://$PROJECT_DIR$/public/js/colorpicker.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="26" selection-start="1684" selection-end="1684" vertical-scroll-proportion="0.0" vertical-offset="1292" max-vertical-offset="5015">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/app/parts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="29" selection-start="5519" selection-end="5519" vertical-scroll-proportion="0.0" vertical-offset="2615" max-vertical-offset="8840">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="637" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="823" column="0" selection-start="26204" selection-end="26204" vertical-scroll-proportion="0.5270049" vertical-offset="13669" max-vertical-offset="14280">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/app/utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="1" selection-start="703" selection-end="703" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/app/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="14" selection-start="938" selection-end="952" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+        <state line="441" column="0" selection-start="15633" selection-end="15633" vertical-scroll-proportion="1.0525423" vertical-offset="6876" max-vertical-offset="7599">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/app/ui-handlers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="51" selection-start="2370" selection-end="2417" vertical-scroll-proportion="0.0" vertical-offset="940" max-vertical-offset="1598">
+        <state line="94" column="1" selection-start="2931" selection-end="2931" vertical-scroll-proportion="0.7548077" vertical-offset="1127" max-vertical-offset="1751">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/public/js/bootstrap-colorpicker.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="27" selection-start="73" selection-end="73" vertical-scroll-proportion="-0.7692308" vertical-offset="31" max-vertical-offset="595">
+        <state line="379" column="91" selection-start="13736" selection-end="13736" vertical-scroll-proportion="0.5777414" vertical-offset="6090" max-vertical-offset="9639">
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/app/canvas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="58" selection-start="3228" selection-end="3228" vertical-scroll-proportion="0.61378205" vertical-offset="1096" max-vertical-offset="1904">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
+    <entry file="file://$PROJECT_DIR$/public/css/colorpicker.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="33" selection-start="1189" selection-end="1189" vertical-scroll-proportion="0.0" vertical-offset="89" max-vertical-offset="969">
+        <state line="68" column="0" selection-start="1779" selection-end="1779" vertical-scroll-proportion="1.0160257" vertical-offset="522" max-vertical-offset="1258">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.js">
+    <entry file="file://$PROJECT_DIR$/public/js/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="77" selection-end="77" vertical-scroll-proportion="0.086440675" vertical-offset="0" max-vertical-offset="590">
+        <state line="28" column="32" selection-start="1171" selection-end="1171" vertical-scroll-proportion="0.76282054" vertical-offset="0" max-vertical-offset="629">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/app/parts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="362" column="50" selection-start="13078" selection-end="13078" vertical-scroll-proportion="0.5008183" vertical-offset="5848" max-vertical-offset="9350">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="678" column="22" selection-start="21170" selection-end="21170" vertical-scroll-proportion="-12.576923" vertical-offset="11199" max-vertical-offset="11849">
+          <folding>
+            <element signature="n#style#0;n#input#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1384340410000" expanded="true" signature="17371:17576" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="17423:17571" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="17437:17562" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="17713:17965" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="17780:17864" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="18080:18178" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="18205:20369" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="18245:19092" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="18315:18977" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="18426:18461" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="18624:18662" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="18848:18886" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="19310:20154" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="19380:20139" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="20251:20358" placeholder="..." />
+            <marker date="1384340410000" expanded="true" signature="20396:20756" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/lib/lesshat.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="598" column="1" selection-start="66048" selection-end="66048" vertical-scroll-proportion="-0.102564104" vertical-offset="10226" max-vertical-offset="45135">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/new_style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="62" selection-start="77" selection-end="77" vertical-scroll-proportion="-0.65384614" vertical-offset="0" max-vertical-offset="8364">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="877" selection-end="877" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="15419">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="583">
           <folding />
         </state>
       </provider>
