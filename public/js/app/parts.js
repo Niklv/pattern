@@ -318,6 +318,12 @@ var Fabric = Backbone.Model.extend({
     initialize: function (attr, opt) {
         this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center"});
         this.model = opt.model;
+        filter = new fabric.Image.filters.Tint({
+            color: '#3513B0',
+            opacity: 1
+        });
+        this._fabric.filters.push(filter);
+        this._fabric.applyFilters();
         this.add();
         this.bind("change", this.render);
         this.bind("change:show", this.show);
