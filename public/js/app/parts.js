@@ -318,12 +318,12 @@ var Fabric = Backbone.Model.extend({
     initialize: function (attr, opt) {
         this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center"});
         this.model = opt.model;
-        filter = new fabric.Image.filters.Tint({
-            color: '#3513B0',
-            opacity: 1
-        });
-        this._fabric.filters.push(filter);
-        this._fabric.applyFilters();
+        /*filter = new fabric.Image.filters.Tint({
+         color: '#3513B0',
+         opacity: 1
+         });
+         this._fabric.filters.push(filter);
+         this._fabric.applyFilters();*/
         this.add();
         this.bind("change", this.render);
         this.bind("change:show", this.show);
@@ -365,8 +365,7 @@ var PartView = Backbone.View.extend({
     init_controls: function () {
         //console.log(this.model.attributes);
         this.$tabHeader.find('button.close').click(_.bind(this.remove, this));
-        //this.$el.find('.colorpicker').colorpicker({format: "rgba"});
-        this.$el.find('.colorpicker').colorPicker();
+        this.$el.find('.colorpicker').colorPicker("init", {opacity: 1});
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
         switch (this.$el.find('.placement input:checked').val()) {

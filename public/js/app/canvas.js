@@ -1,6 +1,6 @@
 var Canvas = Backbone.Model.extend({
     defaults: {
-        color: "#ffffff",
+        color: "#FFFFFF",
         autoupdate: false,
         height: 300,
         width: 300,
@@ -49,13 +49,15 @@ var Canvas = Backbone.Model.extend({
     },
     color: function () {
         this.canvas.setBackgroundColor(this.get("color"));
-        ga('send', 'event', 'pattern_bg_color', 'set', this.get("color"));
+        //ga('send', 'event', 'pattern_bg_color', 'set', this.get("color"));
     },
     width: function () {
         this.canvas.setWidth(this.get("width"));
+        $(window).resize();
     },
     height: function () {
         this.canvas.setHeight(this.get("height"));
+        $(window).resize();
     },
     removeAll: function () {
         this.canvas._objects = [];
@@ -75,17 +77,16 @@ var Canvas = Backbone.Model.extend({
         var b64 = data.split(',')[1];
         var blob = b64toBlob(b64, "image/png");
         saveAs(blob, "awesome-pattern_" + _.random(100000, 200000) + ".png");
-        ga('send', 'event', 'download_pattern', 'download');
-        ga('send', 'event', 'download_pattern', 'width', this.get("width"));
-        ga('send', 'event', 'download_pattern', 'height', this.get("height"));
+        //ga('send', 'event', 'download_pattern', 'download');
+        //ga('send', 'event', 'download_pattern', 'width', this.get("width"));
+        //ga('send', 'event', 'download_pattern', 'height', this.get("height"));
     }
 });
 
 var CanvasView = Backbone.View.extend({
     initialize: function () {
         this.$el = $('.canvas-options');
-        //this.$el.find('.colorpicker').colorpicker({format: "hex"}).colorpicker('setValue', this.model.get("color"));
-        this.$el.find('.colorpicker').colorPicker().colorPicker("setHEX", this.model.get("color"));
+        this.$el.find('.colorpicker').colorPicker("init",{}).colorPicker("setHEX", this.model.get("color"));
         new Slider({model: this.model, name: "width", jquery_object: this.$el.find(".width")});
         new Slider({model: this.model, name: "height", jquery_object: this.$el.find(".height")});
     },
@@ -96,7 +97,7 @@ var CanvasView = Backbone.View.extend({
         "click .download": "download_image"
     },
     color_changed: function (ev) {
-        this.model.set("color", $(ev.target).val());
+        this.model.set("color", $(ev.target).colorPicker("getHEX"));
     },
     autoupdate_changed: function (e) {
         this.model.set("autoupdate", $(e.target).prop("checked"));
