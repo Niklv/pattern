@@ -365,7 +365,7 @@ var PartView = Backbone.View.extend({
     init_controls: function () {
         //console.log(this.model.attributes);
         this.$tabHeader.find('button.close').click(_.bind(this.remove, this));
-        this.$el.find('.colorpicker').colorPicker("init", {opacity: 1});
+        this.$el.find('.colorpicker').colorPicker("init", {opacity: 1, position:"top"});
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
         switch (this.$el.find('.placement input:checked').val()) {

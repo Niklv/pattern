@@ -54,6 +54,8 @@
 
         ColorPicker.prototype.hex = "#FF0000";
 
+        ColorPicker.prototype.position = "bottom";
+
         function ColorPicker(input, param) {
             this._updateControls = __bind(this._updateControls, this);
             this._recalculateColor = __bind(this._recalculateColor, this);
@@ -105,6 +107,9 @@
                 });
             } else {
                 this.el.addClass("disable-opacity");
+            }
+            if (param != null ? param.position : void 0) {
+                this.position = param.position;
             }
             this._bind(input);
         }
@@ -176,8 +181,15 @@
                 return $(this).hide();
             });
             position = this.input.position();
-            this.el.css("top", position.top + this.input.outerHeight(true));
-            this.el.css("left", position.left + parseInt(this.input.css("margin-left"), 10));
+            switch (this.position) {
+                case "top":
+                    this.el.css("top", position.top - this.el.outerHeight(true));
+                    this.el.css("left", position.left + parseInt(this.input.css("margin-left"), 10));
+                    break;
+                case "bottom":
+                    this.el.css("top", position.top + this.input.outerHeight(true));
+                    this.el.css("left", position.left + parseInt(this.input.css("margin-left"), 10));
+            }
             return this.el.toggle();
         };
 
