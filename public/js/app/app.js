@@ -26,6 +26,6 @@ function init() {
 }
 
 var canvas = new Canvas;
-var parts = new PartCollection();
+var samples = new SampleCollection();
 init();
 

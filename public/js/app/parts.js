@@ -1,4 +1,4 @@
-var Part = Backbone.Model.extend({
+var Sample = Backbone.Model.extend({
     objects: null,
     defaults: {
         count: 5,
@@ -252,7 +252,6 @@ var Part = Backbone.Model.extend({
     }
 });
 
-
 //TODO: 3x grid from prev-prev and next-next img
 var Grid = Backbone.Model.extend({
     objects: null,
@@ -309,7 +308,6 @@ var Grid = Backbone.Model.extend({
     }
 });
 
-
 var Fabric = Backbone.Model.extend({
     _fabric: null,
     defaults: {
@@ -354,7 +352,8 @@ var Fabric = Backbone.Model.extend({
     }
 });
 
-var PartView = Backbone.View.extend({
+//VIEW
+var SampleView = Backbone.View.extend({
     $tabHeader: null,
     tagName: "div",
     className: "tab-pane fade",
@@ -504,7 +503,7 @@ var PartView = Backbone.View.extend({
         this.model.set(p_name, parseFloat(val));
     },
     remove: function () {
-        parts.remove(this.model);
+        samples.remove(this.model);
         //this.$el.animate({width: "0px"}, ANIM_TIME*10, function(){
         //this.remove()
         //});
@@ -525,16 +524,16 @@ var PartView = Backbone.View.extend({
     }
 });
 
-
-var PartCollection = Backbone.Collection.extend({
-    model: Part,
+//COLLECTION
+var SampleCollection = Backbone.Collection.extend({
+    model: Sample,
     initialize: function () {
         this.bind("add", this.add_model);
         this.bind("remove", this.remove_model);
         this.bind("render", canvas.update, canvas);
     },
     add_model: function (model) {
-        var view = new PartView({model: model});
+        var view = new SampleView({model: model});
         model.view = view;
         view.render().init_controls().place();
         canvas.update();

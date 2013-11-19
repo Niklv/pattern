@@ -20,7 +20,7 @@ function select_from_library(e) {
             img.src = data.prefix + data.image;
             img.onload = function () {
                 $('#collections_modal').modal('hide');
-                parts.add({type: "img", img: img});
+                samples.add({type: "img", img: img});
             };
         },
         error: function () {
@@ -48,7 +48,7 @@ function select_from_internet(e) {
             var img = new Image();
             img.src = data.prefix + data.image;
             img.onload = function () {
-                parts.add({type: "img", img: img});
+                samples.add({type: "img", img: img});
                 $('#paste_link_modal').modal('hide');
             };
         },
@@ -74,7 +74,7 @@ function handle_image(e) {
         var imgObj = new Image();
         imgObj.src = event.target.result;
         imgObj.onload = function () {
-            parts.add({type: "img", img: imgObj});
+            samples.add({type: "img", img: imgObj});
         };
         $(e.target).val("");
     };
