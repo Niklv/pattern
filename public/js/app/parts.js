@@ -9,7 +9,7 @@ var Sample = Backbone.Model.extend({
         overlay: null,
         angle_delta: 0,
         offset: 0,
-        grid: 9, //9, 25, 49, 81
+        grid: 1, //1, 4, 9, 16
         x: 0,
         y: 0,
         radius: 40,
@@ -51,7 +51,7 @@ var Sample = Backbone.Model.extend({
                 max: 360
             },
             grid: {
-                values: [9, 25, 49, 81]
+                values: [1, 4, 9, 16]
             },
             x: {
                 step: 1
@@ -259,15 +259,58 @@ var Grid = Backbone.Model.extend({
     initialize: function (attr, opt) {
         this.objects = new Backbone.Collection([], {model: Fabric});
         this.model = opt.model;
-        //TODO:remove hardcoded value 81
-        for (var i = 0; i < 81; i++)
+        //TODO:remove hardcoded value 121
+        for (var i = 0; i < 121; i++)
             this.objects.add(this.attributes, opt);
-        this.grid_size();
-        this.grid_position();
-        this.bind("change:grid", this.grid_size);
-        this.bind("change:grid change:x change:y", this.grid_position);
-        this.bind("change:grid change:width change:height change:angle change:opacity", this.params_change);
-        canvas.bind("change:width change:height", this.grid_position, this);
+        this.new_grid();
+        //this.grid_size();
+        //this.grid_position();
+        //this.bind("change:grid", this.grid_size);
+        //this.bind("change:grid change:x change:y", this.grid_position);
+        //this.bind("change:grid change:width change:height change:angle change:opacity", this.params_change);
+        //canvas.bind("change:width change:height", this.grid_position, this);
+    },
+    new_grid: function () {
+        var g = this.get("grid"),
+            x = this.get("x"),
+            y = this.get("y"),
+            step_x = canvas.getWidth() / g,
+            step_y = canvas.getHeight() / g,
+            i = 0, R = 0, isVisible = true, fabric_index = 0;
+
+        //process CENTER elements
+        this.objects.at(fabric_index++).set({show: true});
+
+        //process OTHER elements
+        while (isVisible) {
+            isVisible = false;
+            for (i = -R; i <= R; i++) { //check top and bottom row
+                if (this.isVisibleWhen(i * step_x, R * step_y)) {
+                    isVisible = true;
+                    this.objects.at(fabric_index++).set({show: true, x: x + i * step_x, y: y + R * step_y});
+                }
+                if (this.isVisibleWhen(i * step_x, -R * step_y)) {
+                    isVisible = true;
+                    this.objects.at(fabric_index++).set({show: true, x: x + i * step_x, y: y - R * step_y});
+                }
+            }
+            for (i = -R + 1; i <= R - 1; i++) {
+                //check left and right row
+                if (this.isVisibleWhen(R * step_x, i * step_y)) {
+                    isVisible = true;
+                    this.objects.at(fabric_index++).set({show: true, x: x + R * step_x, y: y + i * step_y});
+                }
+                if (this.isVisibleWhen(-R * step_x, i * step_y)) {
+                    isVisible = true;
+                    this.objects.at(fabric_index++).set({show: true, x: x - R * step_x, y: y + i * step_y});
+                }
+            }
+            if (fabric_index > 100) break;
+            R++;
+        }
+    },
+    isVisibleWhen: function (sx, sy) {
+        return true;
     },
     params_change: function () {
         var data = {}, i, size = this.get("grid");
@@ -364,7 +407,7 @@ var SampleView = Backbone.View.extend({
     init_controls: function () {
         //console.log(this.model.attributes);
         this.$tabHeader.find('button.close').click(_.bind(this.remove, this));
-        this.$el.find('.colorpicker').colorPicker("init", {opacity: 1, position:"top"});
+        this.$el.find('.colorpicker').colorPicker("init", {opacity: 1, position: "top"});
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
         switch (this.$el.find('.placement input:checked').val()) {
