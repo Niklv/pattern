@@ -476,6 +476,9 @@ input[type='text'] {
   margin-left: auto;
   margin-right: auto;
   display: block;
+  width: 300px;
+  height: 300px;
+  margin-top: 0;
   -webkit-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);

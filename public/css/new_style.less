@@ -461,16 +461,17 @@ input:not([type]), input[type='text'] {
 #canvas {
   margin-left: auto;
   margin-right: auto;
-  display:block;
-  //border: 1px solid rgba(0, 0, 0, 0.2);
+  display: block;
+  width: 300px;
+  height: 300px;
+  margin-top: 0;
   .box-shadow(0 0 25px rgba(0, 0, 0, 0.6));
   .transition-duration(.5s);
   .transition-property(box-shadow);
-  &.preview{
+  &.preview {
     .box-shadow(none);
   }
 }
-
 
 //DEBUG
 body {
