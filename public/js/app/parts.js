@@ -256,13 +256,19 @@ var Sample = Backbone.Model.extend({
 var Grid = Backbone.Model.extend({
     objects: null,
     model: null,
+    center_el: null,
+    tl: null,
+    br: null,
     initialize: function (attr, opt) {
         this.objects = new Backbone.Collection([], {model: Fabric});
         this.model = opt.model;
         //TODO:remove hardcoded value 121
         for (var i = 0; i < 121; i++)
             this.objects.add(this.attributes, opt);
+        this.updateBoundingPoints();
         this.new_grid();
+        this.bind("change:grid", this.new_grid);
+        canvas.bind("change:width change:height", this.updateBoundingPoints, this);
         //this.grid_size();
         //this.grid_position();
         //this.bind("change:grid", this.grid_size);
@@ -274,43 +280,56 @@ var Grid = Backbone.Model.extend({
         var g = this.get("grid"),
             x = this.get("x"),
             y = this.get("y"),
-            step_x = canvas.getWidth() / g,
-            step_y = canvas.getHeight() / g,
-            i = 0, R = 0, isVisible = true, fabric_index = 0;
+            step_x = canvas.getWidth() / Math.sqrt(g),
+            step_y = canvas.getHeight() / Math.sqrt(g),
+            i = 0, R = 1, isVisible = true, fabric_index = 0, opt = new DoubleLinkedList();
 
         //process CENTER elements
         this.objects.at(fabric_index++).set({show: true});
-
+        this.center_el = this.objects.at(0)._fabric;
+        opt.add({x: x, y: y}, 0, 0);
         //process OTHER elements
         while (isVisible) {
             isVisible = false;
             for (i = -R; i <= R; i++) { //check top and bottom row
                 if (this.isVisibleWhen(i * step_x, R * step_y)) {
                     isVisible = true;
-                    this.objects.at(fabric_index++).set({show: true, x: x + i * step_x, y: y + R * step_y});
+                    opt.add({x: x + i * step_x, y: y + R * step_y}, i, R);
                 }
                 if (this.isVisibleWhen(i * step_x, -R * step_y)) {
                     isVisible = true;
-                    this.objects.at(fabric_index++).set({show: true, x: x + i * step_x, y: y - R * step_y});
+                    opt.add({x: x + i * step_x, y: y - R * step_y}, i, -R);
                 }
             }
-            for (i = -R + 1; i <= R - 1; i++) {
-                //check left and right row
+            for (i = -R + 1; i <= R - 1; i++) { //check left and right row
                 if (this.isVisibleWhen(R * step_x, i * step_y)) {
                     isVisible = true;
-                    this.objects.at(fabric_index++).set({show: true, x: x + R * step_x, y: y + i * step_y});
+                    opt.add({x: x + R * step_x, y: y + i * step_y}, R, i);
                 }
                 if (this.isVisibleWhen(-R * step_x, i * step_y)) {
                     isVisible = true;
-                    this.objects.at(fabric_index++).set({show: true, x: x - R * step_x, y: y + i * step_y});
+                    opt.add({x: x - R * step_x, y: y + i * step_y}, -R, i);
                 }
             }
-            if (fabric_index > 100) break;
             R++;
         }
+        console.log("empty_R = " + R + ", objects_in_render = " + fabric_index);
+        console.log(opt.toArray());
+        while (fabric_index < this.objects.length)
+            this.objects.at(fabric_index++).set({show: false});
     },
     isVisibleWhen: function (sx, sy) {
-        return true;
+        var subV = new fabric.Point(sx, sy);
+        //subV = subV.add(this.br_half);
+        var tl = this.tl.subtract(subV);
+        var br = this.br.subtract(subV);
+        return this.center_el.intersectsWithRect(tl, br) || this.center_el.isContainedWithinRect(tl, br);
+    },
+    updateBoundingPoints: function () {
+        this.tl = new fabric.Point(0, 0);
+        this.br = new fabric.Point(canvas.getWidth(), canvas.getHeight());
+        this.br = this.br.divide(2);
+        this.tl = this.tl.subtract(this.br);
     },
     params_change: function () {
         var data = {}, i, size = this.get("grid");
@@ -357,7 +376,7 @@ var Fabric = Backbone.Model.extend({
         show: false
     },
     initialize: function (attr, opt) {
-        this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center"});
+        this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center", filters: []});
         this.model = opt.model;
         /*filter = new fabric.Image.filters.Tint({
          color: '#3513B0',

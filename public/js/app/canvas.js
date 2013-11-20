@@ -26,7 +26,7 @@ var Canvas = Backbone.Model.extend({
             var prevH = $('.preview-button').height();
             var viewH = $('.controls-section').position().top;
             var canvasH = cnv.height();
-            var offset = (viewH - prevH - canvasH)/2 + prevH;
+            var offset = (viewH - prevH - canvasH) / 2 + prevH;
             cnv.css('margin-top', offset + "px");
         }).resize();
         new CanvasView({model: this});
@@ -68,7 +68,7 @@ var Canvas = Backbone.Model.extend({
         } else
             this.canvas.renderAll(true);
     },
-    render_to_bg: function(){
+    render_to_bg: function () {
         $(window).resize();
         $('body').css('background-image', 'url(' + this.canvas.toDataURL({format: "png", quality: 1}) + ')');
     },
@@ -86,7 +86,7 @@ var Canvas = Backbone.Model.extend({
 var CanvasView = Backbone.View.extend({
     initialize: function () {
         this.$el = $('.canvas-options');
-        this.$el.find('.colorpicker').colorPicker("init",{}).colorPicker("setHEX", this.model.get("color"));
+        this.$el.find('.colorpicker').colorPicker("init", {}).colorPicker("setHEX", this.model.get("color"));
         new Slider({model: this.model, name: "width", jquery_object: this.$el.find(".width")});
         new Slider({model: this.model, name: "height", jquery_object: this.$el.find(".height")});
     },
