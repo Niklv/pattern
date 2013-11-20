@@ -252,7 +252,7 @@ var Sample = Backbone.Model.extend({
     }
 });
 
-//TODO: 3x grid from prev-prev and next-next img
+
 var Grid = Backbone.Model.extend({
     objects: null,
     model: null,
@@ -269,6 +269,7 @@ var Grid = Backbone.Model.extend({
         this.new_grid();
         this.bind("change:grid", this.new_grid);
         canvas.bind("change:width change:height", this.updateBoundingPoints, this);
+        this.bind("change:width change:height change:angle change:opacity", this.new_grid);
         //this.grid_size();
         //this.grid_position();
         //this.bind("change:grid", this.grid_size);
@@ -280,12 +281,15 @@ var Grid = Backbone.Model.extend({
         var g = this.get("grid"),
             x = this.get("x"),
             y = this.get("y"),
+            width = this.get("width"),
+            height = this.get("height"),
+            angle = this.get("angle"),
+            opacity = this.get("opacity")
             step_x = canvas.getWidth() / Math.sqrt(g),
             step_y = canvas.getHeight() / Math.sqrt(g),
-            i = 0, R = 1, isVisible = true, fabric_index = 0, opt = new DoubleLinkedList();
+            i = 0, R = 1, isVisible = true, opt = new DoubleLinkedList();
 
         //process CENTER elements
-        this.objects.at(fabric_index++).set({show: true});
         this.center_el = this.objects.at(0)._fabric;
         opt.add({x: x, y: y}, 0, 0);
         //process OTHER elements
@@ -313,10 +317,15 @@ var Grid = Backbone.Model.extend({
             }
             R++;
         }
-        console.log("empty_R = " + R + ", objects_in_render = " + fabric_index);
-        console.log(opt.toArray());
-        while (fabric_index < this.objects.length)
-            this.objects.at(fabric_index++).set({show: false});
+        var vis = opt.toArray();
+        i = 0;
+        console.log(vis);
+        while (vis.length > this.objects.length)
+            this.objects.add(this.attributes, {model: this.model});
+        while (i < vis.length)
+            this.objects.at(i).set({show: true, x: vis[i].x, y: vis[i++].y, width:width, height:height, opacity:opacity, angle:angle});
+        while (i < this.objects.length)
+            this.objects.at(i++).set({show: false});
     },
     isVisibleWhen: function (sx, sy) {
         var subV = new fabric.Point(sx, sy);

@@ -51,11 +51,6 @@ DoubleLinkedList.prototype = {
                     cur.prev = node;
                     this.first = node;
                 }
-                /*cur.next.prev = node;
-                node.next = cur.next;
-                cur.next = node;
-                node.prev = cur;*/
-
             } else {
                 cur = this.last;
                 cur.next = node;
