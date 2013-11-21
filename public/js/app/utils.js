@@ -39,7 +39,7 @@ DoubleLinkedList.prototype = {
         }
         else {
             var cur = this.first;
-            while (cur && (cur.y > node.y || ( cur.y == node.y && cur.x < node.x))) cur = cur.next;
+            while (cur && (cur.y < node.y || ( cur.y == node.y && cur.x < node.x))) cur = cur.next;
             if (cur) {
                 if (cur.prev) {
                     node.prev = cur.prev;

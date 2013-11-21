@@ -77,7 +77,8 @@ var Sample = Backbone.Model.extend({
             r = img.width / img.height;
         this.set({width: Math.min(w, h * r), height: Math.min(h, w / r)});
 
-        for (var i = 0; i < range.count.max; i++)
+        //for (var i = 0; i < range.count.max; i++)
+        for (var i = 0; i < 1; i++)
             this.objects.add({
                 x: this.get("x"),
                 y: this.get("y"),
@@ -256,9 +257,10 @@ var Sample = Backbone.Model.extend({
 var Grid = Backbone.Model.extend({
     objects: null,
     model: null,
-    center_el: null,
+    el_dots: null,
     tl: null,
     br: null,
+    visible_parts: null,
     initialize: function (attr, opt) {
         this.objects = new Backbone.Collection([], {model: Fabric});
         this.model = opt.model;
@@ -266,10 +268,12 @@ var Grid = Backbone.Model.extend({
         for (var i = 0; i < 121; i++)
             this.objects.add(this.attributes, opt);
         this.updateBoundingPoints();
-        this.new_grid();
-        this.bind("change:grid", this.new_grid);
+        this.calculate_grid();
+        this.bind("change:grid", this.calculate_grid);
         canvas.bind("change:width change:height", this.updateBoundingPoints, this);
-        this.bind("change:width change:height change:angle change:opacity", this.new_grid);
+        this.bind("change:width change:height change:angle change:x change:y", this.calculate_grid);
+        this.bind("change:opacity change:overlay", this.update_non_dimension_settings);
+
         //this.grid_size();
         //this.grid_position();
         //this.bind("change:grid", this.grid_size);
@@ -277,22 +281,46 @@ var Grid = Backbone.Model.extend({
         //this.bind("change:grid change:width change:height change:angle change:opacity", this.params_change);
         //canvas.bind("change:width change:height", this.grid_position, this);
     },
-    new_grid: function () {
+    calculate_grid: function () {
         var g = this.get("grid"),
             x = this.get("x"),
             y = this.get("y"),
             width = this.get("width"),
             height = this.get("height"),
             angle = this.get("angle"),
-            opacity = this.get("opacity")
             step_x = canvas.getWidth() / Math.sqrt(g),
             step_y = canvas.getHeight() / Math.sqrt(g),
             i = 0, R = 1, isVisible = true, opt = new DoubleLinkedList();
 
         //process CENTER elements
-        this.center_el = this.objects.at(0)._fabric;
+        var rad = angle / 180 * Math.PI;
+        var c = Math.cos(rad);
+        var s = Math.sin(rad);
+        var ROT = [
+            [c, -s],
+            [s, c]
+        ];
+        var POINTS = [
+            {x: x + width / 2, y: y + height / 2},
+            {x: x + width / 2, y: y - height / 2},
+            {x: x - width / 2, y: y - height / 2},
+            {x: x - width / 2, y: y + height / 2}
+        ];
+
+        this.el_dots = {POINTS: [
+            new fabric.Point(POINTS[0].x * ROT[0][0] + POINTS[0].y * ROT[0][1], POINTS[0].x * ROT[1][0] + POINTS[0].y * ROT[1][1]),
+            new fabric.Point(POINTS[1].x * ROT[0][0] + POINTS[1].y * ROT[0][1], POINTS[1].x * ROT[1][0] + POINTS[1].y * ROT[1][1]),
+            new fabric.Point(POINTS[2].x * ROT[0][0] + POINTS[2].y * ROT[0][1], POINTS[2].x * ROT[1][0] + POINTS[2].y * ROT[1][1]),
+            new fabric.Point(POINTS[3].x * ROT[0][0] + POINTS[3].y * ROT[0][1], POINTS[3].x * ROT[1][0] + POINTS[3].y * ROT[1][1])
+        ]};
+        this.el_dots.t = Math.max(POINTS[0].y, POINTS[1].y, POINTS[2].y, POINTS[3].y);
+        this.el_dots.r = Math.max(POINTS[0].x, POINTS[1].x, POINTS[2].x, POINTS[3].x);
+        this.el_dots.b = Math.min(POINTS[0].y, POINTS[1].y, POINTS[2].y, POINTS[3].y);
+        this.el_dots.l = Math.min(POINTS[0].x, POINTS[1].x, POINTS[2].x, POINTS[3].x);
+
         opt.add({x: x, y: y}, 0, 0);
         //process OTHER elements
+        //TODO FIX BUG WITH R=3
         while (isVisible) {
             isVisible = false;
             for (i = -R; i <= R; i++) { //check top and bottom row
@@ -319,20 +347,34 @@ var Grid = Backbone.Model.extend({
         }
         var vis = opt.toArray();
         i = 0;
-        console.log(vis);
-        while (vis.length > this.objects.length)
+        console.log(R - 1, vis);
+        this.visible_parts = vis.length;
+        while (this.visible_parts > this.objects.length)
             this.objects.add(this.attributes, {model: this.model});
-        while (i < vis.length)
-            this.objects.at(i).set({show: true, x: vis[i].x, y: vis[i++].y, width:width, height:height, opacity:opacity, angle:angle});
+        while (i < this.visible_parts)
+            this.objects.at(i).set({show: true, x: vis[i].x, y: vis[i++].y, width: width, height: height, angle: angle});
         while (i < this.objects.length)
             this.objects.at(i++).set({show: false});
     },
+    update_non_dimension_settings: function () {
+        var opacity = this.get("opacity"),
+            overlay = this.get("overlay"), i = 0;
+        while (i < this.visible_parts)
+            this.objects.at(i++).set({opacity: opacity, overlay: overlay});
+    },
     isVisibleWhen: function (sx, sy) {
         var subV = new fabric.Point(sx, sy);
-        //subV = subV.add(this.br_half);
-        var tl = this.tl.subtract(subV);
-        var br = this.br.subtract(subV);
-        return this.center_el.intersectsWithRect(tl, br) || this.center_el.isContainedWithinRect(tl, br);
+        var tl = this.tl.subtract(subV);//.subtract(new fabric.Point(-100, -100));
+        var br = this.br.subtract(subV);//.add(new fabric.Point(100, 100));
+        var intersection = fabric.Intersection.intersectPolygonRectangle(this.el_dots.POINTS, tl, br);
+        var intersected = (intersection.status === 'Intersection');
+        var contained = (
+            this.el_dots.l >= tl.x &&
+                this.el_dots.r <= br.x &&
+                this.el_dots.t >= tl.y &&
+                this.el_dots.b <= br.y
+            );
+        return intersected || contained;
     },
     updateBoundingPoints: function () {
         this.tl = new fabric.Point(0, 0);
