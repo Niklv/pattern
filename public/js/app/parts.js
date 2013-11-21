@@ -296,27 +296,21 @@ var Grid = Backbone.Model.extend({
         var rad = angle / 180 * Math.PI;
         var c = Math.cos(rad);
         var s = Math.sin(rad);
-        var ROT = [
-            [c, -s],
-            [s, c]
-        ];
-        var POINTS = [
+        var pnts = [
             {x: x + width / 2, y: y + height / 2},
-            {x: x + width / 2, y: y - height / 2},
-            {x: x - width / 2, y: y - height / 2},
-            {x: x - width / 2, y: y + height / 2}
+            {x: x + width / 2, y: y - height / 2}
         ];
 
         this.el_dots = {POINTS: [
-            new fabric.Point(POINTS[0].x * ROT[0][0] + POINTS[0].y * ROT[0][1], POINTS[0].x * ROT[1][0] + POINTS[0].y * ROT[1][1]),
-            new fabric.Point(POINTS[1].x * ROT[0][0] + POINTS[1].y * ROT[0][1], POINTS[1].x * ROT[1][0] + POINTS[1].y * ROT[1][1]),
-            new fabric.Point(POINTS[2].x * ROT[0][0] + POINTS[2].y * ROT[0][1], POINTS[2].x * ROT[1][0] + POINTS[2].y * ROT[1][1]),
-            new fabric.Point(POINTS[3].x * ROT[0][0] + POINTS[3].y * ROT[0][1], POINTS[3].x * ROT[1][0] + POINTS[3].y * ROT[1][1])
+            new fabric.Point(pnts[0].x * c - pnts[0].y * s, pnts[0].x * s + pnts[0].y * c),
+            new fabric.Point(pnts[1].x * c - pnts[1].y * s, pnts[1].x * s + pnts[1].y * c)
         ]};
-        this.el_dots.t = Math.max(POINTS[0].y, POINTS[1].y, POINTS[2].y, POINTS[3].y);
-        this.el_dots.r = Math.max(POINTS[0].x, POINTS[1].x, POINTS[2].x, POINTS[3].x);
-        this.el_dots.b = Math.min(POINTS[0].y, POINTS[1].y, POINTS[2].y, POINTS[3].y);
-        this.el_dots.l = Math.min(POINTS[0].x, POINTS[1].x, POINTS[2].x, POINTS[3].x);
+        this.el_dots.POINTS[2] = this.el_dots.POINTS[0].multiply(-1);
+        this.el_dots.POINTS[3] = this.el_dots.POINTS[1].multiply(-1);
+        this.el_dots.t = Math.max(this.el_dots.POINTS[0].y, this.el_dots.POINTS[1].y, this.el_dots.POINTS[2].y, this.el_dots.POINTS[3].y);
+        this.el_dots.r = Math.max(this.el_dots.POINTS[0].x, this.el_dots.POINTS[1].x, this.el_dots.POINTS[2].x, this.el_dots.POINTS[3].x);
+        this.el_dots.b = -this.el_dots.t;
+        this.el_dots.l = -this.el_dots.r;
 
         opt.add({x: x, y: y}, 0, 0);
         //process OTHER elements
@@ -377,10 +371,8 @@ var Grid = Backbone.Model.extend({
         return intersected || contained;
     },
     updateBoundingPoints: function () {
-        this.tl = new fabric.Point(0, 0);
-        this.br = new fabric.Point(canvas.getWidth(), canvas.getHeight());
-        this.br = this.br.divide(2);
-        this.tl = this.tl.subtract(this.br);
+        this.tl = new fabric.Point(-canvas.getWidth()/2, canvas.getHeight()/2);
+        this.br = new fabric.Point(canvas.getWidth()/2, -canvas.getHeight()/2);
     },
     params_change: function () {
         var data = {}, i, size = this.get("grid");
