@@ -268,7 +268,6 @@ var Grid = Backbone.Model.extend({
         for (var i = 0; i < 121; i++)
             this.objects.add(this.attributes, opt);
         this.updateBoundingPoints();
-        this.calculate_grid();
         this.bind("change:grid", this.calculate_grid);
         canvas.bind("change:width change:height", this.updateBoundingPoints, this);
         this.bind("change:width change:height change:angle change:x change:y", this.calculate_grid);
@@ -293,14 +292,13 @@ var Grid = Backbone.Model.extend({
             i = 0, R = 1, isVisible = true, opt = new DoubleLinkedList();
 
         //process CENTER elements
-        var rad = angle / 180 * Math.PI;
+        var rad = -angle / 180 * Math.PI;
         var c = Math.cos(rad);
         var s = Math.sin(rad);
         var pnts = [
-            {x: x + width / 2, y: y + height / 2},
-            {x: x + width / 2, y: y - height / 2}
+            {x: width / 2, y: height / 2},
+            {x: width / 2, y: -height / 2}
         ];
-
         this.el_dots = {POINTS: [
             new fabric.Point(pnts[0].x * c - pnts[0].y * s, pnts[0].x * s + pnts[0].y * c),
             new fabric.Point(pnts[1].x * c - pnts[1].y * s, pnts[1].x * s + pnts[1].y * c)
@@ -311,10 +309,20 @@ var Grid = Backbone.Model.extend({
         this.el_dots.r = Math.max(this.el_dots.POINTS[0].x, this.el_dots.POINTS[1].x, this.el_dots.POINTS[2].x, this.el_dots.POINTS[3].x);
         this.el_dots.b = -this.el_dots.t;
         this.el_dots.l = -this.el_dots.r;
+        var off = new fabric.Point(x, y);
+        this.el_dots.POINTS[0].addEquals(off);
+        this.el_dots.POINTS[1].addEquals(off);
+        this.el_dots.POINTS[2].addEquals(off);
+        this.el_dots.POINTS[3].addEquals(off);
+        this.el_dots.t = this.el_dots.t + y;
+        this.el_dots.r = this.el_dots.r + x;
+        this.el_dots.b = this.el_dots.b + y;
+        this.el_dots.l = this.el_dots.l + x;
+
 
         opt.add({x: x, y: y}, 0, 0);
-        //process OTHER elements
         //TODO FIX BUG WITH R=3
+        //process OTHER elements
         while (isVisible) {
             isVisible = false;
             for (i = -R; i <= R; i++) { //check top and bottom row
@@ -358,10 +366,11 @@ var Grid = Backbone.Model.extend({
     },
     isVisibleWhen: function (sx, sy) {
         var subV = new fabric.Point(sx, sy);
-        var tl = this.tl.subtract(subV);//.subtract(new fabric.Point(-100, -100));
-        var br = this.br.subtract(subV);//.add(new fabric.Point(100, 100));
-        var intersection = fabric.Intersection.intersectPolygonRectangle(this.el_dots.POINTS, tl, br);
-        var intersected = (intersection.status === 'Intersection');
+        var tl = this.tl.subtract(subV);
+        var tr = this.tr.subtract(subV);
+        var br = this.br.subtract(subV);
+        var bl = this.bl.subtract(subV);
+        var intersected = (fabric.Intersection.intersectPolygonPolygon(this.el_dots.POINTS, [tl, tr, br, bl]).status === 'Intersection');
         var contained = (
             this.el_dots.l >= tl.x &&
                 this.el_dots.r <= br.x &&
@@ -371,8 +380,12 @@ var Grid = Backbone.Model.extend({
         return intersected || contained;
     },
     updateBoundingPoints: function () {
-        this.tl = new fabric.Point(-canvas.getWidth()/2, canvas.getHeight()/2);
-        this.br = new fabric.Point(canvas.getWidth()/2, -canvas.getHeight()/2);
+        var w = canvas.getWidth() / 2, h = canvas.getHeight() / 2;
+        this.tl = new fabric.Point(-w, h);
+        this.tr = new fabric.Point(w, h);
+        this.br = new fabric.Point(w, -h);
+        this.bl = new fabric.Point(-w, -h);
+        this.calculate_grid();
     },
     params_change: function () {
         var data = {}, i, size = this.get("grid");
