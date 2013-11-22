@@ -305,19 +305,11 @@ var Grid = Backbone.Model.extend({
         ]};
         this.el_dots.POINTS[2] = this.el_dots.POINTS[0].multiply(-1);
         this.el_dots.POINTS[3] = this.el_dots.POINTS[1].multiply(-1);
-        this.el_dots.t = Math.max(this.el_dots.POINTS[0].y, this.el_dots.POINTS[1].y, this.el_dots.POINTS[2].y, this.el_dots.POINTS[3].y);
-        this.el_dots.r = Math.max(this.el_dots.POINTS[0].x, this.el_dots.POINTS[1].x, this.el_dots.POINTS[2].x, this.el_dots.POINTS[3].x);
-        this.el_dots.b = -this.el_dots.t;
-        this.el_dots.l = -this.el_dots.r;
-        var off = new fabric.Point(x, y);
+        var off = {x: x, y: y};
         this.el_dots.POINTS[0].addEquals(off);
         this.el_dots.POINTS[1].addEquals(off);
         this.el_dots.POINTS[2].addEquals(off);
         this.el_dots.POINTS[3].addEquals(off);
-        this.el_dots.t = this.el_dots.t + y;
-        this.el_dots.r = this.el_dots.r + x;
-        this.el_dots.b = this.el_dots.b + y;
-        this.el_dots.l = this.el_dots.l + x;
 
 
         opt.add({x: x, y: y}, 0, 0);
@@ -366,18 +358,18 @@ var Grid = Backbone.Model.extend({
     },
     isVisibleWhen: function (sx, sy) {
         var subV = new fabric.Point(sx, sy);
-        var tl = this.tl.subtract(subV);
         var tr = this.tr.subtract(subV);
-        var br = this.br.subtract(subV);
         var bl = this.bl.subtract(subV);
-        var intersected = (fabric.Intersection.intersectPolygonPolygon(this.el_dots.POINTS, [tl, tr, br, bl]).status === 'Intersection');
-        var contained = (
-            this.el_dots.l >= tl.x &&
-                this.el_dots.r <= br.x &&
-                this.el_dots.t >= tl.y &&
-                this.el_dots.b <= br.y
-            );
-        return intersected || contained;
+        //contain any point
+        var i = 0;
+        while (i < this.el_dots.POINTS.length)
+            if (this.el_dots.POINTS[i].lte(tr) && this.el_dots.POINTS[i].gte(bl))
+                return true;
+            else
+                i++;
+        var tl = this.tl.subtract(subV);
+        var br = this.br.subtract(subV);
+        return (fabric.Intersection.intersectPolygonPolygon(this.el_dots.POINTS, [tl, tr, br, bl]).status === 'Intersection');
     },
     updateBoundingPoints: function () {
         var w = canvas.getWidth() / 2, h = canvas.getHeight() / 2;
