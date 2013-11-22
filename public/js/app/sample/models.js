@@ -4,13 +4,12 @@ var Sample = Backbone.Model.extend({
         count: 5,
         placement: "one", //one, random, circle
         angle: 0,
-        color: "rgba(0, 0, 0, 0)",
         opacity: 1,
-        overlay: null,
+        overlay: "rgba(0, 0, 0, 0.8)",
         filter: null,
         angle_delta: 0,
         offset: 0,
-        grid: 1, //1, 4, 9, 16
+        grid: 1, //1, 4, 9, 16, 25?
         x: 0,
         y: 0,
         radius: 40,
@@ -52,7 +51,7 @@ var Sample = Backbone.Model.extend({
                 max: 360
             },
             grid: {
-                values: [1, 4, 9, 16]
+                values: [1, 4, 9, 16, 25]
             },
             x: {
                 step: 1
@@ -68,9 +67,9 @@ var Sample = Backbone.Model.extend({
     },
     initialize: function () {
         this.objects = new Backbone.Collection([], {model: Grid});
-        this.set({filter: new fabric.Image.filters.Tint({color: 'rgba(53, 21, 176, 0.5)'})});
         this.set({id: _.random(0, 100000000)});
         this.set_range();
+        this.set({filter: new fabric.Image.filters.Tint({color: this.get("overlay")})});
         var range = this.get("range"), img = this.get("img");
         /*init height and width*/
         var w = Math.min(img.width, range.width.max / 2),
@@ -84,28 +83,30 @@ var Sample = Backbone.Model.extend({
                 y: this.get("y"),
                 angle: this.get("angle"),
                 opacity: this.get("opacity"),
+                filter: this.get("filter"),
                 grid: this.get("grid"),
                 height: this.get("height"),
                 width: this.get("width"),
                 img: this.get("img")
-            }, {model: this});
+            }, {parent: this});
 
         this.change_layout();
         this.layout();
         this.bind("change", this.layout);
+        this.bind("change:overlay", this.update_filter);
         this.bind("change:range", this.update_to_range);
         this.bind("change:placement", this.change_layout);
-        canvas.bind("change:width change:height", this.canvas_size_changed, this);
+        APP.Canvas.bind("change:width change:height", this.canvas_size_changed, this);
     },
     set_range: function () {
         var range = this.get("range");
-        range.width.max = canvas.getWidth() * 2;
-        range.height.max = canvas.getHeight() * 2;
-        range.x.max = Math.round(canvas.getWidth() / 2);
-        range.x.min = -Math.round(canvas.getWidth() / 2);
-        range.y.max = Math.round(canvas.getHeight() / 2);
-        range.y.min = -Math.round(canvas.getHeight() / 2);
-        range.radius.max = Math.min(canvas.getHeight(), canvas.getWidth());
+        range.width.max = APP.Canvas.getWidth() * 2;
+        range.height.max = APP.Canvas.getHeight() * 2;
+        range.x.max = Math.round(APP.Canvas.getWidth() / 2);
+        range.x.min = -Math.round(APP.Canvas.getWidth() / 2);
+        range.y.max = Math.round(APP.Canvas.getHeight() / 2);
+        range.y.min = -Math.round(APP.Canvas.getHeight() / 2);
+        range.radius.max = Math.min(APP.Canvas.getHeight(), APP.Canvas.getWidth());
         this.set("range", range);
     },
     update_to_range: function () {
@@ -150,6 +151,7 @@ var Sample = Backbone.Model.extend({
                 y = this.get("y"),
                 angle = this.get("angle"),
                 opacity = this.get("opacity"),
+                filter = this.get("filter"),
                 grid = this.get("grid"),
                 height = this.get("height"),
                 width = this.get("width");
@@ -158,6 +160,7 @@ var Sample = Backbone.Model.extend({
                 y: y,
                 angle: angle,
                 opacity: opacity,
+                filter: filter,
                 grid: grid,
                 height: height,
                 width: width
@@ -169,6 +172,7 @@ var Sample = Backbone.Model.extend({
         random: function () {
             var count = this.get("count"),
                 opacity = this.get("opacity"),
+                filter = this.get("filter"),
                 grid = this.get("grid"),
                 height = this.get("height"),
                 width = this.get("width"),
@@ -176,6 +180,7 @@ var Sample = Backbone.Model.extend({
             for (i = 0; i < count; i++)
                 data[i] = {
                     opacity: opacity,
+                    filter: filter,
                     grid: grid,
                     height: height,
                     width: width
@@ -197,6 +202,7 @@ var Sample = Backbone.Model.extend({
                 angle = this.get("angle"),
                 angle_delta = this.get("angle_delta"),
                 opacity = this.get("opacity"),
+                filter = this.get("filter"),
                 grid = this.get("grid"),
                 height = this.get("height"),
                 width = this.get("width"),
@@ -207,6 +213,7 @@ var Sample = Backbone.Model.extend({
                     y: y + radius * Math.cos(Math.PI * (offset + delta * i) / 180),
                     angle: angle + angle_delta * i,
                     opacity: opacity,
+                    filter: filter,
                     grid: grid,
                     height: height,
                     width: width
@@ -239,6 +246,9 @@ var Sample = Backbone.Model.extend({
         var r = this.get("range");
         return _.random(r[p].min / r[p].step, r[p].max / r[p].step) * r[p].step;
     },
+    update_filter: function () {
+        this.get("filter").color=this.get("overlay");
+    },
     canvas_size_changed: function () {
         this.set_range();
         this.trigger("change:range");
@@ -255,11 +265,10 @@ var Grid = Backbone.Model.extend({
     visible_parts: null,
     initialize: function (attr, opt) {
         this.objects = new Backbone.Collection([], {model: Fabric});
-        this.model = opt.model;
         this.updateBoundingPoints();
         this.bind("change:grid change:width change:height change:angle change:x change:y", this.calculate_grid);
-        this.bind("change:opacity change:overlay", this.update_non_dimension_settings);
-        canvas.bind("change:width change:height", this.updateBoundingPoints, this);
+        this.bind("change:opacity change:filter", this.update_non_dimension_settings);
+        APP.Canvas.bind("change:width change:height", this.updateBoundingPoints, this);
     },
     calculate_grid: function () {
         var g = this.get("grid"),
@@ -269,9 +278,9 @@ var Grid = Backbone.Model.extend({
             height = this.get("height"),
             angle = this.get("angle"),
             opacity = this.get("opacity"),
-            overlay = this.get("overlay"),
-            step_x = canvas.getWidth() / Math.sqrt(g),
-            step_y = canvas.getHeight() / Math.sqrt(g),
+            filter = this.get("filter"),
+            step_x = APP.Canvas.getWidth() / Math.sqrt(g),
+            step_y = APP.Canvas.getHeight() / Math.sqrt(g),
             i = 0, R = 1, currentVis = true, totalVis = true, opt = new DoubleLinkedList();
 
         //process CENTER elements
@@ -327,17 +336,17 @@ var Grid = Backbone.Model.extend({
         var vis = opt.toArray();
         this.visible_parts = vis.length;
         while (this.visible_parts > this.objects.length)
-            this.objects.add(this.attributes, {model: this.model});
+            this.objects.add(this.attributes, {parent: this});
         while (i < this.visible_parts)
-            this.objects.at(i).set({show: true, x: vis[i].x, y: vis[i++].y, width: width, height: height, angle: angle, opacity: opacity, overlay: overlay});
+            this.objects.at(i).set({show: true, x: vis[i].x, y: vis[i++].y, width: width, height: height, angle: angle, opacity: opacity, filter: filter});
         while (i < this.objects.length)
             this.objects.at(i++).set({show: false});
     },
     update_non_dimension_settings: function () {
         var opacity = this.get("opacity"),
-            overlay = this.get("overlay"), i = 0;
+            filter = this.get("filter"), i = 0;
         while (i < this.visible_parts)
-            this.objects.at(i++).set({opacity: opacity, overlay: overlay});
+            this.objects.at(i++).set({opacity: opacity, filter: filter});
     },
     isVisibleWhen: function (sx, sy) {
         var subV = new fabric.Point(sx, sy);
@@ -355,7 +364,7 @@ var Grid = Backbone.Model.extend({
         return (fabric.Intersection.intersectPolygonPolygon(this.el_dots.POINTS, [tl, tr, br, bl]).status === 'Intersection');
     },
     updateBoundingPoints: function () {
-        var w = canvas.getWidth() / 2, h = canvas.getHeight() / 2;
+        var w = APP.Canvas.getWidth() / 2, h = APP.Canvas.getHeight() / 2;
         this.tl = new fabric.Point(-w, h);
         this.tr = new fabric.Point(w, h);
         this.br = new fabric.Point(w, -h);
@@ -375,32 +384,35 @@ var Fabric = Backbone.Model.extend({
         show: false
     },
     initialize: function (attr, opt) {
-        this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center", filters: []});
-        this.model = opt.model;
-        this._fabric.filters.push(this.model.get("filter"));
+        this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center", filters: [this.get("filter")]});
         this._fabric.applyFilters();
         this.add();
         this.bind("change", this.render);
+        this.bind("change:filter", this.filter);
         this.bind("change:show", this.show);
-        this.model.bind("reinitialize", this.add, this);
+        APP.Events.bind("reinitialize", this.add, this);
     },
     add: function () {
-        canvas.add(this._fabric);
+        APP.Canvas.add(this._fabric);
     },
     show: function () {
         //TODO: strange optimization think about it
         /*
-         if (this.get("show") && this._fabric.intersectsWithRect(new fabric.Point(0, 0), new fabric.Point(canvas.width, canvas.height)))
+         if (this.get("show") && this._fabric.intersectsWithRect(new fabric.Point(0, 0), new fabric.Point(APP.Canvas.width, APP.Canvas.height)))
          this._fabric.set("visible", this.get("show"));
          else
          this._fabric.set("visible", false);
          */
         this._fabric.set("visible", this.get("show"));
     },
+    filter: function () {
+        this._fabric.filters[0] = this.get("filter");
+        this._fabric.applyFilters();
+    },
     render: function () {
         this._fabric.set({
-            left: canvas.getCenter().left + this.get("x"),
-            top: canvas.getCenter().top - this.get("y"),
+            left: APP.Canvas.getCenter().left + this.get("x"),
+            top: APP.Canvas.getCenter().top - this.get("y"),
             width: this.get("width"),
             height: this.get("height"),
             angle: this.get("angle"),

@@ -20,7 +20,7 @@ function select_from_library(e) {
             img.src = data.prefix + data.image;
             img.onload = function () {
                 $('#collections_modal').modal('hide');
-                samples.add({type: "img", img: img});
+                APP.Samples.add({type: "img", img: img});
             };
         },
         error: function () {
@@ -48,7 +48,7 @@ function select_from_internet(e) {
             var img = new Image();
             img.src = data.prefix + data.image;
             img.onload = function () {
-                samples.add({type: "img", img: img});
+                APP.Samples.add({type: "img", img: img});
                 $('#paste_link_modal').modal('hide');
             };
         },
@@ -74,7 +74,7 @@ function handle_image(e) {
         var imgObj = new Image();
         imgObj.src = event.target.result;
         imgObj.onload = function () {
-            samples.add({type: "img", img: imgObj});
+            APP.Samples.add({type: "img", img: imgObj});
         };
         $(e.target).val("");
     };
@@ -83,7 +83,7 @@ function handle_image(e) {
 }
 
 function hide_controls_and_show_bg() {
-    canvas.render_to_bg();
+    APP.Canvas.render_to_bg();
     $('#canvas').addClass("preview");
     $('.controls-section').addClass("flow-down");
     ga('send', 'event', 'preview-button', 'click');

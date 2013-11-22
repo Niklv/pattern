@@ -149,7 +149,7 @@ var SampleView = Backbone.View.extend({
         this.model.set(p_name, parseFloat(val));
     },
     remove: function () {
-        samples.remove(this.model);
+        APP.Samples.remove(this.model);
         //this.$el.animate({width: "0px"}, ANIM_TIME*10, function(){
         //this.remove()
         //});
@@ -166,7 +166,7 @@ var SampleView = Backbone.View.extend({
             this.model.set(p_name, $(ev.target).val());
     },
     color_changed: function (ev) {
-        this.model.set("color", $(ev.target).val());
+        this.model.set("overlay", $(ev.target).colorPicker("getRGBA_string"));
     }
 });
 
