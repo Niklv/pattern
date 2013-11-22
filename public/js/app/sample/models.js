@@ -96,6 +96,7 @@ var Sample = Backbone.Model.extend({
         this.bind("change:overlay", this.update_filter);
         this.bind("change:range", this.update_to_range);
         this.bind("change:placement", this.change_layout);
+        this.bind("remove", this.remove);
         APP.Canvas.bind("change:width change:height", this.canvas_size_changed, this);
     },
     set_range: function () {
@@ -226,6 +227,9 @@ var Sample = Backbone.Model.extend({
             this.trigger("render");
         }
     },
+    remove: function () {
+        this.objects.remove(this.objects.models);
+    },
     randomize: function () {
         var r = this.get("range"), data = {};
         data.count = this.rnd("count");
@@ -247,7 +251,7 @@ var Sample = Backbone.Model.extend({
         return _.random(r[p].min / r[p].step, r[p].max / r[p].step) * r[p].step;
     },
     update_filter: function () {
-        this.get("filter").color=this.get("overlay");
+        this.get("filter").color = this.get("overlay");
     },
     canvas_size_changed: function () {
         this.set_range();
@@ -269,6 +273,9 @@ var Grid = Backbone.Model.extend({
         this.bind("change:grid change:width change:height change:angle change:x change:y", this.calculate_grid);
         this.bind("change:opacity change:filter", this.update_non_dimension_settings);
         APP.Canvas.bind("change:width change:height", this.updateBoundingPoints, this);
+        this.bind("remove", function () {
+            this.objects.remove(this.objects.models);
+        });
     },
     calculate_grid: function () {
         var g = this.get("grid"),
@@ -391,6 +398,9 @@ var Fabric = Backbone.Model.extend({
         this.bind("change:filter", this.filter);
         this.bind("change:show", this.show);
         APP.Events.bind("reinitialize", this.add, this);
+        this.bind("remove", function () {
+            APP.Events.unbind("reinitialize", this.add, this)
+        });
     },
     add: function () {
         APP.Canvas.add(this._fabric);

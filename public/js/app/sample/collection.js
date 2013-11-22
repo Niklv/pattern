@@ -12,9 +12,7 @@ var SampleCollection = Backbone.Collection.extend({
         view.render().init_controls().place();
         APP.Canvas.update();
     },
-    remove_model: function (model) {
-        console.log(APP);
-        console.log(model);
+    remove_model: function () {
         APP.Canvas.removeAll();
         APP.Events.trigger("reinitialize");
         APP.Canvas.update();
