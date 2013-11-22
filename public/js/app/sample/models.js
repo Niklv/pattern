@@ -273,9 +273,7 @@ var Grid = Backbone.Model.extend({
         this.bind("change:grid change:width change:height change:angle change:x change:y", this.calculate_grid);
         this.bind("change:opacity change:filter", this.update_non_dimension_settings);
         APP.Canvas.bind("change:width change:height", this.updateBoundingPoints, this);
-        this.bind("remove", function () {
-            this.objects.remove(this.objects.models);
-        });
+        this.bind("remove", this.remove);
     },
     calculate_grid: function () {
         var g = this.get("grid"),
@@ -382,6 +380,9 @@ var Grid = Backbone.Model.extend({
         var i;
         for (i = 0; i < this.visible_parts; i++)
             this.objects.at(i).set({show: isVisible});
+    },
+    remove: function(){
+        this.objects.remove(this.objects.models);
     }
 });
 
