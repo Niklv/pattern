@@ -166,7 +166,9 @@ var SampleView = Backbone.View.extend({
             this.model.set(p_name, $(ev.target).val());
     },
     color_changed: function (ev) {
-        this.model.set("overlay", $(ev.target).colorPicker("getRGBA_string"));
+        console.log("change_filter_triggered!");
+        console.log($(ev.target).colorPicker("getRGBA"));
+        this.model.set("overlay", $(ev.target).colorPicker("getRGBA"));
     }
 });
 

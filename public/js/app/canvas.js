@@ -23,11 +23,11 @@ var Canvas = Backbone.Model.extend({
             var cnv = $('#canvas');
             var off = cnv.offset();
             $('body').css('background-position-x', off.left).css('background-position-y', off.top);
-            var prevH = $('.preview-button').height();
-            var viewH = $('.controls-section').position().top;
-            var canvasH = cnv.height();
-            var offset = (viewH - prevH - canvasH) / 2 + prevH;
-            cnv.css('margin-top', offset + "px");
+            //var prevH = $('.preview-button').height();
+            //var viewH = $('.controls-section').position().top;
+            //var canvasH = cnv.height();
+            //var offset = (viewH - prevH - canvasH) / 2 + prevH;
+            //cnv.css('margin-top', offset + "px");
         }).resize();
         new CanvasView({model: this});
         this.on("change", this.update);
@@ -65,12 +65,39 @@ var Canvas = Backbone.Model.extend({
     update: function () {
         if (this.get("autoupdate")) {
             this.render_to_bg();
-        } else
-            this.canvas.renderAll(true);
+        } else {
+            this.canvas.renderAll(false);
+        }
+
     },
     render_to_bg: function () {
-        $(window).resize();
-        $('body').css('background-image', 'url(' + this.canvas.toDataURL({format: "png", quality: 1}) + ')');
+        //$(window).resize();
+        //$('body').css('background-image', 'url(' + this.canvas.toDataURL({format: "png", quality: 1}) + ')');
+
+
+        this.canvas.renderAll(false);
+        var ctx = this.canvas.getContext("2d");
+        var myImageData = ctx.getImageData(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
+        var bg = document.getElementById('bg_canvas');
+        var bgCtx = bg.getContext("2d");
+        var w = $(window).width(), h = $(window).height();
+        bg.width = w;
+        bg.height = h;
+        while(w>0){
+            w-=this.canvas.getWidth();
+            var oldh=h;
+            while(oldh>0){
+                oldh-=this.canvas.getHeight();
+                bgCtx.putImageData(myImageData, w, oldh);
+            }
+        }
+        /*bgCtx.putImageData(myImageData, 0, 0);
+        bgCtx.putImageData(myImageData, 300, 0);
+        bgCtx.putImageData(myImageData, 600, 0);
+        bgCtx.putImageData(myImageData, 900, 0);
+        bgCtx.putImageData(myImageData, 1200, 0);
+        bgCtx.putImageData(myImageData, 1500, 0);
+        bgCtx.putImageData(myImageData, 1800, 0);*/
     },
     download_image: function () {
         var data = this.canvas.toDataURL({format: "png", quality: 1});

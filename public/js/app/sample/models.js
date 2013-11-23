@@ -95,8 +95,8 @@ var Sample = Backbone.Model.extend({
         this.change_layout();
         this.layout();
         this.on("change", this.layout);
-        this.on("change:overlay", this.update_filter);
         this.on("change:range", this.update_to_range);
+        this.on("change:overlay", this.update_filter);
         this.on("change:placement", this.change_layout);
         this.on("remove", this.remove);
         APP.Canvas.on("change:width change:height", this.canvas_size_changed, this);
@@ -253,8 +253,12 @@ var Sample = Backbone.Model.extend({
         return _.random(r[p].min / r[p].step, r[p].max / r[p].step) * r[p].step;
     },
     update_filter: function () {
-        this.get("filter").color = this.get("overlay");
+        var rgba = this.get("overlay");
+        this.get("filter").color = "rgba(" + rgba.r + ", " + rgba.g + ", " + rgba.b + ", " + rgba.a + ")";
+        this.get("filter").opacity = rgba.a;
+        console.log(this.get("filter"));
         this.events.trigger("change:filter");
+        console.log("after triggering event");
     },
     canvas_size_changed: function () {
         this.set_range();
@@ -396,12 +400,13 @@ var Fabric = Backbone.Model.extend({
     initialize: function (attr, opt) {
         this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center", filters: [this.get("filter")]});
         this.events = opt.events;
-        this.filter();
+        //this.filter();
+        this._fabric.applyFilters(function(){console.log("callbackdone!")});
+        console.log("code after applyFilters");
         this.add();
         this.on("change", this.render);
-        this.on("change:filter", this.filter);
         this.on("change:show", this.show);
-        this.events.on("filter", this.filter, this);
+        this.events.on("change:filter", this.filter, this);
         this.events.on("remove", function () {
             APP.Events.off("reinitialize", this.add, this)
         }, this);
@@ -414,9 +419,7 @@ var Fabric = Backbone.Model.extend({
         this._fabric.set("visible", this.get("show"));
     },
     filter: function () {
-        //this._fabric.filters[0] = this.get("filter");
-        //console.log("filter", this._fabric.filters[0]);
-        this._fabric.applyFilters();
+        //this._fabric.applyFilters();
     },
     render: function () {
         this._fabric.set({
