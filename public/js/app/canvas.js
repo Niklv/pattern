@@ -30,11 +30,11 @@ var Canvas = Backbone.Model.extend({
             cnv.css('margin-top', offset + "px");
         }).resize();
         new CanvasView({model: this});
-        this.bind("change", this.update);
-        this.bind("change:width", this.width);
-        this.bind("change:height", this.height);
-        this.bind("change:color", this.color);
-        this.bind("change:autoupdate", this.update);
+        this.on("change", this.update);
+        this.on("change:width", this.width);
+        this.on("change:height", this.height);
+        this.on("change:color", this.color);
+        this.on("change:autoupdate", this.update);
     },
     canvas: function () {
         this.canvas = new fabric.StaticCanvas("canvas");

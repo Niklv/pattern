@@ -1,11 +1,23 @@
-var B = function(){
-    console.log("constructor B");
+/*var B = function(){
+ console.log("constructor B");
+ };
+
+ var A = function(){
+ console.log("constructor A");
+ };
+
+ A.prototype.b = new B();
+
+ new A();
+ new A();
+ */
+
+var a = {
+    b: 5
 };
 
-var A = function(){
-    console.log("constructor A");
-};
+var b = a.b;
 
-A.prototype.b = new B();
-
-var a = new A();
+console.log(b);
+a.b = 4;
+console.log(b);

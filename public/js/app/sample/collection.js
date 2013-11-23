@@ -2,9 +2,9 @@
 var SampleCollection = Backbone.Collection.extend({
     model: Sample,
     initialize: function () {
-        this.bind("add", this.add_model);
-        this.bind("remove", this.remove_model);
-        this.bind("render", APP.Canvas.update, APP.Canvas);
+        this.on("add", this.add_model);
+        this.on("remove", this.remove_model);
+        this.on("render", APP.Canvas.update, APP.Canvas);
     },
     add_model: function (model) {
         var view = new SampleView({model: model});

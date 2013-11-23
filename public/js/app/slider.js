@@ -17,8 +17,8 @@ var Slider = Backbone.View.extend({
             value: this.model.get(opt.name),
             range: "min"
         });
-        this.model.bind("change:range", this.setNewRange, this)
-        this.model.bind("change:" + opt.name, this.setNewValue, this);
+        this.model.on("change:range", this.setNewRange, this)
+        this.model.on("change:" + opt.name, this.setNewValue, this);
     },
     events: {
         "slide .slider": "onslide",
