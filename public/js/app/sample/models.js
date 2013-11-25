@@ -91,16 +91,22 @@ var Sample = Backbone.Model.extend({
                 height: this.get("height"),
                 width: this.get("width"),
                 img: this.get("img")
-            }, {events: this.events});
+            }, {sample_events: this.events});
 
         this.change_layout();
         this.layout();
-        this.on("change:count change:angle change:opacity change:angle_delta change:offset change:grid change:x change:y change:radius", this.layout);
+        this.on("change", this.model_changed);
+        //this.on("change:count change:angle change:opacity change:angle_delta change:offset change:grid change:x change:y change:radius", this.layout);
         //this.on("change:range", _.compose(this.layout, this.updateRange));
-        this.on("change:overlay", this.updateFilter);
-        this.on("change:placement", _.compose(this.layout, this.change_layout));
+        //this.on("change:overlay", this.updateFilter);
+        //this.on("change:placement", this.change_layout);
         this.on("remove", this.remove);
         APP.Canvas.on("change:width change:height", this.canvasSizeChanged, this);
+    },
+    model_changed: function (data) {
+        if('overlay' in data.changed)
+
+
     },
     setRange: function () {
         var range = this.get("range");
@@ -271,6 +277,7 @@ var Sample = Backbone.Model.extend({
 var Grid = Backbone.Model.extend({
     objects: null,
     model: null,
+    sample_events: null,
     events: null,
     el_dots: null,
     tl: null,
@@ -278,16 +285,17 @@ var Grid = Backbone.Model.extend({
     visible_parts: null,
     fabric_element: null,
     initialize: function (attr, opt) {
+        this.events = _.extend({}, Backbone.Events);
         this.objects = new Backbone.Collection([], {model: Fabric});
-        this.events = opt.events;
+        this.sample_events = opt.sample_events;
         this.updateBoundingPoints();
-        this.grid();
-        this.on("change:grid change:width change:height change:angle change:x change:y", this.grid);
+        this.calculateGrid();
+        this.on("change:grid change:width change:height change:angle change:x change:y", this.calculateGrid);
         this.on("change:opacity", this.update_non_dimension_settings);
-        this.events.on("change:fabric_element", this.updateElement, this);
-        this.events.on("change:canvas", this.updateBoundingPoints, this);
+        this.sample_events.on("change:fabric_element", this.updateElement, this);
+        this.sample_events.on("change:canvas", this.updateBoundingPoints, this);
     },
-    grid: function () {
+    calculateGrid: function () {
         var g = this.get("grid"),
             x = this.get("x"),
             y = this.get("y"),
@@ -353,7 +361,7 @@ var Grid = Backbone.Model.extend({
         this.visible_parts = vis.length;
         //console.log(vis.length);
         while (this.objects.length < this.visible_parts)
-            this.objects.add(this.attributes, {events: this.events, el: this.fabric_element});
+            this.objects.add(this.attributes, {sample_events: this.sample_events, grid_events: this.events, el: this.fabric_element});
         while (i < this.visible_parts)
             this.objects.at(i).set({show: true, x: vis[i].x, y: vis[i++].y, width: width, height: height, angle: angle, opacity: opacity});
         while (i < this.objects.length)
@@ -400,7 +408,7 @@ var Grid = Backbone.Model.extend({
 
 var Fabric = Backbone.Model.extend({
     _fabric: null,
-    events: null,
+    sample_events: null,
     defaults: {
         show: false
     },
@@ -408,13 +416,14 @@ var Fabric = Backbone.Model.extend({
         this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center"});
         if (opt.el)
             this.updateElement(opt.el);
-        this.events = opt.events;
+        this.sample_events = opt.sample_events;
+        this.grid_events = opt.grid_events;
         this.add();
-        this.on("change", this.render);
+        this.on("change", this.updateFabricProperties);
         this.on("change:show", this.show);
-        this.events.on("change:fabric_element", this.updateElement, this);
-        this.events.on("change:canvas", this.render, this);
-        this.events.on("remove:fabric", function () {
+        this.sample_events.on("change:fabric_element", this.updateFabricElement, this);
+        this.sample_events.on("change:canvas", this.render, this);
+        this.sample_events.on("remove:fabric", function () {
             APP.Events.off("reinitialize", this.add, this)
         }, this);
         APP.Events.on("reinitialize", this.add, this);
@@ -425,10 +434,10 @@ var Fabric = Backbone.Model.extend({
     show: function () {
         this._fabric.set("visible", this.get("show"));
     },
-    updateElement: function (el) {
+    updateFabricElement: function (el) {
         this._fabric._element = el;
     },
-    render: function () {
+    updateFabricProperties: function () {
         this._fabric.set({
             left: APP.Canvas.getCenter().left + this.get("x"),
             top: APP.Canvas.getCenter().top - this.get("y"),
