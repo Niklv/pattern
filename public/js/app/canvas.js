@@ -66,15 +66,15 @@ var Canvas = Backbone.Model.extend({
         if (this.get("autoupdate")) {
             this.render_to_bg();
         } else {
-            this.canvas.renderAll(false);
+            this.canvas.renderAll(true);
         }
 
     },
     render_to_bg: function () {
-        //$(window).resize();
-        //$('body').css('background-image', 'url(' + this.canvas.toDataURL({format: "png", quality: 1}) + ')');
+        $(window).resize();
+        $('body').css('background-image', 'url(' + this.canvas.toDataURL({format: "png", quality: 1}) + ')');
 
-
+        /*
         this.canvas.renderAll(false);
         var ctx = this.canvas.getContext("2d");
         var myImageData = ctx.getImageData(0, 0, this.canvas.getWidth(), this.canvas.getHeight());

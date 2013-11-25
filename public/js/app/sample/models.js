@@ -1,5 +1,6 @@
 var Sample = Backbone.Model.extend({
     objects: null,
+    original_fabric: null,
     events: null,
     defaults: {
         count: 5,
@@ -69,9 +70,10 @@ var Sample = Backbone.Model.extend({
     initialize: function () {
         this.events = _.extend({}, Backbone.Events);
         this.objects = new Backbone.Collection([], {model: Grid});
-        this.set_range();
+        this.setRange();
         this.set({id: this.cid});
         this.set({filter: new fabric.Image.filters.Tint({color: this.get("overlay")})});
+        this.original_fabric = new fabric.Image(this.get("img"), {filters: [this.get("filter")]});
         var range = this.get("range"), img = this.get("img");
         /*init height and width*/
         var w = Math.min(img.width, range.width.max / 2),
@@ -94,14 +96,14 @@ var Sample = Backbone.Model.extend({
 
         this.change_layout();
         this.layout();
-        this.on("change", this.layout);
-        this.on("change:range", this.update_to_range);
-        this.on("change:overlay", this.update_filter);
-        this.on("change:placement", this.change_layout);
+        this.on("change:count change:angle change:opacity change:filter change:angle_delta change:offset change:grid change:x change:y change:radius", this.layout);
+        this.on("change:range", _.compose(this.layout, this.updateRange));
+        this.on("change:overlay", this.updateFilter);
+        this.on("change:placement", _.compose(this.layout, this.change_layout));
         this.on("remove", this.remove);
-        APP.Canvas.on("change:width change:height", this.canvas_size_changed, this);
+        APP.Canvas.on("change:width change:height", this.canvasSizeChanged, this);
     },
-    set_range: function () {
+    setRange: function () {
         var range = this.get("range");
         range.width.max = APP.Canvas.getWidth() * 2;
         range.height.max = APP.Canvas.getHeight() * 2;
@@ -112,7 +114,7 @@ var Sample = Backbone.Model.extend({
         range.radius.max = Math.min(APP.Canvas.getHeight(), APP.Canvas.getWidth());
         this.set("range", range);
     },
-    update_to_range: function () {
+    updateRange: function () {
         var range = this.get("range");
         this.set("width", Math.min(this.get("width"), range.width.max));
         this.set("height", Math.min(this.get("height"), range.height.max));
@@ -252,16 +254,17 @@ var Sample = Backbone.Model.extend({
         var r = this.get("range");
         return _.random(r[p].min / r[p].step, r[p].max / r[p].step) * r[p].step;
     },
-    update_filter: function () {
+    updateFilter: function () {
         var rgba = this.get("overlay");
         this.get("filter").color = "rgba(" + rgba.r + ", " + rgba.g + ", " + rgba.b + ", " + rgba.a + ")";
         this.get("filter").opacity = rgba.a;
-        console.log(this.get("filter"));
-        this.events.trigger("change:filter");
-        console.log("after triggering event");
+        this.original_fabric.applyFilters(_.bind(function () {
+            this.events.trigger("change:fabric_element", this.original_fabric._element);
+            this.layout();
+        }, this));
     },
-    canvas_size_changed: function () {
-        this.set_range();
+    canvasSizeChanged: function () {
+        this.setRange();
         this.trigger("change:range");
         this.trigger("render");
     }
@@ -275,15 +278,17 @@ var Grid = Backbone.Model.extend({
     tl: null,
     br: null,
     visible_parts: null,
+    fabric_element: null,
     initialize: function (attr, opt) {
         this.objects = new Backbone.Collection([], {model: Fabric});
         this.events = opt.events;
         this.updateBoundingPoints();
-        this.on("change:grid change:width change:height change:angle change:x change:y", this.calculate_grid);
+        this.on("change:grid change:width change:height change:angle change:x change:y", this.grid);
         this.on("change:opacity change:filter", this.update_non_dimension_settings);
+        this.events.on("change:fabric_element", this.updateElement, this);
         APP.Canvas.on("change:width change:height", this.updateBoundingPoints, this);
     },
-    calculate_grid: function () {
+    grid: function () {
         var g = this.get("grid"),
             x = this.get("x"),
             y = this.get("y"),
@@ -322,21 +327,21 @@ var Grid = Backbone.Model.extend({
         while (totalVis) {
             currentVis = false;
             for (i = -R; i <= R; i++) { //check top and bottom row
-                if (this.isVisibleWhen(i * step_x, R * step_y)) {
+                if (this.isVisible(i * step_x, R * step_y)) {
                     currentVis = true;
                     opt.add({x: x + i * step_x, y: y + R * step_y}, i, R);
                 }
-                if (this.isVisibleWhen(i * step_x, -R * step_y)) {
+                if (this.isVisible(i * step_x, -R * step_y)) {
                     currentVis = true;
                     opt.add({x: x + i * step_x, y: y - R * step_y}, i, -R);
                 }
             }
             for (i = -R + 1; i <= R - 1; i++) { //check left and right row
-                if (this.isVisibleWhen(R * step_x, i * step_y)) {
+                if (this.isVisible(R * step_x, i * step_y)) {
                     currentVis = true;
                     opt.add({x: x + R * step_x, y: y + i * step_y}, R, i);
                 }
-                if (this.isVisibleWhen(-R * step_x, i * step_y)) {
+                if (this.isVisible(-R * step_x, i * step_y)) {
                     currentVis = true;
                     opt.add({x: x - R * step_x, y: y + i * step_y}, -R, i);
                 }
@@ -349,7 +354,7 @@ var Grid = Backbone.Model.extend({
         var vis = opt.toArray();
         this.visible_parts = vis.length;
         while (this.visible_parts > this.objects.length)
-            this.objects.add(this.attributes, {events: this.events});
+            this.objects.add(this.attributes, {events: this.events, el: this.fabric_element});
         while (i < this.visible_parts)
             this.objects.at(i).set({show: true, x: vis[i].x, y: vis[i++].y, width: width, height: height, angle: angle, opacity: opacity, filter: filter});
         while (i < this.objects.length)
@@ -361,7 +366,7 @@ var Grid = Backbone.Model.extend({
         while (i < this.visible_parts)
             this.objects.at(i++).set({opacity: opacity, filter: filter});
     },
-    isVisibleWhen: function (sx, sy) {
+    isVisible: function (sx, sy) {
         var subV = new fabric.Point(sx, sy);
         var tr = this.tr.subtract(subV);
         var bl = this.bl.subtract(subV);
@@ -382,7 +387,10 @@ var Grid = Backbone.Model.extend({
         this.tr = new fabric.Point(w, h);
         this.br = new fabric.Point(w, -h);
         this.bl = new fabric.Point(-w, -h);
-        this.calculate_grid();
+        this.grid();
+    },
+    updateElement: function (el) {
+        this.fabric_element = el;
     },
     visible: function (isVisible) {
         var i;
@@ -398,15 +406,14 @@ var Fabric = Backbone.Model.extend({
         show: false
     },
     initialize: function (attr, opt) {
-        this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center", filters: [this.get("filter")]});
+        this._fabric = new fabric.Image(this.get("img"), {visible: this.get("show"), originX: "center", originY: "center"});
+        if (opt.el)
+            this.updateElement(opt.el);
         this.events = opt.events;
-        //this.filter();
-        this._fabric.applyFilters(function(){console.log("callbackdone!")});
-        console.log("code after applyFilters");
         this.add();
         this.on("change", this.render);
         this.on("change:show", this.show);
-        this.events.on("change:filter", this.filter, this);
+        this.events.on("change:fabric_element", this.updateElement, this);
         this.events.on("remove", function () {
             APP.Events.off("reinitialize", this.add, this)
         }, this);
@@ -417,9 +424,15 @@ var Fabric = Backbone.Model.extend({
     },
     show: function () {
         this._fabric.set("visible", this.get("show"));
+        //TODO: shutdown unused handlers
+        /*if (this.get("show")) {
+         this._fabric.set("visible", true);
+         }else{
+         this._fabric.set("visible", false);
+         } */
     },
-    filter: function () {
-        //this._fabric.applyFilters();
+    updateElement: function (el) {
+        this._fabric._element = el;
     },
     render: function () {
         this._fabric.set({
