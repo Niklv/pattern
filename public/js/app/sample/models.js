@@ -226,7 +226,7 @@ var Sample = Backbone.Model.extend({
         }
     },
     remove: function () {
-        this.events.trigger("remove");
+        this.events.trigger("remove:fabric");
     },
     randomize: function () {
         var r = this.get("range");
@@ -414,7 +414,7 @@ var Fabric = Backbone.Model.extend({
         this.on("change:show", this.show);
         this.events.on("change:fabric_element", this.updateElement, this);
         this.events.on("change:canvas", this.render, this);
-        this.events.on("remove", function () {
+        this.events.on("remove:fabric", function () {
             APP.Events.off("reinitialize", this.add, this)
         }, this);
         APP.Events.on("reinitialize", this.add, this);
@@ -424,13 +424,6 @@ var Fabric = Backbone.Model.extend({
     },
     show: function () {
         this._fabric.set("visible", this.get("show"));
-        //TODO: shutdown unused handlers
-        /*
-         if (this.get("show")) {
-         this.events.on("change:canvas", this.render, this);
-         } else {
-         this.events.off("change:canvas", this.render, this);
-         }*/
     },
     updateElement: function (el) {
         this._fabric._element = el;
