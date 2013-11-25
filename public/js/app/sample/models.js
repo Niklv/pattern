@@ -87,7 +87,6 @@ var Sample = Backbone.Model.extend({
                 y: this.get("y"),
                 angle: this.get("angle"),
                 opacity: this.get("opacity"),
-                filter: this.get("filter"),
                 grid: this.get("grid"),
                 height: this.get("height"),
                 width: this.get("width"),
@@ -96,7 +95,7 @@ var Sample = Backbone.Model.extend({
 
         this.change_layout();
         this.layout();
-        this.on("change:count change:angle change:opacity change:filter change:angle_delta change:offset change:grid change:x change:y change:radius", this.layout);
+        this.on("change:count change:angle change:opacity change:angle_delta change:offset change:grid change:x change:y change:radius", this.layout);
         this.on("change:range", _.compose(this.layout, this.updateRange));
         this.on("change:overlay", this.updateFilter);
         this.on("change:placement", _.compose(this.layout, this.change_layout));
@@ -156,7 +155,6 @@ var Sample = Backbone.Model.extend({
                 y = this.get("y"),
                 angle = this.get("angle"),
                 opacity = this.get("opacity"),
-                filter = this.get("filter"),
                 grid = this.get("grid"),
                 height = this.get("height"),
                 width = this.get("width");
@@ -165,7 +163,6 @@ var Sample = Backbone.Model.extend({
                 y: y,
                 angle: angle,
                 opacity: opacity,
-                filter: filter,
                 grid: grid,
                 height: height,
                 width: width
@@ -177,7 +174,6 @@ var Sample = Backbone.Model.extend({
         random: function () {
             var count = this.get("count"),
                 opacity = this.get("opacity"),
-                filter = this.get("filter"),
                 grid = this.get("grid"),
                 height = this.get("height"),
                 width = this.get("width"),
@@ -185,7 +181,6 @@ var Sample = Backbone.Model.extend({
             for (i = 0; i < count; i++)
                 data[i] = {
                     opacity: opacity,
-                    filter: filter,
                     grid: grid,
                     height: height,
                     width: width
@@ -207,7 +202,6 @@ var Sample = Backbone.Model.extend({
                 angle = this.get("angle"),
                 angle_delta = this.get("angle_delta"),
                 opacity = this.get("opacity"),
-                filter = this.get("filter"),
                 grid = this.get("grid"),
                 height = this.get("height"),
                 width = this.get("width"),
@@ -218,7 +212,6 @@ var Sample = Backbone.Model.extend({
                     y: y + radius * Math.cos(Math.PI * (offset + delta * i) / 180),
                     angle: angle + angle_delta * i,
                     opacity: opacity,
-                    filter: filter,
                     grid: grid,
                     height: height,
                     width: width
@@ -284,7 +277,7 @@ var Grid = Backbone.Model.extend({
         this.events = opt.events;
         this.updateBoundingPoints();
         this.on("change:grid change:width change:height change:angle change:x change:y", this.grid);
-        this.on("change:opacity change:filter", this.update_non_dimension_settings);
+        this.on("change:opacity", this.update_non_dimension_settings);
         this.events.on("change:fabric_element", this.updateElement, this);
         APP.Canvas.on("change:width change:height", this.updateBoundingPoints, this);
     },
@@ -296,7 +289,6 @@ var Grid = Backbone.Model.extend({
             height = this.get("height"),
             angle = this.get("angle"),
             opacity = this.get("opacity"),
-            filter = this.get("filter"),
             step_x = APP.Canvas.getWidth() / Math.sqrt(g),
             step_y = APP.Canvas.getHeight() / Math.sqrt(g),
             i = 0, R = 1, currentVis = true, totalVis = true, opt = new DoubleLinkedList();
@@ -353,18 +345,18 @@ var Grid = Backbone.Model.extend({
         i = 0;
         var vis = opt.toArray();
         this.visible_parts = vis.length;
-        while (this.visible_parts > this.objects.length)
+        console.log(vis.length);
+        while (this.objects.length < this.visible_parts)
             this.objects.add(this.attributes, {events: this.events, el: this.fabric_element});
         while (i < this.visible_parts)
-            this.objects.at(i).set({show: true, x: vis[i].x, y: vis[i++].y, width: width, height: height, angle: angle, opacity: opacity, filter: filter});
+            this.objects.at(i).set({show: true, x: vis[i].x, y: vis[i++].y, width: width, height: height, angle: angle, opacity: opacity});
         while (i < this.objects.length)
             this.objects.at(i++).set({show: false});
     },
     update_non_dimension_settings: function () {
-        var opacity = this.get("opacity"),
-            filter = this.get("filter"), i = 0;
+        var opacity = this.get("opacity"), i = 0;
         while (i < this.visible_parts)
-            this.objects.at(i++).set({opacity: opacity, filter: filter});
+            this.objects.at(i++).set({opacity: opacity});
     },
     isVisible: function (sx, sy) {
         var subV = new fabric.Point(sx, sy);
