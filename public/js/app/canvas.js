@@ -23,11 +23,11 @@ var Canvas = Backbone.Model.extend({
             var cnv = $('#canvas');
             var off = cnv.offset();
             $('body').css('background-position-x', off.left).css('background-position-y', off.top);
-            //var prevH = $('.preview-button').height();
-            //var viewH = $('.controls-section').position().top;
-            //var canvasH = cnv.height();
-            //var offset = (viewH - prevH - canvasH) / 2 + prevH;
-            //cnv.css('margin-top', offset + "px");
+            var prevH = $('.preview-button').height();
+            var viewH = $('.controls-section').position().top;
+            var canvasH = cnv.height();
+            var offset = (viewH - prevH - canvasH) / 2 + prevH;
+            cnv.css('margin-top', offset + "px");
         }).resize();
         new CanvasView({model: this});
         this.on("change", this.update);
