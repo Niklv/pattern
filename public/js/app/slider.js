@@ -10,7 +10,7 @@ var Slider = Backbone.View.extend({
         this.$slider = this.$el.find(".slider");
         this.$input.val(this.model.get(opt.name));
         this.$slider.slider({
-            animate: ANIM_TIME,
+            //animate: ANIM_TIME,
             min: range.min,
             max: range.max,
             step: range.step,
