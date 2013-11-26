@@ -7,88 +7,113 @@ var SampleView = Backbone.View.extend({
     tabHeaderTemplate: _.template($("#part-settings-tab-header-tmpl").remove().text()),
     controlTemplate: _.template($("#part-settings-control").remove().text()),
     allowed_keys: [],
+    j:{
+        x:null,
+        y:null,
+        height:null,
+        width:null,
+        opacity:null,
+        angle:null,
+        count:null,
+        offset:null,
+        radius:null,
+        angle_delta:null,
+        colorpicker:null
+    },
     init_controls: function () {
+        this.j.x = this.$el.find('.x');
+        this.j.y = this.$el.find('.y');
+        this.j.angle = this.$el.find('.angle');
+        this.j.angle_delta = this.$el.find('.angle-delta');
+        this.j.width = this.$el.find('.width');
+        this.j.height = this.$el.find('.height');
+        this.j.opacity = this.$el.find('.opacity');
+        this.j.count = this.$el.find('.count');
+        this.j.offset = this.$el.find('.offset');
+        this.j.radius = this.$el.find('.radius');
+        this.j.colorpicker = this.$el.find('.colorpicker');
+
         //console.log(this.model.attributes);
         this.$tabHeader.find('button.close').click(_.bind(this.remove, this));
-        this.$el.find('.colorpicker').colorPicker("init", {opacity: 1, position: "top"});
+        this.j.colorpicker.colorPicker("init", {opacity: 1, position: "top"}).colorPicker("setRGBA", this.model.get("overlay"));
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
         switch (this.$el.find('.placement input:checked').val()) {
             case "one":
-                this.$el.find('.x').show();
-                this.$el.find('.y').show();
-                this.$el.find('.angle').show();
-                this.$el.find('.count').hide();
-                this.$el.find('.offset').hide();
-                this.$el.find('.angle-delta').hide();
-                this.$el.find('.radius').hide();
+                this.j.x.show();
+                this.j.y.show();
+                this.j.angle.show();
+                this.j.count.hide();
+                this.j.offset.hide();
+                this.j.angle_delta.hide();
+                this.j.radius.hide();
                 this.$el.find('.placement button.rndmz').hide();
                 break;
             case "random":
-                this.$el.find('.x').hide();
-                this.$el.find('.y').hide();
-                this.$el.find('.angle').hide();
-                this.$el.find('.count').show();
-                this.$el.find('.offset').hide();
-                this.$el.find('.angle-delta').hide();
-                this.$el.find('.radius').hide();
+                this.j.x.hide();
+                this.j.y.hide();
+                this.j.angle.hide();
+                this.j.count.show();
+                this.j.offset.hide();
+                this.j.angle_delta.hide();
+                this.j.radius.hide();
                 this.$el.find('.placement button.rndmz').show();
                 break;
             case "circle":
-                this.$el.find('.x').show();
-                this.$el.find('.y').show();
-                this.$el.find('.angle').show();
-                this.$el.find('.count').show();
-                this.$el.find('.offset').show();
-                this.$el.find('.angle-delta').show();
-                this.$el.find('.radius').show();
+                this.j.x.show();
+                this.j.y.show();
+                this.j.angle.show();
+                this.j.count.show();
+                this.j.offset.show();
+                this.j.angle_delta.show();
+                this.j.radius.show();
                 this.$el.find('.placement button.rndmz').hide();
                 break;
         }
 
-        new Slider({model: this.model, name: "angle", jquery_object: this.$el.find(".angle")});
-        new Slider({model: this.model, name: "opacity", jquery_object: this.$el.find(".opacity")});
-        new Slider({model: this.model, name: "width", jquery_object: this.$el.find(".width")});
-        new Slider({model: this.model, name: "height", jquery_object: this.$el.find(".height")});
-        new Slider({model: this.model, name: "count", jquery_object: this.$el.find(".count")});
-        new Slider({model: this.model, name: "x", jquery_object: this.$el.find(".x")});
-        new Slider({model: this.model, name: "y", jquery_object: this.$el.find(".y")});
-        new Slider({model: this.model, name: "radius", jquery_object: this.$el.find(".radius")});
-        new Slider({model: this.model, name: "angle_delta", jquery_object: this.$el.find(".angle-delta")});
-        new Slider({model: this.model, name: "offset", jquery_object: this.$el.find(".offset")});
+        new Slider({model: this.model, name: "angle", jquery_object: this.j.angle});
+        new Slider({model: this.model, name: "opacity", jquery_object: this.j.opacity});
+        new Slider({model: this.model, name: "width", jquery_object: this.j.width});
+        new Slider({model: this.model, name: "height", jquery_object: this.j.height});
+        new Slider({model: this.model, name: "count", jquery_object: this.j.count});
+        new Slider({model: this.model, name: "x", jquery_object: this.j.x});
+        new Slider({model: this.model, name: "y", jquery_object: this.j.y});
+        new Slider({model: this.model, name: "radius", jquery_object: this.j.radius});
+        new Slider({model: this.model, name: "angle_delta", jquery_object: this.j.angle_delta});
+        new Slider({model: this.model, name: "offset", jquery_object: this.j.offset});
 
         return this;
     },
     change_settings_order: function () {
         switch (this.$el.find('.placement input:checked').val()) {
             case "one":
-                this.$el.find('.x').slideDown(ANIM_TIME);
-                this.$el.find('.y').slideDown(ANIM_TIME);
-                this.$el.find('.angle').slideDown(ANIM_TIME);
-                this.$el.find('.count').slideUp(ANIM_TIME);
-                this.$el.find('.offset').slideUp(ANIM_TIME);
-                this.$el.find('.angle-delta').slideUp(ANIM_TIME);
-                this.$el.find('.radius').slideUp(ANIM_TIME);
+                this.j.x.slideDown(ANIM_TIME);
+                this.j.y.slideDown(ANIM_TIME);
+                this.j.angle.slideDown(ANIM_TIME);
+                this.j.count.slideUp(ANIM_TIME);
+                this.j.offset.slideUp(ANIM_TIME);
+                this.j.angle_delta.slideUp(ANIM_TIME);
+                this.j.radius.slideUp(ANIM_TIME);
                 this.$el.find('.placement button.rndmz').hide();
                 break;
             case "random":
-                this.$el.find('.x').slideUp(ANIM_TIME);
-                this.$el.find('.y').slideUp(ANIM_TIME);
-                this.$el.find('.angle').slideUp(ANIM_TIME);
-                this.$el.find('.count').slideDown(ANIM_TIME);
-                this.$el.find('.offset').slideUp(ANIM_TIME);
-                this.$el.find('.angle-delta').slideUp(ANIM_TIME);
-                this.$el.find('.radius').slideUp(ANIM_TIME);
+                this.j.x.slideUp(ANIM_TIME);
+                this.j.y.slideUp(ANIM_TIME);
+                this.j.angle.slideUp(ANIM_TIME);
+                this.j.count.slideDown(ANIM_TIME);
+                this.j.offset.slideUp(ANIM_TIME);
+                this.j.angle_delta.slideUp(ANIM_TIME);
+                this.j.radius.slideUp(ANIM_TIME);
                 this.$el.find('.placement button.rndmz').show();
                 break;
             case "circle":
-                this.$el.find('.x').slideDown(ANIM_TIME);
-                this.$el.find('.y').slideDown(ANIM_TIME);
-                this.$el.find('.angle').slideDown(ANIM_TIME);
-                this.$el.find('.count').slideDown(ANIM_TIME);
-                this.$el.find('.offset').slideDown(ANIM_TIME);
-                this.$el.find('.angle-delta').slideDown(ANIM_TIME);
-                this.$el.find('.radius').slideDown(ANIM_TIME);
+                this.j.x.slideDown(ANIM_TIME);
+                this.j.y.slideDown(ANIM_TIME);
+                this.j.angle.slideDown(ANIM_TIME);
+                this.j.count.slideDown(ANIM_TIME);
+                this.j.offset.slideDown(ANIM_TIME);
+                this.j.angle_delta.slideDown(ANIM_TIME);
+                this.j.radius.slideDown(ANIM_TIME);
                 this.$el.find('.placement button.rndmz').hide();
                 break;
         }

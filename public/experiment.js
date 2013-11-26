@@ -5,10 +5,11 @@ var A = Backbone.Model.extend({
     },
     initialize: function () {
         this.on("change", function () {
-            console.log(arguments);
+            console.log(arguments[0]);
         });
     }
 });
 
 var a = new A();
 a.set({c:3});
+a.set("c", null, {unset :true});
