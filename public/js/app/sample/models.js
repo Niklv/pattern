@@ -3,6 +3,7 @@ var Sample = Backbone.Model.extend({
     original_fabric: null,
     events: null,
     defaults: {
+        layer: 0,
         count: 5,
         placement: "one", //one, random, circle
         angle: 0,
@@ -86,6 +87,7 @@ var Sample = Backbone.Model.extend({
                 grid: this.get("grid"),
                 height: this.get("height"),
                 width: this.get("width"),
+                layer: this.get("layer"),
                 img: this.get("img")
             }, {sample_events: this.events});
 
@@ -97,13 +99,13 @@ var Sample = Backbone.Model.extend({
         APP.Canvas.on("change:width change:height", this.canvasSizeChanged, this);
         console.log("finish first init");
     },
-    resize_and_filter: function(cb){
+    resize_and_filter: function (cb) {
         //resize
         //...
         //filter
         var rgba = this.get("overlay");
         var color = "rgba(" + rgba.r + ", " + rgba.g + ", " + rgba.b + ", " + rgba.a + ")";
-        this.original_fabric = new fabric.Image(this.get("img"), {filters: [new fabric.Image.filters.Tint({color:color})]});
+        this.original_fabric = new fabric.Image(this.get("img"), {filters: [new fabric.Image.filters.Tint({color: color})]});
         this.original_fabric.applyFilters(_.bind(function () {
             this.events.trigger("change:fabric_element", this.original_fabric._element);
             cb && cb();
@@ -111,11 +113,18 @@ var Sample = Backbone.Model.extend({
     },
     model_changed: function (ev) {
         var data = ev.changed;
-        if (_.has(data, 'placement')) //change layout function
+
+        if (_.has(data, 'placement'))
             this.change_layout();
         if (_.has(data, 'placement') || !_.isEmpty(_.omit(data, 'opacity', 'range', 'filter', 'overlay'))) {
             this.layout();
             this.events.trigger("change:grid");
+        }
+
+        if (_.has(data, 'layer')){
+            this.events.trigger("change:layer", data.layer);
+            if(_.isEmpty(_.omit(data, 'layer')))
+                return;
         }
 
         if (_.has(data, "opacity"))
@@ -442,6 +451,7 @@ var Fabric = Backbone.Model.extend({
         this.sample_events.on("change:fabric_element", this.updateFabricElement, this);
         this.sample_events.on("change:opacity", this.updateOpacity, this);
         this.sample_events.on("change:canvas", this.updateFabricProperties, this);
+        this.sample_events.on("change:layer", this.changeLayer, this);
         this.sample_events.on("remove:fabric", function () {
             APP.Events.off(null, null, this);
             this.sample_events.off(null, null, this);
@@ -457,6 +467,9 @@ var Fabric = Backbone.Model.extend({
     visible: function (isVisible) {
         this.set('show', isVisible);
     },
+    changeLayer: function (n) {
+        this.set("layer", n);
+    },
     updateFabricElement: function (el) {
         this._fabric._element = el;
     },
@@ -465,6 +478,7 @@ var Fabric = Backbone.Model.extend({
     },
     updateFabricProperties: function () {
         this._fabric.set({
+            layer: this.get("layer"),
             left: APP.Canvas.getCenter().left + this.get("x"),
             top: APP.Canvas.getCenter().top - this.get("y"),
             width: this.get("width"),

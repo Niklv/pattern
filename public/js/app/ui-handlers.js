@@ -14,13 +14,13 @@ function select_from_library(e) {
     $.ajax({
         url: "img/calculated/" + src + ".json",
         success: function (data) {
-            if(typeof data == "string")
+            if (typeof data == "string")
                 data = JSON.parse(data);
             var img = new Image();
             img.src = data.prefix + data.image;
             img.onload = function () {
                 $('#collections_modal').modal('hide');
-                APP.Samples.add({type: "img", img: img});
+                APP.Samples.add({type: "img", img: img, layer: APP.Samples.length});
             };
         },
         error: function () {
@@ -38,7 +38,7 @@ function select_from_internet(e) {
     $.ajax({
         url: "/imgtob64?img_url=" + src,
         success: function (data) {
-            if(data.err!=null){
+            if (data.err != null) {
                 $(e.currentTarget).addClass("text-danger");
                 console.log("error!");
                 console.log(arguments);
@@ -48,7 +48,7 @@ function select_from_internet(e) {
             var img = new Image();
             img.src = data.prefix + data.image;
             img.onload = function () {
-                APP.Samples.add({type: "img", img: img});
+                APP.Samples.add({type: "img", img: img, layer: APP.Samples.length});
                 $('#paste_link_modal').modal('hide');
             };
         },
@@ -62,10 +62,9 @@ function select_from_internet(e) {
     return 0;
 }
 
-function on_modal_paste_link_hide(e){
-    $(e.target).find("input").val("").removeClass("text-danger");;
+function on_modal_paste_link_hide(e) {
+    $(e.target).find("input").val("").removeClass("text-danger");
 }
-
 
 
 function handle_image(e) {
@@ -74,7 +73,7 @@ function handle_image(e) {
         var imgObj = new Image();
         imgObj.src = event.target.result;
         imgObj.onload = function () {
-            APP.Samples.add({type: "img", img: imgObj});
+            APP.Samples.add({type: "img", img: imgObj, layer: APP.Samples.length});
         };
         $(e.target).val("");
     };

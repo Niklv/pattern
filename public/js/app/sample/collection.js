@@ -14,6 +14,12 @@ var SampleCollection = Backbone.Collection.extend({
             APP.Canvas.update();
         }, this));
     },
+    swap: function(a, b) {
+        this.models[a] = this.models.splice(b, 1, this.models[a])[0];
+        this.models[a].set("layer", a);
+        this.models[b].set("layer", b);
+        APP.Canvas.update();
+    },
     remove_model: function () {
         APP.Canvas.removeAll();
         APP.Events.trigger("reinitialize");
