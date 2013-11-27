@@ -32,6 +32,7 @@ var Slider = Backbone.View.extend({
         this.$input.val(val);
     },
     setNewRange: function () {
+        console.log("range!");
         this.range = this.model.get("range")[this.name];
         this.$slider.slider("option", "min", this.range.min);
         this.$slider.slider("option", "max", this.range.max);

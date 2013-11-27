@@ -15,6 +15,8 @@ var Sample = Backbone.Model.extend({
         x: 0,
         y: 0,
         radius: 40,
+        lock_ratio: false,
+        ratio: 1,
         range: {
             angle: {
                 min: -180,
@@ -77,7 +79,7 @@ var Sample = Backbone.Model.extend({
         var w = Math.min(img.width, range.width.max / 2),
             h = Math.min(img.height, range.height.max / 2),
             r = img.width / img.height;
-        this.set({width: Math.min(w, h * r), height: Math.min(h, w / r)});
+        this.set({width: Math.min(w, h * r), height: Math.min(h, w / r), ratio: r});
         /* Create 20 objects */
         for (var i = 0; i < range.count.max; i++)
             this.objects.add({
@@ -94,10 +96,12 @@ var Sample = Backbone.Model.extend({
         this.change_layout();
         this.layout();
         this.events.trigger("change:opacity", this.get("opacity"));
+        this.on("all", function (t) {
+            console.log("model:" + t)
+        });
         this.on("change", this.model_changed);
         this.on("remove", this.remove);
         APP.Canvas.on("change:width change:height", this.canvasSizeChanged, this);
-        console.log("finish first init");
     },
     resize_and_filter: function (cb) {
         //resize
@@ -111,19 +115,23 @@ var Sample = Backbone.Model.extend({
             cb && cb();
         }, this));
     },
-    model_changed: function (ev) {
+    model_changed: function (ev, opt, opt2) {
         var data = ev.changed;
-
         if (_.has(data, 'placement'))
             this.change_layout();
+        if (_.has(data, 'lock_ratio'))
+            this.lock_ratio();
+        if (this.get("lock_ratio") && (_.has(data, 'width') || _.has(data, 'height')))
+            this.process_ratio(data);
+
         if (_.has(data, 'placement') || !_.isEmpty(_.omit(data, 'opacity', 'range', 'filter', 'overlay'))) {
             this.layout();
             this.events.trigger("change:grid");
         }
 
-        if (_.has(data, 'layer')){
+        if (_.has(data, 'layer')) {
             this.events.trigger("change:layer", data.layer);
-            if(_.isEmpty(_.omit(data, 'layer')))
+            if (_.isEmpty(_.omit(data, 'layer')))
                 return;
         }
 
@@ -136,25 +144,39 @@ var Sample = Backbone.Model.extend({
             }, this));
         else
             this.trigger("render");
-
-
     },
     setRange: function () {
-        var range = this.get("range");
-        range.width.max = APP.Canvas.getWidth() * 2;
-        range.height.max = APP.Canvas.getHeight() * 2;
+        var range = this.get("range"), isLock = this.get("lock_ratio"), r = this.get("ratio");
+        if (isLock) {
+            range.width.max = Math.min(APP.Canvas.getHeight() * 2 * r, APP.Canvas.getWidth() * 2);
+            range.height.max = Math.min(APP.Canvas.getHeight() * 2 / r, APP.Canvas.getHeight() * 2);
+        } else {
+            range.width.max = APP.Canvas.getWidth() * 2;
+            range.height.max = APP.Canvas.getHeight() * 2;
+        }
         range.x.max = Math.round(APP.Canvas.getWidth() / 2);
         range.x.min = -Math.round(APP.Canvas.getWidth() / 2);
         range.y.max = Math.round(APP.Canvas.getHeight() / 2);
         range.y.min = -Math.round(APP.Canvas.getHeight() / 2);
         range.radius.max = Math.min(APP.Canvas.getHeight(), APP.Canvas.getWidth());
-        this.set("range", range);
+        //this.set("range", range, {silent: true});
+        this.trigger("change:range", {changed: {range: range}});
     },
     updateElementSize: function () {
-        var range = this.get("range");
+        var range = this.get("range"), w = this.get("width"), h = this.get("height");
+        if (this.get("lock_ratio")) {
+            var r = this.get("ratio"), nw, nh;
+            nh = Math.min(Math.min(w, range.width.max) / r, range.height.max);
+            nw = nh * r;
+            w = ((nw < w + 1) && (nw > w - 1)) ? w : nw;
+            h = ((nh < h + 1) && (nh > h - 1)) ? h : nh;
+        } else {
+            w = Math.min(w, range.width.max);
+            h = Math.min(h, range.height.max);
+        }
         this.set({
-            width: Math.min(this.get("width"), range.width.max),
-            height: Math.min(this.get("height"), range.height.max),
+            width: w,
+            height: h,
             x: Math.max(Math.min(this.get("x"), range.x.max), range.x.min),
             y: Math.max(Math.min(this.get("y"), range.y.max), range.y.min),
             radius: Math.min(this.get("radius"), range.radius.max)
@@ -281,12 +303,32 @@ var Sample = Backbone.Model.extend({
         this.original_fabric.filters[0].opacity = rgba.a;
         this.original_fabric.applyFilters(cb);
     },
+    lock_ratio: function (isLock) {
+        this.off("change", this.model_changed);
+        this.setRange();
+        this.on("change", this.model_changed);
+    },
+    process_ratio: function (data) {
+        var w = this.get("width"),
+            h = this.get("height"),
+            r = this.get("ratio");
+        if (!_.has(data, 'width') && _.has(data, 'height'))
+            w = h * r;
+        else
+            h = w / r;
+        //this.off("change", this.model_changed);
+        this.set({width: w, height: h});
+        //this.on("change", this.model_changed);
+        this.updateElementSize();
+    },
     canvasSizeChanged: function () {
+        this.off("change", this.model_changed);
         this.setRange();
         this.updateElementSize();
         this.layout();
         this.events.trigger("change:canvas");
         this.events.trigger("change:grid");
+        this.on("change", this.model_changed);
         this.trigger("render");
 
     }

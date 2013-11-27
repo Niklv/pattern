@@ -235,6 +235,7 @@ input:not([type]), input[type='text'] {
     //TAB CONTENT
     .settings-wrapper {
       .tab-content {
+        .user-select(none);
         padding: 0;
         .tab-pane button.random {
           font-size: 10px;
@@ -275,6 +276,20 @@ input:not([type]), input[type='text'] {
           right: 0px;
           width: @input_len;
           height: 100%;
+        }
+      }
+      .lock-origin-ratio {
+        position: absolute;
+        top: 88px;
+        left: 30px;
+        font-size: 10px;
+        color: #dbdbdb;
+        &:hover{
+          cursor: pointer;
+          color: #7d7d7d;
+        }
+        &.locked{
+          color: #3b3b3b;
         }
       }
       .infolinks {

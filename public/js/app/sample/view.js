@@ -7,18 +7,19 @@ var SampleView = Backbone.View.extend({
     tabHeaderTemplate: _.template($("#part-settings-tab-header-tmpl").remove().text()),
     controlTemplate: _.template($("#part-settings-control").remove().text()),
     allowed_keys: [],
-    j:{
-        x:null,
-        y:null,
-        height:null,
-        width:null,
-        opacity:null,
-        angle:null,
-        count:null,
-        offset:null,
-        radius:null,
-        angle_delta:null,
-        colorpicker:null
+    j: {
+        x: null,
+        y: null,
+        height: null,
+        width: null,
+        opacity: null,
+        angle: null,
+        count: null,
+        offset: null,
+        radius: null,
+        angle_delta: null,
+        colorpicker: null,
+        origin_ratio: null
     },
     init_controls: function () {
         this.j.x = this.$el.find('.x');
@@ -32,12 +33,15 @@ var SampleView = Backbone.View.extend({
         this.j.offset = this.$el.find('.offset');
         this.j.radius = this.$el.find('.radius');
         this.j.colorpicker = this.$el.find('.colorpicker');
+        this.j.origin_ratio = this.$el.find('.lock-origin-ratio');
 
         //console.log(this.model.attributes);
         this.$tabHeader.find('button.close').click(_.bind(this.remove, this));
         this.j.colorpicker.colorPicker("init", {opacity: 1, position: "top"}).colorPicker("setRGBA", this.model.get("overlay"));
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
+        if (this.model.get("lock_ratio"))
+            this.j.origin_ratio.addClass("locked");
         switch (this.$el.find('.placement input:checked').val()) {
             case "one":
                 this.j.x.show();
@@ -149,6 +153,7 @@ var SampleView = Backbone.View.extend({
         "change input[type=radio]": "radio_changed",
         "change input.placement-of-obj": "change_settings_order",
         "changeColor input.colorpicker": "color_changed",
+        "click .lock-origin-ratio": "ratio_changed",
         "click button.random": "random"
     },
     generate_random_layout: function () {
@@ -189,6 +194,11 @@ var SampleView = Backbone.View.extend({
             this.model.set(p_name, parseInt($(ev.target).val()));
         else if (p_name == "placement")
             this.model.set(p_name, $(ev.target).val());
+    },
+    ratio_changed: function () {
+        this.j.origin_ratio.toggleClass("locked");
+        this.model.set("lock_ratio", !(this.model.get("lock_ratio")));
+
     },
     color_changed: function (ev) {
         this.model.set("overlay", $(ev.target).colorPicker("getRGBA"));
