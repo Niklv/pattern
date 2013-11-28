@@ -13,3 +13,5 @@ var A = Backbone.Model.extend({
 var a = new A();
 a.set({c:3});
 a.set("c", null, {unset :true});
+var d=1;
+console.log(""+(2*++d));

@@ -424,6 +424,11 @@ input[type='text'] {
   display: inline-block;
   vertical-align: middle;
 }
+.box .innerContent img.generated {
+  position: absolute;
+  width: 1951px;
+  height: 1202px;
+}
 .box .innerContent:before {
   content: "";
   display: inline-block;

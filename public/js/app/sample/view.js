@@ -6,7 +6,6 @@ var SampleView = Backbone.View.extend({
     template: _.template($("#part-settings-tmpl").remove().text()),
     tabHeaderTemplate: _.template($("#part-settings-tab-header-tmpl").remove().text()),
     controlTemplate: _.template($("#part-settings-control").remove().text()),
-    allowed_keys: [],
     j: {
         x: null,
         y: null,
