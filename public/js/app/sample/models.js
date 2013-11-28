@@ -149,7 +149,7 @@ var Sample = Backbone.Model.extend({
         var range = this.get("range"), isLock = this.get("lock_ratio"), r = this.get("ratio");
         if (isLock) {
             range.width.max = Math.min(APP.Canvas.getHeight() * 2 * r, APP.Canvas.getWidth() * 2);
-            range.height.max = Math.min(APP.Canvas.getHeight() * 2 / r, APP.Canvas.getHeight() * 2);
+            range.height.max = Math.min(APP.Canvas.getWidth() * 2 / r, APP.Canvas.getHeight() * 2);
         } else {
             range.width.max = APP.Canvas.getWidth() * 2;
             range.height.max = APP.Canvas.getHeight() * 2;
@@ -306,6 +306,7 @@ var Sample = Backbone.Model.extend({
     lock_ratio: function (isLock) {
         this.off("change", this.model_changed);
         this.setRange();
+        this.updateElementSize();
         this.on("change", this.model_changed);
     },
     process_ratio: function (data) {
