@@ -159,7 +159,6 @@ var Sample = Backbone.Model.extend({
         range.y.max = Math.round(APP.Canvas.getHeight() / 2);
         range.y.min = -Math.round(APP.Canvas.getHeight() / 2);
         range.radius.max = Math.min(APP.Canvas.getHeight(), APP.Canvas.getWidth());
-        //this.set("range", range, {silent: true});
         this.trigger("change:range", {changed: {range: range}});
     },
     updateElementSize: function () {
