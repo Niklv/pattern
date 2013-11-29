@@ -31,7 +31,7 @@ var APP = {
                 $('#input-link').focus();
             });
         $('button.preview-button').mousedown(hide_controls_and_show_bg).mouseleave(show_controls).mouseup(show_controls);
-        //$('a[data-toggle="tab"]').on('shown.bs.tab', update_dropdown_caption);
+        $('a[data-toggle="tab"]').on('shown.bs.tab', update_dropdown_caption);
     }
 };
 
