@@ -5,8 +5,8 @@ var Libraries = Backbone.Collection.extend({
         this.add({
             name: "Sample 1",
             id_name: "sample_1",
-            sprite_path: "/img/samples/sample_1",
-            sprite_ext: ".sprite.png"
+            sprite_path: "/img/samples/",
+            sprite_name: "sample_1.sprite.png"
         }, {total: 100,
             width: 13,
             height: 8,

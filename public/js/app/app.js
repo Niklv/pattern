@@ -21,7 +21,7 @@ var APP = {
     addUIHandlers: function () {
         $('.upload-file').click(upload_file);
         $('#file-uploader').change(handle_image);
-        //$('a.innerContent').click(select_from_library);
+        $('a.innerContent').click(select_from_library);
         $('#input-link').change(select_from_internet);
         $('#paste-link-button').click(function () {
             $('#input-link').trigger("submit");
@@ -37,4 +37,4 @@ var APP = {
 
 APP.init();
 $('#collections_modal').modal('show');
-$('#collections_modal > div').click();
+//$('#collections_modal > div').click();

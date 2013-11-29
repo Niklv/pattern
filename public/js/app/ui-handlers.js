@@ -7,9 +7,19 @@ function update_dropdown_caption(e) {
 }
 
 function select_from_library(e) {
-    var src = $(e.currentTarget).find('img').attr('src');
-    src = src.split("/");
-    src = _.last(src);
+    e.stopPropagation();
+    e.preventDefault();
+    var src = "", sprite_name = $(this).attr("data-sprite");
+    if (sprite_name) {
+        //TODO: validation!
+        src = sprite_name.split('.');
+        src = _.first(src) + "_" + $(this).attr("data-number") + "." + _.last(src);
+    } else {
+        src = $(this).find('img').attr('src');
+        src = src.split("/");
+        src = _.last(src);
+    }
+    console.log(src);
     ga('send', 'event', 'select_from_library', 'select', src);
     $.ajax({
         url: "img/calculated/" + src + ".json",

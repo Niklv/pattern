@@ -419,7 +419,6 @@ input[type='text'] {
   -moz-transition-timing-function: ease;
   -o-transition-timing-function: ease;
   transition-timing-function: ease;
-  /*background-color: #fff;*/
 }
 .box .innerContent img {
   max-width: 90%;
