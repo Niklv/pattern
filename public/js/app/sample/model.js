@@ -127,6 +127,8 @@ var Sample = Backbone.Model.extend({
         if (_.has(data, 'placement') || !_.isEmpty(_.omit(data, 'opacity', 'range', 'filter', 'overlay'))) {
             this.layout();
             this.events.trigger("change:grid");
+            if (!_.has(data, "opacity"))
+                this.events.trigger("change:opacity", this.get("opacity"));
         }
 
         if (_.has(data, 'layer')) {
@@ -391,6 +393,8 @@ var Grid = Backbone.Model.extend({
 
         opt.add({x: x, y: y}, 0, 0);
         //process OTHER elements
+        //TODO: find and fix error there
+        //TODO: write autotests
         var prevVis = true;
         while (totalVis) {
             currentVis = false;
@@ -417,6 +421,7 @@ var Grid = Backbone.Model.extend({
             totalVis = currentVis || prevVis;
             prevVis = currentVis;
             R++;
+            if (R > 10) break; //limit to 10 radius items
         }
         i = 0;
         var vis = opt.toArray();
@@ -425,7 +430,7 @@ var Grid = Backbone.Model.extend({
         while (this.objects.length < this.visible_parts)
             this.objects.add(this.attributes, {sample_events: this.sample_events, grid_events: this.events, el: this.fabric_element});
         while (i < this.visible_parts)
-            this.objects.at(i).set({show: visible, x: vis[i].x, y: vis[i++].y, width: width, height: height, angle: angle, opacity: opacity});
+            this.objects.at(i).set({show: visible, x: vis[i].x, y: vis[i++].y, width: width, height: height, angle: angle});
         while (i < this.objects.length)
             this.objects.at(i++).set({show: false});
     },
@@ -516,7 +521,7 @@ var Fabric = Backbone.Model.extend({
         this._fabric._element = el;
     },
     updateOpacity: function (op) {
-        this._fabric.set({opacity: op});
+        this.set("opacity", op);
     },
     updateFabricProperties: function () {
         this._fabric.set({

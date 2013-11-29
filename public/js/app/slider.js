@@ -23,7 +23,7 @@ var Slider = Backbone.View.extend({
     events: {
         "slide .slider": "onslide",
         "input input": "oninput",
-        "keypress input": "filter_number",
+        //"keypress input": "filter_number",
         "keydown input": "up_and_down"
     },
     setNewValue: function () {
