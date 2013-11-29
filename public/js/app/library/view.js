@@ -21,7 +21,7 @@ var LibraryView = Backbone.View.extend({
 
 var ItemView = Backbone.View.extend({
     tagName: "div",
-    className: "box",
+    className: "box generated",
     template: _.template($("#library-item-tmpl").remove().text()),
     initialize: function () {
         this.model.on("change render", this.render, this);

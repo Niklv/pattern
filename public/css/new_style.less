@@ -284,11 +284,11 @@ input:not([type]), input[type='text'] {
         left: 30px;
         font-size: 10px;
         color: #dbdbdb;
-        &:hover{
+        &:hover {
           cursor: pointer;
           color: #7d7d7d;
         }
-        &.locked{
+        &.locked {
           color: #3b3b3b;
         }
       }
@@ -421,7 +421,7 @@ input:not([type]), input[type='text'] {
   padding-bottom: 50%;
   position: relative;
   float: left;
-  overflow: hidden;
+  //overflow: hidden;
   .innerContent {
     position: absolute;
     left: 10px;
@@ -434,17 +434,13 @@ input:not([type]), input[type='text'] {
     border: solid 1px #D6D6D6;
     .border-radius(5px);
     .transition-duration(.3s);
+    .transition-timing-function(ease);
     /*background-color: #fff;*/
     img {
       max-width: 90%;
       height: auto;
       display: inline-block;
       vertical-align: middle;
-      &.generated {
-        position:absolute;
-        width:1951px;
-        height:1202px;
-      }
     }
     &:before {
       content: "";
@@ -453,8 +449,24 @@ input:not([type]), input[type='text'] {
       vertical-align: middle;
     }
     &:hover {
-      border-color: rgba(31, 147, 255, 0.50);
-      .box-shadow(0 0 10px rgba(31, 147, 255, 0.50));
+      //border-color: rgba(31, 147, 255, 0.50);
+      //.box-shadow(0 0 10px rgba(31, 147, 255, 0.50));
+      .box-shadow(0 0 10px rgba(0, 0, 0, 0.50));
+      .border-radius(6px);
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+    }
+  }
+  &.generated {
+    .innerContent {
+      &:hover {
+        //background-color: rgba(31, 147, 255, 0.05);
+      }
+      img {
+        min-width: 90%;
+      }
     }
   }
   .box-grid(200px, 1);
@@ -471,7 +483,7 @@ input:not([type]), input[type='text'] {
 //MIXINS
 .box-grid (@min-width, @number) {
   @wid: 100%/@number;
-  @media (min-width: @min-width) {
+  @media all and (min-width: @min-width) {
     width: @wid;
     padding-bottom: @wid;
   }

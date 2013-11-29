@@ -5,11 +5,10 @@ var Library = Backbone.Model.extend({
         this.view.$els = new Array(this.items.length);
         for (var i = 0; i < opt.total; i++)
             this.view.$els[i] = this.items.add({
-                bg_url: this.get("sprite_path")+this.get("sprite_ext"),
-                //offset_x: opt.item_width * (i % opt.width),
-                //offset_y: opt.item_height * (i / opt.width),
-                offset_x: (i % opt.width)/opt.width*100,
-                offset_y: Math.floor(i / opt.width)/opt.height*100,
+                bg_url: this.get("sprite_path") + this.get("sprite_ext"),
+                offset_x: (i % opt.width) / (opt.width - 1) * 100 + "%",
+                offset_y: Math.floor(i / opt.width) / (opt.height - 1) * 100 + "%",
+                bg_size: opt.width * 100 + "%",
                 number: i + 1
             }).view.render().$el;
         this.view.render();

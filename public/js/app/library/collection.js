@@ -10,8 +10,8 @@ var Libraries = Backbone.Collection.extend({
         }, {total: 100,
             width: 13,
             height: 8,
-            item_width: 300,
-            item_height: 300});
+            item_width: 150,
+            item_height: 150});
         this.initUI();
     },
     initUI: function () {

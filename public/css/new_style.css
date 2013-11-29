@@ -394,7 +394,6 @@ input[type='text'] {
   padding-bottom: 50%;
   position: relative;
   float: left;
-  overflow: hidden;
 }
 .box .innerContent {
   position: absolute;
@@ -416,6 +415,10 @@ input[type='text'] {
   -moz-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease;
+  -moz-transition-timing-function: ease;
+  -o-transition-timing-function: ease;
+  transition-timing-function: ease;
   /*background-color: #fff;*/
 }
 .box .innerContent img {
@@ -424,11 +427,6 @@ input[type='text'] {
   display: inline-block;
   vertical-align: middle;
 }
-.box .innerContent img.generated {
-  position: absolute;
-  width: 1951px;
-  height: 1202px;
-}
 .box .innerContent:before {
   content: "";
   display: inline-block;
@@ -436,60 +434,72 @@ input[type='text'] {
   vertical-align: middle;
 }
 .box .innerContent:hover {
-  border-color: rgba(31, 147, 255, 0.5);
-  -webkit-box-shadow: 0px 0px 10px rgba(31, 147, 255, 0.5);
-  -moz-box-shadow: 0px 0px 10px rgba(31, 147, 255, 0.5);
-  box-shadow: 0px 0px 10px rgba(31, 147, 255, 0.5);
+  -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 6px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 6px;
+  -moz-background-clip: padding;
+  border-radius: 6px;
+  background-clip: padding-box;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
 }
-@media (min-width: 200px) {
+.box.generated .innerContent img {
+  min-width: 90%;
+}
+@media all and (min-width: 200px) {
   .box {
     width: 100%;
     padding-bottom: 100%;
   }
 }
-@media (min-width: 400px) {
+@media all and (min-width: 400px) {
   .box {
     width: 33.333333333333336%;
     padding-bottom: 33.333333333333336%;
   }
 }
-@media (min-width: 600px) {
+@media all and (min-width: 600px) {
   .box {
     width: 25%;
     padding-bottom: 25%;
   }
 }
-@media (min-width: 800px) {
+@media all and (min-width: 800px) {
   .box {
     width: 20%;
     padding-bottom: 20%;
   }
 }
-@media (min-width: 1000px) {
+@media all and (min-width: 1000px) {
   .box {
     width: 16.666666666666668%;
     padding-bottom: 16.666666666666668%;
   }
 }
-@media (min-width: 1200px) {
+@media all and (min-width: 1200px) {
   .box {
     width: 14.285714285714286%;
     padding-bottom: 14.285714285714286%;
   }
 }
-@media (min-width: 1400px) {
+@media all and (min-width: 1400px) {
   .box {
     width: 12.5%;
     padding-bottom: 12.5%;
   }
 }
-@media (min-width: 1600px) {
+@media all and (min-width: 1600px) {
   .box {
     width: 11.11111111111111%;
     padding-bottom: 11.11111111111111%;
   }
 }
-@media (min-width: 1800px) {
+@media all and (min-width: 1800px) {
   .box {
     width: 10%;
     padding-bottom: 10%;
