@@ -96,9 +96,9 @@ var Sample = Backbone.Model.extend({
         this.change_layout();
         this.layout();
         this.events.trigger("change:opacity", this.get("opacity"));
-        this.on("all", function (t) {
+        /*this.on("all", function (t) {
             console.log("model:" + t)
-        });
+        });*/
         this.on("change", this.model_changed);
         this.on("remove", this.remove);
         APP.Canvas.on("change:width change:height", this.canvasSizeChanged, this);

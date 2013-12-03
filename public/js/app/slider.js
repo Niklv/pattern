@@ -22,8 +22,7 @@ var Slider = Backbone.View.extend({
     },
     events: {
         "slide .slider": "onslide",
-        "input input": "oninput",
-        //"keypress input": "filter_number",
+        "input input": "on_input",
         "keydown input": "up_and_down"
     },
     setNewValue: function () {
@@ -41,64 +40,70 @@ var Slider = Backbone.View.extend({
         var key = e.keyCode;
         if (key != 38 && key != 40)
             return;
-        var val = parseInt($(e.target).val() * 10000);
+        var val = parseInt(Math.round($(e.target).val() * 10000));
         var slider_options = this.$slider.slider("option");
         var step = slider_options.step * 10000;
         var ost = val % step;
-        if (key == 38) { //key up
-            if (ost)
-                val += step - Math.abs(ost);
-            else
-                val += step;
-        } else if (key == 40) {  //key down
-            if (ost)
-                val -= ost;
-            else
-                val -= step;
-        }
+        if (key == 38 && (val > 0 || !ost)) //key up
+            val += step;
+        else if (key == 40 && (val < 0 || !ost)) //key down
+            val -= step;
+        val -= ost;
         val /= 10000;
         val = Math.max(val, slider_options.min);
         val = Math.min(val, slider_options.max);
         this.$input.val(val);
+        this.$input[0].selectionStart = this.$input.val().length;
+        this.$input[0].selectionEnd = this.$input.val().length;
         this.$slider.slider("value", val);
         this.save(val);
     },
-    filter_number: function (e) {
-        var key = e.keyCode;
-        if (!_.contains(this.keys, key))
-            e.preventDefault();
-        else if (key == 46 && $(e.target).val().match(/\./g))
-            e.preventDefault();
-        else if (key == 45 && $(e.target).val().match(/[-]/g))
-            e.preventDefault();
-    },
-    oninput: function (e) {
-        var opt = this.$slider.slider("option");
-        var value = this.$input.val();
-        if (value == "") value = 0;
+    on_input: function (e) {
+        console.log(e);
+        var opt = this.$slider.slider("option"),
+            orig_val = this.$input.val(),
+            val = orig_val.replace(/[^\+\-0-9\.]/g, "").match(/[\+\-]{0,1}[0-9]{0,}[\.]{0,1}[0-9]{0,}/)[0],
+            posOff = orig_val.length - val.length,
+            pos = this.$input[0].selectionStart,
+            isLast = pos == orig_val.length,
+            num;
         if (isInt(opt.step))
-            value = parseInt(value);
+            num = parseInt(val);
         else
-            value = parseFloat(value);
-        if (isNaN(value)) {
-            event.preventDefault();
-            return;
+            num = parseFloat(val);
+        if (isNaN(num)) {
+            this.$input.val(val);
+        } else {
+            if (num < opt.min) {
+                num = opt.min;
+                this.$input.val(num);
+            } else if (num > opt.max) {
+                num = opt.max;
+                this.$input.val(num);
+            } else
+                this.$input.val(val);
         }
-        if (value < opt.min) {
-            this.$slider.slider("value", opt.min);
-            this.$input.val(opt.min);
-        } else if (value > opt.max) {
-            this.$slider.slider("value", opt.max);
-            this.$input.val(opt.max);
-        } else
-            this.$slider.slider("value", value);
+        //restore cursor
+        if (isLast) {
+            this.$input[0].selectionStart = this.$input.val().length;
+            this.$input[0].selectionEnd = this.$input.val().length;
+        } else {
+            this.$input[0].selectionStart = pos + posOff;
+            this.$input[0].selectionEnd = pos + posOff;
+        }
+        if (isNaN(num))
+            num = opt.min;
+        this.$slider.slider("value", num);
         this.save(this.$slider.slider("value"));
+
     },
     onslide: function (e, o) {
         this.$input.val(o.value);
         this.save(o.value);
     },
     save: function (val) {
+        this.model.off("change:" + this.name, this.setNewValue, this);
         this.model.set(this.name, val);
+        this.model.on("change:" + this.name, this.setNewValue, this);
     }
 });
