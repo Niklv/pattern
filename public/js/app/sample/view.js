@@ -125,8 +125,8 @@ var SampleView = Backbone.View.extend({
         //this.$el.hide();
         //$('.control-panel > .row:first-child').after(this.$el);
         //1 create tab+
-        $('.controls-section .sample-tabs .active').removeClass('active').removeClass('in');
-        $('.controls-section .tab-content .active').removeClass('active');
+        //$('.controls-section .sample-tabs .active').removeClass('active').removeClass('in');
+        //$('.controls-section .tab-content .active').removeClass('active');
         $('.controls-section .add-new-sample').before(this.$tabHeader);
         $('.controls-section .tab-content').append(this.$el);
         this.$tabHeader.find('a').tab('show');
@@ -177,15 +177,19 @@ var SampleView = Backbone.View.extend({
         if (val == "") val = this.model.default[p_name];
         this.model.set(p_name, parseFloat(val));
     },
-    remove: function () {
+    remove: function (e) {
+        e.stopPropagation();
+        e.preventDefault();
         APP.Samples.remove(this.model);
-        //this.$el.animate({width: "0px"}, ANIM_TIME*10, function(){
-        //this.remove()
-        //});
-        this.$el.remove();
+        if (this.$tabHeader.hasClass("active")) {
+            this.$tabHeader.find('a').attr("data-toggle", null);
+            $('.sample-tabs a[data-toggle="tab"]:first').tab('show');
+        }
         this.$tabHeader.animate({width: "0px"}, ANIM_TIME * 2, function () {
-            this.remove()
+            this.remove();
         });
+        this.$el.remove();
+
     },
     radio_changed: function (ev) {
         var p_name = $(ev.target).attr("class").replace("-of-obj", "").replace("-", "_");
