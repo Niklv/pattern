@@ -36,5 +36,6 @@ var APP = {
 };
 
 APP.init();
+visibilityTest();
 //$('#collections_modal').modal('show');
 //$('#collections_modal > div').click();

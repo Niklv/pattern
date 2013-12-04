@@ -97,8 +97,8 @@ var Sample = Backbone.Model.extend({
         this.layout();
         this.events.trigger("change:opacity", this.get("opacity"));
         /*this.on("all", function (t) {
-            console.log("model:" + t)
-        });*/
+         console.log("model:" + t)
+         });*/
         this.on("change", this.model_changed);
         this.on("remove", this.remove);
         APP.Canvas.on("change:width change:height", this.canvasSizeChanged, this);
@@ -369,7 +369,7 @@ var Grid = Backbone.Model.extend({
             visible = this.get("visible"),
             step_x = APP.Canvas.getWidth() / Math.sqrt(g),
             step_y = APP.Canvas.getHeight() / Math.sqrt(g),
-            i = 0, R = 1, currentVis = true, totalVis = true, opt = new DoubleLinkedList();
+            i = 0, R = 1, flag = true, opt = new DoubleLinkedList();
 
         //process CENTER elements
         var rad = -angle / 180 * Math.PI;
@@ -391,37 +391,34 @@ var Grid = Backbone.Model.extend({
         this.el_dots.POINTS[2].addEquals(off);
         this.el_dots.POINTS[3].addEquals(off);
 
-        opt.add({x: x, y: y}, 0, 0);
+        //process first element
+        if (this.isVisible(0, 0))
+            opt.add({x: x, y: y}, 0, 0);
         //process OTHER elements
-        //TODO: find and fix error there
-        //TODO: write autotests
-        var prevVis = true;
-        while (totalVis) {
-            currentVis = false;
+        while (flag || !opt.length) {
+            flag = false;
             for (i = -R; i <= R; i++) { //check top and bottom row
                 if (this.isVisible(i * step_x, R * step_y)) {
-                    currentVis = true;
+                    flag = true;
                     opt.add({x: x + i * step_x, y: y + R * step_y}, i, R);
                 }
                 if (this.isVisible(i * step_x, -R * step_y)) {
-                    currentVis = true;
+                    flag = true;
                     opt.add({x: x + i * step_x, y: y - R * step_y}, i, -R);
                 }
             }
             for (i = -R + 1; i <= R - 1; i++) { //check left and right row
                 if (this.isVisible(R * step_x, i * step_y)) {
-                    currentVis = true;
+                    flag = true;
                     opt.add({x: x + R * step_x, y: y + i * step_y}, R, i);
                 }
                 if (this.isVisible(-R * step_x, i * step_y)) {
-                    currentVis = true;
+                    flag = true;
                     opt.add({x: x - R * step_x, y: y + i * step_y}, -R, i);
                 }
             }
-            totalVis = currentVis || prevVis;
-            prevVis = currentVis;
             R++;
-            if (R > 10) break; //limit to 10 radius items
+            if (R > 40) break; //limit to 40 radius items
         }
         i = 0;
         var vis = opt.toArray();
