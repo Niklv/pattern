@@ -17,8 +17,9 @@ var Slider = Backbone.View.extend({
             value: this.model.get(opt.name),
             range: "min"
         });
-        this.model.on("change:range", this.setNewRange, this)
+        this.model.on("change:range", this.setNewRange, this);
         this.model.on("change:" + opt.name, this.setNewValue, this);
+        this.model.on("remove", this.remove, this);
     },
     events: {
         "slide .slider": "onslide",
@@ -31,7 +32,6 @@ var Slider = Backbone.View.extend({
         this.$input.val(val);
     },
     setNewRange: function () {
-        console.log("range!");
         this.range = this.model.get("range")[this.name];
         this.$slider.slider("option", "min", this.range.min);
         this.$slider.slider("option", "max", this.range.max);
@@ -105,5 +105,10 @@ var Slider = Backbone.View.extend({
         this.model.off("change:" + this.name, this.setNewValue, this);
         this.model.set(this.name, val);
         this.model.on("change:" + this.name, this.setNewValue, this);
+    },
+    remove: function(){
+        this.model.off("change:range", this.setNewRange, this);
+        this.model.off("change:" + this.name, this.setNewValue, this);
+        this.model.off("remove", this.remove, this);
     }
 });
