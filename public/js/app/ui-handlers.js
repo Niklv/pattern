@@ -105,4 +105,8 @@ function show_controls() {
     $('.controls-section').removeClass("flow-down");
 }
 
+function add_drawing_mode_sample(){
+
+}
+
 

@@ -23,7 +23,7 @@ var APP = {
         $('#file-uploader').change(handle_image);
         $('a.innerContent').click(select_from_library);
         $('#input-link').change(select_from_internet);
-        //$('.add-free-drawing-tab').click(testDrawingMode());
+        $('.add-free-drawing-tab').click(add_drawing_mode_sample);
         $('#paste-link-button').click(function () {
             $('#input-link').trigger("submit");
         });
