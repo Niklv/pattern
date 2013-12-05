@@ -95,13 +95,13 @@ function handle_image(e) {
 
 function hide_controls_and_show_bg() {
     APP.Canvas.render_to_bg();
-    $('#canvas').addClass("preview");
+    $('.canvas-container').addClass("preview");
     $('.controls-section').addClass("flow-down");
     ga('send', 'event', 'preview-button', 'click');
 }
 
 function show_controls() {
-    $('#canvas').removeClass("preview");
+    $('.canvas-container').removeClass("preview");
     $('.controls-section').removeClass("flow-down");
 }
 

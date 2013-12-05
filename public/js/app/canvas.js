@@ -20,7 +20,7 @@ var Canvas = Backbone.Model.extend({
     initialize: function () {
         this.canvas();
         $(window).resize(function () {
-            var cnv = $('#canvas');
+            var cnv = $('.canvas-container');
             var off = cnv.offset();
             $('body').css('background-position-x', off.left).css('background-position-y', off.top);
             var prevH = $('.preview-button').height();
@@ -37,7 +37,7 @@ var Canvas = Backbone.Model.extend({
         this.on("change:autoupdate", this.update);
     },
     canvas: function () {
-        this.canvas = new fabric.StaticCanvas("canvas");
+        this.canvas = new fabric.Canvas("canvas");
         this.canvas.renderOnAddRemove = false;
         this.color();
         this.height();
@@ -53,10 +53,12 @@ var Canvas = Backbone.Model.extend({
     },
     width: function () {
         this.canvas.setWidth(this.get("width"));
+        $('#canvas-wrapper').width(this.get("width"));
         $(window).resize();
     },
     height: function () {
         this.canvas.setHeight(this.get("height"));
+        $('#canvas-wrapper').height(this.get("height"));
         $(window).resize();
     },
     removeAll: function () {

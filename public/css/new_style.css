@@ -510,13 +510,15 @@ input[type='text'] {
     padding-bottom: 10%;
   }
 }
-#canvas {
+#canvas-wrapper {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 0;
   display: block;
   width: 300px;
   height: 300px;
-  margin-top: 0;
+}
+#canvas-wrapper .canvas-container {
   -webkit-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
@@ -529,7 +531,7 @@ input[type='text'] {
   -o-transition-property: box-shadow;
   transition-property: box-shadow;
 }
-#canvas.preview {
+#canvas-wrapper .canvas-container.preview {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
