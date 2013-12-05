@@ -176,10 +176,6 @@ input:not([type]), input[type='text'] {
           border-radius: 0;
           border: none;
           outline: none;
-          &.hidden-tab {
-            //.transition-duration(10s);
-            //width: 0px;
-          }
           &:hover {
             background-color: @tab_unactive_hover;
           }
@@ -195,6 +191,7 @@ input:not([type]), input[type='text'] {
               max-width: 100%;
               height: auto;
               box-sizing: border-box;
+              pointer-events: none;
             }
             button.close, &:hover button.close {
               position: absolute;
@@ -228,6 +225,10 @@ input:not([type]), input[type='text'] {
           }
           > .dropdown-menu {
             left: -1px;
+            > li > a {
+              outline: none;
+              cursor: pointer;
+            }
           }
         }
       }
@@ -245,6 +246,7 @@ input:not([type]), input[type='text'] {
         margin-bottom: @controls_bot_margin;
         .download {
           height: 34px;
+          outline: none;
         }
       }
       .control {
@@ -457,7 +459,8 @@ input:not([type]), input[type='text'] {
   }
   &.generated {
     .innerContent {
-      &:hover {}
+      &:hover {
+      }
       img {
         min-width: 90%;
       }

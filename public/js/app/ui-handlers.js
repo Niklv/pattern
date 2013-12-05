@@ -1,4 +1,6 @@
-function upload_file() {
+function upload_file(e) {
+    e.stopPropagation();
+    e.preventDefault();
     $('#file-uploader').click();
 }
 

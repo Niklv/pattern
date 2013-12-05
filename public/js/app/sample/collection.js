@@ -7,14 +7,14 @@ var SampleCollection = Backbone.Collection.extend({
         this.on("render", APP.Canvas.update, APP.Canvas);
     },
     add_model: function (model) {
-        model.resize_and_filter(_.bind(function(){
+        model.resize_and_filter(_.bind(function () {
             var view = new SampleView({model: model});
             model.view = view;
             view.render().init_controls().place();
             APP.Canvas.update();
         }, this));
     },
-    swap: function(a, b) {
+    swap: function (a, b) {
         this.models[a] = this.models.splice(b, 1, this.models[a])[0];
         this.models[a].set("layer", a);
         this.models[b].set("layer", b);
@@ -22,6 +22,9 @@ var SampleCollection = Backbone.Collection.extend({
     },
     remove_model: function () {
         APP.Canvas.removeAll();
+        this.each(function (sample, i) {
+            sample.set("layer", i);
+        });
         APP.Events.trigger("reinitialize");
         APP.Canvas.update();
     }

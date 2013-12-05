@@ -188,6 +188,7 @@ input[type='text'] {
   max-width: 100%;
   height: auto;
   box-sizing: border-box;
+  pointer-events: none;
 }
 .controls-section .tab-wrapper .sample-tabs > li > a > div button.close,
 .controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.close {
@@ -221,6 +222,10 @@ input[type='text'] {
 .controls-section .tab-wrapper .sample-tabs > li.add-new-sample > .dropdown-menu {
   left: -1px;
 }
+.controls-section .tab-wrapper .sample-tabs > li.add-new-sample > .dropdown-menu > li > a {
+  outline: none;
+  cursor: pointer;
+}
 .controls-section .tab-wrapper .settings-wrapper .tab-content {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -236,6 +241,7 @@ input[type='text'] {
 }
 .controls-section .tab-wrapper .settings-wrapper .canvas-options .download-image .download {
   height: 34px;
+  outline: none;
 }
 .controls-section .tab-wrapper .settings-wrapper .control {
   width: 100%;
