@@ -435,36 +435,50 @@ var Grid = Backbone.Model.extend({
         var subV = new fabric.Point(sx, sy),
             tr = this.tr.subtract(subV),
             bl = this.bl.subtract(subV),
+            br = this.br.subtract(subV),
+            tl = this.tl.subtract(subV),
             el_arr = this.el_dots.POINTS, i = 0;
-        //contain any point
-        while (i < el_arr.length)
-            if (el_arr[i].lte(tr) && el_arr[i].gte(bl))
-                return true;
-            else
-                i++;
-        //TODO: fix bug with all points outer of canvas
-        //contain any point
-        /*while (i < el_arr.length)
-            if (el_arr[i].lte(tr) && el_arr[i].gte(bl))
-                return true;
-            else
-                i++;*/
 
-        //contain any intersection
-        var tl = this.tl.subtract(subV),
-            br = this.br.subtract(subV);
-        var cnvarr = [tl, tr, br, bl];
-        for (i = 0; i < 4; i++) {
-            var a1 = el_arr[i],
-                a2 = el_arr[(i + 1) % 4];
-            for (var j = 0; j < 4; j++) {
-                var b1 = cnvarr[j],
-                    b2 = cnvarr[(j + 1) % 4],
-                    flag = fabric.Intersection.intersectLineLine(a1, a2, b1, b2).points.length > 0;
-                if (flag) return true;
-            }
-        }
-        return false;
+        var x1_min = Math.min(tl.x, tr.x, br.x, bl.x);
+        var x1_max = Math.max(tl.x, tr.x, br.x, bl.x);
+        var y1_min = Math.min(tl.y, tr.y, br.y, bl.y);
+        var y1_max = Math.max(tl.y, tr.y, br.y, bl.y);
+
+        var x2_min = Math.min(el_arr[0].x, el_arr[1].x, el_arr[2].x, el_arr[3].x);
+        var x2_max = Math.max(el_arr[0].x, el_arr[1].x, el_arr[2].x, el_arr[3].x);
+        var y2_min = Math.min(el_arr[0].y, el_arr[1].y, el_arr[2].y, el_arr[3].y);
+        var y2_max = Math.max(el_arr[0].y, el_arr[1].y, el_arr[2].y, el_arr[3].y);
+
+        if ((x1_max < x2_min) || (x1_min > x2_max) || (y1_max < y2_min) || (y1_min > y2_max))
+            return false;
+
+        //TODO: another projection to second box
+        /*
+         //contain any point
+         while (i < el_arr.length)
+         if (el_arr[i].lte(tr) && el_arr[i].gte(bl))
+         return true;
+         else
+         i++;
+
+
+         //contain any intersection
+         var tl = this.tl.subtract(subV),
+         br = this.br.subtract(subV);
+         var cnvarr = [tl, tr, br, bl];
+         for (i = 0; i < 4; i++) {
+         var a1 = el_arr[i],
+         a2 = el_arr[(i + 1) % 4];
+         for (var j = 0; j < 4; j++) {
+         var b1 = cnvarr[j],
+         b2 = cnvarr[(j + 1) % 4],
+         flag = fabric.Intersection.intersectLineLine(a1, a2, b1, b2).points.length > 0;
+         if (flag) return true;
+         }
+         }
+         return false;
+         */
+        return true;
     },
     updateBoundingPoints: function () {
         var w = APP.Canvas.getWidth() / 2, h = APP.Canvas.getHeight() / 2;
