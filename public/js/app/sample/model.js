@@ -442,6 +442,13 @@ var Grid = Backbone.Model.extend({
                 return true;
             else
                 i++;
+        //TODO: fix bug with all points outer of canvas
+        //contain any point
+        /*while (i < el_arr.length)
+            if (el_arr[i].lte(tr) && el_arr[i].gte(bl))
+                return true;
+            else
+                i++;*/
 
         //contain any intersection
         var tl = this.tl.subtract(subV),

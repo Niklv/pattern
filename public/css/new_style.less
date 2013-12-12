@@ -5,10 +5,10 @@
 
 @w3c: true;
 @webkit: true;
-@moz: true;
-@opera: true;
-@ms: true;
-@oldWebkit: true;
+@moz: false;
+@opera: false;
+@ms: false;
+@oldWebkit: false;
 
 //TAB SETTINGS
 @controls_bg: #ffffff;
@@ -32,7 +32,7 @@
 @slider_side_margin: 7px;
 @slider_heigth: 5px;
 @input_len: 62px;
-@label_len: 55px;
+@label_len: 53px;
 @controls_row: 27px;
 @controls_bot_margin: 5px;
 
@@ -225,9 +225,15 @@ input:not([type]), input[type='text'] {
           }
           > .dropdown-menu {
             left: -1px;
-            > li > a {
-              outline: none;
-              cursor: pointer;
+            > li {
+              &.disabled {
+                cursor: default;
+                pointer-events: none;
+              }
+              > a {
+                outline: none;
+                cursor: pointer;
+              }
             }
           }
         }
@@ -235,6 +241,15 @@ input:not([type]), input[type='text'] {
     }
     //TAB CONTENT
     .settings-wrapper {
+      max-height: 320px;
+      height: 100%;
+      overflow-y: auto;
+      background: linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)) 0 100%;
+      background-attachment: local, local, scroll, scroll;
+      .background-size(100% 40px, 100% 40px, 100% 14px, 100% 14px);
+      background-repeat: no-repeat;
+      background-color: white;
+      z-index: 1100;
       .tab-content {
         .user-select(none);
         padding: 0;
@@ -245,8 +260,12 @@ input:not([type]), input[type='text'] {
       .canvas-options .download-image {
         margin-bottom: @controls_bot_margin;
         .download {
+          width: 100%;
           height: 34px;
           outline: none;
+          &:hover {
+            .tada();
+          }
         }
       }
       .control {
@@ -268,7 +287,7 @@ input:not([type]), input[type='text'] {
           &.radio-case {
             padding-top: 4px;
             label {
-              margin-right: 7px;
+              margin-right: 2px;
             }
           }
         }
@@ -278,6 +297,11 @@ input:not([type]), input[type='text'] {
           right: 0px;
           width: @input_len;
           height: 100%;
+        }
+        &.grid {
+          > div {
+            right: 0;
+          }
         }
       }
       .lock-origin-ratio {
@@ -494,6 +518,8 @@ input:not([type]), input[type='text'] {
   display: block;
   width: 300px;
   height: 300px;
+  //.scale(1);
+  .transform-origin(50% 0);
   .canvas-container {
     .box-shadow(0 0 25px rgba(0, 0, 0, 0.6));
     .transition-duration(.5s);
@@ -504,13 +530,12 @@ input:not([type]), input[type='text'] {
   }
 }
 
-
-
-//DEBUG
+//FONT
 body {
   background-color: #269abc;
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
+  overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6, input, label {
@@ -525,5 +550,52 @@ h1, h2, h3, h4, h5, h6, input, label {
   width: 100%;
   height: 100%;
   z-index: -1;
+}
+
+//ANIMATION MIXIN
+.tada(@duration:1s) {
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-duration: @duration;
+  animation-duration: @duration;
+
+  @-webkit-keyframes tada {
+    0% {
+      -webkit-transform: scale(1);
+    }
+    10%, 20% {
+      -webkit-transform: scale(0.9) rotate(-3deg);
+    }
+    30%, 50%, 70%, 90% {
+      -webkit-transform: scale(1.1) rotate(3deg);
+    }
+    40%, 60%, 80% {
+      -webkit-transform: scale(1.1) rotate(-3deg);
+    }
+    100% {
+      -webkit-transform: scale(1) rotate(0);
+    }
+  }
+
+  @keyframes tada {
+    0% {
+      transform: scale(1);
+    }
+    10%, 20% {
+      transform: scale(0.9) rotate(-3deg);
+    }
+    30%, 50%, 70%, 90% {
+      transform: scale(1.1) rotate(3deg);
+    }
+    40%, 60%, 80% {
+      transform: scale(1.1) rotate(-3deg);
+    }
+    100% {
+      transform: scale(1) rotate(0);
+    }
+  }
+
+  -webkit-animation-name: tada;
+  animation-name: tada;
 }
 

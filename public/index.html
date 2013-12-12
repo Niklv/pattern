@@ -32,7 +32,7 @@
                     <li role="presentation"><a class="show-paste-link" role="menuitem" tabindex="-1" data-toggle="modal"
                                                href="#paste_link_modal"><span
                             class="glyphicon glyphicon-file"></span> Paste Link</a></li>
-                    <li role="presentation"><a class="add-free-drawing-tab" role="menuitem" tabindex="-1">
+                    <li role="presentation" class="disabled"><a class="add-free-drawing-tab" role="menuitem" tabindex="-1">
                         <span class="glyphicon glyphicon-pencil"></span> Free drawing</a></li>
                 </ul>
             </li>
@@ -190,7 +190,7 @@
     <h3 class="col-sm-12">Control panel
         <button type="button" class="random green-button">Random?</button>
     </h3>
-    <div class="col-lg-6">
+    <div class="col-sm-12 col-lg-6">
         <div class="control placement">
             <label>Type</label>
 
@@ -237,7 +237,7 @@
             <input type="text" class="colorpicker">
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-sm-12 col-lg-6">
         <%= control({class_name:"count", name:"Count"}) %>
         <%= control({class_name:"x", name:"X"}) %>
         <%= control({class_name:"y", name:"Y"}) %>

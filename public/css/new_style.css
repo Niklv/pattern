@@ -8,8 +8,6 @@
   border: #EBEBEB 1px solid;
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 5px;
-  -moz-background-clip: padding;
   border-radius: 5px;
   background-clip: padding-box;
 }
@@ -24,8 +22,6 @@
   left: 0;
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 5px;
-  -moz-background-clip: padding;
   border-radius: 5px;
   background-clip: padding-box;
 }
@@ -40,8 +36,6 @@
   margin-left: -3px;
   -webkit-border-radius: 3px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 3px;
-  -moz-background-clip: padding;
   border-radius: 3px;
   background-clip: padding-box;
 }
@@ -62,8 +56,6 @@ input[type="radio"] + label span {
   vertical-align: middle;
   cursor: pointer;
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 input[type="checkbox"] + label,
@@ -91,8 +83,6 @@ input[type='text'] {
   border: none;
   -webkit-border-radius: 0px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 0px;
-  -moz-background-clip: padding;
   border-radius: 0px;
   background-clip: padding-box;
   background-color: #ecf0f1;
@@ -105,8 +95,6 @@ input[type='text'] {
   background-image: none;
   -webkit-border-radius: 0px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 0px;
-  -moz-background-clip: padding;
   border-radius: 0px;
   background-clip: padding-box;
   border: none;
@@ -122,18 +110,14 @@ input[type='text'] {
   right: -30px;
   bottom: 0;
   -webkit-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
   -webkit-transition-duration: 0.5s;
-  -moz-transition-duration: 0.5s;
-  -o-transition-duration: 0.5s;
   transition-duration: 0.5s;
   height: auto;
 }
 .controls-section.flow-down {
   bottom: -240px;
   -webkit-opacity: 0.3;
-  -moz-opacity: 0.3;
   opacity: 0.3;
 }
 .controls-section .tab-wrapper {
@@ -162,8 +146,6 @@ input[type='text'] {
   height: 50px;
   -webkit-border-radius: 0px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 0px;
-  -moz-background-clip: padding;
   border-radius: 0px;
   background-clip: padding-box;
   margin-right: 0;
@@ -222,14 +204,28 @@ input[type='text'] {
 .controls-section .tab-wrapper .sample-tabs > li.add-new-sample > .dropdown-menu {
   left: -1px;
 }
+.controls-section .tab-wrapper .sample-tabs > li.add-new-sample > .dropdown-menu > li.disabled {
+  cursor: default;
+  pointer-events: none;
+}
 .controls-section .tab-wrapper .sample-tabs > li.add-new-sample > .dropdown-menu > li > a {
   outline: none;
   cursor: pointer;
 }
+.controls-section .tab-wrapper .settings-wrapper {
+  max-height: 320px;
+  height: 100%;
+  overflow-y: auto;
+  background: linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)) 0 100%;
+  background-attachment: local, local, scroll, scroll;
+  -webkit-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+  background-repeat: no-repeat;
+  background-color: white;
+  z-index: 1100;
+}
 .controls-section .tab-wrapper .settings-wrapper .tab-content {
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   padding: 0;
 }
@@ -240,8 +236,63 @@ input[type='text'] {
   margin-bottom: 5px;
 }
 .controls-section .tab-wrapper .settings-wrapper .canvas-options .download-image .download {
+  width: 100%;
   height: 34px;
   outline: none;
+}
+.controls-section .tab-wrapper .settings-wrapper .canvas-options .download-image .download:hover {
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-name: tada;
+  animation-name: tada;
+}
+@-webkit-keyframes tada {
+  0% {
+    -webkit-transform: scale(1);
+  }
+  10%,
+  20% {
+    -webkit-transform: scale(0.9) rotate(-3deg);
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: scale(1.1) rotate(3deg);
+  }
+  40%,
+  60%,
+  80% {
+    -webkit-transform: scale(1.1) rotate(-3deg);
+  }
+  100% {
+    -webkit-transform: scale(1) rotate(0);
+  }
+}
+@keyframes tada {
+  0% {
+    transform: scale(1);
+  }
+  10%,
+  20% {
+    transform: scale(0.9) rotate(-3deg);
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale(1.1) rotate(3deg);
+  }
+  40%,
+  60%,
+  80% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
 }
 .controls-section .tab-wrapper .settings-wrapper .control {
   width: 100%;
@@ -258,14 +309,14 @@ input[type='text'] {
 }
 .controls-section .tab-wrapper .settings-wrapper .control > div {
   position: absolute;
-  left: 62px;
+  left: 60px;
   right: 69px;
 }
 .controls-section .tab-wrapper .settings-wrapper .control > div.radio-case {
   padding-top: 4px;
 }
 .controls-section .tab-wrapper .settings-wrapper .control > div.radio-case label {
-  margin-right: 7px;
+  margin-right: 2px;
 }
 .controls-section .tab-wrapper .settings-wrapper .control > input,
 .controls-section .tab-wrapper .settings-wrapper .control > button {
@@ -274,6 +325,9 @@ input[type='text'] {
   right: 0px;
   width: 62px;
   height: 100%;
+}
+.controls-section .tab-wrapper .settings-wrapper .control.grid > div {
+  right: 0;
 }
 .controls-section .tab-wrapper .settings-wrapper .lock-origin-ratio {
   position: absolute;
@@ -384,7 +438,6 @@ input[type='text'] {
   background: linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
   background-attachment: local, local, scroll, scroll;
   -webkit-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-  -moz-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
   background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
   background-repeat: no-repeat;
   background-color: white;
@@ -413,17 +466,11 @@ input[type='text'] {
   border: solid 1px #D6D6D6;
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 5px;
-  -moz-background-clip: padding;
   border-radius: 5px;
   background-clip: padding-box;
   -webkit-transition-duration: 0.3s;
-  -moz-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
   -webkit-transition-timing-function: ease;
-  -moz-transition-timing-function: ease;
-  -o-transition-timing-function: ease;
   transition-timing-function: ease;
 }
 .box .innerContent img {
@@ -440,12 +487,9 @@ input[type='text'] {
 }
 .box .innerContent:hover {
   -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 5px;
-  -moz-background-clip: padding;
   border-radius: 5px;
   background-clip: padding-box;
   top: 0px;
@@ -517,29 +561,26 @@ input[type='text'] {
   display: block;
   width: 300px;
   height: 300px;
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
 }
 #canvas-wrapper .canvas-container {
   -webkit-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
   -webkit-transition-duration: 0.5s;
-  -moz-transition-duration: 0.5s;
-  -o-transition-duration: 0.5s;
   transition-duration: 0.5s;
   -webkit-transition-property: -webkit-box-shadow;
-  -moz-transition-property: -moz-box-shadow;
-  -o-transition-property: box-shadow;
   transition-property: box-shadow;
 }
 #canvas-wrapper .canvas-container.preview {
   -webkit-box-shadow: none;
-  -moz-box-shadow: none;
   box-shadow: none;
 }
 body {
   background-color: #269abc;
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
+  overflow: hidden;
 }
 h1,
 h2,

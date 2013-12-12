@@ -19,15 +19,34 @@ var Canvas = Backbone.Model.extend({
     },
     initialize: function () {
         this.canvas();
+        APP.$wrp = $('#canvas-wrapper');
+        APP.$cnv = $('.canvas-container');
+        APP.$prvbtn = $('.preview-button');
+        APP.$cntr_sec = $('.controls-section')
         $(window).resize(function () {
-            var cnv = $('.canvas-container');
-            var off = cnv.offset();
-            $('body').css('background-position-x', off.left).css('background-position-y', off.top);
-            var prevH = $('.preview-button').height();
-            var viewH = $('.controls-section').position().top;
-            var canvasH = cnv.height();
-            var offset = (viewH - prevH - canvasH) / 2 + prevH;
-            cnv.css('margin-top', offset + "px");
+            var preview_h = APP.$prvbtn.height(),
+                view_h = APP.$cntr_sec.position().top,
+                canvas_w = APP.$cnv.width(),
+                canvas_h = APP.$cnv.height(),
+                offset = (view_h - preview_h - canvas_h) / 2 + preview_h,
+                s_w = $(window).width() / canvas_w,
+                s_h = (view_h - preview_h) / canvas_h,
+                s = Math.min(1, Math.min(s_w, s_h)),
+                margin_left;
+            offset = (s_h < 1) ? preview_h : Math.max(preview_h, offset);
+            margin_left = (s_w < 1) ? ($(window).width() - canvas_w) / 2 : "";
+            APP.$wrp.css({
+                '-webkit-transform': 'scale(' + s + ')',
+                'transform': 'scale(' + s + ')',
+                'margin-left': margin_left,
+                'margin-top': offset + "px"
+            });
+            var cnv_off = APP.$cnv.offset();
+            $('body').css({
+                'background-position-x': cnv_off.left,
+                'background-position-y': cnv_off.top,
+                'background-size': s * canvas_w + 'px ' + s * canvas_h + 'px'
+            });
         }).resize();
         new CanvasView({model: this});
         this.on("change", this.update);
