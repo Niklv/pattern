@@ -341,7 +341,7 @@ var Grid = Backbone.Model.extend({
     model: null,
     sample_events: null,
     events: null,
-    el_dots: null,
+    info: null,
     tl: null,
     br: null,
     visible_parts: null,
@@ -373,23 +373,53 @@ var Grid = Backbone.Model.extend({
 
         //process CENTER elements
         var rad = -angle / 180 * Math.PI;
-        var c = Math.cos(rad);
-        var s = Math.sin(rad);
-        var pnts = [
+        var COS = Math.cos(rad);
+        var SIN = Math.sin(rad);
+        var cnv = [this.tr.add(0), this.br.add(0), this.bl.add(0), this.tl.add(0)];
+        var P = [
             {x: width / 2, y: height / 2},
             {x: width / 2, y: -height / 2}
         ];
-        this.el_dots = {POINTS: [
-            new fabric.Point(pnts[0].x * c - pnts[0].y * s, pnts[0].x * s + pnts[0].y * c),
-            new fabric.Point(pnts[1].x * c - pnts[1].y * s, pnts[1].x * s + pnts[1].y * c)
-        ]};
-        this.el_dots.POINTS[2] = this.el_dots.POINTS[0].multiply(-1);
-        this.el_dots.POINTS[3] = this.el_dots.POINTS[1].multiply(-1);
+        P = [
+            new fabric.Point(P[0].x * COS - P[0].y * SIN, P[0].x * SIN + P[0].y * COS),
+            new fabric.Point(P[1].x * COS - P[1].y * SIN, P[1].x * SIN + P[1].y * COS)
+        ];
+        P[2] = P[0].multiply(-1);
+        P[3] = P[1].multiply(-1);
         var off = {x: x, y: y};
-        this.el_dots.POINTS[0].addEquals(off);
-        this.el_dots.POINTS[1].addEquals(off);
-        this.el_dots.POINTS[2].addEquals(off);
-        this.el_dots.POINTS[3].addEquals(off);
+        P[0].addEquals(off);
+        P[1].addEquals(off);
+        P[2].addEquals(off);
+        P[3].addEquals(off);
+        this.info.el = {};
+        this.info.cnv = {};
+        var A = P[0].y - P[1].y, B = P[0].x - P[1].x;
+        //if (A == 0 && B == 0) return false;//TODO: IF A==0 and B==0 then ?
+        var K = Math.sqrt(Math.pow(A, 2) + Math.pow(B, 2));
+        SIN = -A / K;
+        COS = -B / K;
+        var M = [
+            [COS, SIN],
+            [-SIN, COS]
+        ];
+        var M90 = [
+            [0, -1],
+            [1, 0]
+        ];
+        this.info.M = M;
+        this.info.M90 = M90;
+
+        this.info.el.norm = this.getShadows(P);
+        P = this.rotatePoints(P, M);
+        this.info.el.A = this.getShadows(P);
+        P = this.rotatePoints(P, M90);
+        this.info.el.A90 = this.getShadows(P);
+
+        this.info.cnv.norm = this.getShadows(cnv);
+        this.rotate(cnv, M);
+        this.info.cnv.A = this.getShadows(cnv);
+        this.rotate(cnv, M90);
+        this.info.cnv.A90 = this.getShadows(cnv);
 
         //process first element
         if (this.isVisible(0, 0))
@@ -433,52 +463,42 @@ var Grid = Backbone.Model.extend({
     },
     isVisible: function (sx, sy) {
         var subV = new fabric.Point(sx, sy),
-            tr = this.tr.subtract(subV),
-            bl = this.bl.subtract(subV),
-            br = this.br.subtract(subV),
-            tl = this.tl.subtract(subV),
-            el_arr = this.el_dots.POINTS, i = 0;
+            el = this.info.el,
+            cnv = this.info.cnv,
+            x_max, x_min, y_max, y_min, shad={},
+            i = 0;
 
-        var x1_min = Math.min(tl.x, tr.x, br.x, bl.x);
-        var x1_max = Math.max(tl.x, tr.x, br.x, bl.x);
-        var y1_min = Math.min(tl.y, tr.y, br.y, bl.y);
-        var y1_max = Math.max(tl.y, tr.y, br.y, bl.y);
-
-        var x2_min = Math.min(el_arr[0].x, el_arr[1].x, el_arr[2].x, el_arr[3].x);
-        var x2_max = Math.max(el_arr[0].x, el_arr[1].x, el_arr[2].x, el_arr[3].x);
-        var y2_min = Math.min(el_arr[0].y, el_arr[1].y, el_arr[2].y, el_arr[3].y);
-        var y2_max = Math.max(el_arr[0].y, el_arr[1].y, el_arr[2].y, el_arr[3].y);
-
-        if ((x1_max < x2_min) || (x1_min > x2_max) || (y1_max < y2_min) || (y1_min > y2_max))
+        //TODO: SHADOW OFFSET
+        if(this.compareShadows(shad, el.norm))
             return false;
 
-        //TODO: another projection to second box
-        /*
-         //contain any point
-         while (i < el_arr.length)
-         if (el_arr[i].lte(tr) && el_arr[i].gte(bl))
-         return true;
-         else
-         i++;
+        if(this.compareShadows(shad, el.A))
+            return false;
 
+        if(this.compareShadows(shad, el.A90))
+            return false;
 
-         //contain any intersection
-         var tl = this.tl.subtract(subV),
-         br = this.br.subtract(subV);
-         var cnvarr = [tl, tr, br, bl];
-         for (i = 0; i < 4; i++) {
-         var a1 = el_arr[i],
-         a2 = el_arr[(i + 1) % 4];
-         for (var j = 0; j < 4; j++) {
-         var b1 = cnvarr[j],
-         b2 = cnvarr[(j + 1) % 4],
-         flag = fabric.Intersection.intersectLineLine(a1, a2, b1, b2).points.length > 0;
-         if (flag) return true;
-         }
-         }
-         return false;
-         */
         return true;
+    },
+    getShadows: function (p) {
+        return {
+            x_max: Math.max(p[0].x, p[1].x, p[2].x, p[3].x),
+            x_min: Math.min(p[0].x, p[1].x, p[2].x, p[3].x),
+            y_max: Math.max(p[0].y, p[1].y, p[2].y, p[3].y),
+            y_min: Math.min(p[0].y, p[1].y, p[2].y, p[3].y)
+        }
+    },
+    rotatePoints: function (P, M) {
+        for (i = 0; i < P.length; i++) {
+            P[i].x = P[i].x * M[0][0] + P[i].y * M[0][1];
+            P[i].y = P[i].x * M[1][0] + P[i].y * M[1][1];
+        }
+    },
+    compareShadows: function (shad1, shad2) {
+        return (shad1.x_max < shad2.x_min) ||
+            (shad1.x_min > shad2.x_max) ||
+            (shad1.y_max < shad2.y_min) ||
+            (shad1.y_min > shad2.y_max);
     },
     updateBoundingPoints: function () {
         var w = APP.Canvas.getWidth() / 2, h = APP.Canvas.getHeight() / 2;
