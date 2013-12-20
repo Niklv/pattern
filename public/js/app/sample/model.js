@@ -350,6 +350,7 @@ var Grid = Backbone.Model.extend({
         this.events = _.extend({}, Backbone.Events);
         this.objects = new Backbone.Collection([], {model: Fabric});
         this.sample_events = opt.sample_events;
+        this.info = {};
         this.set("visible", true);
         this.updateBoundingPoints();
         this.calculateGrid();
@@ -375,7 +376,7 @@ var Grid = Backbone.Model.extend({
         var rad = -angle / 180 * Math.PI;
         var COS = Math.cos(rad);
         var SIN = Math.sin(rad);
-        var cnv = [this.tr.add(0), this.br.add(0), this.bl.add(0), this.tl.add(0)];
+        var cnv = [this.tr.scalarAdd(0), this.br.scalarAdd(0), this.bl.scalarAdd(0), this.tl.scalarAdd(0)];
         var P = [
             {x: width / 2, y: height / 2},
             {x: width / 2, y: -height / 2}
@@ -402,24 +403,16 @@ var Grid = Backbone.Model.extend({
             [COS, SIN],
             [-SIN, COS]
         ];
-        var M90 = [
-            [0, -1],
-            [1, 0]
-        ];
+
         this.info.M = M;
-        this.info.M90 = M90;
 
         this.info.el.norm = this.getShadows(P);
-        P = this.rotatePoints(P, M);
+        this.rotatePoints(P, M);
         this.info.el.A = this.getShadows(P);
-        P = this.rotatePoints(P, M90);
-        this.info.el.A90 = this.getShadows(P);
 
         this.info.cnv.norm = this.getShadows(cnv);
-        this.rotate(cnv, M);
+        this.rotatePoints(cnv, M);
         this.info.cnv.A = this.getShadows(cnv);
-        this.rotate(cnv, M90);
-        this.info.cnv.A90 = this.getShadows(cnv);
 
         //process first element
         if (this.isVisible(0, 0))
@@ -462,23 +455,29 @@ var Grid = Backbone.Model.extend({
             this.objects.at(i++).set({show: false});
     },
     isVisible: function (sx, sy) {
-        var subV = new fabric.Point(sx, sy),
+        var v = {x: sx, y: sy},
+            vA = {x: sx, y: sy},
             el = this.info.el,
-            cnv = this.info.cnv,
-            x_max, x_min, y_max, y_min, shad={},
-            i = 0;
+            cnv = _.clone(this.info.cnv);
+        this.rotatePoints(vA, this.info.M);
 
-        //TODO: SHADOW OFFSET
-        if(this.compareShadows(shad, el.norm))
+        cnv.norm = {
+            x_max: cnv.norm.x_max - v.x,
+            x_min: cnv.norm.x_min - v.x,
+            y_max: cnv.norm.y_max - v.y,
+            y_min: cnv.norm.y_min - v.y
+        };
+
+        if (this.compareShadows(cnv.norm, el.norm))
             return false;
 
-        if(this.compareShadows(shad, el.A))
-            return false;
-
-        if(this.compareShadows(shad, el.A90))
-            return false;
-
-        return true;
+        cnv.A = {
+            x_max: cnv.A.x_max - vA.x,
+            x_min: cnv.A.x_min - vA.x,
+            y_max: cnv.A.y_max - vA.y,
+            y_min: cnv.A.y_min - vA.y
+        };
+        return !this.compareShadows(cnv.A, el.A);
     },
     getShadows: function (p) {
         return {
