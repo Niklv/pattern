@@ -387,21 +387,11 @@ var Grid = Backbone.Model.extend({
         ];
         P[2] = P[0].multiply(-1);
         P[3] = P[1].multiply(-1);
-        var off = {x: x, y: y};
-        P[0].addEquals(off);
-        P[1].addEquals(off);
-        P[2].addEquals(off);
-        P[3].addEquals(off);
         this.info.el = {};
         this.info.cnv = {};
-        var A = P[0].y - P[1].y, B = P[0].x - P[1].x;
-        //if (A == 0 && B == 0) return false;//TODO: IF A==0 and B==0 then ?
-        var K = Math.sqrt(Math.pow(A, 2) + Math.pow(B, 2));
-        SIN = -A / K;
-        COS = -B / K;
         var M = [
-            [COS, SIN],
-            [-SIN, COS]
+            [COS, -SIN],
+            [SIN, COS]
         ];
 
         this.info.M = M;
@@ -415,27 +405,27 @@ var Grid = Backbone.Model.extend({
         this.info.cnv.A = this.getShadows(cnv);
 
         //process first element
-        if (this.isVisible(0, 0))
+        if (this.isVisible(x, y))
             opt.add({x: x, y: y}, 0, 0);
         //process OTHER elements
         while (flag || !opt.length) {
             flag = false;
             for (i = -R; i <= R; i++) { //check top and bottom row
-                if (this.isVisible(i * step_x, R * step_y)) {
+                if (this.isVisible(x + i * step_x, y + R * step_y)) {
                     flag = true;
                     opt.add({x: x + i * step_x, y: y + R * step_y}, i, R);
                 }
-                if (this.isVisible(i * step_x, -R * step_y)) {
+                if (this.isVisible(x + i * step_x, y - R * step_y)) {
                     flag = true;
                     opt.add({x: x + i * step_x, y: y - R * step_y}, i, -R);
                 }
             }
             for (i = -R + 1; i <= R - 1; i++) { //check left and right row
-                if (this.isVisible(R * step_x, i * step_y)) {
+                if (this.isVisible(x + R * step_x, y + i * step_y)) {
                     flag = true;
                     opt.add({x: x + R * step_x, y: y + i * step_y}, R, i);
                 }
-                if (this.isVisible(-R * step_x, i * step_y)) {
+                if (this.isVisible(x - R * step_x, y + i * step_y)) {
                     flag = true;
                     opt.add({x: x - R * step_x, y: y + i * step_y}, -R, i);
                 }
@@ -458,26 +448,25 @@ var Grid = Backbone.Model.extend({
         var v = {x: sx, y: sy},
             vA = {x: sx, y: sy},
             el = this.info.el,
-            cnv = _.clone(this.info.cnv);
+            cnv = this.info.cnv;
         this.rotatePoints(vA, this.info.M);
 
-        cnv.norm = {
-            x_max: cnv.norm.x_max - v.x,
-            x_min: cnv.norm.x_min - v.x,
-            y_max: cnv.norm.y_max - v.y,
-            y_min: cnv.norm.y_min - v.y
-        };
+        var norm = {};
+        norm.x_max = el.norm.x_max + v.x;
+        norm.x_min = el.norm.x_min + v.x;
+        norm.y_max = el.norm.y_max + v.y;
+        norm.y_min = el.norm.y_min + v.y;
 
         if (this.compareShadows(cnv.norm, el.norm))
             return false;
 
-        cnv.A = {
-            x_max: cnv.A.x_max - vA.x,
-            x_min: cnv.A.x_min - vA.x,
-            y_max: cnv.A.y_max - vA.y,
-            y_min: cnv.A.y_min - vA.y
-        };
-        return !this.compareShadows(cnv.A, el.A);
+        var A = {};
+        A.x_max = el.A.x_max + vA.x;
+        A.x_min = el.A.x_min + vA.x;
+        A.y_max = el.A.y_max + vA.y;
+        A.y_min = el.A.y_min + vA.y;
+
+        return !this.compareShadows(cnv.A, A);
     },
     getShadows: function (p) {
         return {
@@ -488,9 +477,19 @@ var Grid = Backbone.Model.extend({
         }
     },
     rotatePoints: function (P, M) {
-        for (i = 0; i < P.length; i++) {
-            P[i].x = P[i].x * M[0][0] + P[i].y * M[0][1];
-            P[i].y = P[i].x * M[1][0] + P[i].y * M[1][1];
+        var x, y;
+        if(_.isArray(P))
+            for (i = 0; i < P.length; i++) {
+                x = P[i].x * M[0][0] + P[i].y * M[0][1];
+                y = P[i].x * M[1][0] + P[i].y * M[1][1];
+                P[i].x = x;
+                P[i].y = y;
+            }
+        else if(_.isObject(P)){
+            x = P.x * M[0][0] + P.y * M[0][1];
+            y = P.x * M[1][0] + P.y * M[1][1];
+            P.x = x;
+            P.y = y;
         }
     },
     compareShadows: function (shad1, shad2) {
