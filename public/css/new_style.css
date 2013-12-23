@@ -172,21 +172,67 @@ input[type='text'] {
   box-sizing: border-box;
   pointer-events: none;
 }
-.controls-section .tab-wrapper .sample-tabs > li > a > div button.close,
-.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.close {
+.controls-section .tab-wrapper .sample-tabs > li > a > div button,
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button {
   position: absolute;
-  top: -1px;
-  right: 3px;
   text-shadow: none;
   visibility: hidden;
   outline: none;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0);
+  border: 0;
+  -webkit-appearance: none;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+}
+.controls-section .tab-wrapper .sample-tabs > li > a > div button.close,
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.close {
+  top: -1px;
+  right: 3px;
 }
 .controls-section .tab-wrapper .sample-tabs > li > a > div button.close:hover,
 .controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.close:hover {
   color: red;
 }
-.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.close {
+.controls-section .tab-wrapper .sample-tabs > li > a > div button.right,
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.right,
+.controls-section .tab-wrapper .sample-tabs > li > a > div button.left,
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.left {
+  -webkit-opacity: 0.2;
+  opacity: 0.2;
+  font-size: 15px;
+  top: 20px;
+}
+.controls-section .tab-wrapper .sample-tabs > li > a > div button.right.right,
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.right.right,
+.controls-section .tab-wrapper .sample-tabs > li > a > div button.left.right,
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.left.right {
+  right: 3px;
+}
+.controls-section .tab-wrapper .sample-tabs > li > a > div button.right.left,
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.right.left,
+.controls-section .tab-wrapper .sample-tabs > li > a > div button.left.left,
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.left.left {
+  left: 3px;
+}
+.controls-section .tab-wrapper .sample-tabs > li > a > div button.right:hover,
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.right:hover,
+.controls-section .tab-wrapper .sample-tabs > li > a > div button.left:hover,
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button.left:hover {
+  -webkit-opacity: 1;
+  opacity: 1;
+  color: #2ecc71;
+}
+.controls-section .tab-wrapper .sample-tabs > li > a > div:hover button {
   visibility: visible;
+}
+.controls-section .tab-wrapper .sample-tabs > li:first-child button.left {
+  display: none;
+}
+.controls-section .tab-wrapper .sample-tabs > li:nth-last-child(2) button.right {
+  display: none;
 }
 .controls-section .tab-wrapper .sample-tabs > li.add-new-sample > a {
   width: 50px;

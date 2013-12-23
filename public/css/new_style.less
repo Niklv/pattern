@@ -193,20 +193,55 @@ input:not([type]), input[type='text'] {
               box-sizing: border-box;
               pointer-events: none;
             }
-            button.close, &:hover button.close {
+            button, &:hover button {
               position: absolute;
-              top: -1px;
-              right: 3px;
               text-shadow: none;
               visibility: hidden;
               outline: none;
-              &:hover {
-                color: red;
+              padding: 0;
+              cursor: pointer;
+              background: rgba(0, 0, 0, 0);
+              border: 0;
+              -webkit-appearance: none;
+              font-weight: bold;
+              line-height: 1;
+              color: #000;
+              &.close {
+                top: -1px;
+                right: 3px;
+                &:hover {
+                  color: red;
+                }
+              }
+              &.right, &.left {
+                .opacity(0.2);
+                font-size: 15px;
+                top: 20px;
+                &.right {
+                  right: 3px;
+                }
+                &.left {
+                  left: 3px;
+                }
+                &:hover {
+                  .opacity(1);
+                  color: @button_color;
+                }
               }
             }
-            &:hover button.close {
+            &:hover button {
               visibility: visible;
             }
+          }
+        }
+        &:first-child {
+          button.left {
+            display: none;
+          }
+        }
+        &:nth-last-child(2) {
+          button.right {
+            display: none;
           }
         }
         &.add-new-sample {
