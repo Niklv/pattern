@@ -234,6 +234,9 @@ input[type='text'] {
 .controls-section .tab-wrapper .sample-tabs > li:nth-last-child(2) button.right {
   display: none;
 }
+.controls-section .tab-wrapper .sample-tabs > li.ui-draggable-dragging {
+  z-index: 1;
+}
 .controls-section .tab-wrapper .sample-tabs > li.add-new-sample > a {
   width: 50px;
 }
@@ -410,6 +413,15 @@ input[type='text'] {
   z-index: 500;
   color: white;
   outline: none;
+}
+#loading-hover {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 501;
 }
 #paste_link_modal .form-group {
   position: relative;

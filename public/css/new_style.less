@@ -244,6 +244,9 @@ input:not([type]), input[type='text'] {
             display: none;
           }
         }
+        &.ui-draggable-dragging{
+          z-index:1;
+        }
         &.add-new-sample {
           > a {
             width: @tab_height;
@@ -378,6 +381,17 @@ input:not([type]), input[type='text'] {
   z-index: 500;
   color: white;
   outline: none;
+}
+
+//LOADING SPLASH
+#loading-hover{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: rgba(0,0,0,0.2);
+  z-index: 501;
 }
 
 //MODALS
