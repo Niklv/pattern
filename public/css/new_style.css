@@ -292,56 +292,10 @@ input[type='text'] {
 .controls-section .tab-wrapper .settings-wrapper .canvas-options .download-image .download:hover {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
+  -webkit-animation: tada;
+  animation: tada;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
-  -webkit-animation-name: tada;
-  animation-name: tada;
-}
-@-webkit-keyframes tada {
-  0% {
-    -webkit-transform: scale(1);
-  }
-  10%,
-  20% {
-    -webkit-transform: scale(0.9) rotate(-3deg);
-  }
-  30%,
-  50%,
-  70%,
-  90% {
-    -webkit-transform: scale(1.1) rotate(3deg);
-  }
-  40%,
-  60%,
-  80% {
-    -webkit-transform: scale(1.1) rotate(-3deg);
-  }
-  100% {
-    -webkit-transform: scale(1) rotate(0);
-  }
-}
-@keyframes tada {
-  0% {
-    transform: scale(1);
-  }
-  10%,
-  20% {
-    transform: scale(0.9) rotate(-3deg);
-  }
-  30%,
-  50%,
-  70%,
-  90% {
-    transform: scale(1.1) rotate(3deg);
-  }
-  40%,
-  60%,
-  80% {
-    transform: scale(1.1) rotate(-3deg);
-  }
-  100% {
-    transform: scale(1) rotate(0);
-  }
 }
 .controls-section .tab-wrapper .settings-wrapper .control {
   width: 100%;
@@ -413,15 +367,6 @@ input[type='text'] {
   z-index: 500;
   color: white;
   outline: none;
-}
-#loading-hover {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 501;
 }
 #paste_link_modal .form-group {
   position: relative;
@@ -658,4 +603,53 @@ label {
   width: 100%;
   height: 100%;
   z-index: -1;
+}
+#loading-hover {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: rgba(255, 255, 255, 0.4);
+  z-index: 501;
+  -webkit-user-select: none;
+  user-select: none;
+}
+#loading-hover div.outer {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+}
+#loading-hover div.outer div.inner {
+  position: relative;
+  left: -50%;
+  top: -50px;
+}
+#loading-hover .spin {
+  cursor: wait;
+  background-color: rgba(0, 0, 0, 0);
+  opacity: .8;
+  border-radius: 50px;
+  border-right: 10px solid #2ecc71;
+  border-bottom: 10px solid #2ecc71;
+  border-top: 10px solid rgba(0, 0, 0, 0);
+  border-left: 10px solid rgba(0, 0, 0, 0);
+  width: 50px;
+  height: 50px;
+  -webkit-animation: loading 0.5s infinite linear;
+  animation: loading 0.5s infinite linear;
+}
+lesshat-selector {
+  -lh-property: 0; } 
+@-webkit-keyframes loading{ 0% {.-webkit-transform: rotate(0deg);} 100% {-webkit-transform: rotate(360deg);}}
+@-moz-keyframes loading{ 0% {.-moz-transform: rotate(0deg);} 100% {-moz-transform: rotate(360deg);}}
+@-o-keyframes loading{ 0% {.-o-transform: rotate(0deg);} 100% {-o-transform: rotate(360deg);}}
+@keyframes loading{ 0% {.-webkit-transform: rotate(0deg);.-moz-transform: rotate(0deg);.-ms-transform: rotate(0deg);.transform: rotate(0deg);} 100% {-webkit-transform: rotate(360deg);-moz-transform: rotate(360deg);-ms-transform: rotate(360deg);transform: rotate(360deg);};
+}
+lesshat-selector {
+  -lh-property: 0; } 
+@-webkit-keyframes tada{ 0% {-webkit-transform: scale(1);} 10%, 20% {-webkit-transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {-webkit-transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {-webkit-transform: scale(1.1) rotate(-3deg);} 100% {-webkit-transform: scale(1) rotate(0);}}
+@-moz-keyframes tada{ 0% {-moz-transform: scale(1);} 10%, 20% {-moz-transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {-moz-transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {-moz-transform: scale(1.1) rotate(-3deg);} 100% {-moz-transform: scale(1) rotate(0);}}
+@-o-keyframes tada{ 0% {-o-transform: scale(1);} 10%, 20% {-o-transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {-o-transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {-o-transform: scale(1.1) rotate(-3deg);} 100% {-o-transform: scale(1) rotate(0);}}
+@keyframes tada{ 0% {-webkit-transform: scale(1);-moz-transform: scale(1);-ms-transform: scale(1);transform: scale(1);} 10%, 20% {-webkit-transform: scale(0.9) rotate(-3deg);-moz-transform: scale(0.9) rotate(-3deg);-ms-transform: scale(0.9) rotate(-3deg);transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {-webkit-transform: scale(1.1) rotate(3deg);-moz-transform: scale(1.1) rotate(3deg);-ms-transform: scale(1.1) rotate(3deg);transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {-webkit-transform: scale(1.1) rotate(-3deg);-moz-transform: scale(1.1) rotate(-3deg);-ms-transform: scale(1.1) rotate(-3deg);transform: scale(1.1) rotate(-3deg);} 100% {-webkit-transform: scale(1) rotate(0);-moz-transform: scale(1) rotate(0);-ms-transform: scale(1) rotate(0);transform: scale(1) rotate(0);};
 }
