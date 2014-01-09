@@ -4,6 +4,32 @@ function upload_file(e) {
     $('#file-uploader').click();
 }
 
+function handle_image(e) {
+    var reader = new FileReader();
+    reader.onload = function (event) {
+        var imgObj = new Image();
+        var res = event.target.result;
+        if (res) {
+            var ext = res.split("\/")[1];
+            if (ext) {
+                ext = ext.split(";")[0];
+                if (ext && (ext == 'jpeg' || ext == 'bmp' || ext == 'png')) {
+                    imgObj.src = event.target.result;
+                    imgObj.onload = function () {
+                        APP.Samples.add({type: "img", img: imgObj, layer: APP.Samples.length});
+                    };
+                } else
+                    APP.alert("Only .png, .jpeg and .bmp supported!");
+            } else
+                APP.alert("Only .png, .jpeg and .bmp supported!");
+        } else
+            APP.alert("File is empty!");
+        $(e.target).val("");
+    };
+    reader.readAsDataURL(e.target.files[0]);
+    ga('send', 'event', 'select_from_pc', 'select');
+}
+
 function update_dropdown_caption(e) {
     $(e.target).parent().parent().parent().find("a h4").html($(e.target).text() + " <b class='caret'></b>");
 }
@@ -11,6 +37,7 @@ function update_dropdown_caption(e) {
 function select_from_library(e) {
     e.stopPropagation();
     e.preventDefault();
+    APP.loading(true);
     var src = "", sprite_name = $(this).attr("data-sprite");
     if (sprite_name) {
         //TODO: validation!
@@ -22,7 +49,6 @@ function select_from_library(e) {
         src = _.last(src);
     }
     console.log(src);
-    ga('send', 'event', 'select_from_library', 'select', src);
     $.ajax({
         url: "img/calculated/" + src + ".json",
         success: function (data) {
@@ -31,20 +57,24 @@ function select_from_library(e) {
             var img = new Image();
             img.src = data.prefix + data.image;
             img.onload = function () {
-                $('#collections_modal').modal('hide');
                 APP.Samples.add({type: "img", img: img, layer: APP.Samples.length});
+                APP.loading(false);
             };
         },
         error: function () {
             console.log("error!");
             console.log(arguments);
-            ga('send', 'event', 'select_from_library', 'error', arguments);
+            APP.loading(false);
+            APP.alert();
         }
     });
-    return 0;
+    $('#collections_modal').modal('hide');
 }
 
 function select_from_internet(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    APP.loading(true);
     var src = $(e.currentTarget).val();
     ga('send', 'event', 'select_from_internet', 'select', src);
     $.ajax({
@@ -54,6 +84,8 @@ function select_from_internet(e) {
                 $(e.currentTarget).addClass("text-danger");
                 console.log("error!");
                 console.log(arguments);
+                APP.loading(false);
+                APP.alert("Error parsing image!");
                 return;
             }
             $(e.currentTarget).removeClass("text-danger");
@@ -61,37 +93,25 @@ function select_from_internet(e) {
             img.src = data.prefix + data.image;
             img.onload = function () {
                 APP.Samples.add({type: "img", img: img, layer: APP.Samples.length});
-                $('#paste_link_modal').modal('hide');
+                APP.loading(false);
             };
         },
         error: function () {
             $(e.currentTarget).addClass("text-danger");
             console.log("error!");
             console.log(arguments);
-            ga('send', 'event', 'select_from_internet', 'error', arguments);
+            APP.loading(false);
+            APP.alert();
+
         }
     });
-    return 0;
+    $('#paste_link_modal').modal('hide');
 }
 
 function on_modal_paste_link_hide(e) {
     $(e.target).find("input").val("").removeClass("text-danger");
 }
 
-
-function handle_image(e) {
-    var reader = new FileReader();
-    reader.onload = function (event) {
-        var imgObj = new Image();
-        imgObj.src = event.target.result;
-        imgObj.onload = function () {
-            APP.Samples.add({type: "img", img: imgObj, layer: APP.Samples.length});
-        };
-        $(e.target).val("");
-    };
-    reader.readAsDataURL(e.target.files[0]);
-    ga('send', 'event', 'select_from_pc', 'select');
-}
 
 function hide_controls_and_show_bg() {
     APP.Canvas.render_to_bg();
@@ -105,7 +125,7 @@ function show_controls() {
     $('.controls-section').removeClass("flow-down");
 }
 
-function add_drawing_mode_sample(){
+function add_drawing_mode_sample() {
 
 }
 

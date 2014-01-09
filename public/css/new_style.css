@@ -113,6 +113,8 @@ input[type='text'] {
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
   -webkit-transition-duration: 0.5s;
   transition-duration: 0.5s;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   height: auto;
 }
 .controls-section.flow-down {
@@ -579,9 +581,46 @@ input[type='text'] {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+.alerts {
+  position: absolute;
+  top: 25px;
+  right: 0px;
+  bottom: 0px;
+  pagging: 10px;
+  z-index: 1;
+  font-weight: lighter;
+}
+.alerts .auto-hidden-alert {
+  background-color: #fffc99;
+  margin: 10px 10px 0px 10px;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+  -webkit-border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  border-radius: 3px;
+  background-clip: padding-box;
+  min-width: 300px;
+  cursor: pointer;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+.alerts .auto-hidden-alert.new {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-name: alertShow;
+  animation-name: alertShow;
+}
+.alerts .auto-hidden-alert.deleted {
+  -webkit-animation-duration: 1.5s;
+  animation-duration: 1.5s;
+  -webkit-animation-name: alertHide;
+  animation-name: alertHide;
+}
 body {
   background-color: #269abc;
   font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
   font-weight: bold;
   overflow: hidden;
 }
@@ -605,39 +644,54 @@ label {
   z-index: -1;
 }
 #loading-hover {
+  -webkit-transition: opacity 0.5s linear;
+  transition: opacity 0.5s linear;
+  -webkit-transform: translateZ(0px);
+  transform: translateZ(0px);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  opacity: 1;
   position: absolute;
   top: 0px;
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background: rgba(255, 255, 255, 0.4);
+  background-image: -webkit-radial-gradient(50 ,circle% 50%, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
+  background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
   z-index: 501;
   -webkit-user-select: none;
   user-select: none;
 }
+#loading-hover.non-visible {
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
 #loading-hover div.outer {
   position: absolute;
   left: 50%;
-  top: 40%;
+  top: 50%;
 }
 #loading-hover div.outer div.inner {
   position: relative;
   left: -50%;
-  top: -50px;
+  top: -37.5px;
 }
 #loading-hover .spin {
   cursor: wait;
   background-color: rgba(0, 0, 0, 0);
   opacity: .8;
-  border-radius: 50px;
+  border-radius: 75px;
   border-right: 10px solid #2ecc71;
   border-bottom: 10px solid #2ecc71;
   border-top: 10px solid rgba(0, 0, 0, 0);
   border-left: 10px solid rgba(0, 0, 0, 0);
-  width: 50px;
-  height: 50px;
-  -webkit-animation: loading 0.5s infinite linear;
-  animation: loading 0.5s infinite linear;
+  width: 75px;
+  height: 75px;
+  -webkit-animation: loading 1s infinite linear;
+  animation: loading 1s infinite linear;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 lesshat-selector {
   -lh-property: 0; } 
@@ -652,4 +706,18 @@ lesshat-selector {
 @-moz-keyframes tada{ 0% {-moz-transform: scale(1);} 10%, 20% {-moz-transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {-moz-transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {-moz-transform: scale(1.1) rotate(-3deg);} 100% {-moz-transform: scale(1) rotate(0);}}
 @-o-keyframes tada{ 0% {-o-transform: scale(1);} 10%, 20% {-o-transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {-o-transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {-o-transform: scale(1.1) rotate(-3deg);} 100% {-o-transform: scale(1) rotate(0);}}
 @keyframes tada{ 0% {-webkit-transform: scale(1);-moz-transform: scale(1);-ms-transform: scale(1);transform: scale(1);} 10%, 20% {-webkit-transform: scale(0.9) rotate(-3deg);-moz-transform: scale(0.9) rotate(-3deg);-ms-transform: scale(0.9) rotate(-3deg);transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {-webkit-transform: scale(1.1) rotate(3deg);-moz-transform: scale(1.1) rotate(3deg);-ms-transform: scale(1.1) rotate(3deg);transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {-webkit-transform: scale(1.1) rotate(-3deg);-moz-transform: scale(1.1) rotate(-3deg);-ms-transform: scale(1.1) rotate(-3deg);transform: scale(1.1) rotate(-3deg);} 100% {-webkit-transform: scale(1) rotate(0);-moz-transform: scale(1) rotate(0);-ms-transform: scale(1) rotate(0);transform: scale(1) rotate(0);};
+}
+lesshat-selector {
+  -lh-property: 0; } 
+@-webkit-keyframes alertHide{  0% {-webkit-transform: translateX(0);} 20% {opacity: 1; -webkit-transform: translateX(-20px);} 100% {opacity: 0; -webkit-transform: translateX(2000px);}}
+@-moz-keyframes alertHide{  0% {-moz-transform: translateX(0);} 20% {opacity: 1; -moz-transform: translateX(-20px);} 100% {opacity: 0; -moz-transform: translateX(2000px);}}
+@-o-keyframes alertHide{  0% {-o-transform: translateX(0);} 20% {opacity: 1; -o-transform: translateX(-20px);} 100% {opacity: 0; -o-transform: translateX(2000px);}}
+@keyframes alertHide{  0% {-webkit-transform: translateX(0);-moz-transform: translateX(0);-ms-transform: translateX(0);transform: translateX(0);} 20% {opacity: 1;-webkit-transform: translateX(-20px);-moz-transform: translateX(-20px);-ms-transform: translateX(-20px);transform: translateX(-20px);} 100% {opacity: 0;-webkit-transform: translateX(2000px);-moz-transform: translateX(2000px);-ms-transform: translateX(2000px);transform: translateX(2000px);};
+}
+lesshat-selector {
+  -lh-property: 0; } 
+@-webkit-keyframes alertShow{  0% {opacity: 0; -webkit-transform: translateX(2000px);} 80% {opacity: 1; -webkit-transform: translateX(-20px);} 100% {-webkit-transform: translateX(0);}}
+@-moz-keyframes alertShow{  0% {opacity: 0; -moz-transform: translateX(2000px);} 80% {opacity: 1; -moz-transform: translateX(-20px);} 100% {-moz-transform: translateX(0);}}
+@-o-keyframes alertShow{  0% {opacity: 0; -o-transform: translateX(2000px);} 80% {opacity: 1; -o-transform: translateX(-20px);} 100% {-o-transform: translateX(0);}}
+@keyframes alertShow{  0% {opacity: 0;-webkit-transform: translateX(2000px);-moz-transform: translateX(2000px);-ms-transform: translateX(2000px);transform: translateX(2000px);} 80% {opacity: 1;-webkit-transform: translateX(-20px);-moz-transform: translateX(-20px);-ms-transform: translateX(-20px);transform: translateX(-20px);} 100% {-webkit-transform: translateX(0);-moz-transform: translateX(0);-ms-transform: translateX(0);transform: translateX(0);};
 }
