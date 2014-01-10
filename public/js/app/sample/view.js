@@ -36,9 +36,7 @@ var SampleView = Backbone.View.extend({
 
         //console.log(this.model.attributes);
         this.$tabHeader.find('button.close').click(_.bind(this.remove, this));
-        this.$tabHeader.find('button.left').click(_.bind(this.move_left, this));
-        this.$tabHeader.find('button.right').click(_.bind(this.move_right, this));
-        this.$tabHeader.draggable({ axis: "x", drag: _.bind(this.on_drag, this)});
+        //this.$tabHeader.draggable({ axis: "x", drag: _.bind(this.on_drag, this)});
         this.j.colorpicker.colorPicker("init", {opacity: 1, position: "top"}).colorPicker("setRGBA", this.model.get("overlay"));
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
@@ -208,15 +206,6 @@ var SampleView = Backbone.View.extend({
     },
     color_changed: function (ev) {
         this.model.set("overlay", $(ev.target).colorPicker("getRGBA"));
-    },
-    move_left: function(ev){
-        console.log("move left");
-    },
-    move_right: function(ev){
-        console.log("move right");
-    },
-    on_drag: function(ev, ui){
-        console.log(ev, ui);
     }
 });
 

@@ -132,9 +132,11 @@ input[type="checkbox"], input[type="radio"] {
     .type-one:after {
       content: '1';
     }
+
     .type-random:after {
       content: 'Rnd';
     }
+
     .type-circle:after {
       content: 'O';
     }
@@ -173,11 +175,12 @@ input:not([type]), input[type='text'] {
   right: -30px;
   bottom: 0;
   .box-shadow(0 0 25px rgba(0, 0, 0, 0.4));
+  .transition-property(opacity,bottom);
   .transition-duration(.5s);
   .backface-visibility(hidden);
   height: auto;
   &.flow-down {
-    bottom: -274px; //hide panel
+    bottom: -320px; //hide panel
     .opacity(0.3);
   }
   .tab-wrapper {
@@ -190,6 +193,11 @@ input:not([type]), input[type='text'] {
         background-color: @tab_unactive;
         margin-right: @tab_spacing;
         margin-bottom: 0;
+        overflow: hidden;
+        .animation(addTab .5s);
+        //&.ui-sortable-helper{
+        //  .transition(none);
+        //}
         &:hover {
           background-color: @tab_unactive_hover;
         }
@@ -244,41 +252,18 @@ input:not([type]), input[type='text'] {
                   color: red;
                 }
               }
-              &.right, &.left {
-                .opacity(0.2);
-                font-size: 15px;
-                top: 20px;
-                &.right {
-                  right: 3px;
-                }
-                &.left {
-                  left: 3px;
-                }
-                &:hover {
-                  .opacity(1);
-                  color: @button_color;
-                }
-              }
             }
             &:hover button {
               visibility: visible;
             }
           }
         }
-        &:first-child {
-          button.left {
-            display: none;
-          }
-        }
-        &:nth-last-child(2) {
-          button.right {
-            display: none;
-          }
-        }
         &.ui-draggable-dragging {
           z-index: 1;
         }
         &.add-new-sample {
+          .animation(none);
+          overflow: visible;
           > a {
             width: @tab_height;
             &:hover {
@@ -321,9 +306,18 @@ input:not([type]), input[type='text'] {
       z-index: 1100;
       .tab-content {
         .user-select(none);
+        .transition(height .5s);
         padding: 0;
-        .tab-pane button.random {
-          font-size: 10px;
+        .tab-pane {
+          //.animation(addTabContent .5s);
+          //.transition(display 5s);
+          //.transform(translateX(1000px));
+          &.active{
+            //.transform(translateX(0));
+          }
+          button.random {
+            font-size: 10px;
+          }
         }
       }
       .canvas-options .download-image {
@@ -528,8 +522,7 @@ input:not([type]), input[type='text'] {
     font-size: 0;
     border: solid 1px #D6D6D6;
     .border-radius(5px);
-    .transition-duration(.3s);
-    .transition-timing-function(ease);
+    .transition(all .3s ease);
     img {
       max-width: 90%;
       height: auto;
@@ -712,3 +705,4 @@ h1, h2, h3, h4, h5, h6, input, label {
 .keyframes(~'tada, 0% {transform: scale(1);} 10%, 20% {transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);} 100% {transform: scale(1) rotate(0);}');
 .keyframes(~'alertHide,  0% {transform: translateX(0);} 20% {opacity: 1; transform: translateX(-20px);} 100% {opacity: 0; transform: translateX(2000px);}');
 .keyframes(~'alertShow,  0% {opacity: 0; transform: translateX(2000px);} 80% {opacity: 1; transform: translateX(-20px);} 100% {transform: translateX(0);}');
+.keyframes(~'addTab, from {width: 0px;} to {width: @{tab_width};}');
