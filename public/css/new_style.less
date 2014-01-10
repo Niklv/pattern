@@ -87,7 +87,7 @@
 //CHECKBOX AND RADIO DESIGN
 input[type="checkbox"], input[type="radio"] {
   display: none;
-  + label span {
+  + label span:first-child {
     display: inline-block;
     width: 19px;
     height: 19px;
@@ -111,8 +111,32 @@ input[type="checkbox"], input[type="radio"] {
     + label span:first-child {
       background: url(@check_box_img) -38px top no-repeat;
     }
-    &:checked + label span {
+    &:checked + label span:first-child {
       background: url(@check_box_img) -57px top no-repeat;
+    }
+  }
+}
+
+//TYPES RADIOS
+.radio-case {
+  .type-one:after {
+    content: 'One';
+  }
+  .type-random:after {
+    content: 'Random';
+  }
+  .type-circle:after {
+    content: 'Circle';
+  }
+  @media all and (max-width: 375px) {
+    .type-one:after {
+      content: '1';
+    }
+    .type-random:after {
+      content: 'Rnd';
+    }
+    .type-circle:after {
+      content: 'O';
     }
   }
 }
@@ -153,7 +177,7 @@ input:not([type]), input[type='text'] {
   .backface-visibility(hidden);
   height: auto;
   &.flow-down {
-    bottom: -240px; //hide panel
+    bottom: -274px; //hide panel
     .opacity(0.3);
   }
   .tab-wrapper {
@@ -351,7 +375,7 @@ input:not([type]), input[type='text'] {
       }
       .lock-origin-ratio {
         position: absolute;
-        top: 88px;
+        top: 56px;
         left: 30px;
         font-size: 10px;
         color: #dbdbdb;
@@ -572,6 +596,9 @@ input:not([type]), input[type='text'] {
     &.preview {
       .box-shadow(none);
     }
+    canvas {
+      pointer-events: none;
+    }
   }
 }
 
@@ -584,13 +611,15 @@ input:not([type]), input[type='text'] {
   pagging: 10px;
   z-index: 1;
   font-weight: lighter;
+  pointer-events: none;
   .auto-hidden-alert {
+    pointer-events: all;
     background-color: #fffc99;
     margin: 10px 10px 0px 10px;
     padding: 10px;
     .box-shadow(0 0 25px rgba(0, 0, 0, 0.4));
     .border-radius(3px);
-    min-width: 300px;
+    width: 250px;
     cursor: pointer;
     .animation-fill-mode(both);
     &.new {

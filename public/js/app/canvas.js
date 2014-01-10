@@ -90,7 +90,7 @@ var Canvas = Backbone.Model.extend({
         if (this.get("autoupdate")) {
             this.render_to_bg();
         } else {
-            this.canvas.renderAll(true);
+            this.canvas.renderAll(false);
         }
 
     },

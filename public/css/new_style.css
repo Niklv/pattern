@@ -47,8 +47,8 @@ input[type="checkbox"],
 input[type="radio"] {
   display: none;
 }
-input[type="checkbox"] + label span,
-input[type="radio"] + label span {
+input[type="checkbox"] + label span:first-child,
+input[type="radio"] + label span:first-child {
   display: inline-block;
   width: 19px;
   height: 19px;
@@ -74,9 +74,29 @@ input[type="checkbox"][type="radio"] + label span:first-child,
 input[type="radio"][type="radio"] + label span:first-child {
   background: url("/img/check_radio_sheet.png") -38px top no-repeat;
 }
-input[type="checkbox"][type="radio"]:checked + label span,
-input[type="radio"][type="radio"]:checked + label span {
+input[type="checkbox"][type="radio"]:checked + label span:first-child,
+input[type="radio"][type="radio"]:checked + label span:first-child {
   background: url("/img/check_radio_sheet.png") -57px top no-repeat;
+}
+.radio-case .type-one:after {
+  content: 'One';
+}
+.radio-case .type-random:after {
+  content: 'Random';
+}
+.radio-case .type-circle:after {
+  content: 'Circle';
+}
+@media all and (max-width: 375px) {
+  .radio-case .type-one:after {
+    content: '1';
+  }
+  .radio-case .type-random:after {
+    content: 'Rnd';
+  }
+  .radio-case .type-circle:after {
+    content: 'O';
+  }
 }
 input:not([type]),
 input[type='text'] {
@@ -118,7 +138,7 @@ input[type='text'] {
   height: auto;
 }
 .controls-section.flow-down {
-  bottom: -240px;
+  bottom: -274px;
   -webkit-opacity: 0.3;
   opacity: 0.3;
 }
@@ -336,7 +356,7 @@ input[type='text'] {
 }
 .controls-section .tab-wrapper .settings-wrapper .lock-origin-ratio {
   position: absolute;
-  top: 88px;
+  top: 56px;
   left: 30px;
   font-size: 10px;
   color: #dbdbdb;
@@ -581,6 +601,9 @@ input[type='text'] {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+#canvas-wrapper .canvas-container canvas {
+  pointer-events: none;
+}
 .alerts {
   position: absolute;
   top: 25px;
@@ -589,8 +612,10 @@ input[type='text'] {
   pagging: 10px;
   z-index: 1;
   font-weight: lighter;
+  pointer-events: none;
 }
 .alerts .auto-hidden-alert {
+  pointer-events: all;
   background-color: #fffc99;
   margin: 10px 10px 0px 10px;
   padding: 10px;
@@ -600,7 +625,7 @@ input[type='text'] {
   -webkit-background-clip: padding-box;
   border-radius: 3px;
   background-clip: padding-box;
-  min-width: 300px;
+  width: 250px;
   cursor: pointer;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;

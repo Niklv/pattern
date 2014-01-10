@@ -15,7 +15,7 @@ var Sample = Backbone.Model.extend({
         x: 0,
         y: 0,
         radius: 40,
-        lock_ratio: false,
+        lock_ratio: true,
         ratio: 1,
         range: {
             angle: {

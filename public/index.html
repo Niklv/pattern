@@ -19,7 +19,7 @@
 </div>
 <div class="alerts">
 </div>
-<canvas id="bg_canvas"></canvas>
+<!--<canvas id="bg_canvas"></canvas>-->
 <div id="canvas-wrapper">
     <canvas id="canvas"></canvas>
 </div>
@@ -203,22 +203,24 @@
     <h3 class="col-sm-12">Control panel
         <button type="button" class="random green-button">Random?</button>
     </h3>
-    <div class="col-sm-12 col-lg-6">
+    <div class="col-sm-12">
         <div class="control placement">
             <label>Type</label>
 
             <div class="radio-case">
                 <input id="one-<%=id%>" type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>"
-                       value="one"><label for="one-<%=id%>"><span></span>One</label>
+                       value="one"><label for="one-<%=id%>"><span></span><span class="type-one"></span></label>
                 <input id="random-<%=id%>" type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>"
                        value="random">
-                <label for="random-<%=id%>"><span></span>Random</label>
+                <label for="random-<%=id%>"><span></span><span class="type-random"></span></label>
                 <input id="circle-<%=id%>" type="radio" class="placement-of-obj" name="placement-of-obj-<%=id%>"
                        value="circle">
-                <label for="circle-<%=id%>"><span></span>Circle</label>
+                <label for="circle-<%=id%>"><span></span><span class="type-circle"></span></label>
             </div>
             <button class="green-button rndmz"><i class="glyphicon glyphicon-refresh"></i></button>
         </div>
+    </div>
+    <div class="col-sm-12 col-lg-6">
         <%= control({class_name:"opacity", name:"Opacity"}) %>
         <%= control({class_name:"width", name:"Width"}) %>
         <span class="lock-origin-ratio glyphicon glyphicon-lock"></span>
