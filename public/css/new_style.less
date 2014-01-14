@@ -175,220 +175,249 @@ input:not([type]), input[type='text'] {
   right: -30px;
   bottom: 0;
   .box-shadow(0 0 25px rgba(0, 0, 0, 0.4));
-  .transition-property(opacity,bottom);
+  .transition-property(opacity, bottom);
   .transition-duration(.5s);
   .backface-visibility(hidden);
   height: auto;
   &.flow-down {
-    bottom: -320px; //hide panel
+    //hide panel
+    bottom: -320px;
     .opacity(0.3);
   }
-  .tab-wrapper {
+  .bottom-section-wrapper {
     margin: 0 30px;
     //TABS
-    .sample-tabs {
-      border-bottom: none;
+    .tab-header-wrapper {
       background-color: @tab_space_bg;
-      > li {
-        background-color: @tab_unactive;
-        margin-right: @tab_spacing;
-        margin-bottom: 0;
-        overflow: hidden;
-        .animation(addTab .5s);
-        //&.ui-sortable-helper{
-        //  .transition(none);
-        //}
-        &:hover {
-          background-color: @tab_unactive_hover;
-        }
-        &.active {
-          > a, > a:hover, > a:focus {
-            border: none;
-            background-color: @tab_active;
-          }
-        }
-        > a {
-          .size(@tab_width, @tab_height);
-          .border-radius(0);
-          margin-right: 0;
-          padding: 0;
-          border-radius: 0;
-          border: none;
-          outline: none;
-          &:hover {
-            background-color: @tab_unactive_hover;
-          }
-          > div {
-            min-width: 100%;
-            max-width: 100%;
-            height: 100%;
-            text-align: center;
-            line-height: @tab_height;
-            > img {
-              padding: 5px 11px;
-              max-height: 100%;
-              max-width: 100%;
-              height: auto;
-              box-sizing: border-box;
-              pointer-events: none;
-            }
-            button, &:hover button {
-              position: absolute;
-              text-shadow: none;
-              visibility: hidden;
-              outline: none;
-              padding: 0;
-              cursor: pointer;
-              background: rgba(0, 0, 0, 0);
-              border: 0;
-              -webkit-appearance: none;
-              font-weight: bold;
-              line-height: 1;
-              color: #000;
-              &.close {
-                top: -1px;
-                right: 3px;
-                &:hover {
-                  color: red;
-                }
-              }
-            }
-            &:hover button {
-              visibility: visible;
-            }
-          }
-        }
-        &.ui-draggable-dragging {
-          z-index: 1;
-        }
-        &.add-new-sample {
-          .animation(none);
-          overflow: visible;
-          > a {
-            width: @tab_height;
-            &:hover {
-              cursor: pointer;
-            }
-            > div {
-              font-size: 60px;
-              font-family: sans-serif;
-              font-weight: 100;
-              padding-top: 1px;
-              color: @plus_color;
-            }
-          }
-          > .dropdown-menu {
-            left: -1px;
-            > li {
-              &.disabled {
-                cursor: default;
-                pointer-events: none;
-              }
-              > a {
-                outline: none;
-                cursor: pointer;
-              }
-            }
-          }
-        }
-      }
-    }
-    //TAB CONTENT
-    .settings-wrapper {
-      max-height: 320px;
-      height: 100%;
-      overflow-y: auto;
-      background: linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)) 0 100%;
-      background-attachment: local, local, scroll, scroll;
-      .background-size(100% 40px, 100% 40px, 100% 14px, 100% 14px);
-      background-repeat: no-repeat;
-      background-color: white;
-      z-index: 1100;
-      .tab-content {
-        .user-select(none);
-        .transition(height .5s);
-        padding: 0;
-        .tab-pane {
-          //.animation(addTabContent .5s);
-          //.transition(display 5s);
-          //.transform(translateX(1000px));
-          &.active{
-            //.transform(translateX(0));
-          }
-          button.random {
-            font-size: 10px;
-          }
-        }
-      }
-      .canvas-options .download-image {
-        margin-bottom: @controls_bot_margin;
-        .download {
-          width: 100%;
-          height: 34px;
-          outline: none;
-          &:hover {
-            .tada();
-          }
-        }
-      }
-      .control {
-        width: 100%;
-        height: @controls_row;
-        margin-bottom: @controls_bot_margin;
-        position: relative;
-        > label {
-          padding-top: 3px;
-          position: absolute;
-          top: 0px;
-          left: 0px;
-          margin: 0;
-        }
-        > div {
-          position: absolute;
-          left: @label_len + @slider_side_margin;
-          right: @input_len + @slider_side_margin;
-          &.radio-case {
-            padding-top: 4px;
-            label {
-              margin-right: 2px;
-            }
-          }
-        }
-        > input, > button {
-          position: absolute;
-          top: 0px;
-          right: 0px;
-          width: @input_len;
-          height: 100%;
-        }
-        &.grid {
-          > div {
-            right: 0;
-          }
-        }
-      }
-      .lock-origin-ratio {
-        position: absolute;
-        top: 56px;
-        left: 30px;
-        font-size: 10px;
-        color: #dbdbdb;
-        &:hover {
-          cursor: pointer;
-          color: #7d7d7d;
-        }
-        &.locked {
-          color: #3b3b3b;
-        }
-      }
-      .infolinks {
-        color: #bcbcbc;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-right: 15px;
+      .tabs-header {
+
         display: inline-block;
+        .tab-header();
+      }
+      .add-new-sample {
+        display: inline-block;
+        .add-button();
       }
     }
+    .settings-wrapper {
+      .tab-content();
+    }
+  }
+}
+
+//TABS HEADER
+.tab-header() {
+  max-height: @tab_height;
+  border-bottom: none;
+  float: left;
+  > li {
+    float:left;
+    background-color: @tab_unactive;
+    margin-right: @tab_spacing;
+    margin-bottom: 0;
+    overflow: hidden;
+    /*&.new {
+      .animation(newTab .5s);
+    }
+    &.ui-sortable-helper {
+
+    } */
+    &.ui-draggable-dragging {
+      z-index: 1;
+    }
+    .tab-header-content();
+  }
+}
+
+//CONTENT IN TABS HEADER
+.tab-header-content() {
+  &:hover {
+    background-color: @tab_unactive_hover;
+  }
+  &.active {
+    > a, > a:hover, > a:focus {
+      border: none;
+      background-color: @tab_active;
+    }
+  }
+  > a {
+    .size(@tab_width, @tab_height);
+    .border-radius(0);
+    margin-right: 0;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    outline: none;
+    &:hover {
+      background-color: @tab_unactive_hover;
+    }
+    > div {
+      min-width: 100%;
+      max-width: 100%;
+      height: 100%;
+      text-align: center;
+      line-height: @tab_height;
+      > img {
+        padding: 5px 11px;
+        max-height: 100%;
+        max-width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        pointer-events: none;
+      }
+      button, &:hover button {
+        position: absolute;
+        text-shadow: none;
+        visibility: hidden;
+        outline: none;
+        padding: 0;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0);
+        border: 0;
+        -webkit-appearance: none;
+        font-weight: bold;
+        line-height: 1;
+        color: #000;
+        &.close {
+          top: -1px;
+          right: 3px;
+          &:hover {
+            color: red;
+          }
+        }
+      }
+      &:hover button {
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.add-button() {
+  .size(@tab_height, @tab_height);
+  > a {
+    //width: @tab_height;
+    &:hover {
+      cursor: pointer;
+    }
+    > div {
+      font-size: 60px;
+      font-family: sans-serif;
+      font-weight: 100;
+      padding-top: 1px;
+      color: @plus_color;
+      line-height: @tab_height;
+    }
+  }
+  > .dropdown-menu {
+    left: -1px;
+    > li {
+      &.disabled {
+        cursor: default;
+        pointer-events: none;
+      }
+      > a {
+        outline: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+//TAB CONTENT
+.tab-content() {
+  max-height: 320px;
+  height: 100%;
+  overflow-y: auto;
+  background: linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)) 0 100%;
+  background-attachment: local, local, scroll, scroll;
+  .background-size(100% 40px, 100% 40px, 100% 14px, 100% 14px);
+  background-repeat: no-repeat;
+  background-color: white;
+  z-index: 1100;
+  .tab-content {
+    .user-select(none);
+    .transition(height .5s);
+    padding: 0;
+    .tab-pane {
+      //.animation(addTabContent .5s);
+      //.transition(display 5s);
+      //.transform(translateX(1000px));
+      &.active {
+        //.transform(translateX(0));
+      }
+      button.random {
+        font-size: 10px;
+      }
+    }
+  }
+  .canvas-options .download-image {
+    margin-bottom: @controls_bot_margin;
+    .download {
+      width: 100%;
+      height: 34px;
+      outline: none;
+      &:hover {
+        .animation(tada 1s both);
+      }
+    }
+  }
+  .control {
+    width: 100%;
+    height: @controls_row;
+    margin-bottom: @controls_bot_margin;
+    position: relative;
+    > label {
+      padding-top: 3px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      margin: 0;
+    }
+    > div {
+      position: absolute;
+      left: @label_len + @slider_side_margin;
+      right: @input_len + @slider_side_margin;
+      &.radio-case {
+        padding-top: 4px;
+        label {
+          margin-right: 2px;
+        }
+      }
+    }
+    > input, > button {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: @input_len;
+      height: 100%;
+    }
+    &.grid {
+      > div {
+        right: 0;
+      }
+    }
+  }
+  .lock-origin-ratio {
+    position: absolute;
+    top: 56px;
+    left: 30px;
+    font-size: 10px;
+    color: #dbdbdb;
+    &:hover {
+      cursor: pointer;
+      color: #7d7d7d;
+    }
+    &.locked {
+      color: #3b3b3b;
+    }
+  }
+  .infolinks {
+    color: #bcbcbc;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 15px;
+    display: inline-block;
   }
 }
 
@@ -649,13 +678,6 @@ h1, h2, h3, h4, h5, h6, input, label {
   z-index: -1;
 }
 
-//ANIMATION MIXIN
-.tada(@duration:1s) {
-  .animation-fill-mode(both);
-  .animation(tada);
-  .animation-duration(@duration);
-}
-
 //LOADING SPLASH
 #loading-hover {
   &.non-visible {
@@ -705,4 +727,4 @@ h1, h2, h3, h4, h5, h6, input, label {
 .keyframes(~'tada, 0% {transform: scale(1);} 10%, 20% {transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);} 100% {transform: scale(1) rotate(0);}');
 .keyframes(~'alertHide,  0% {transform: translateX(0);} 20% {opacity: 1; transform: translateX(-20px);} 100% {opacity: 0; transform: translateX(2000px);}');
 .keyframes(~'alertShow,  0% {opacity: 0; transform: translateX(2000px);} 80% {opacity: 1; transform: translateX(-20px);} 100% {transform: translateX(0);}');
-.keyframes(~'addTab, from {width: 0px;} to {width: @{tab_width};}');
+.keyframes(~'newTab, from {width: 0px;} to {width: @{tab_width};}');

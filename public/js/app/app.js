@@ -36,19 +36,19 @@ var APP = {
             });
         $('button.preview-button').mousedown(hide_controls_and_show_bg).mouseleave(show_controls).mouseup(show_controls);
         $('a[data-toggle="tab"]').on('shown.bs.tab', update_dropdown_caption);
-        $('.sample-tabs').sortable({
+        /*$('.sample-tabs').sortable({
             items: "> li",
             axis: 'x',
             cancel: '.add-new-sample',
             cursor: 'ew-resize',
             distance: 4,
-            //forceHelperSize: true,
-            //forcePlaceholderSize: true,
-            opacity: 0.5,
+            forceHelperSize: true,
+            forcePlaceholderSize: true,
+            opacity: 0.9,
             revert: true,
-            scroll: false
+            scroll: true
 
-        });
+        });*/
     },
     loading: function(isVisible){
         if(isVisible)

@@ -3,6 +3,13 @@ function test() {
     addTestSample("sample_1_2.png");
     addTestSample("sample_1_3.png");
     addTestSample("sample_1_4.png");
+    addTestSample("sample_1_5.png");
+    addTestSample("sample_1_6.png");
+    addTestSample("sample_1_7.png");
+    addTestSample("sample_1_8.png");
+    addTestSample("sample_1_9.png");
+    addTestSample("sample_1_10.png");
+    addTestSample("sample_1_11.png");
 }
 
 function addTestSample(name) {

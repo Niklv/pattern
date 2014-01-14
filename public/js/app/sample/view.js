@@ -128,7 +128,7 @@ var SampleView = Backbone.View.extend({
         //1 create tab+
         //$('.controls-section .sample-tabs .active').removeClass('active').removeClass('in');
         //$('.controls-section .tab-content .active').removeClass('active');
-        $('.controls-section .add-new-sample').before(this.$tabHeader);
+        $('.controls-section .tabs-header').append(this.$tabHeader);
         $('.controls-section .tab-content').append(this.$el);
         this.$tabHeader.find('a').tab('show');
 
