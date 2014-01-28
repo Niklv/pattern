@@ -129,4 +129,19 @@ function add_drawing_mode_sample() {
 
 }
 
+function recalculate_tab_width(onRemove) {
+
+    var st = $('.sample-tabs');
+    var lis = st.find('> li');
+    var n = lis.length;
+    lis.each(function (i) {
+        console.log(onRemove, i, n - 1);
+        if (onRemove)
+            $(this).css('max-width', 100 / (n - 1) + "%");
+        else
+            $(this).css('max-width', 100 / n + "%");
+
+    });
+}
+
 

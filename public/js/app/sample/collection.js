@@ -12,7 +12,9 @@ var SampleCollection = Backbone.Collection.extend({
             model.view = view;
             view.render().init_controls().place();
             APP.Canvas.update();
+            recalculate_tab_width();
         }, this));
+
     },
     swap: function (a, b) {
         this.models[a] = this.models.splice(b, 1, this.models[a])[0];

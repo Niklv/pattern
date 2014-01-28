@@ -189,8 +189,8 @@ input:not([type]), input[type='text'] {
     //TABS
     .tab-header-wrapper {
       background-color: @tab_space_bg;
+      height: @tab_height;
       .tabs-header {
-
         display: inline-block;
         .tab-header();
       }
@@ -211,9 +211,14 @@ input:not([type]), input[type='text'] {
   border-bottom: none;
   float: left;
   > li {
-    float:left;
+    .transition(max-width 1s);
+    &.onRemove {
+      max-width: 0px !important;
+      //.animation(removeTab .5s);
+    }
+    float: left;
     background-color: @tab_unactive;
-    margin-right: @tab_spacing;
+    //margin-right: @tab_spacing;
     margin-bottom: 0;
     overflow: hidden;
     /*&.new {
@@ -242,6 +247,7 @@ input:not([type]), input[type='text'] {
   }
   > a {
     .size(@tab_width, @tab_height);
+    max-width: 100%;
     .border-radius(0);
     margin-right: 0;
     padding: 0;
@@ -256,7 +262,7 @@ input:not([type]), input[type='text'] {
       max-width: 100%;
       height: 100%;
       text-align: center;
-      line-height: @tab_height;
+      //line-height: @tab_height;
       > img {
         padding: 5px 11px;
         max-height: 100%;
@@ -296,17 +302,42 @@ input:not([type]), input[type='text'] {
 .add-button() {
   .size(@tab_height, @tab_height);
   > a {
-    //width: @tab_height;
+    width: @tab_height;
+    height: @tab_height;
+    display: inline-block;
     &:hover {
       cursor: pointer;
+      text-decoration: none;
+      background: @tab_unactive;
     }
+    @plus_padding: 7px;
+    @plus_height: @tab_height - 2*@plus_padding;
+    @plus_aspect: 0.15;
+    @plus_offset: (1 - @plus_aspect)/2;
     > div {
-      font-size: 60px;
-      font-family: sans-serif;
-      font-weight: 100;
-      padding-top: 1px;
-      color: @plus_color;
-      line-height: @tab_height;
+      //font-size: 60px;
+      //font-family: sans-serif;
+      //font-weight: 100;
+      //padding-top: 1px;
+      //color: @plus_color;
+      //line-height: @tab_height;
+      //.animation(loading 10s);
+
+      background: @plus_color;
+      width: @plus_aspect*@plus_height;
+      height: @plus_height;
+      position: relative;
+      margin: @plus_padding @plus_offset*@plus_height+@plus_padding @plus_padding @plus_offset*@plus_height+@plus_padding;
+
+      &:before {
+        background: @plus_color;
+        content: "";
+        width: @plus_height;
+        height: @plus_aspect*@plus_height;
+        position: absolute;
+        top: @plus_offset*@plus_height;
+        left: -@plus_offset*@plus_height;
+      }
     }
   }
   > .dropdown-menu {
@@ -728,3 +759,4 @@ h1, h2, h3, h4, h5, h6, input, label {
 .keyframes(~'alertHide,  0% {transform: translateX(0);} 20% {opacity: 1; transform: translateX(-20px);} 100% {opacity: 0; transform: translateX(2000px);}');
 .keyframes(~'alertShow,  0% {opacity: 0; transform: translateX(2000px);} 80% {opacity: 1; transform: translateX(-20px);} 100% {transform: translateX(0);}');
 .keyframes(~'newTab, from {width: 0px;} to {width: @{tab_width};}');
+.keyframes(~'removeTab, from {width: @{tab_width};} to {width: 0px;}');

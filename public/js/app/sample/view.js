@@ -186,9 +186,17 @@ var SampleView = Backbone.View.extend({
             this.$tabHeader.find('a').attr("data-toggle", null);
             $('.sample-tabs a[data-toggle="tab"]:first').tab('show');
         }
-        this.$tabHeader.animate({width: "0px"}, ANIM_TIME * 2, function () {
-            this.remove();
+
+        recalculate_tab_width(true);
+        this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function(){
+            console.log("TRANSITION END!");
+            $(this).remove();
         });
+        this.$tabHeader.addClass('onRemove');
+        /*this.$tabHeader.animate({width: "0px"}, ANIM_TIME * 20, function () {
+            recalculate_tab_width();
+            this.remove();
+        });*/
         this.$el.remove();
 
     },

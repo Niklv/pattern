@@ -36,7 +36,7 @@ var APP = {
             });
         $('button.preview-button').mousedown(hide_controls_and_show_bg).mouseleave(show_controls).mouseup(show_controls);
         $('a[data-toggle="tab"]').on('shown.bs.tab', update_dropdown_caption);
-        /*$('.sample-tabs').sortable({
+        $('.sample-tabs').sortable({
             items: "> li",
             axis: 'x',
             cancel: '.add-new-sample',
@@ -47,8 +47,8 @@ var APP = {
             opacity: 0.9,
             revert: true,
             scroll: true
-
-        });*/
+        });
+        $(window).resize(this.onResize).resize();
     },
     loading: function(isVisible){
         if(isVisible)
@@ -72,6 +72,11 @@ var APP = {
         }, alert);
         alert.click(nice_hide);
         setTimeout(nice_hide, 5000);
+    },
+    onResize: function(){
+        var st = $('.sample-tabs');
+        var plus = $('.add-new-sample');
+        st.css('max-width', $(window).width() - plus.width() + "px");
     }
 };
 
