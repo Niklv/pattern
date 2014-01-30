@@ -74,9 +74,10 @@ var APP = {
         setTimeout(nice_hide, 5000);
     },
     onResize: function(){
-        var st = $('.sample-tabs');
-        var plus = $('.add-new-sample');
-        st.css('max-width', $(window).width() - plus.width() + "px");
+        recalculate_tab_width();
+        //var st = $('.sample-tabs');
+        //var plus = $('.add-new-sample');
+        //st.css('max-width', $(window).width() - plus.width() + "px");
     }
 };
 

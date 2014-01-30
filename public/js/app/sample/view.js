@@ -123,23 +123,20 @@ var SampleView = Backbone.View.extend({
         }
     },
     place: function () {
-        //this.$el.hide();
-        //$('.control-panel > .row:first-child').after(this.$el);
         //1 create tab+
-        //$('.controls-section .sample-tabs .active').removeClass('active').removeClass('in');
-        //$('.controls-section .tab-content .active').removeClass('active');
         $('.controls-section .tabs-header').append(this.$tabHeader);
-        $('.controls-section .tab-content').append(this.$el);
-        this.$tabHeader.find('a').tab('show');
-
-        //this.$tabHeader.find('a').tab('show');
         //2 paste tab content
-
+        $('.controls-section .tab-content').append(this.$el);
         //3 focus to tab
-
-        //this.$el.slideDown(ANIM_TIME);
-        //$('li.active').removeClass('active');
-        //this.$tabHeader.addClass('active');
+        this.$tabHeader.find('a').tab('show');
+        //Animation
+        this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function(){
+            $(this).unbind();
+            console.log("TRANSITION END!");
+            $(this).removeClass("onAdd");
+            $(this).css("opacity", 1);
+        });
+        this.$tabHeader.addClass("onAdd");
         return this;
     },
     render: function () {
@@ -187,10 +184,12 @@ var SampleView = Backbone.View.extend({
             $('.sample-tabs a[data-toggle="tab"]:first').tab('show');
         }
 
-        recalculate_tab_width(true);
+        //recalculate_tab_width(true);
         this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function(){
             console.log("TRANSITION END!");
+
             $(this).remove();
+            recalculate_tab_width();
         });
         this.$tabHeader.addClass('onRemove');
         /*this.$tabHeader.animate({width: "0px"}, ANIM_TIME * 20, function () {

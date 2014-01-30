@@ -192,10 +192,12 @@ input:not([type]), input[type='text'] {
       height: @tab_height;
       .tabs-header {
         display: inline-block;
+        padding-right: @tab_height;
         .tab-header();
       }
       .add-new-sample {
         display: inline-block;
+        margin-left: -@tab_height;
         .add-button();
       }
     }
@@ -207,23 +209,27 @@ input:not([type]), input[type='text'] {
 
 //TABS HEADER
 .tab-header() {
-  max-height: @tab_height;
+  overflow: hidden;
+  height: @tab_height;
   border-bottom: none;
   float: left;
   > li {
-    .transition(max-width 1s);
+    .transform-origin(0 0);
+    //.transition(width 2s);
+    &.onAdd {
+      .animation(addTab .5s);
+    }
     &.onRemove {
-      max-width: 0px !important;
-      //.animation(removeTab .5s);
+      //.transition(width 2s);
+      //width:10px;
+
+      .animation(removeTab .5s);
     }
     float: left;
     background-color: @tab_unactive;
-    //margin-right: @tab_spacing;
     margin-bottom: 0;
     overflow: hidden;
-    /*&.new {
-      .animation(newTab .5s);
-    }
+    /*
     &.ui-sortable-helper {
 
     } */
@@ -300,7 +306,9 @@ input:not([type]), input[type='text'] {
 }
 
 .add-button() {
+  .transition(all 2s);
   .size(@tab_height, @tab_height);
+  float: left;
   > a {
     width: @tab_height;
     height: @tab_height;
@@ -754,9 +762,9 @@ h1, h2, h3, h4, h5, h6, input, label {
   .user-select(none);
 }
 
-.keyframes(~'loading, 0% {.transform: rotate(0deg);} 100% {transform: rotate(360deg);}');
+.keyframes(~'loading, 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);}');
 .keyframes(~'tada, 0% {transform: scale(1);} 10%, 20% {transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);} 100% {transform: scale(1) rotate(0);}');
 .keyframes(~'alertHide,  0% {transform: translateX(0);} 20% {opacity: 1; transform: translateX(-20px);} 100% {opacity: 0; transform: translateX(2000px);}');
 .keyframes(~'alertShow,  0% {opacity: 0; transform: translateX(2000px);} 80% {opacity: 1; transform: translateX(-20px);} 100% {transform: translateX(0);}');
-.keyframes(~'newTab, from {width: 0px;} to {width: @{tab_width};}');
-.keyframes(~'removeTab, from {width: @{tab_width};} to {width: 0px;}');
+.keyframes(~'addTab, 0% {width: 0;transform: translateY(2000px);} 30%{width: @{tab_width}; transform: translateY(@{tab_height});} 100% {transform: translateY(0);}');
+.keyframes(~'removeTab, 0% {transform: translateY(0px);} 70%{width: @{tab_width}; transform: translateY(@{tab_height});} 100% {transform: translateY(2000px);width: 0;}');

@@ -153,26 +153,31 @@ input[type='text'] {
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header {
   display: inline-block;
-  max-height: 50px;
+  padding-right: 50px;
+  overflow: hidden;
+  height: 50px;
   border-bottom: none;
   float: left;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li {
-  -webkit-transition: max-width 1s;
-  transition: max-width 1s;
+  -webkit-transform-origin: 0% 0%;
+  transform-origin: 0% 0%;
   float: left;
   background-color: #bdc3c7;
   margin-bottom: 0;
   overflow: hidden;
-  /*&.new {
-      .animation(newTab .5s);
-    }
+  /*
     &.ui-sortable-helper {
 
     } */
 }
+.controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li.onAdd {
+  -webkit-animation: addTab 0.5s;
+  animation: addTab 0.5s;
+}
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li.onRemove {
-  max-width: 0px !important;
+  -webkit-animation: removeTab 0.5s;
+  animation: removeTab 0.5s;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li.ui-draggable-dragging {
   z-index: 1;
@@ -246,8 +251,12 @@ input[type='text'] {
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample {
   display: inline-block;
+  margin-left: -50px;
+  -webkit-transition: all 2s;
+  transition: all 2s;
   width: 50px;
   height: 50px;
+  float: left;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample > a {
   width: 50px;
@@ -719,10 +728,10 @@ label {
 }
 lesshat-selector {
   -lh-property: 0; } 
-@-webkit-keyframes loading{ 0% {.-webkit-transform: rotate(0deg);} 100% {-webkit-transform: rotate(360deg);}}
-@-moz-keyframes loading{ 0% {.-moz-transform: rotate(0deg);} 100% {-moz-transform: rotate(360deg);}}
-@-o-keyframes loading{ 0% {.-o-transform: rotate(0deg);} 100% {-o-transform: rotate(360deg);}}
-@keyframes loading{ 0% {.-webkit-transform: rotate(0deg);.-moz-transform: rotate(0deg);.-ms-transform: rotate(0deg);.transform: rotate(0deg);} 100% {-webkit-transform: rotate(360deg);-moz-transform: rotate(360deg);-ms-transform: rotate(360deg);transform: rotate(360deg);};
+@-webkit-keyframes loading{ 0% {-webkit-transform: rotate(0deg);} 100% {-webkit-transform: rotate(360deg);}}
+@-moz-keyframes loading{ 0% {-moz-transform: rotate(0deg);} 100% {-moz-transform: rotate(360deg);}}
+@-o-keyframes loading{ 0% {-o-transform: rotate(0deg);} 100% {-o-transform: rotate(360deg);}}
+@keyframes loading{ 0% {-webkit-transform: rotate(0deg);-moz-transform: rotate(0deg);-ms-transform: rotate(0deg);transform: rotate(0deg);} 100% {-webkit-transform: rotate(360deg);-moz-transform: rotate(360deg);-ms-transform: rotate(360deg);transform: rotate(360deg);};
 }
 lesshat-selector {
   -lh-property: 0; } 
@@ -747,15 +756,15 @@ lesshat-selector {
 }
 lesshat-selector {
   -lh-property: 0; } 
-@-webkit-keyframes newTab{ from {width: 0px;} to {width: 135px;}}
-@-moz-keyframes newTab{ from {width: 0px;} to {width: 135px;}}
-@-o-keyframes newTab{ from {width: 0px;} to {width: 135px;}}
-@keyframes newTab{ from {width: 0px;} to {width: 135px;};
+@-webkit-keyframes addTab{ 0% {width: 0;-webkit-transform: translateY(2000px);} 30%{width: 135px; -webkit-transform: translateY(50px);} 100% {-webkit-transform: translateY(0);}}
+@-moz-keyframes addTab{ 0% {width: 0;-moz-transform: translateY(2000px);} 30%{width: 135px; -moz-transform: translateY(50px);} 100% {-moz-transform: translateY(0);}}
+@-o-keyframes addTab{ 0% {width: 0;-o-transform: translateY(2000px);} 30%{width: 135px; -o-transform: translateY(50px);} 100% {-o-transform: translateY(0);}}
+@keyframes addTab{ 0% {width: 0;-webkit-transform: translateY(2000px);-moz-transform: translateY(2000px);-ms-transform: translateY(2000px);transform: translateY(2000px);} 30%{width: 135px;-webkit-transform: translateY(50px);-moz-transform: translateY(50px);-ms-transform: translateY(50px);transform: translateY(50px);} 100% {-webkit-transform: translateY(0);-moz-transform: translateY(0);-ms-transform: translateY(0);transform: translateY(0);};
 }
 lesshat-selector {
   -lh-property: 0; } 
-@-webkit-keyframes removeTab{ from {width: 135px;} to {width: 0px;}}
-@-moz-keyframes removeTab{ from {width: 135px;} to {width: 0px;}}
-@-o-keyframes removeTab{ from {width: 135px;} to {width: 0px;}}
-@keyframes removeTab{ from {width: 135px;} to {width: 0px;};
+@-webkit-keyframes removeTab{ 0% {-webkit-transform: translateY(0px);} 70%{width: 135px; -webkit-transform: translateY(50px);} 100% {-webkit-transform: translateY(2000px);width: 0;}}
+@-moz-keyframes removeTab{ 0% {-moz-transform: translateY(0px);} 70%{width: 135px; -moz-transform: translateY(50px);} 100% {-moz-transform: translateY(2000px);width: 0;}}
+@-o-keyframes removeTab{ 0% {-o-transform: translateY(0px);} 70%{width: 135px; -o-transform: translateY(50px);} 100% {-o-transform: translateY(2000px);width: 0;}}
+@keyframes removeTab{ 0% {-webkit-transform: translateY(0px);-moz-transform: translateY(0px);-ms-transform: translateY(0px);transform: translateY(0px);} 70%{width: 135px;-webkit-transform: translateY(50px);-moz-transform: translateY(50px);-ms-transform: translateY(50px);transform: translateY(50px);} 100% {-webkit-transform: translateY(2000px);-moz-transform: translateY(2000px);-ms-transform: translateY(2000px);transform: translateY(2000px);width: 0;};
 }

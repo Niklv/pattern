@@ -130,16 +130,16 @@ function add_drawing_mode_sample() {
 }
 
 function recalculate_tab_width(onRemove) {
-
     var st = $('.sample-tabs');
+    var total = $(window).width() - $(".add-new-sample").width();
+    console.log(total);
     var lis = st.find('> li');
     var n = lis.length;
     lis.each(function (i) {
-        console.log(onRemove, i, n - 1);
         if (onRemove)
-            $(this).css('max-width', 100 / (n - 1) + "%");
+            $(this).css('max-width', total / (n - 1) + "px");
         else
-            $(this).css('max-width', 100 / n + "%");
+            $(this).css('max-width', total / n + "px");
 
     });
 }
