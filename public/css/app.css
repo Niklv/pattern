@@ -101,9 +101,9 @@ input[type="radio"][type="radio"]:checked + label span:first-child {
 input:not([type]),
 input[type='text'] {
   border: none;
-  -webkit-border-radius: 0px;
+  -webkit-border-radius: 0;
   -webkit-background-clip: padding-box;
-  border-radius: 0px;
+  border-radius: 0;
   background-clip: padding-box;
   background-color: #ecf0f1;
   outline: none;
@@ -113,9 +113,9 @@ input[type='text'] {
 .green-button {
   background-color: #2ecc71;
   background-image: none;
-  -webkit-border-radius: 0px;
+  -webkit-border-radius: 0;
   -webkit-background-clip: padding-box;
-  border-radius: 0px;
+  border-radius: 0;
   background-clip: padding-box;
   border: none;
   color: white;
@@ -129,8 +129,8 @@ input[type='text'] {
   left: -30px;
   right: -30px;
   bottom: 0;
-  -webkit-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   -webkit-transition-property: opacity, bottom;
   transition-property: opacity, bottom;
   -webkit-transition-duration: 0.5s;
@@ -160,8 +160,8 @@ input[type='text'] {
   float: left;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li {
-  -webkit-transform-origin: 0% 0%;
-  transform-origin: 0% 0%;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
   float: left;
   background-color: #bdc3c7;
   margin-bottom: 0;
@@ -195,9 +195,8 @@ input[type='text'] {
   width: 135px;
   height: 50px;
   max-width: 100%;
-  -webkit-border-radius: 0px;
+  -webkit-border-radius: 0;
   -webkit-background-clip: padding-box;
-  border-radius: 0px;
   background-clip: padding-box;
   margin-right: 0;
   padding: 0;
@@ -519,8 +518,8 @@ input[type='text'] {
   vertical-align: middle;
 }
 .box .innerContent:hover {
-  -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
   border-radius: 5px;
@@ -594,12 +593,12 @@ input[type='text'] {
   display: block;
   width: 300px;
   height: 300px;
-  -webkit-transform-origin: 50% 0%;
-  transform-origin: 50% 0%;
+  -webkit-transform-origin: 50% 0;
+  transform-origin: 50% 0;
 }
 #canvas-wrapper .canvas-container {
-  -webkit-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
   -webkit-transition-duration: 0.5s;
   transition-duration: 0.5s;
   -webkit-transition-property: -webkit-box-shadow;
@@ -627,8 +626,8 @@ input[type='text'] {
   background-color: #fffc99;
   margin: 10px 10px 0px 10px;
   padding: 10px;
-  -webkit-box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   -webkit-border-radius: 3px;
   -webkit-background-clip: padding-box;
   border-radius: 3px;
