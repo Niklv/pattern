@@ -39,14 +39,32 @@ var APP = {
         $('.sample-tabs').sortable({
             items: "> li",
             axis: 'x',
-            cancel: '.add-new-sample',
-            cursor: 'ew-resize',
-            distance: 4,
-            forceHelperSize: true,
-            forcePlaceholderSize: true,
-            opacity: 0.9,
-            revert: true,
-            scroll: true
+            containment: "parent",
+            //cursor: 'ew-resize',
+            delay: 100,
+            sort: function (event, ui) {
+                var that = $(this),
+                    w = ui.helper.outerWidth();
+                that.children().each(function () {
+                    if ($(this).hasClass('ui-sortable-helper') || $(this).hasClass('ui-sortable-placeholder'))
+                        return true;
+                    // If overlap is more than half of the dragged item
+                    var dist = Math.abs(ui.position.left - $(this).position().left),
+                        before = ui.position.left > $(this).position().left;
+                    if ((w - dist) > (w / 2) && (dist < w)) {
+                        if (before)
+                            $('.ui-sortable-placeholder', that).insertBefore($(this));
+                        else
+                            $('.ui-sortable-placeholder', that).insertAfter($(this));
+                        return false;
+                    }
+                });
+            },
+            distance: 2,
+            //forceHelperSize: true,
+            //forcePlaceholderSize: true,
+            revert: 100,
+            scroll: false
         });
         $(window).resize(this.onResize).resize();
     },
