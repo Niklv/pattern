@@ -132,7 +132,6 @@ var SampleView = Backbone.View.extend({
         //Animation
         this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function(){
             $(this).unbind();
-            console.log("TRANSITION END!");
             $(this).removeClass("onAdd");
             $(this).css("opacity", 1);
         });
@@ -186,8 +185,6 @@ var SampleView = Backbone.View.extend({
 
         //recalculate_tab_width(true);
         this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function(){
-            console.log("TRANSITION END!");
-
             $(this).remove();
             recalculate_tab_width();
         });

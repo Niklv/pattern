@@ -16,6 +16,15 @@ var SampleCollection = Backbone.Collection.extend({
         }, this));
 
     },
+    move: function (oldIndex, newIndex) {
+        var model = this.at(oldIndex);
+        this.remove(model, {silent:true});
+        this.add(model, {at: newIndex, silent:true});
+        this.each(function (sample, i) {
+            sample.set("layer", i);
+        });
+        APP.Canvas.update();
+    },
     swap: function (a, b) {
         this.models[a] = this.models.splice(b, 1, this.models[a])[0];
         this.models[a].set("layer", a);

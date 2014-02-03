@@ -60,10 +60,21 @@ var APP = {
                     }
                 });
             },
+            start: function(event, ui) {
+                $(this).attr('data-previndex', ui.item.index());
+            },
+            stop: function (event, ui) {
+                var newIndex = ui.item.index();
+                var oldIndex = parseInt($(this).attr('data-previndex'));
+                $(this).removeAttr('data-previndex');
+                if(oldIndex!=newIndex){
+                    APP.Samples.move(oldIndex, newIndex);
+                }
+            },
             distance: 2,
+            revert: 100,
             //forceHelperSize: true,
             //forcePlaceholderSize: true,
-            revert: 100,
             scroll: false
         });
         $(window).resize(this.onResize).resize();
