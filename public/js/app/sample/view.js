@@ -133,7 +133,7 @@ var SampleView = Backbone.View.extend({
         this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function(){
             $(this).unbind();
             $(this).removeClass("onAdd");
-            $(this).css("opacity", 1);
+            dropdown_add_align();
         });
         this.$tabHeader.addClass("onAdd");
         return this;
@@ -187,6 +187,7 @@ var SampleView = Backbone.View.extend({
         this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function(){
             $(this).remove();
             recalculate_tab_width();
+            dropdown_add_align();
         });
         this.$tabHeader.addClass('onRemove');
         /*this.$tabHeader.animate({width: "0px"}, ANIM_TIME * 20, function () {

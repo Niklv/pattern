@@ -104,6 +104,7 @@ var APP = {
     },
     onResize: function(){
         recalculate_tab_width();
+        dropdown_add_align();
         //var st = $('.sample-tabs');
         //var plus = $('.add-new-sample');
         //st.css('max-width', $(window).width() - plus.width() + "px");

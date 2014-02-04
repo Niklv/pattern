@@ -302,9 +302,16 @@ input:not([type]), input[type='text'] {
 }
 
 .add-button() {
-  .transition(all 2s);
+  //.transition(all 2s);
   .size(@tab_height, @tab_height);
   float: left;
+  position: inherit;
+  &.open{
+    background-color: @tab_active;
+    > a:hover {
+      background: @tab_active;
+    }
+  }
   > a {
     width: @tab_height;
     height: @tab_height;
@@ -345,7 +352,16 @@ input:not([type]), input[type='text'] {
     }
   }
   > .dropdown-menu {
-    left: -1px;
+    .box-shadow(0 6px 12px rgba(0, 0, 0, 0.175));
+    border-radius: 0;
+    top: 50px;
+    border: none;
+    margin: 0;
+    padding: 0;
+    left: initial;
+    &.sticky {
+      right: 30px;
+    }
     > li {
       &.disabled {
         cursor: default;

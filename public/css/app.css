@@ -251,11 +251,16 @@ input[type='text'] {
 .controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample {
   display: inline-block;
   margin-left: -50px;
-  -webkit-transition: all 2s;
-  transition: all 2s;
   width: 50px;
   height: 50px;
   float: left;
+  position: inherit;
+}
+.controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample.open {
+  background-color: #ffffff;
+}
+.controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample.open > a:hover {
+  background: #ffffff;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample > a {
   width: 50px;
@@ -284,7 +289,17 @@ input[type='text'] {
   left: -15.299999999999999px;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample > .dropdown-menu {
-  left: -1px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  border-radius: 0;
+  top: 50px;
+  border: none;
+  margin: 0;
+  padding: 0;
+  left: initial;
+}
+.controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample > .dropdown-menu.sticky {
+  right: 30px;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample > .dropdown-menu > li.disabled {
   cursor: default;
