@@ -1,0 +1,18 @@
+.color-picker {
+  position: relative;
+}
+.color-picker input {
+  float: left;
+}
+.color-picker .picker,
+.color-picker .op-picker {
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  width: 100px;
+  height: 0px;
+  background-color: red;
+  position: absolute;
+}
+.color-picker .vis {
+  height: 100px;
+}

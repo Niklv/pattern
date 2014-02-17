@@ -1,6 +1,25 @@
+//LESSHAT properties
+@import "../bower/lesshat/build/lesshat.less";
+@w3c: true;
+@webkit: true;
+@moz: false;
+@opera: false;
+@ms: false;
+@oldWebkit: false;
+
 .color-picker {
   position: relative;
   input {
     float: left;
+  }
+  .picker, .op-picker{
+    .transition(all 1s);
+    width:100px;
+    height:0px;
+    background-color: red;
+    position: absolute;
+  }
+  .vis{
+    height:100px;
   }
 }
