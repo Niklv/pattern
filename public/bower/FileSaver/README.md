@@ -29,8 +29,11 @@ Supported Browsers
 
 Feature detection is possible:
 
-    try { var isFileSaverSupported = !!new Blob(); } catch(e){}
-
+```js
+try {
+    var isFileSaverSupported = !!new Blob();
+} catch (e) {}
+```
 
 ### IE < 10
 
@@ -47,26 +50,32 @@ press <kbd>⌘</kbd>+<kbd>S</kbd> to save the file after it is opened. Further i
 Syntax
 ------
 
-    FileSaver saveAs(in Blob data, in DOMString filename)
+```js
+FileSaver saveAs(in Blob data, in DOMString filename)
+```
 
 Examples
 --------
 
 ### Saving text
 
-    var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, "hello world.txt");
+```js
+var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+saveAs(blob, "hello world.txt");
+```
 
 The standard W3C File API [`Blob`][3] interface is not available in all browsers.
 [Blob.js][4] is a cross-browser `Blob` implementation that solves this.
 
 ### Saving a canvas
 
-    var canvas = document.getElementById("my-canvas"), ctx = canvas.getContext("2d");
-	// draw to canvas...
-    canvas.toBlob(function(blob) {
-        saveAs(blob, "pretty image.png");
-    });
+```js
+var canvas = document.getElementById("my-canvas"), ctx = canvas.getContext("2d");
+// draw to canvas...
+canvas.toBlob(function(blob) {
+    saveAs(blob, "pretty image.png");
+});
+```
 
 Note: The standard HTML5 `canvas.toBlob()` method is not available in all browsers.
 [canvas-toBlob.js][5] is a cross-browser `canvas.toBlob()` that polyfills this.
