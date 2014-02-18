@@ -7,14 +7,15 @@ var Colorpicker = Backbone.Model.extend({
             b: 0
         },
         hsv: {
-            h: 0,
-            s: 0,
-            v: 0
+            h: 0.5,
+            s: 0.5,
+            v: 0.5
         },
         hex: "#000000",
-        alpha: 0
+        alpha: 0.5
     },
     initialize: function (params, opt) {
+        this.hsv_changed();
         this.view = new ColorpickerView({
             model: this,
             el: opt.el,
