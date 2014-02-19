@@ -1,3 +1,5 @@
+var GLOBAL_COLORPICKER_EVENT_BUS = _.extend({}, Backbone.Events);
+
 var ColorpickerView = Backbone.View.extend({
     $: {
         color_input: null,
@@ -8,14 +10,18 @@ var ColorpickerView = Backbone.View.extend({
         alpha_col: null,
         result: null
     },
-    template_color: "<input class='hex-color' type='text'><div class='picker'><div class='map'><div class='pointer'></div></div><div class='column value'><div class='selector'></div></div></div></div>",
-    template_alpha: "<input class='alpha' type='text'><div class='op-picker'><div class='column alpha'><div class='alpha-gradient'><div class='selector'></div></div></div>",
+    messages: GLOBAL_COLORPICKER_EVENT_BUS,
+    template_color: "<input class='hex-color' type='text' maxlength='7'><div class='picker'><div class='map'><div class='pointer'></div></div><div class='column value'><div class='selector'></div></div></div></div>",
+    template_alpha: "<input class='alpha' type='text' maxlength='4'><div class='op-picker'><div class='column alpha'><div class='alpha-gradient'><div class='selector'></div></div></div>",
     template_result: "<div class='result-wrapper'><div class='color-result'></div></div>",
     events: {
         "click .hex-color": "show_picker",
+        "focus .hex-color": "show_picker",
+        "input .hex-color": "show_picker",
         "click .alpha": "show_op_picker",
-        "click .color-result": "show_picker",
-        "blur input": "hide_all"
+        "focus .alpha": "show_op_picker",
+        "input .alpha": "show_op_picker",
+        "click .color-result": "show_picker"
     },
     initialize: function () {
         var $color = $(this.template_color),
@@ -32,6 +38,7 @@ var ColorpickerView = Backbone.View.extend({
         this.$.result = $result.eq(0).find(".color-result");
         this.set_positions();
         this.update_colors();
+        this.messages.on("hide", _.bind(this.hide_all, this));
     },
     set_positions: function () {
         this.$.color_picker.css({
@@ -62,15 +69,76 @@ var ColorpickerView = Backbone.View.extend({
             "background-color": this.model.getRGBA_string()
         });
     },
-    show_picker: function () {
-        this.$.color_picker.toggleClass("vis");
-        console.log("show_picker");
+    show_picker: function (e) {
+        e.stopPropagation();
+        this.messages.trigger("hide");
+        this.$.color_picker.addClass("vis");
     },
-    show_op_picker: function () {
-        this.$.alpha_picker.toggleClass("vis");
+    hide_picker: function () {
+        this.$.color_picker.removeClass("vis");
+    },
+    show_op_picker: function (e) {
+        e.stopPropagation();
+        this.messages.trigger("hide");
+        this.$.alpha_picker.addClass("vis");
+    },
+    hide_op_picker: function () {
+        this.$.alpha_picker.removeClass("vis");
     },
     hide_all: function () {
-        this.$.color_picker.removeClass("vis");
-        this.$.alpha_picker.removeClass("vis");
+        this.hide_picker();
+        this.hide_op_picker();
+    },
+    bind_focus: function () {
+        $("body").addClass("unselectable");
+        this.$.color_input.blur();
+        this.$.alpha_input.blur();
+    },
+    unbind_focus: function () {
+        $("body").removeClass("unselectable");
+        //this.$.color_input.blur();
+        //this.$.alpha_input.blur();
+    },
+
+    pointerStartmove: function (e) {
+        $(document).on({
+            mouseover: this.pointerMove,
+            mousemove: this.pointerMove,
+            mouseup: this.pointerStopmove
+        });
+        this.bind_focus();
+        this.pointerMove(e);
+    },
+    pointerStopmove: function (e) {
+        this.pointerMove(e);
+        this.unbind_focus();
+        $(document).off({
+            mouseover: this.pointerMove,
+            mousemove: this.pointerMove,
+            mouseup: this.pointerStopmove
+        });
+    },
+    pointerMove: function (e) {
+        var maxH, maxW, offset, x, y;
+        e.stopPropagation();
+        e.preventDefault();
+        offset = this.map.offset();
+        maxW = this.map.width();
+        maxH = this.map.height();
+        x = (e.clientX - offset.left) * 100 / maxW;
+        y = (e.clientY - offset.top) * 100 / maxH;
+        x = Math.max(Math.min(100, x), 0);
+        y = Math.max(Math.min(100, y), 0);
+        this.pointer.css("top", y + "%");
+        this.pointer.css("left", x + "%");
+        //TODO: I STOP THERE!
+        //this.model.setHue(x);
+        //this.model.setValue(100 - y);
+        //this.model.recalculateColor();
     }
 });
+
+$(document).click(function () {
+    GLOBAL_COLORPICKER_EVENT_BUS.trigger("hide");
+});
+
