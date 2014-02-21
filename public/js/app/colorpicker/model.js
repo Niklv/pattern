@@ -21,14 +21,13 @@ var Colorpicker = Backbone.Model.extend({
             el: opt.el,
             alpha: opt.alpha
         });
-        console.log(opt);
         this.on("change:hsv", this.hsv_changed);
         this.on("change:rgb", this.rgb_changed);
         this.on("change:hex", this.hex_changed);
         this.on("change:alpha", this.alpha_changed);
     },
     hsv_changed: function () {
-        console.log("HSV CHANGED");
+        //console.log("HSV CHANGED");
         var hsv = this.get("hsv");
         var rgb = this.cnv.hsvtorgb(hsv);
         var hex = this.cnv.rgbtohex(rgb);
@@ -37,7 +36,7 @@ var Colorpicker = Backbone.Model.extend({
         this.trigger("change:color");
     },
     rgb_changed: function () {
-        console.log("RGB CHANGED");
+        //console.log("RGB CHANGED");
         var rgb = this.get("rgb");
         var hsv = this.cnv.rgbtohsv(rgb);
         var hex = this.cnv.rgbtohex(rgb);
@@ -46,7 +45,7 @@ var Colorpicker = Backbone.Model.extend({
         this.trigger("change:color");
     },
     hex_changed: function () {
-        console.log("HEX CHANGED");
+        //console.log("HEX CHANGED");
         var hex = this.get("hex");
         var rgb = this.cnv.hextorgb(hex);
         var hsv = this.cnv.rgbtohsv(rgb);
