@@ -31,15 +31,34 @@ body.unselectable {
     .transform-origin(0, 0);
     .transform(scaleY(0));
   }
-  .selector(){
-    @row_size: 3px;
+  .arrows() {
+    @arrow_w: 3px;
+    @arrow_h: 4px;
+    .arr-r {
+      border-top: @arrow_w solid transparent;
+      border-bottom: @arrow_w solid transparent;
+      border-right: @arrow_h solid @selector_color;
+      position: absolute;
+      top: -@arrow_h/2;
+      right: -@arrow_w;
+    }
+    .arr-l {
+      border-top: @arrow_w solid transparent;
+      border-bottom: @arrow_w solid transparent;
+      border-left: @arrow_h solid @selector_color;
+      position: absolute;
+      top: -@arrow_h/2;
+      left: -@arrow_w;
+    }
+  }
+  .selector() {
     position: absolute;
-    width: @color_col_w + @row_size*2;
-    left: -@row_size;
+    width: @color_col_w;
     height: 1px;
     background-color: @selector_color;
     .box-sizing(border-box);
     pointer-events: none;
+    .arrows();
   }
   position: relative;
   input {

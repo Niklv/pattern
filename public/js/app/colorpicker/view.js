@@ -15,21 +15,19 @@ var ColorpickerView = Backbone.View.extend({
         result: null
     },
     messages: GLOBAL_COLORPICKER_EVENT_BUS,
-    template_color: "<input class='hex-color' type='text' maxlength='7'><div class='picker'><div class='map'><div class='pointer'></div></div><div class='column value'><div class='selector'></div></div></div></div>",
-    template_alpha: "<input class='alpha' type='text' maxlength='4'><div class='op-picker'><div class='column alpha'><div class='alpha-gradient'><div class='selector'></div></div></div>",
+    template_color: "<input class='hex-color' type='text' maxlength='7'><div class='picker'><div class='map'><div class='pointer'></div></div><div class='column value'><div class='selector'><div class='arr-l'></div><div class='arr-r'></div></div></div></div></div>",
+    template_alpha: "<input class='alpha' type='text' maxlength='4'><div class='op-picker'><div class='column alpha'><div class='alpha-gradient'><div class='selector'><div class='arr-l'></div><div class='arr-r'></div></div></div></div>",
     template_result: "<div class='result-wrapper'><div class='color-result'></div></div>",
     events: {
         "focus .hex-color": "show_picker",
         "input .hex-color": "parseColor",
         "focus .alpha": "show_op_picker",
-        "input .alpha": "show_op_picker",
+        "input .alpha": "parseAlpha",
+        "keydown .alpha": "keydown_op_picker",
         "click .color-result": "show_picker",
         "mousedown .map": "pointerStartmove",
-        "mouseup .map": "pointerStopmove",
         "mousedown .value": "selectorStartmove",
-        "mouseup .value": "selectorStopmove",
-        "mousedown .alpha-gradient": "opselectorStartmove",
-        "mouseup .alpha-gradient": "opselectorStopmove"
+        "mousedown .alpha-gradient": "opselectorStartmove"
     },
     stop_propagation: function (e) {
         e.stopPropagation();
@@ -159,6 +157,7 @@ var ColorpickerView = Backbone.View.extend({
         });
         this.bind_focus();
         this.pointerMove(e);
+        this.show_picker(e);
     },
     pointerStopmove: function (e) {
         this.pointerMove(e);
@@ -196,6 +195,7 @@ var ColorpickerView = Backbone.View.extend({
         });
         this.bind_focus();
         this.selectorMove(e);
+        this.show_picker(e);
     },
     selectorStopmove: function (e) {
         this.selectorMove(e);
@@ -225,7 +225,7 @@ var ColorpickerView = Backbone.View.extend({
         });
         this.bind_focus();
         this.opselectorMove(e);
-
+        this.show_op_picker(e);
     },
 
     opselectorStopmove: function (e) {
@@ -272,17 +272,73 @@ var ColorpickerView = Backbone.View.extend({
             rgbarr.push(parseInt(color.substring(0, 2), 16));
             color = color.substring(2, color.length);
         }
-        this.model.attributes.rgb =  {r: rgbarr[0], g: rgbarr[1], b: rgbarr[2]};
+        this.model.attributes.rgb = {r: rgbarr[0], g: rgbarr[1], b: rgbarr[2]};
         this.model.trigger("change:rgb");
         this.update_controls();
         this.update_colors();
     },
-    parseAlpha: function(e){
+    parseAlpha: function (e) {
         this.show_op_picker(e);
+        var orig_val = this.$.alpha_input.val(),
+            val = orig_val.replace(/[^\+\-0-9\.]/g, "").match(/[\+\-]{0,1}[0-9]{0,}[\.]{0,1}[0-9]{0,}/)[0],
+            posOff = orig_val.length - val.length,
+            pos = this.$.alpha_input[0].selectionStart,
+            isLast = pos == orig_val.length,
+            num;
+        num = parseFloat(val);
+
+        if (isNaN(num)) {
+            this.$.alpha_input.val(val);
+        } else {
+            if (num < 0) {
+                num = 0;
+                this.$.alpha_input.val(num);
+            } else if (num > 1) {
+                num = 1;
+                this.$.alpha_input.val(num);
+            } else
+                this.$.alpha_input.val(val);
+        }
+        //restore cursor
+        if (isLast) {
+            this.$.alpha_input[0].selectionStart = this.$.alpha_input.val().length;
+            this.$.alpha_input[0].selectionEnd = this.$.alpha_input.val().length;
+        } else {
+            this.$.alpha_input[0].selectionStart = pos + posOff;
+            this.$.alpha_input[0].selectionEnd = pos + posOff;
+        }
+        if (isNaN(num))
+            num = 0;
+        this.model.set("alpha", num);
+        this.update_colors();
+        this.update_controls();
+    },
+    keydown_op_picker: function (e) {
+        var key = e.keyCode;
+        if (key != 38 && key != 40)
+            return;
+        var val = parseInt(Math.round(this.$.alpha_input.val() * 10000));
+        var step = 0.01 * 10000;
+        var ost = val % step;
+        if (key == 38 && (val > 0 || !ost)) //key up
+            val += step;
+        else if (key == 40 && (val < 0 || !ost)) //key down
+            val -= step;
+        val -= ost;
+        val /= 10000;
+        val = Math.max(val, 0);
+        val = Math.min(val, 1);
+        this.$.alpha_input.val(val);
+        this.$.alpha_input[0].selectionStart = this.$.alpha_input.val().length;
+        this.$.alpha_input[0].selectionEnd = this.$.alpha_input.val().length;
+        this.model.set("alpha", val);
+        this.update_colors();
+        this.update_controls();
     }
 });
 
 $(document).click(function () {
+    console.log('GLOBAL_COLORPICKER_EVENT_BUS.trigger("hide");');
     GLOBAL_COLORPICKER_EVENT_BUS.trigger("hide");
 });
 
