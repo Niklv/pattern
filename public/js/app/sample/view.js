@@ -6,6 +6,7 @@ var SampleView = Backbone.View.extend({
     template: _.template($("#part-settings-tmpl").remove().text()),
     tabHeaderTemplate: _.template($("#part-settings-tab-header-tmpl").remove().text()),
     controlTemplate: _.template($("#part-settings-control").remove().text()),
+    colorpicker: null,
     j: {
         x: null,
         y: null,
@@ -31,13 +32,16 @@ var SampleView = Backbone.View.extend({
         this.j.count = this.$el.find('.count');
         this.j.offset = this.$el.find('.offset');
         this.j.radius = this.$el.find('.radius');
-        this.j.colorpicker = this.$el.find('.colorpicker');
+        this.j.colorpicker = this.$el.find('.color-picker');
         this.j.origin_ratio = this.$el.find('.lock-origin-ratio');
 
         //console.log(this.model.attributes);
         this.$tabHeader.find('button.close').click(_.bind(this.remove, this));
         //this.$tabHeader.draggable({ axis: "x", drag: _.bind(this.on_drag, this)});
-        this.j.colorpicker.colorPicker("init", {opacity: 1, position: "top"}).colorPicker("setRGBA", this.model.get("overlay"));
+        //this.j.colorpicker.colorPicker("init", {opacity: 1, position: "top"}).colorPicker("setRGBA", this.model.get("overlay"));
+        this.colorpicker = new Colorpicker(null, {el: this.$el.find('.color-picker').eq(0), alpha: true});
+        this.colorpicker.setRGBA(this.model.get("overlay"));
+        this.colorpicker.on("change:color", _.bind(this.color_changed, this));
         this.$el.find('input.grid-of-obj[value=' + this.model.get('grid') + ']').attr('checked', true);
         this.$el.find('input.placement-of-obj[value=' + this.model.get('placement') + ']').attr('checked', true);
         if (this.model.get("lock_ratio"))
@@ -130,7 +134,7 @@ var SampleView = Backbone.View.extend({
         //3 focus to tab
         this.$tabHeader.find('a').tab('show');
         //Animation
-        this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function(){
+        this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function () {
             $(this).unbind();
             $(this).removeClass("onAdd");
             dropdown_add_align();
@@ -184,16 +188,16 @@ var SampleView = Backbone.View.extend({
         }
 
         //recalculate_tab_width(true);
-        this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function(){
+        this.$tabHeader.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd", function () {
             $(this).remove();
             recalculate_tab_width();
             dropdown_add_align();
         });
         this.$tabHeader.addClass('onRemove');
         /*this.$tabHeader.animate({width: "0px"}, ANIM_TIME * 20, function () {
-            recalculate_tab_width();
-            this.remove();
-        });*/
+         recalculate_tab_width();
+         this.remove();
+         });*/
         this.$el.remove();
 
     },
@@ -210,7 +214,9 @@ var SampleView = Backbone.View.extend({
 
     },
     color_changed: function (ev) {
-        this.model.set("overlay", $(ev.target).colorPicker("getRGBA"));
+        this.model.set("overlay", this.colorpicker.getRGBA());
+        this.model.model_changed({changed: {overlay: null}});
+        console.log("OVERLAYCHANGED");
     }
 });
 

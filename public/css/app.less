@@ -163,8 +163,25 @@ input:not([type]), input[type='text'] {
 }
 
 //COLORPICKER DESIGN
-.picker {
-  height: 140px;
+.color-picker {
+  input {
+    position: absolute;
+    &.hex-color {
+      width: 68px;
+      left: 0px;
+    }
+    &.alpha {
+      width: 36px;
+      right: 70px;
+    }
+  }
+  .result-wrapper {
+    width: 62px;
+    height: @controls_row;
+    margin-top: 0px;
+    position: absolute;
+    right: 0px;
+  }
 }
 
 //CONTROLS SECTION
@@ -306,7 +323,7 @@ input:not([type]), input[type='text'] {
   .size(@tab_height, @tab_height);
   float: left;
   position: inherit;
-  &.open{
+  &.open {
     background-color: @tab_active;
     > a:hover {
       background: @tab_active;
@@ -429,6 +446,10 @@ input:not([type]), input[type='text'] {
       position: absolute;
       left: @label_len + @slider_side_margin;
       right: @input_len + @slider_side_margin;
+      //exceptions
+      &.color-picker {
+        right: 0px;
+      }
       &.radio-case {
         padding-top: 4px;
         label {

@@ -15,7 +15,7 @@ var Colorpicker = Backbone.Model.extend({
         alpha: 0.5
     },
     initialize: function (params, opt) {
-        this.hsv_changed();
+        this.set("alpha", opt.alpha ? 0 : 1);
         this.view = new ColorpickerView({
             model: this,
             el: opt.el,
@@ -55,6 +55,16 @@ var Colorpicker = Backbone.Model.extend({
     },
     alpha_changed: function () {
         this.trigger("change:color");
+    },
+    setRGBA: function(rgba){
+        this.attributes.rgb = {
+            r: rgba.r,
+            g: rgba.g,
+            b: rgba.b
+        };
+        this.attributes.opacity = rgba.a;
+        this.rgb_changed();
+        this.view.update_all();
     },
     getRGBA: function () {
         return $.extend(this.get("rgb"), {

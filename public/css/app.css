@@ -120,8 +120,23 @@ input[type='text'] {
   border: none;
   color: white;
 }
-.picker {
-  height: 140px;
+.color-picker input {
+  position: absolute;
+}
+.color-picker input.hex-color {
+  width: 68px;
+  left: 0px;
+}
+.color-picker input.alpha {
+  width: 36px;
+  right: 70px;
+}
+.color-picker .result-wrapper {
+  width: 62px;
+  height: 27px;
+  margin-top: 0px;
+  position: absolute;
+  right: 0px;
 }
 .controls-section {
   background-color: #ffffff;
@@ -360,6 +375,9 @@ input[type='text'] {
   position: absolute;
   left: 60px;
   right: 69px;
+}
+.controls-section .bottom-section-wrapper .settings-wrapper .control > div.color-picker {
+  right: 0px;
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .control > div.radio-case {
   padding-top: 4px;

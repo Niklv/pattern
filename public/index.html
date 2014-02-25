@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="bower/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen"/>
     <link href="bower/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
-    <link href="css/colorpicker.css" rel="stylesheet" media="screen"/>
+    <link href="css/colorpicker2.css" rel="stylesheet" media="screen"/>
     <link href="css/app.css" rel="stylesheet" media="screen"/>
 </head>
 <body>
@@ -56,12 +56,14 @@
                     <label class="checkbox" for="autofill-checkbox"><span></span> Autofill</label>
                 </div>
                 <div class="color">
+
                     <div>
                         <div class="input-append color" data-color-format="rgba">
-                            <input id="canvas-bg-color" class="colorpicker input-sm" type="text">
+                            <!--<input id="canvas-bg-color" class="colorpicker input-sm" type="text">-->
+                            <div class="color-picker"></div>
                         </div>
                     </div>
-                    <label for="canvas-bg-color">Color</label>
+                    <label for="hex-color">Color</label>
                 </div>
                 <div class="control width">
                     <label for="canvas-width">Width</label>
@@ -245,7 +247,7 @@
         <%= control({class_name:"angle", name:"Angle"}) %>
         <div class="control overlay">
             <label for="picker">Overlay</label>
-            <input type="text" class="colorpicker">
+            <div class="color-picker"></div>
         </div>
     </div>
     <div class="col-sm-12 col-lg-6">
@@ -271,7 +273,7 @@
 <script src="js/colorpicker.js"></script>
 <script src="js/fabric.js"></script>-->
 
-<script src="bower/jquery/jquery.js"></script>
+<script src="bower/jquery/dist/jquery.js"></script>
 <script src="js/jquery-ui-1.10.3.custom.js"></script>
 <script src="bower/FileSaver/FileSaver.js"></script>
 <script src="bower/json2/json2.js"></script>
@@ -284,9 +286,11 @@
 <!-- APP -->
 <script src="js/app/const.js"></script>
 <script src="js/app/utils.js"></script>
-<script src="js/app/colorpicker.js"></script>
+<!--<script src="js/app/colorpicker.js"></script>-->
 <script src="js/app/slider.js"></script>
 <script src="js/app/canvas.js"></script>
+<script src="js/app/colorpicker/model.js"></script>
+<script src="js/app/colorpicker/view.js"></script>
 <script src="js/app/sample/model.js"></script>
 <script src="js/app/sample/view.js"></script>
 <script src="js/app/sample/collection.js"></script>

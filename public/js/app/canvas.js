@@ -137,18 +137,22 @@ var Canvas = Backbone.Model.extend({
 var CanvasView = Backbone.View.extend({
     initialize: function () {
         this.$el = $('.canvas-options');
-        this.$el.find('.colorpicker').colorPicker("init", {}).colorPicker("setHEX", this.model.get("color"));
+        //this.$el.find('.colorpicker').colorPicker("init", {}).colorPicker("setHEX", this.model.get("color"));
+        this.colorpicker = new Colorpicker(null, {el: this.$el.find('.color-picker').eq(0), alpha: false});
+        this.colorpicker.set("hex", this.model.get("color"));
+        this.colorpicker.view.update_all();
+        this.colorpicker.on("change:color", _.bind(this.color_changed, this));
         new Slider({model: this.model, name: "width", jquery_object: this.$el.find(".width")});
         new Slider({model: this.model, name: "height", jquery_object: this.$el.find(".height")});
     },
     events: {
-        "changeColor .colorpicker": "color_changed",
+
         "input .colorpicker": "color_changed",
         "change #autofill-checkbox": "autoupdate_changed",
         "click .download": "download_image"
     },
     color_changed: function (ev) {
-        this.model.set("color", $(ev.target).colorPicker("getHEX"));
+        this.model.set("color", this.colorpicker.get("hex"));
     },
     autoupdate_changed: function (e) {
         this.model.set("autoupdate", $(e.target).prop("checked"));

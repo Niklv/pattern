@@ -19,7 +19,8 @@ var ColorpickerView = Backbone.View.extend({
         "click .value": "change_mouse_state",
         "click .alpha-gradient": "change_mouse_state"
     },
-    initialize: function () {
+    initialize: function (opt) {
+        console.log(opt);
         this.$el.append(this.template_color + this.template_alpha + this.template_result);
         this.$el.click(_.bind(this.stop_propagation, this));
         this._$ = {};
@@ -30,6 +31,8 @@ var ColorpickerView = Backbone.View.extend({
         this._$.alpha_input = this.$el.find('input.alpha');
         this._$.alpha_picker = this.$el.find('div.op-picker');
         this._$.alpha_col = this._$.alpha_picker.find(".alpha-gradient");
+        if (!opt.alpha)
+            this._$.alpha_input.attr("disabled", true).css("display", "none");
         this._$.color_map_pointer = this._$.color_map.find('.pointer');
         this._$.color_value_selector = this._$.value_col.find('.selector');
         this._$.alpha_col_selector = this._$.alpha_col.find('.selector');
@@ -47,7 +50,6 @@ var ColorpickerView = Backbone.View.extend({
         this.opselectorStartmove = _.bind(this.opselectorStartmove, this);
         this.opselectorStopmove = _.bind(this.opselectorStopmove, this);
 
-        this.set_positions();
         this.update_colors();
         this.update_controls();
         this.update_inputs();
@@ -59,15 +61,17 @@ var ColorpickerView = Backbone.View.extend({
         e.preventDefault();
     },
     set_positions: function () {
-        this._$.color_picker.css({
-            top: this._$.color_input.outerHeight(true) + "px",
-            left: this._$.color_input.position().left + "px"
-        });
+
 
         this._$.alpha_picker.css({
             top: this._$.alpha_input.outerHeight(true),
             left: this._$.alpha_input.position().left + "px"
         });
+    },
+    update_all: function () {
+        this.update_colors();
+        this.update_controls();
+        this.update_inputs();
     },
     update_colors: function () {
         var hsv = this.model.get("hsv");
@@ -107,6 +111,17 @@ var ColorpickerView = Backbone.View.extend({
     show_picker: function (e) {
         e.stopPropagation();
         e.preventDefault();
+        //check for visibility
+        if (this._$.color_picker.height() + this._$.color_input.outerHeight(true) + this._$.color_input.offset().top <= $(window).height())
+            this._$.color_picker.css({
+                top: this._$.color_input.outerHeight(true) + this._$.color_input.position().top + "px",
+                left: this._$.color_input.position().left + "px"
+            }).removeClass("upSideDown");
+        else
+            this._$.color_picker.css({
+                top: -this._$.color_picker.height() + "px",
+                left: this._$.color_input.position().left + "px"
+            }).addClass("upSideDown");
         this.messages.trigger("hide");
         this._$.color_picker.addClass("vis").removeClass("none");
     },
@@ -116,11 +131,21 @@ var ColorpickerView = Backbone.View.extend({
     show_op_picker: function (e) {
         e.stopPropagation();
         e.preventDefault();
+        if (this._$.alpha_picker.height() + this._$.alpha_input.outerHeight(true) + this._$.alpha_input.offset().top <= $(window).height())
+            this._$.alpha_picker.css({
+                top: this._$.alpha_input.outerHeight(true) + this._$.alpha_input.position().top + "px",
+                left: this._$.alpha_input.position().left + "px"
+            }).removeClass("upSideDown");
+        else
+            this._$.alpha_picker.css({
+                top: -this._$.alpha_picker.height() + "px",
+                left: this._$.alpha_input.position().left + "px"
+            }).addClass("upSideDown");
         this.messages.trigger("hide");
-        this._$.alpha_picker.addClass("vis").removeClass("none");;
+        this._$.alpha_picker.addClass("vis").removeClass("none");
     },
     hide_op_picker: function () {
-        this._$.alpha_picker.addClass("none");;
+        this._$.alpha_picker.addClass("none");
     },
     hide_all: function () {
         this.hide_picker();
