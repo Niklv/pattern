@@ -1,22 +1,9 @@
-var GLOBAL_COLORPICKER_EVENT_BUS = _.extend({}, Backbone.Events);
+var GLOBAL_COLORPICKER_EVENT_BUS = _.extend({}, Backbone.Events),
+    isMouseClickedInside = false;
 
 var ColorpickerView = Backbone.View.extend({
-    $: {
-        color_input: null,
-        color_picker: null,
-        color_map: null,
-        value_col: null,
-        alpha_input: null,
-        alpha_picker: null,
-        alpha_col: null,
-        color_map_pointer: null,
-        color_value_selector: null,
-        alpha_col_selector: null,
-        result: null
-    },
-    messages: GLOBAL_COLORPICKER_EVENT_BUS,
-    template_color: "<input class='hex-color' type='text' maxlength='7'><div class='picker'><div class='map'><div class='pointer'></div></div><div class='column value'><div class='selector'><div class='arr-l'></div><div class='arr-r'></div></div></div></div></div>",
-    template_alpha: "<input class='alpha' type='text' maxlength='4'><div class='op-picker'><div class='column alpha'><div class='alpha-gradient'><div class='selector'><div class='arr-l'></div><div class='arr-r'></div></div></div></div>",
+    template_color: "<input class='hex-color' type='text' maxlength='7'><div class='picker'><div class='map'><div class='pointer'></div></div><div class='column value'><div class='selector'><div class='arr-l'></div><div class='arr-r'></div></div></div></div>",
+    template_alpha: "<input class='alpha' type='text' maxlength='4'><div class='op-picker'><div class='column alpha'><div class='alpha-gradient'><div class='selector'><div class='arr-l'></div><div class='arr-r'></div></div></div></div></div>",
     template_result: "<div class='result-wrapper'><div class='color-result'></div></div>",
     events: {
         "focus .hex-color": "show_picker",
@@ -27,30 +14,27 @@ var ColorpickerView = Backbone.View.extend({
         "click .color-result": "show_picker",
         "mousedown .map": "pointerStartmove",
         "mousedown .value": "selectorStartmove",
-        "mousedown .alpha-gradient": "opselectorStartmove"
-    },
-    stop_propagation: function (e) {
-        e.stopPropagation();
-        e.preventDefault();
+        "mousedown .alpha-gradient": "opselectorStartmove",
+        "click .map": "change_mouse_state",
+        "click .value": "change_mouse_state",
+        "click .alpha-gradient": "change_mouse_state"
     },
     initialize: function () {
-        var $color = $(this.template_color),
-            $alpha = $(this.template_alpha),
-            $result = $(this.template_result);
-        this.$el.append($color, $alpha, $result);
+        this.$el.append(this.template_color + this.template_alpha + this.template_result);
         this.$el.click(_.bind(this.stop_propagation, this));
-        this.$.color_input = $color.eq(0);
-        this.$.color_picker = $color.eq(1);
-        this.$.color_map = this.$.color_picker.find(".map").eq(0);
-        this.$.value_col = this.$.color_picker.find(".value").eq(0);
-        this.$.alpha_input = $alpha.eq(0);
-        this.$.alpha_picker = $alpha.eq(1);
-        this.$.alpha_col = this.$.alpha_picker.find(".alpha-gradient").eq(0);
-        this.$.color_map_pointer = this.$.color_map.find('.pointer').eq(0);
-        this.$.color_value_selector = this.$.value_col.find('.selector').eq(0);
-        this.$.alpha_col_selector = this.$.alpha_col.find('.selector').eq(0);
-        this.$.result = $result.eq(0).find(".color-result").eq(0);
-
+        this._$ = {};
+        this._$.color_input = this.$el.find('input.hex-color');
+        this._$.color_picker = this.$el.find('div.picker');
+        this._$.color_map = this._$.color_picker.find(".map");
+        this._$.value_col = this._$.color_picker.find(".value");
+        this._$.alpha_input = this.$el.find('input.alpha');
+        this._$.alpha_picker = this.$el.find('div.op-picker');
+        this._$.alpha_col = this._$.alpha_picker.find(".alpha-gradient");
+        this._$.color_map_pointer = this._$.color_map.find('.pointer');
+        this._$.color_value_selector = this._$.value_col.find('.selector');
+        this._$.alpha_col_selector = this._$.alpha_col.find('.selector');
+        this._$.result = this.$el.find("div.color-result");
+        this.messages = GLOBAL_COLORPICKER_EVENT_BUS;
         this.messages.on("hide", _.bind(this.hide_all, this));
 
         this.pointerMove = _.bind(this.pointerMove, this);
@@ -70,69 +54,73 @@ var ColorpickerView = Backbone.View.extend({
 
         this.model.on("change:hsv", _.bind(this.update_colors, this));
     },
+    stop_propagation: function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    },
     set_positions: function () {
-        this.$.color_picker.css({
-            top: this.$.color_input.outerHeight(true) + "px",
-            left: this.$.color_input.position().left + "px"
+        this._$.color_picker.css({
+            top: this._$.color_input.outerHeight(true) + "px",
+            left: this._$.color_input.position().left + "px"
         });
 
-        this.$.alpha_picker.css({
-            top: this.$.alpha_input.outerHeight(true),
-            left: this.$.alpha_input.position().left + "px"
+        this._$.alpha_picker.css({
+            top: this._$.alpha_input.outerHeight(true),
+            left: this._$.alpha_input.position().left + "px"
         });
     },
     update_colors: function () {
         var hsv = this.model.get("hsv");
         var rgb = this.model.get("rgb");
         var alpha = this.model.get("alpha");
-        this.$.color_map.css({
+        this._$.color_map.css({
             "background": "-webkit-linear-gradient(top, rgba(255, 255, 255, " + (1 - hsv.s) + "), #000000), -webkit-linear-gradient(to right, #ff0000 0%, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)",
             "background-image": "linear-gradient(to bottom, rgba(255, 255, 255, " + (1 - hsv.s) + "), #000), linear-gradient(to right, #F00 0%, #FF0, #0F0, #0FF, #00F, #F0F, #F00)"
         });
-        this.$.value_col.css({
+        this._$.value_col.css({
             "background-color": this.model.cnv.hsvtohex({h: hsv.h, s: 1, v: hsv.v})
         });
-        this.$.alpha_col.css({
+        this._$.alpha_col.css({
             "background": "-webkit-linear-gradient(to bottom, rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", 1), rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", 0))",
             "background-image": "linear-gradient(to bottom, rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", 1), rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", 0))"
         });
-        this.$.result.css({
+        this._$.result.css({
             "background-color": this.model.getRGBA_string()
         });
     },
     update_controls: function () {
         var hsv = this.model.get("hsv");
         var alpha = this.model.get("alpha");
-        this.$.color_map_pointer.css({
+        this._$.color_map_pointer.css({
             top: (1 - hsv.v) * 100 + "%",
             left: hsv.h * 100 + "%"
         });
-        this.$.color_value_selector.css("top", (1 - hsv.s) * 100 + "%");
-        this.$.alpha_col_selector.css("top", (1 - alpha) * 100 + "%");
+        this._$.color_value_selector.css("top", (1 - hsv.s) * 100 + "%");
+        this._$.alpha_col_selector.css("top", (1 - alpha) * 100 + "%");
     },
     update_inputs: function () {
         var hex = this.model.get("hex");
         var alpha = this.model.get("alpha");
-        this.$.color_input.val(hex);
-        this.$.alpha_input.val(alpha.toFixed(2));
+        this._$.color_input.val(hex);
+        this._$.alpha_input.val(alpha.toFixed(2));
     },
     show_picker: function (e) {
         e.stopPropagation();
         e.preventDefault();
         this.messages.trigger("hide");
-        this.$.color_picker.addClass("vis");
+        this._$.color_picker.addClass("vis").removeClass("none");
     },
     hide_picker: function () {
-        this.$.color_picker.removeClass("vis");
+        this._$.color_picker.addClass("none");
     },
     show_op_picker: function (e) {
         e.stopPropagation();
         e.preventDefault();
         this.messages.trigger("hide");
-        this.$.alpha_picker.addClass("vis");
+        this._$.alpha_picker.addClass("vis").removeClass("none");;
     },
     hide_op_picker: function () {
-        this.$.alpha_picker.removeClass("vis");
+        this._$.alpha_picker.addClass("none");;
     },
     hide_all: function () {
         this.hide_picker();
@@ -140,13 +128,13 @@ var ColorpickerView = Backbone.View.extend({
     },
     bind_focus: function () {
         $("body").addClass("unselectable");
-        this.$.color_input.blur();
-        this.$.alpha_input.blur();
+        this._$.color_input.blur();
+        this._$.alpha_input.blur();
     },
     unbind_focus: function () {
         $("body").removeClass("unselectable");
-        this.$.color_input.blur();
-        this.$.alpha_input.blur();
+        this._$.color_input.blur();
+        this._$.alpha_input.blur();
     },
 
     pointerStartmove: function (e) {
@@ -158,9 +146,9 @@ var ColorpickerView = Backbone.View.extend({
         this.bind_focus();
         this.pointerMove(e);
         this.show_picker(e);
+        isMouseClickedInside = true;
     },
     pointerStopmove: function (e) {
-        this.pointerMove(e);
         this.unbind_focus();
         $(document).off({
             mouseover: this.pointerMove,
@@ -172,15 +160,15 @@ var ColorpickerView = Backbone.View.extend({
         e.stopPropagation();
         e.preventDefault();
         var maxH, maxW, offset, x, y;
-        offset = this.$.color_map.offset();
-        maxW = this.$.color_map.width();
-        maxH = this.$.color_map.height();
+        offset = this._$.color_map.offset();
+        maxW = this._$.color_map.width();
+        maxH = this._$.color_map.height();
         x = (e.clientX - offset.left) * 100 / maxW;
         y = (e.clientY - offset.top) * 100 / maxH;
         x = Math.max(Math.min(100, x), 0);
         y = Math.max(Math.min(100, y), 0);
-        this.$.color_map_pointer.css("top", y + "%");
-        this.$.color_map_pointer.css("left", x + "%");
+        this._$.color_map_pointer.css("top", y + "%");
+        this._$.color_map_pointer.css("left", x + "%");
         this.model.attributes.hsv.h = x / 100;
         this.model.attributes.hsv.v = (100 - y ) / 100;
         this.model.trigger("change:hsv");
@@ -196,9 +184,9 @@ var ColorpickerView = Backbone.View.extend({
         this.bind_focus();
         this.selectorMove(e);
         this.show_picker(e);
+        isMouseClickedInside = true;
     },
     selectorStopmove: function (e) {
-        this.selectorMove(e);
         this.unbind_focus();
         $(document).off({
             mouseover: this.selectorMove,
@@ -209,9 +197,9 @@ var ColorpickerView = Backbone.View.extend({
     selectorMove: function (e) {
         e.stopPropagation();
         e.preventDefault();
-        y = (e.clientY - this.$.value_col.offset().top) * 100 / this.$.value_col.height();
+        y = (e.clientY - this._$.value_col.offset().top) * 100 / this._$.value_col.height();
         y = Math.max(Math.min(100, y), 0);
-        this.$.color_value_selector.css("top", y + "%");
+        this._$.color_value_selector.css("top", y + "%");
         this.model.attributes.hsv.s = (100 - y) / 100;
         this.model.trigger("change:hsv");
         this.update_colors();
@@ -226,10 +214,10 @@ var ColorpickerView = Backbone.View.extend({
         this.bind_focus();
         this.opselectorMove(e);
         this.show_op_picker(e);
+        isMouseClickedInside = true;
     },
 
     opselectorStopmove: function (e) {
-        this.opselectorMove(e);
         this.unbind_focus();
         $(document).off({
             mouseover: this.opselectorMove,
@@ -241,9 +229,9 @@ var ColorpickerView = Backbone.View.extend({
     opselectorMove: function (e) {
         e.stopPropagation();
         e.preventDefault();
-        y = (e.clientY - this.$.alpha_col.offset().top) * 100 / this.$.alpha_col.height();
+        y = (e.clientY - this._$.alpha_col.offset().top) * 100 / this._$.alpha_col.height();
         y = Math.max(Math.min(100, y), 0);
-        this.$.alpha_col_selector.css("top", y + "%");
+        this._$.alpha_col_selector.css("top", y + "%");
         this.model.set("alpha", (100 - y) / 100);
         this.update_colors();
         this.update_inputs();
@@ -251,14 +239,14 @@ var ColorpickerView = Backbone.View.extend({
     parseColor: function (e) {
         this.show_picker(e);
         var rgbarr = [];
-        var val = this.$.color_input.val();
+        var val = this._$.color_input.val();
         var color = val.replace(/[^A-Fa-f0-9]/g, "");
         if ((val[0] != '#') || (val.length - 1 != color.length)) {
-            pos = this.$.color_input[0].selectionStart;
-            this.$.color_input.val('#' + color);
+            pos = this._$.color_input[0].selectionStart;
+            this._$.color_input.val('#' + color);
             if (pos != val.length) {
-                this.$.color_input[0].selectionStart = pos - 1;
-                this.$.color_input[0].selectionEnd = pos - 1;
+                this._$.color_input[0].selectionStart = pos - 1;
+                this._$.color_input[0].selectionEnd = pos - 1;
             }
         }
         if (color.length == 0)
@@ -279,33 +267,33 @@ var ColorpickerView = Backbone.View.extend({
     },
     parseAlpha: function (e) {
         this.show_op_picker(e);
-        var orig_val = this.$.alpha_input.val(),
+        var orig_val = this._$.alpha_input.val(),
             val = orig_val.replace(/[^\+\-0-9\.]/g, "").match(/[\+\-]{0,1}[0-9]{0,}[\.]{0,1}[0-9]{0,}/)[0],
             posOff = orig_val.length - val.length,
-            pos = this.$.alpha_input[0].selectionStart,
+            pos = this._$.alpha_input[0].selectionStart,
             isLast = pos == orig_val.length,
             num;
         num = parseFloat(val);
 
         if (isNaN(num)) {
-            this.$.alpha_input.val(val);
+            this._$.alpha_input.val(val);
         } else {
             if (num < 0) {
                 num = 0;
-                this.$.alpha_input.val(num);
+                this._$.alpha_input.val(num);
             } else if (num > 1) {
                 num = 1;
-                this.$.alpha_input.val(num);
+                this._$.alpha_input.val(num);
             } else
-                this.$.alpha_input.val(val);
+                this._$.alpha_input.val(val);
         }
         //restore cursor
         if (isLast) {
-            this.$.alpha_input[0].selectionStart = this.$.alpha_input.val().length;
-            this.$.alpha_input[0].selectionEnd = this.$.alpha_input.val().length;
+            this._$.alpha_input[0].selectionStart = this._$.alpha_input.val().length;
+            this._$.alpha_input[0].selectionEnd = this._$.alpha_input.val().length;
         } else {
-            this.$.alpha_input[0].selectionStart = pos + posOff;
-            this.$.alpha_input[0].selectionEnd = pos + posOff;
+            this._$.alpha_input[0].selectionStart = pos + posOff;
+            this._$.alpha_input[0].selectionEnd = pos + posOff;
         }
         if (isNaN(num))
             num = 0;
@@ -317,7 +305,7 @@ var ColorpickerView = Backbone.View.extend({
         var key = e.keyCode;
         if (key != 38 && key != 40)
             return;
-        var val = parseInt(Math.round(this.$.alpha_input.val() * 10000));
+        var val = parseInt(Math.round(this._$.alpha_input.val() * 10000));
         var step = 0.01 * 10000;
         var ost = val % step;
         if (key == 38 && (val > 0 || !ost)) //key up
@@ -328,17 +316,22 @@ var ColorpickerView = Backbone.View.extend({
         val /= 10000;
         val = Math.max(val, 0);
         val = Math.min(val, 1);
-        this.$.alpha_input.val(val);
-        this.$.alpha_input[0].selectionStart = this.$.alpha_input.val().length;
-        this.$.alpha_input[0].selectionEnd = this.$.alpha_input.val().length;
+        this._$.alpha_input.val(val);
+        this._$.alpha_input[0].selectionStart = this._$.alpha_input.val().length;
+        this._$.alpha_input[0].selectionEnd = this._$.alpha_input.val().length;
         this.model.set("alpha", val);
         this.update_colors();
         this.update_controls();
+    },
+    change_mouse_state: function () {
+        isMouseClickedInside = false;
     }
 });
 
-$(document).click(function () {
-    console.log('GLOBAL_COLORPICKER_EVENT_BUS.trigger("hide");');
-    GLOBAL_COLORPICKER_EVENT_BUS.trigger("hide");
+$(document).on("click", function () {
+    if (isMouseClickedInside)
+        isMouseClickedInside = false;
+    else
+        GLOBAL_COLORPICKER_EVENT_BUS.trigger("hide");
 });
 

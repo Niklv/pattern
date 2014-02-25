@@ -27,9 +27,11 @@ body.unselectable {
     position: absolute;
     background-color: white;
     .box-shadow(0 0 3px rgba(0, 0, 0, 0.4));
-    .transition(all .5s);
+    //.transition(all .5s);
     .transform-origin(0, 0);
-    .transform(scaleY(0));
+    .backface-visibility(visible);
+    display: none;
+    z-index: 9998;
   }
   .arrows() {
     @arrow_w: 3px;
@@ -133,6 +135,23 @@ body.unselectable {
     }
   }
   .vis {
-    .transform(scaleY(1));
+    z-index: 9999;
+    display: block;
+    .flipInX;
+    &.none{
+      .flipOutX;
+    }
   }
 }
+
+//ANIMATION
+.flipInX {
+  .animation(0.5s flipInX forwards);
+}
+
+.flipOutX {
+  .animation(0.5s flipOutX forwards);
+}
+
+.keyframes(~'flipInX, 0% {transform: perspective(400px) rotateX(90deg);opacity: 0;} 40% {transform: perspective(400px) rotateX(-10deg);} 70% {transform: perspective(400px) rotateX(10deg);} 100% {transform: perspective(400px) rotateX(0deg);opacity: 1;}');
+.keyframes(~'flipOutX, 0% {transform: perspective(400px) rotateX(0deg);opacity: 1;} 100% { transform: perspective(400px) rotateX(90deg); opacity: 0;}');
