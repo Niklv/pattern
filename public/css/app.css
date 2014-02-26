@@ -346,6 +346,20 @@ input[type='text'] {
 .controls-section .bottom-section-wrapper .settings-wrapper .tab-content .tab-pane button.random {
   font-size: 10px;
 }
+.controls-section .bottom-section-wrapper .settings-wrapper .canvas-options .autofill-checkbox label {
+  width: 80px;
+  cursor: pointer;
+}
+.controls-section .bottom-section-wrapper .settings-wrapper .canvas-options .controls.color {
+  position: relative;
+}
+.controls-section .bottom-section-wrapper .settings-wrapper .canvas-options .controls.color .color-picker {
+  position: absolute;
+  top: 0px;
+  left: 61px;
+  right: 0px;
+  height: 27px;
+}
 .controls-section .bottom-section-wrapper .settings-wrapper .canvas-options .download-image {
   margin-bottom: 5px;
 }

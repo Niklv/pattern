@@ -55,15 +55,9 @@
                     <input id="autofill-checkbox" type="checkbox">
                     <label class="checkbox" for="autofill-checkbox"><span></span> Autofill</label>
                 </div>
-                <div class="color">
-
-                    <div>
-                        <div class="input-append color" data-color-format="rgba">
-                            <!--<input id="canvas-bg-color" class="colorpicker input-sm" type="text">-->
-                            <div class="color-picker"></div>
-                        </div>
-                    </div>
+                <div class="control color">
                     <label for="hex-color">Color</label>
+                    <div class="color-picker"></div>
                 </div>
                 <div class="control width">
                     <label for="canvas-width">Width</label>
@@ -247,6 +241,7 @@
         <%= control({class_name:"angle", name:"Angle"}) %>
         <div class="control overlay">
             <label for="picker">Overlay</label>
+
             <div class="color-picker"></div>
         </div>
     </div>
