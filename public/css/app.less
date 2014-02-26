@@ -68,13 +68,13 @@
   .ui-slider-handle {
     position: absolute;
     z-index: 2;
-    width: 6px;
+    width: 4px;
     height: 12px;
     cursor: pointer;
     background-color: @slider_handle;
     top: -4.5px;
     margin-left: -3px;
-    .border-radius(3px);
+    //.border-radius(3px);
     //border: 2px solid #858585;
     &:focus {
       outline: none;
@@ -151,6 +151,7 @@ input:not([type]), input[type='text'] {
   outline: none;
   height: 27px;
   padding: 3px;
+  text-align:center;
 }
 
 //BUTTON DESIGN
@@ -194,10 +195,14 @@ input:not([type]), input[type='text'] {
   .box-shadow(0 0 25px rgba(0, 0, 0, 0.4));
   .transition-property(opacity, bottom);
   .transition-duration(.5s);
+  .transition-timing-function(ease-in-out);
+  .transform-style(preserve-3d);
   .backface-visibility(hidden);
   height: auto;
+  .opacity(1);
   &.flow-down {
     //hide panel
+    //.animation(hideAllControls 1s forwards);
     bottom: -320px;
     .opacity(0.3);
   }
@@ -404,6 +409,7 @@ input:not([type]), input[type='text'] {
   background-color: white;
   z-index: 1100;
   .tab-content {
+    min-height: 280px;
     .user-select(none);
     .transition(height .5s);
     padding: 0;
@@ -524,6 +530,7 @@ input:not([type]), input[type='text'] {
   z-index: 500;
   color: white;
   outline: none;
+  font-weight: normal;
 }
 
 //MODALS
@@ -748,9 +755,19 @@ body {
   background-color: #269abc;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  font-weight: bold;
+//  font-weight: bold;
+  font-weight: normal;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
+  //.transform(translateZ(0));
 }
+
+/** {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 14px !important;
+  //font-weight: bold !important;
+} */
 
 h1, h2, h3, h4, h5, h6, input, label {
   font-family: 'Open Sans', sans-serif;
@@ -817,3 +834,4 @@ h1, h2, h3, h4, h5, h6, input, label {
 .keyframes(~'alertShow,  0% {opacity: 0; transform: translateX(2000px);} 80% {opacity: 1; transform: translateX(-20px);} 100% {transform: translateX(0);}');
 .keyframes(~'addTab, 0% {width: 0;transform: translateY(2000px);} 30%{width: @{tab_width}; transform: translateY(@{tab_height});} 100% {transform: translateY(0);}');
 .keyframes(~'removeTab, 0% {transform: translateY(0px);} 70%{width: @{tab_width}; transform: translateY(@{tab_height});} 100% {transform: translateY(2000px);width: 0;}');
+//.keyframes(~'hideAllControls, 0% {bottom: 0px;} 100% {bottom: -320px;}');

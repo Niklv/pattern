@@ -28,16 +28,12 @@
 .ui-slider .ui-slider-handle {
   position: absolute;
   z-index: 2;
-  width: 6px;
+  width: 4px;
   height: 12px;
   cursor: pointer;
   background-color: #bdc3c7;
   top: -4.5px;
   margin-left: -3px;
-  -webkit-border-radius: 3px;
-  -webkit-background-clip: padding-box;
-  border-radius: 3px;
-  background-clip: padding-box;
 }
 .ui-slider .ui-slider-handle:focus {
   outline: none;
@@ -109,6 +105,7 @@ input[type='text'] {
   outline: none;
   height: 27px;
   padding: 3px;
+  text-align: center;
 }
 .green-button {
   background-color: #2ecc71;
@@ -150,9 +147,15 @@ input[type='text'] {
   transition-property: opacity, bottom;
   -webkit-transition-duration: 0.5s;
   transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   height: auto;
+  -webkit-opacity: 1;
+  opacity: 1;
 }
 .controls-section.flow-down {
   bottom: -320px;
@@ -337,6 +340,7 @@ input[type='text'] {
   z-index: 1100;
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .tab-content {
+  min-height: 280px;
   -webkit-user-select: none;
   user-select: none;
   -webkit-transition: height 0.5s;
@@ -445,6 +449,7 @@ input[type='text'] {
   z-index: 500;
   color: white;
   outline: none;
+  font-weight: normal;
 }
 #paste_link_modal .form-group {
   position: relative;
@@ -700,9 +705,16 @@ body {
   background-color: #269abc;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: normal;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
+/** {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 14px !important;
+  //font-weight: bold !important;
+} */
 h1,
 h2,
 h3,

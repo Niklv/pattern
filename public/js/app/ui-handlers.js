@@ -144,11 +144,11 @@ function recalculate_tab_width(onRemove) {
 
 
 function dropdown_add_align() {
-    console.log("dropdown_add_align");
+    //console.log("dropdown_add_align");
     var ans = $('.add-new-sample');
     var dm = ans.find('.dropdown-menu');
     var wid = $(window).width() - ans.position().left + ans.width() + 30; //SHITY CONSTANT
-    console.log(wid);
+    //console.log(wid);
     if (wid <= dm.width())
         dm.addClass("sticky");
     else
