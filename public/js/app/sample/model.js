@@ -282,6 +282,7 @@ var Sample = Backbone.Model.extend({
         this.set({
             count: this.rnd("count"),
             placement: r.placement.values[_.random(0, r.placement.values.length - 1)],
+            overlay: {r: _.random(0, 255), g: _.random(0, 255), b: _.random(0, 255), a: Math.random()},
             angle: this.rnd("angle"),
             opacity: this.rnd("opacity"),
             angle_delta: this.rnd("angle_delta"),

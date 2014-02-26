@@ -167,6 +167,7 @@ var SampleView = Backbone.View.extend({
         this.$el.find('.placement input[value=' + v.placement + ']').prop('checked', true);
         this.$el.find('.grid input[value=' + v.grid + ']').prop('checked', true);
         this.change_settings_order();
+        this.colorpicker.setRGBA(v.overlay);
         this.$el.find("button.random").attr("disabled", false);
     },
     onslide: function (e, o) {
@@ -216,7 +217,6 @@ var SampleView = Backbone.View.extend({
     color_changed: function (ev) {
         this.model.set("overlay", this.colorpicker.getRGBA());
         this.model.model_changed({changed: {overlay: null}});
-        console.log("OVERLAYCHANGED");
     }
 });
 
