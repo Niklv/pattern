@@ -42,11 +42,11 @@ var Canvas = Backbone.Model.extend({
                 'margin-top': offset + "px"
             });
             var cnv_off = APP.$cnv.offset();
-            $('body').css({
+            /*$('body').css({
                 'background-position-x': cnv_off.left,
                 'background-position-y': cnv_off.top,
                 'background-size': s * canvas_w + 'px ' + s * canvas_h + 'px'
-            });
+            });*/
         }).resize();
         new CanvasView({model: this});
         this.on("change", this.update);
@@ -96,7 +96,7 @@ var Canvas = Backbone.Model.extend({
     },
     render_to_bg: function () {
         $(window).resize();
-        $('body').css('background-image', 'url(' + this.canvas.toDataURL({format: "png", quality: 1}) + ')');
+        //$('body').css('background-image', 'url(' + this.canvas.toDataURL({format: "png", quality: 1}) + ')');
 
         /*
          this.canvas.renderAll(false);
