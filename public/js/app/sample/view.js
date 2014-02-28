@@ -37,6 +37,9 @@ var SampleView = Backbone.View.extend({
 
         //console.log(this.model.attributes);
         this.$tabHeader.find('button.close').click(_.bind(this.remove, this));
+        this.$tabHeader.find('a[data-toggle="tab"]').on('show.bs.tab', _.bind(function () {
+            this.colorpicker.view.removeVisClass();
+        }, this));
         //this.$tabHeader.draggable({ axis: "x", drag: _.bind(this.on_drag, this)});
         //this.j.colorpicker.colorPicker("init", {opacity: 1, position: "top"}).colorPicker("setRGBA", this.model.get("overlay"));
         this.colorpicker = new Colorpicker(null, {el: this.$el.find('.color-picker').eq(0), alpha: true});

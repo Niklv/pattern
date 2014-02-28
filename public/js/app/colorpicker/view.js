@@ -20,7 +20,6 @@ var ColorpickerView = Backbone.View.extend({
         "click .alpha-gradient": "change_mouse_state"
     },
     initialize: function (opt) {
-        console.log(opt);
         this.$el.append(this.template_color + this.template_alpha + this.template_result);
         this.$el.click(_.bind(this.stop_propagation, this));
         this._$ = {};
@@ -59,14 +58,6 @@ var ColorpickerView = Backbone.View.extend({
     stop_propagation: function (e) {
         e.stopPropagation();
         e.preventDefault();
-    },
-    set_positions: function () {
-
-
-        this._$.alpha_picker.css({
-            top: this._$.alpha_input.outerHeight(true),
-            left: this._$.alpha_input.position().left + "px"
-        });
     },
     update_all: function () {
         this.update_colors();
@@ -124,6 +115,7 @@ var ColorpickerView = Backbone.View.extend({
             }).addClass("upSideDown");
         this.messages.trigger("hide");
         this._$.color_picker.addClass("vis").removeClass("none");
+        //$(document).on("click", hide_all_colorpickers);
     },
     hide_picker: function () {
         this._$.color_picker.addClass("none");
@@ -143,6 +135,7 @@ var ColorpickerView = Backbone.View.extend({
             }).addClass("upSideDown");
         this.messages.trigger("hide");
         this._$.alpha_picker.addClass("vis").removeClass("none");
+        //$(document).on("click", hide_all_colorpickers);
     },
     hide_op_picker: function () {
         this._$.alpha_picker.addClass("none");
@@ -350,13 +343,22 @@ var ColorpickerView = Backbone.View.extend({
     },
     change_mouse_state: function () {
         isMouseClickedInside = false;
+    },
+    removeVisClass: function(){
+        this._$.color_picker.removeClass('vis');
+        this._$.alpha_picker.removeClass('vis');
     }
 });
 
-$(document).on("click", function () {
+function hide_all_colorpickers() {
     if (isMouseClickedInside)
         isMouseClickedInside = false;
-    else
+    else {
         GLOBAL_COLORPICKER_EVENT_BUS.trigger("hide");
-});
+        //$(document).off("click", hide_all_colorpickers);
+    }
+
+}
+
+$(document).on("click", hide_all_colorpickers);
 
