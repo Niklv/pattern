@@ -38,7 +38,8 @@
           continue;
         }
 
-        if (this.get('lockUniScaling') && (i === 'mt' || i === 'mr' || i === 'mb' || i === 'ml')) {
+        if (this.get('lockUniScaling') &&
+           (i === 'mt' || i === 'mr' || i === 'mb' || i === 'ml')) {
           continue;
         }
 
@@ -353,7 +354,7 @@
         top - scaleOffsetY - strokeWidth2 - paddingY);
 
       // bottom-left
-      this._drawControl('tr', ctx, methodName,
+      this._drawControl('bl', ctx, methodName,
         left - scaleOffsetX - strokeWidth2 - paddingX,
         top + height + scaleOffsetSizeY + strokeWidth2 + paddingY);
 

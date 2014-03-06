@@ -63,6 +63,13 @@
     type: 'path',
 
     /**
+     * Array of path points
+     * @type Array
+     * @default
+     */
+    path: null,
+
+    /**
      * Constructor
      * @param {Array|String} path Path data (sequence of coordinates and corresponding "command" tokens)
      * @param {Object} [options] Options object
@@ -125,7 +132,9 @@
           this.left = this.width / 2;
         }
       }
-      this.pathOffset = this.pathOffset || this._calculatePathOffset(origLeft, origTop); //Save top-left coords as offset
+      this.pathOffset = this.pathOffset ||
+                        // Save top-left coords as offset
+                        this._calculatePathOffset(origLeft, origTop);
     },
 
     /**
@@ -484,7 +493,7 @@
      */
     toObject: function(propertiesToInclude) {
       var o = extend(this.callSuper('toObject', propertiesToInclude), {
-        path: this.path,
+        path: this.path.map(function(item) { return item.slice() }),
         pathOffset: this.pathOffset
       });
       if (this.sourcePath) {
@@ -556,7 +565,7 @@
           coords = [ ],
           currentPath,
           parsed,
-          re = /(-?\.\d+)|(-?\d+(\.\d+)?)/g,
+          re = /([-+]?((\d+\.\d+)|((\d+)|(\.\d+)))(?:e[-+]?\d+)?)/ig,
           match,
           coordsStr;
 

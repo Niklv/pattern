@@ -390,10 +390,13 @@
         this[prop] = options[prop];
       }
 
-      this.width = parseInt(this.lowerCanvasEl.width, 10) || 0;
-      this.height = parseInt(this.lowerCanvasEl.height, 10) || 0;
+      this.width = this.width || parseInt(this.lowerCanvasEl.width, 10) || 0;
+      this.height = this.height || parseInt(this.lowerCanvasEl.height, 10) || 0;
 
       if (!this.lowerCanvasEl.style) return;
+
+      this.lowerCanvasEl.width = this.width;
+      this.lowerCanvasEl.height = this.height;
 
       this.lowerCanvasEl.style.width = this.width + 'px';
       this.lowerCanvasEl.style.height = this.height + 'px';
@@ -665,10 +668,19 @@
      * @param {fabric.Group} activeGroup
      */
     _renderObjects: function(ctx, activeGroup) {
-      for (var i = 0, length = this._objects.length; i < length; ++i) {
-        if (!activeGroup ||
-            (activeGroup && this._objects[i] && !activeGroup.contains(this._objects[i]))) {
+      var i, length;
+
+      // fast path
+      if (!activeGroup) {
+        for (i = 0, length = this._objects.length; i < length; ++i) {
           this._draw(ctx, this._objects[i]);
+        }
+      }
+      else {
+        for (i = 0, length = this._objects.length; i < length; ++i) {
+          if (this._objects[i] && !activeGroup.contains(this._objects[i])) {
+            this._draw(ctx, this._objects[i]);
+          }
         }
       }
     },
@@ -759,9 +771,7 @@
         activeGroup.render(ctx);
       }
 
-      if (this.overlayImage) {
-        ctx.drawImage(this.overlayImage, this.overlayImageLeft, this.overlayImageTop);
-      }
+      this._renderOverlay(ctx);
 
       this.fire('after:render');
 
@@ -878,7 +888,10 @@
       fabric.util.populateWithProperties(this, data, propertiesToInclude);
 
       if (activeGroup) {
-        this.setActiveGroup(new fabric.Group(activeGroup.getObjects()));
+        this.setActiveGroup(new fabric.Group(activeGroup.getObjects(), {
+          originX: 'center',
+          originY: 'center'
+        }));
         activeGroup.forEachObject(function(o) {
           o.set('active', true);
         });

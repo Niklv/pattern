@@ -611,6 +611,7 @@
 
     /**
      * Function that determines clipping of an object (context is passed as a first argument)
+     * Note that context origin is at the object's center point (not left/top corner)
      * @type Function
      */
     clipTo:                   null,
@@ -832,6 +833,15 @@
     },
 
     /**
+     * @private
+     */
+    _setObject: function(obj) {
+      for (var prop in obj) {
+        this._set(prop, obj[prop]);
+      }
+    },
+
+    /**
      * Sets property to a given value. When changing position/dimension -related properties (left, top, scale, angle, etc.) `set` does not update position of object's borders/controls. If you need to update those, call `setCoords()`.
      * @param {String|Object} key Property name or object (if object, iterate over the object properties)
      * @param {Object|Function} value Property value (if function, the value is passed into it and its return value is used as a new one)
@@ -840,9 +850,7 @@
      */
     set: function(key, value) {
       if (typeof key === 'object') {
-        for (var prop in key) {
-          this._set(prop, key[prop]);
-        }
+        this._setObject(key);
       }
       else {
         if (typeof value === 'function' && key !== 'clipTo') {
@@ -883,7 +891,7 @@
       }
 
       this[key] = value;
-
+      
       return this;
     },
 
@@ -994,6 +1002,8 @@
      * @param {CanvasRenderingContext2D} ctx Context to render on
      */
     _removeShadow: function(ctx) {
+      if (!this.shadow) return;
+
       ctx.shadowColor = '';
       ctx.shadowBlur = ctx.shadowOffsetX = ctx.shadowOffsetY = 0;
     },
@@ -1332,7 +1342,8 @@
      * @chainable
      */
     remove: function() {
-      return this.canvas.remove(this);
+      this.canvas.remove(this);
+      return this;
     },
 
     /**
