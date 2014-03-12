@@ -58,7 +58,6 @@ var SampleView = Backbone.View.extend({
                 this.j.offset.hide();
                 this.j.angle_delta.hide();
                 this.j.radius.hide();
-                this.$el.find('.placement button.rndmz').hide();
                 break;
             case "random":
                 this.j.x.hide();
@@ -68,7 +67,6 @@ var SampleView = Backbone.View.extend({
                 this.j.offset.hide();
                 this.j.angle_delta.hide();
                 this.j.radius.hide();
-                this.$el.find('.placement button.rndmz').show();
                 break;
             case "circle":
                 this.j.x.show();
@@ -78,7 +76,6 @@ var SampleView = Backbone.View.extend({
                 this.j.offset.show();
                 this.j.angle_delta.show();
                 this.j.radius.show();
-                this.$el.find('.placement button.rndmz').hide();
                 break;
         }
 
@@ -105,7 +102,6 @@ var SampleView = Backbone.View.extend({
                 this.j.offset.slideUp(ANIM_TIME);
                 this.j.angle_delta.slideUp(ANIM_TIME);
                 this.j.radius.slideUp(ANIM_TIME);
-                this.$el.find('.placement button.rndmz').hide();
                 break;
             case "random":
                 this.j.x.slideUp(ANIM_TIME);
@@ -115,7 +111,6 @@ var SampleView = Backbone.View.extend({
                 this.j.offset.slideUp(ANIM_TIME);
                 this.j.angle_delta.slideUp(ANIM_TIME);
                 this.j.radius.slideUp(ANIM_TIME);
-                this.$el.find('.placement button.rndmz').show();
                 break;
             case "circle":
                 this.j.x.slideDown(ANIM_TIME);
@@ -125,7 +120,6 @@ var SampleView = Backbone.View.extend({
                 this.j.offset.slideDown(ANIM_TIME);
                 this.j.angle_delta.slideDown(ANIM_TIME);
                 this.j.radius.slideDown(ANIM_TIME);
-                this.$el.find('.placement button.rndmz').hide();
                 break;
         }
     },
@@ -152,16 +146,11 @@ var SampleView = Backbone.View.extend({
         return this;
     },
     events: {
-        "click button.rndmz": "generate_random_layout",
         "change input[type=radio]": "radio_changed",
         "change input.placement-of-obj": "change_settings_order",
         "changeColor input.colorpicker": "color_changed",
         "click .lock-origin-ratio": "ratio_changed",
         "click button.random": "random"
-    },
-    generate_random_layout: function () {
-        this.model.change_layout();
-        this.model.trigger("render");
     },
     random: function () {
         this.$el.find("button.random").attr("disabled", true);

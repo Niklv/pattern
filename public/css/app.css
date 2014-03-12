@@ -328,6 +328,7 @@ input[type='text'] {
   margin: 0 auto;
   max-height: 320px;
   height: 100%;
+  overflow-x: hidden;
   overflow-y: auto;
   background: linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)) 0 100%;
   background-attachment: local, local, scroll, scroll;
@@ -346,7 +347,15 @@ input[type='text'] {
   padding: 0;
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .tab-content .tab-pane button.random {
-  font-size: 10px;
+  font-size: 14px;
+  -webkit-border-radius: 30px;
+  -webkit-background-clip: padding-box;
+  border-radius: 30px;
+  background-clip: padding-box;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  outline: none;
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .canvas-options .autofill-checkbox label {
   width: 80px;

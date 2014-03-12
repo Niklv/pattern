@@ -62,7 +62,7 @@ var Colorpicker = Backbone.Model.extend({
             g: rgba.g,
             b: rgba.b
         };
-        this.attributes.opacity = rgba.a;
+        this.attributes.alpha = rgba.a;
         this.rgb_changed();
         this.view.update_all();
     },

@@ -279,21 +279,47 @@ var Sample = Backbone.Model.extend({
     },
     randomize: function () {
         var r = this.get("range");
-        this.set({
-            count: this.rnd("count"),
-            placement: r.placement.values[_.random(0, r.placement.values.length - 1)],
-            overlay: {r: _.random(0, 255), g: _.random(0, 255), b: _.random(0, 255), a: Math.random()},
-            angle: this.rnd("angle"),
-            opacity: this.rnd("opacity"),
-            angle_delta: this.rnd("angle_delta"),
-            offset: this.rnd("offset"),
-            grid: r.grid.values[_.random(0, r.grid.values.length - 1)],
-            width: this.rnd("width"),
-            height: this.rnd("height"),
-            x: this.rnd("x"),
-            y: this.rnd("y"),
-            radius: this.rnd("radius")
-        });
+        switch (this.get("placement")) {
+            case "one":
+                this.set({
+                    overlay: {r: _.random(0, 255), g: _.random(0, 255), b: _.random(0, 255), a: Math.random()},
+                    angle: this.rnd("angle"),
+                    opacity: this.rnd("opacity"),
+                    width: this.rnd("width"),
+                    height: this.rnd("height"),
+                    x: this.rnd("x"),
+                    grid: r.grid.values[_.random(0, 3)],
+                    y: this.rnd("y")
+                });
+                break;
+            case "random":
+                this.change_layout();
+                this.set({
+                    count: this.rnd("count"),
+                    overlay: {r: _.random(0, 255), g: _.random(0, 255), b: _.random(0, 255), a: Math.random()},
+                    grid: r.grid.values[_.random(0, 1)],
+                    opacity: this.rnd("opacity"),
+                    width: this.rnd("width"),
+                    height: this.rnd("height")
+                });
+                break;
+            case "circle":
+                this.set({
+                    count: this.rnd("count"),
+                    overlay: {r: _.random(0, 255), g: _.random(0, 255), b: _.random(0, 255), a: Math.random()},
+                    grid: r.grid.values[_.random(0, 1)],
+                    angle: this.rnd("angle"),
+                    opacity: this.rnd("opacity"),
+                    angle_delta: this.rnd("angle_delta"),
+                    offset: this.rnd("offset"),
+                    width: this.rnd("width"),
+                    height: this.rnd("height"),
+                    x: this.rnd("x"),
+                    y: this.rnd("y"),
+                    radius: this.rnd("radius")
+                });
+                break;
+        }
     },
     rnd: function (p) {
         var r = this.get("range");
@@ -479,14 +505,14 @@ var Grid = Backbone.Model.extend({
     },
     rotatePoints: function (P, M) {
         var x, y;
-        if(_.isArray(P))
+        if (_.isArray(P))
             for (i = 0; i < P.length; i++) {
                 x = P[i].x * M[0][0] + P[i].y * M[0][1];
                 y = P[i].x * M[1][0] + P[i].y * M[1][1];
                 P[i].x = x;
                 P[i].y = y;
             }
-        else if(_.isObject(P)){
+        else if (_.isObject(P)) {
             x = P.x * M[0][0] + P.y * M[0][1];
             y = P.x * M[1][0] + P.y * M[1][1];
             P.x = x;

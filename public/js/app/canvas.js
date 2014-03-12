@@ -42,7 +42,7 @@ var Canvas = Backbone.Model.extend({
                 'margin-top': offset + "px"
             });
             var cnv_off = APP.$cnv.offset();
-            console.log(cnv_off.left,cnv_off.top, s * canvas_w + 'px ' + s * canvas_h + 'px');
+            //console.log(cnv_off.left,cnv_off.top, s * canvas_w + 'px ' + s * canvas_h + 'px');
             $('.pattern-preview-area').css({
              'background-position': cnv_off.left+'px '+cnv_off.top+ 'px',
              'background-size': s * canvas_w + 'px ' + s * canvas_h + 'px'
