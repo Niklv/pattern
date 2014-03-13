@@ -580,11 +580,14 @@ input:not([type]), input[type='text'] {
 #collections_modal {
   .modal-content {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
+    @margin: 50px;
+    top: @margin;
+    left: @margin;
+    right: @margin;
+    bottom: @margin;
     overflow: hidden;
+    .border-radius(0);
+    border: none;
     .modal-header {
       position: absolute;
       top: 0;
@@ -595,30 +598,22 @@ input:not([type]), input[type='text'] {
       background-color: #fff;
       text-align: center;
       button.close {
-        padding: 5px;
+        padding-top: 0px;
+        padding-right: 2px;
+        &:hover {
+          color: red;
+        }
       }
-      h5 {
-        padding: 11px 15px;
-        margin: 0;
-        line-height: 23px;
-      }
-    }
-    .modal-footer {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      padding: 10px;
-      margin-top: 0;
-      z-index: 1101;
     }
     .modal-body {
       position: absolute;
-      top: 46px;
+      top: 33px;
       right: 0;
       left: 0;
-      bottom: 54px;
+      bottom: 0px;
       overflow-y: auto;
+      overflow-x: none;
+      padding: 4px;
       //?????
       //.gradient(~"linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */ radial-gradient(50% 0, farthest-side, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)), radial-gradient(50% 100%, farthest-side, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%");
       //.gradient(~"linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%");
@@ -634,6 +629,31 @@ input:not([type]), input[type='text'] {
   #sample-collections-tabs {
     width: 200px;
     float: left;
+    .dropdown {
+      &.open .dropdown-toggle {
+        background: none;
+      }
+      .dropdown-menu {
+        margin:0px;
+        .border-radius(0);
+        border-top:none;
+        border-left: none;
+        border-right:  1px solid rgba(0, 0, 0, 0.15);
+        border-bottom:  1px solid rgba(0, 0, 0, 0.15);
+      }
+    }
+    .dropdown-toggle {
+      padding: 4px 0px 4px 8px;
+      &:hover, &:focus {
+        background: none;
+        h4 {
+          text-decoration: underline;
+        }
+      }
+      h4 {
+        text-align: left;
+      }
+    }
   }
 }
 
@@ -645,16 +665,18 @@ input:not([type]), input[type='text'] {
   float: left;
   .innerContent {
     position: absolute;
-    left: 10px;
-    right: 10px;
-    top: 10px;
-    bottom: 10px;
+    @margin: 4px;
+    left: @margin;
+    right: @margin;
+    top: @margin;
+    bottom: @margin;
     overflow: hidden;
     text-align: center;
     font-size: 0;
     border: solid 1px #D6D6D6;
-    .border-radius(5px);
-    .transition(all .3s ease);
+    background-color: white;
+    //.border-radius(5px);
+    .transition(all .17s ease-In-Out);
     img {
       max-width: 90%;
       height: auto;
@@ -669,17 +691,17 @@ input:not([type]), input[type='text'] {
     }
     &:hover {
       .box-shadow(0 0 20px rgba(0, 0, 0, 0.40));
-      .border-radius(5px);
-      top: 0px;
-      left: 0px;
-      right: 0px;
-      bottom: 0px;
+      //.border-radius(5px);
+      @margin: 0px;
+      top: @margin;
+      left: @margin;
+      right: @margin;
+      bottom: @margin;
+      z-index: 9999;
     }
   }
   &.generated {
     .innerContent {
-      &:hover {
-      }
       img {
         min-width: 90%;
       }
@@ -855,6 +877,7 @@ h1, h2, h3, h4, h5, h6, input, label {
 
 .keyframes(~'loading, 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);}');
 .keyframes(~'tada, 0% {transform: scale(1);} 10%, 20% {transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);} 100% {transform: scale(1) rotate(0);}');
+//.keyframes(~'tada, 0% {transform: scale(1);} 100% {transform: scale(1.05);}');
 .keyframes(~'alertHide,  0% {transform: translateX(0);} 20% {opacity: 1; transform: translateX(-20px);} 100% {opacity: 0; transform: translateX(2000px);}');
 .keyframes(~'alertShow,  0% {opacity: 0; transform: translateX(2000px);} 80% {opacity: 1; transform: translateX(-20px);} 100% {transform: translateX(0);}');
 .keyframes(~'addTab, 0% {width: 0;transform: translateY(2000px);} 30%{width: @{tab_width}; transform: translateY(@{tab_height});} 100% {transform: translateY(0);}');

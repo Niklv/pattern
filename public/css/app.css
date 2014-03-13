@@ -488,11 +488,16 @@ input[type='text'] {
 }
 #collections_modal .modal-content {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
+  top: 50px;
+  left: 50px;
+  right: 50px;
+  bottom: 50px;
   overflow: hidden;
+  -webkit-border-radius: 0;
+  -webkit-background-clip: padding-box;
+  border-radius: 0;
+  background-clip: padding-box;
+  border: none;
 }
 #collections_modal .modal-content .modal-header {
   position: absolute;
@@ -505,29 +510,21 @@ input[type='text'] {
   text-align: center;
 }
 #collections_modal .modal-content .modal-header button.close {
-  padding: 5px;
+  padding-top: 0px;
+  padding-right: 2px;
 }
-#collections_modal .modal-content .modal-header h5 {
-  padding: 11px 15px;
-  margin: 0;
-  line-height: 23px;
-}
-#collections_modal .modal-content .modal-footer {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  padding: 10px;
-  margin-top: 0;
-  z-index: 1101;
+#collections_modal .modal-content .modal-header button.close:hover {
+  color: red;
 }
 #collections_modal .modal-content .modal-body {
   position: absolute;
-  top: 46px;
+  top: 33px;
   right: 0;
   left: 0;
-  bottom: 54px;
+  bottom: 0px;
   overflow-y: auto;
+  overflow-x: none;
+  padding: 4px;
   background: linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
   background-attachment: local, local, scroll, scroll;
   -webkit-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
@@ -540,6 +537,34 @@ input[type='text'] {
   width: 200px;
   float: left;
 }
+#collections_modal #sample-collections-tabs .dropdown.open .dropdown-toggle {
+  background: none;
+}
+#collections_modal #sample-collections-tabs .dropdown .dropdown-menu {
+  margin: 0px;
+  -webkit-border-radius: 0;
+  -webkit-background-clip: padding-box;
+  border-radius: 0;
+  background-clip: padding-box;
+  border-top: none;
+  border-left: none;
+  border-right: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+#collections_modal #sample-collections-tabs .dropdown-toggle {
+  padding: 4px 0px 4px 8px;
+}
+#collections_modal #sample-collections-tabs .dropdown-toggle:hover,
+#collections_modal #sample-collections-tabs .dropdown-toggle:focus {
+  background: none;
+}
+#collections_modal #sample-collections-tabs .dropdown-toggle:hover h4,
+#collections_modal #sample-collections-tabs .dropdown-toggle:focus h4 {
+  text-decoration: underline;
+}
+#collections_modal #sample-collections-tabs .dropdown-toggle h4 {
+  text-align: left;
+}
 /*the grid*/
 .box {
   width: 50%;
@@ -549,20 +574,17 @@ input[type='text'] {
 }
 .box .innerContent {
   position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 10px;
-  bottom: 10px;
+  left: 4px;
+  right: 4px;
+  top: 4px;
+  bottom: 4px;
   overflow: hidden;
   text-align: center;
   font-size: 0;
   border: solid 1px #D6D6D6;
-  -webkit-border-radius: 5px;
-  -webkit-background-clip: padding-box;
-  border-radius: 5px;
-  background-clip: padding-box;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  background-color: white;
+  -webkit-transition: all 0.17s ease-In-Out;
+  transition: all 0.17s ease-In-Out;
 }
 .box .innerContent img {
   max-width: 90%;
@@ -579,14 +601,11 @@ input[type='text'] {
 .box .innerContent:hover {
   -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-  -webkit-border-radius: 5px;
-  -webkit-background-clip: padding-box;
-  border-radius: 5px;
-  background-clip: padding-box;
   top: 0px;
   left: 0px;
   right: 0px;
   bottom: 0px;
+  z-index: 9999;
 }
 .box.generated .innerContent img {
   min-width: 90%;
