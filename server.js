@@ -1,11 +1,10 @@
-var env = process.env;
 var express = require('express');
-var app = express();
 var utils = require('./utils');
 
+var app = express();
+
 console.log("Starting patter.net server");
-
-
+//app.use(express.favicon());
 app.use(express.static(__dirname + '/public'));
 
 app.all('/imgtob64', function (req, res) {

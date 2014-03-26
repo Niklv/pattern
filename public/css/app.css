@@ -288,19 +288,19 @@ input[type='text'] {
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample > a > div {
   background: #000000;
-  width: 5.3999999999999995px;
+  width: 5.4px;
   height: 36px;
   position: relative;
-  margin: 7px 22.299999999999997px 7px 22.299999999999997px;
+  margin: 7px 22.3px 7px 22.3px;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample > a > div:before {
   background: #000000;
   content: "";
   width: 36px;
-  height: 5.3999999999999995px;
+  height: 5.4px;
   position: absolute;
-  top: 15.299999999999999px;
-  left: -15.299999999999999px;
+  top: 15.3px;
+  left: -15.3px;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample > .dropdown-menu {
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -618,8 +618,8 @@ input[type='text'] {
 }
 @media all and (min-width: 400px) {
   .box {
-    width: 33.333333333333336%;
-    padding-bottom: 33.333333333333336%;
+    width: 33.33333333%;
+    padding-bottom: 33.33333333%;
   }
 }
 @media all and (min-width: 600px) {
@@ -636,14 +636,14 @@ input[type='text'] {
 }
 @media all and (min-width: 1000px) {
   .box {
-    width: 16.666666666666668%;
-    padding-bottom: 16.666666666666668%;
+    width: 16.66666667%;
+    padding-bottom: 16.66666667%;
   }
 }
 @media all and (min-width: 1200px) {
   .box {
-    width: 14.285714285714286%;
-    padding-bottom: 14.285714285714286%;
+    width: 14.28571429%;
+    padding-bottom: 14.28571429%;
   }
 }
 @media all and (min-width: 1400px) {
@@ -654,8 +654,8 @@ input[type='text'] {
 }
 @media all and (min-width: 1600px) {
   .box {
-    width: 11.11111111111111%;
-    padding-bottom: 11.11111111111111%;
+    width: 11.11111111%;
+    padding-bottom: 11.11111111%;
   }
 }
 @media all and (min-width: 1800px) {
