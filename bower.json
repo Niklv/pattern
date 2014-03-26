@@ -1,6 +1,6 @@
 {
   "name": "pattern",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/Niklv/pattern",
   "authors": [
     "Nikita Lvov <niklvov@gmail.com>"
@@ -10,14 +10,14 @@
     "node_modules"
   ],
   "dependencies": {
-    "bootstrap": "~3.1.0",
-    "underscore": "~1.5.2",
-    "backbone": "~1.1.0",
-    "jquery": "~2.1.0",
-    "fabric": "~1.4.0",
+    "bootstrap": "3.*.*",
+    "underscore": "1.*.*",
+    "backbone": "1.*.*",
+    "jquery": "2.*.*",
+    "fabric": "1.*.*",
     "FileSaver": "*",
-    "lesshat": "~2.0.14",
+    "lesshat": "2.*.*",
     "json2": "*",
-    "requirejs": "~2.1.11"
+    "requirejs": "2.*.*"
   }
 }

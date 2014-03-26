@@ -29,6 +29,6 @@
     "commit": "3c656e9c95ee705e83a9f49fe6cb6862270cf9a9"
   },
   "_source": "git://github.com/kangax/fabric.js.git",
-  "_target": "~1.4.0",
+  "_target": "1.*.*",
   "_originalSource": "fabric"
 }

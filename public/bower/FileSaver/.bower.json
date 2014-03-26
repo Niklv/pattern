@@ -19,11 +19,11 @@
     "test",
     "tests"
   ],
-  "_release": "5c0a372216",
+  "_release": "7cc9f38c94",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "5c0a3722161ec1d97dc7627f10286ffb4f4cd02b"
+    "commit": "7cc9f38c9475f71c3419ebf2db6ea25b67b08a9e"
   },
   "_source": "git://github.com/eligrey/FileSaver.js.git",
   "_target": "*",
