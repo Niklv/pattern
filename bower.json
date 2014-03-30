@@ -18,6 +18,7 @@
     "FileSaver": "*",
     "lesshat": "2.*.*",
     "json2": "*",
-    "requirejs": "2.*.*"
+    "requirejs": "2.*.*",
+    "font-awesome": "~4.0.3"
   }
 }
