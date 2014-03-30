@@ -1,8 +1,10 @@
 //GOOGLE FONTS
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400&subset=latin,cyrillic);
-//LESSHAT properties
-@import "../bower/lesshat/build/lesshat.less";
+@import "../bower/lesshat/build/lesshat";
+@import "../bower/font-awesome/less/font-awesome";
+@import "../bower/bootstrap/less/bootstrap";
 
+//LESSHAT properties
 @w3c: true;
 @webkit: true;
 @moz: false;
@@ -12,25 +14,29 @@
 
 //TAB SETTINGS
 @controls_bg: #ffffff;
-@tab_space_bg: #95A5A6;
+@tab_space_bg: #2f4154;
 @tab_active: @controls_bg;
-@tab_unactive: #BDC3C7;
-@tab_unactive_hover: #dee4e8;
-@plus_color: #000000;
+@tab_unactive: #2f4154;
+@tab_unactive_hover: #415b76;
+@plus_color: #1abc9c;
+@close_color: #e74c3c;
 @tab_height: 50px;
 @tab_width: 135px;
 @tab_spacing: 1px;
 
 //CONTROLS SETTINGS
-@button_color: #2ECC71;
+@button_color: #1abc9c;
 @download_button: @button_color;
-@input_bg: #ECF0F1;
-@slider_bg: #7F8C8D;
-@slider_handle: #BDC3C7;
-@slider_handle_active: #91989c;
-@slider_range: #7F8C8D;
-@slider_side_margin: 7px;
-@slider_heigth: 5px;
+@input_bg: #FFF;
+@input_border_radius: 5px;
+@input_border_color: #bdc3c7;
+@input_focus_border_color: #1abc9c;
+
+@slider_bg: #ebedef;
+@slider_handle: #16a085;
+@slider_handle_active: #48c9b0;
+@slider_range: #1abc9c;
+@slider_side_margin: 10px;
 @input_len: 62px;
 @label_len: 53px;
 @controls_row: 27px;
@@ -41,20 +47,22 @@
 
 //OTHER
 @preview_button_height: 25px;
+@preview_button_color: #2f4154;
 
 //IMG
 @check_box_img: "/img/check_radio_sheet.png";
 
 //SLIDER
 .ui-slider {
-  margin-top: 11px;
-  height: @slider_heigth;
+  margin-top: 9px;
+  height: 10px;
   position: relative;
   text-align: left;
   background-color: @slider_bg;
-  border: #EBEBEB 1px solid;
-  .border-radius(5px);
+  //border: #EBEBEB 1px solid;
+  .border-radius(32px);
   .ui-slider-range {
+    border-radius: 30px 0 0 30px;
     position: absolute;
     z-index: 1;
     display: block;
@@ -68,17 +76,15 @@
   .ui-slider-handle {
     position: absolute;
     z-index: 2;
-    width: 4px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
     background-color: @slider_handle;
-    top: -4.5px;
-    margin-left: -3px;
-    //.border-radius(3px);
-    //border: 2px solid #858585;
-    &:focus {
+    top: -3px;
+    margin-left: -8px;
+    .border-radius(30px);
+    &:hover, &:focus, &:active {
       outline: none;
-      //border: 1px solid gray;
       background-color: @slider_handle_active;
     }
   }
@@ -109,10 +115,16 @@ input[type="checkbox"], input[type="radio"] {
   }
   &[type="radio"] {
     + label span:first-child {
-      background: url(@check_box_img) -38px top no-repeat;
+      .fa(@fa-var-circle);
+      font-size: 18px;
+      color: @slider_handle;
+      //background: url(@check_box_img) -38px top no-repeat;
     }
     &:checked + label span:first-child {
-      background: url(@check_box_img) -57px top no-repeat;
+      .fa(@fa-var-circle-o);
+      font-size: 18px;
+      color: @slider_handle;
+      //background: url(@check_box_img) -57px top no-repeat;
     }
   }
 }
@@ -145,9 +157,13 @@ input[type="checkbox"], input[type="radio"] {
 
 //INPUT DESIGN
 input:not([type]), input[type='text'] {
-  border: none;
-  .border-radius(0);
+  //border: none;
+  .border-radius(@input_border_radius);
   background-color: @input_bg;
+  border: 1px solid @input_border_color;
+  &:focus {
+    border: 2px solid @input_focus_border_color;
+  }
   outline: none;
   height: 27px;
   padding: 3px;
@@ -158,7 +174,7 @@ input:not([type]), input[type='text'] {
 .green-button {
   background-color: @download_button;
   background-image: none;
-  .border-radius(0);
+  .border-radius(@input_border_radius);
   border: none;
   color: white;
 }
@@ -314,7 +330,7 @@ input:not([type]), input[type='text'] {
           top: -1px;
           right: 3px;
           &:hover {
-            color: red;
+            color: @close_color;
           }
         }
       }
@@ -343,27 +359,18 @@ input:not([type]), input[type='text'] {
     &:hover {
       cursor: pointer;
       text-decoration: none;
-      background: @tab_unactive;
+      background: @tab_unactive_hover;
     }
-    @plus_padding: 7px;
+    @plus_padding: 10px;
     @plus_height: @tab_height - 2*@plus_padding;
     @plus_aspect: 0.15;
     @plus_offset: (1 - @plus_aspect)/2;
     > div {
-      //font-size: 60px;
-      //font-family: sans-serif;
-      //font-weight: 100;
-      //padding-top: 1px;
-      //color: @plus_color;
-      //line-height: @tab_height;
-      //.animation(loading 10s);
-
       background: @plus_color;
       width: @plus_aspect*@plus_height;
       height: @plus_height;
       position: relative;
       margin: @plus_padding @plus_offset*@plus_height+@plus_padding @plus_padding @plus_offset*@plus_height+@plus_padding;
-
       &:before {
         background: @plus_color;
         content: "";
@@ -425,11 +432,13 @@ input:not([type]), input[type='text'] {
       }
       button.random {
         font-size: 14px;
-        .border-radius(30px);
-        width: 20px;
-        height: 20px;
-        padding: 0;
+        .border-radius(5px);
+        height: 28px;
         outline: none;
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: 170px;
       }
     }
   }
@@ -534,7 +543,7 @@ input:not([type]), input[type='text'] {
   border: none;
   padding: 0;
   margin: 0;
-  background-color: #34495E;
+  background-color: @preview_button_color;
   z-index: 500;
   color: white;
   outline: none;
@@ -601,7 +610,7 @@ input:not([type]), input[type='text'] {
         padding-top: 0px;
         padding-right: 2px;
         &:hover {
-          color: red;
+          color: @close_color;
         }
       }
     }
@@ -727,6 +736,18 @@ input:not([type]), input[type='text'] {
   }
 }
 
+.fa(@var) {
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  &:before {
+    content: @var;
+  }
+}
 
 //CANVAS
 #canvas-wrapper {
@@ -750,7 +771,6 @@ input:not([type]), input[type='text'] {
     }
   }
 }
-
 
 //ALERTS
 .alerts {
@@ -836,14 +856,14 @@ h1, h2, h3, h4, h5, h6, input, label {
 //LOADING SPLASH
 #loading-hover {
   &.non-visible {
-    opacity: 0;
+    .opacity(0);
     pointer-events: none;
     z-index: -1;
   }
   .transition(opacity 0.5s linear);
   .transform(translateZ(0));
   .backface-visibility(hidden);
-  opacity: 1;
+  .opacity(1);
   position: absolute;
   top: 0px;
   left: 0px;
@@ -864,7 +884,7 @@ h1, h2, h3, h4, h5, h6, input, label {
   .spin {
     cursor: wait;
     background-color: rgba(0, 0, 0, 0);
-    opacity: .8;
+    .opacity(.8);
     border-radius: @spin_size;
     border-right: 10px solid @button_color;
     border-bottom: 10px solid @button_color;
