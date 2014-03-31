@@ -1,1 +1,1 @@
-var ANIM_TIME = 100;
+var ANIM_TIME = 200;

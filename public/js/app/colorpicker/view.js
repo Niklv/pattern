@@ -105,12 +105,12 @@ var ColorpickerView = Backbone.View.extend({
         //check for visibility
         if (this._$.color_picker.height() + this._$.color_input.outerHeight(true) + this._$.color_input.offset().top <= $(window).height())
             this._$.color_picker.css({
-                top: this._$.color_input.outerHeight(true) + this._$.color_input.position().top + "px",
+                top: this._$.color_input.outerHeight(true) + this._$.color_input.position().top + 2 + "px",
                 left: this._$.color_input.position().left + "px"
             }).removeClass("upSideDown");
         else
             this._$.color_picker.css({
-                top: -this._$.color_picker.height() + "px",
+                top: 0 - 3 - this._$.color_picker.height() + "px",
                 left: this._$.color_input.position().left + "px"
             }).addClass("upSideDown");
         this.messages.trigger("hide");
@@ -125,12 +125,12 @@ var ColorpickerView = Backbone.View.extend({
         e.preventDefault();
         if (this._$.alpha_picker.height() + this._$.alpha_input.outerHeight(true) + this._$.alpha_input.offset().top <= $(window).height())
             this._$.alpha_picker.css({
-                top: this._$.alpha_input.outerHeight(true) + this._$.alpha_input.position().top + "px",
+                top: this._$.alpha_input.outerHeight(true) + this._$.alpha_input.position().top + 2 + "px",
                 left: this._$.alpha_input.position().left + "px"
             }).removeClass("upSideDown");
         else
             this._$.alpha_picker.css({
-                top: -this._$.alpha_picker.height() + "px",
+                top: 0 - 3 - this._$.alpha_picker.height() + "px",
                 left: this._$.alpha_input.position().left + "px"
             }).addClass("upSideDown");
         this.messages.trigger("hide");
@@ -344,7 +344,7 @@ var ColorpickerView = Backbone.View.extend({
     change_mouse_state: function () {
         isMouseClickedInside = false;
     },
-    removeVisClass: function(){
+    removeVisClass: function () {
         this._$.color_picker.removeClass('vis');
         this._$.alpha_picker.removeClass('vis');
     }

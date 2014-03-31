@@ -1,6 +1,7 @@
 function test() {
     addTestSample("sample_1_1.png");
     //$('#collections_modal').modal('show');
+    //$('#collections_modal div').click();
     //addTestSample("sample_1_2.png");
     //addTestSample("sample_1_3.png");
     //addTestSample("sample_1_4.png");

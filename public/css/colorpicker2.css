@@ -175,24 +175,24 @@ body.unselectable {
   display: block;
   -webkit-transform-origin: 50% 0%;
   transform-origin: 50% 0%;
-  -webkit-animation: 0.5s flipInX forwards;
-  animation: 0.5s flipInX forwards;
+  -webkit-animation: 0.5s openAnim forwards;
+  animation: 0.5s openAnim forwards;
 }
 .color-picker .vis.none {
-  -webkit-animation: 0.5s flipOutX forwards;
-  animation: 0.5s flipOutX forwards;
+  -webkit-animation: 0.5s closeAnim forwards;
+  animation: 0.5s closeAnim forwards;
 }
 .color-picker .vis.upSideDown {
   -webkit-transform-origin: 50% 100%;
   transform-origin: 50% 100%;
 }
-.flipInX {
-  -webkit-animation: 0.5s flipInX forwards;
-  animation: 0.5s flipInX forwards;
+.ShowCP {
+  -webkit-animation: 0.5s openAnim forwards;
+  animation: 0.5s openAnim forwards;
 }
-.flipOutX {
-  -webkit-animation: 0.5s flipOutX forwards;
-  animation: 0.5s flipOutX forwards;
+.HideCP {
+  -webkit-animation: 0.5s closeAnim forwards;
+  animation: 0.5s closeAnim forwards;
 }
 lesshat-selector {
   -lh-property: 0; } 
@@ -207,4 +207,18 @@ lesshat-selector {
 @-moz-keyframes flipOutX{ 0% {-moz-transform: perspective(400px) rotateX(0deg);opacity: 1;} 100% { -moz-transform: perspective(400px) rotateX(90deg); opacity: 0;}}
 @-o-keyframes flipOutX{ 0% {-o-transform: perspective(400px) rotateX(0deg);opacity: 1;} 100% { -o-transform: perspective(400px) rotateX(90deg); opacity: 0;}}
 @keyframes flipOutX{ 0% {-webkit-transform: perspective(400px) rotateX(0deg);-moz-transform: perspective(400px) rotateX(0deg);-ms-transform: perspective(400px) rotateX(0deg);transform: perspective(400px) rotateX(0deg);opacity: 1;} 100% {-webkit-transform: perspective(400px) rotateX(90deg);-moz-transform: perspective(400px) rotateX(90deg);-ms-transform: perspective(400px) rotateX(90deg);transform: perspective(400px) rotateX(90deg); opacity: 0;};
+}
+lesshat-selector {
+  -lh-property: 0; } 
+@-webkit-keyframes openAnim{ 0% {-webkit-transform: rotateX(90deg);opacity: 0;} 100% {-webkit-transform: rotateX(0deg);opacity: 1;}}
+@-moz-keyframes openAnim{ 0% {-moz-transform: rotateX(90deg);opacity: 0;} 100% {-moz-transform: rotateX(0deg);opacity: 1;}}
+@-o-keyframes openAnim{ 0% {-o-transform: rotateX(90deg);opacity: 0;} 100% {-o-transform: rotateX(0deg);opacity: 1;}}
+@keyframes openAnim{ 0% {-webkit-transform: rotateX(90deg);-moz-transform: rotateX(90deg);-ms-transform: rotateX(90deg);transform: rotateX(90deg);opacity: 0;} 100% {-webkit-transform: rotateX(0deg);-moz-transform: rotateX(0deg);-ms-transform: rotateX(0deg);transform: rotateX(0deg);opacity: 1;};
+}
+lesshat-selector {
+  -lh-property: 0; } 
+@-webkit-keyframes closeAnim{ 0% {-webkit-transform: rotateX(0deg);opacity: 1;} 100% {-webkit-transform: rotateX(90deg);opacity: 0;}}
+@-moz-keyframes closeAnim{ 0% {-moz-transform: rotateX(0deg);opacity: 1;} 100% {-moz-transform: rotateX(90deg);opacity: 0;}}
+@-o-keyframes closeAnim{ 0% {-o-transform: rotateX(0deg);opacity: 1;} 100% {-o-transform: rotateX(90deg);opacity: 0;}}
+@keyframes closeAnim{ 0% {-webkit-transform: rotateX(0deg);-moz-transform: rotateX(0deg);-ms-transform: rotateX(0deg);transform: rotateX(0deg);opacity: 1;} 100% {-webkit-transform: rotateX(90deg);-moz-transform: rotateX(90deg);-ms-transform: rotateX(90deg);transform: rotateX(90deg);opacity: 0;};
 }
