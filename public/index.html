@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!--<link href="bower/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen"/>
     <link href="bower/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" media="screen"/>-->
-    <link href="css/colorpicker2.css" rel="stylesheet" media="screen"/>
+    <!--<link href="css/colorpicker2.css" rel="stylesheet" media="screen"/>-->
     <link href="css/app.css" rel="stylesheet" media="screen"/>
 </head>
 <body>
@@ -57,7 +57,9 @@
 
                 <div class="autofill-checkbox">
                     <input id="autofill-checkbox" type="checkbox">
-                    <label class="checkbox" for="autofill-checkbox"><span></span> Autofill</label>
+                    <label class="checkbox" for="autofill-checkbox">Autofill
+                        <span data-toggle="tooltip" data-placement="right" title="Autofill may slow rendering performance"></span>
+                    </label>
                 </div>
                 <div class="control color">
                     <label for="hex-color">Color</label>
@@ -72,6 +74,7 @@
                     <input id="canvas-width" class="filter-field input-sm" data-option="width"/>
 
                 </div>
+                <span class="lock-origin-ratio glyphicon glyphicon-lock"></span>
                 <div class="control height">
                     <label for="canvas-height">Height</label>
 

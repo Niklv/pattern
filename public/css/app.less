@@ -1,8 +1,10 @@
 //GOOGLE FONTS
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400&subset=latin,cyrillic);
 @import "../bower/lesshat/build/lesshat";
-@import "../bower/font-awesome/less/font-awesome";
+@import "../bower/font-awesome/less/path";
+@import "../bower/font-awesome/less/variables";
 @import "../bower/bootstrap/less/bootstrap";
+@import "colorpicker2";
 
 //LESSHAT properties
 @w3c: true;
@@ -29,18 +31,45 @@
 @download_button: @button_color;
 @input_bg: #FFF;
 @input_border_radius: 5px;
-@input_border_color: #bdc3c7;
+@input_border_color: #ECF0F1;
 @input_focus_border_color: #1abc9c;
-
-@slider_bg: #ebedef;
-@slider_handle: #16a085;
-@slider_handle_active: #48c9b0;
-@slider_range: #1abc9c;
-@slider_side_margin: 10px;
 @input_len: 62px;
 @label_len: 53px;
 @controls_row: 27px;
 @controls_bot_margin: 5px;
+
+//SLIDER
+@slider_bg: #ECF0F1;
+@slider_handle: #16a085;
+@slider_handle_active: #48c9b0;
+@slider_range: #1abc9c;
+@slider_side_margin: 10px;
+
+//CHECKBOX
+@checkbox_width: 68px;
+@checkbox_height: 27px;
+@checkbox_ok_color: #16A085;
+@checkbox_ok_bg: #1ABC9C;
+@checkbox_x_color: #C0392B;
+@checkbox_x_bg: #E74C3C;
+
+//RADIO
+@radio_color: #16a085;
+@radio_active: #48c9b0;
+
+//RATIO
+.lock-origin-ratio {
+  position: absolute;
+  font-size: 10px;
+  color: #dbdbdb;
+  &:hover {
+    cursor: pointer;
+    color: #7d7d7d;
+  }
+  &.locked {
+    color: #3b3b3b;
+  }
+}
 
 //LOADING SPINNER
 @spin_size: 75px;
@@ -49,9 +78,6 @@
 @preview_button_height: 25px;
 @preview_button_color: #2f4154;
 
-//IMG
-@check_box_img: "/img/check_radio_sheet.png";
-
 //SLIDER
 .ui-slider {
   margin-top: 9px;
@@ -59,7 +85,6 @@
   position: relative;
   text-align: left;
   background-color: @slider_bg;
-  //border: #EBEBEB 1px solid;
   .border-radius(32px);
   .ui-slider-range {
     border-radius: 30px 0 0 30px;
@@ -71,7 +96,6 @@
     height: 100%;
     top: 0;
     left: 0;
-    //.border-radius(5px);
   }
   .ui-slider-handle {
     position: absolute;
@@ -90,41 +114,83 @@
   }
 }
 
-//CHECKBOX AND RADIO DESIGN
-input[type="checkbox"], input[type="radio"] {
+//RADIO DESIGN
+input[type="radio"] {
   display: none;
   + label span:first-child {
-    display: inline-block;
-    width: 19px;
-    height: 19px;
-    margin: -2px 0 0 0;
-    vertical-align: middle;
     cursor: pointer;
     .user-select(none);
   }
   + label {
     padding-left: 0;
   }
-  &[type="checkbox"] {
-    + label span {
-      background: url(@check_box_img) left top no-repeat;
-    }
-    &:checked + label span {
-      background: url(@check_box_img) -19px top no-repeat;
-    }
-  }
   &[type="radio"] {
     + label span:first-child {
+      display: inline-block;
+      width: 18px;
+      height: 19px;
+      margin: -2px 0 0 0;
+      vertical-align: middle;
       .fa(@fa-var-circle);
       font-size: 18px;
-      color: @slider_handle;
-      //background: url(@check_box_img) -38px top no-repeat;
+      color: @radio_color;
+      &:hover {
+        color: @radio_active;
+      }
+    ;
     }
     &:checked + label span:first-child {
       .fa(@fa-var-circle-o);
       font-size: 18px;
-      color: @slider_handle;
-      //background: url(@check_box_img) -57px top no-repeat;
+    }
+  }
+}
+
+//CHECKBOX
+input[type="checkbox"] {
+  display: none;
+  + label {
+    position: relative;
+    padding-left: 0;
+    .tooltip-inner {
+      width: 150px;
+    }
+  }
+  + label span {
+    &:first-child {
+      cursor: pointer;
+      .user-select(none);
+    }
+    position: absolute;
+    left: 63px;
+    top: -3px;
+    display: block;
+    overflow: hidden;
+    width: @checkbox_width;
+    height: @checkbox_height;
+    .border-radius(@input_border_radius);
+    .fa(@fa-var-times);
+    font-size: @checkbox_height - 1;
+    color: white;
+    background-color: @checkbox_x_bg;
+    &:before {
+      .transition(all .3s ease-in-out);
+      background-color: @checkbox_x_color;
+      display: block;
+      position: absolute;
+      .border-radius(@input_border_radius);
+      text-align: center;
+      left: 0;
+      width: @checkbox_width/2;
+      height: @checkbox_height;
+    }
+  }
+  &:checked + label span {
+    .fa(@fa-var-check);
+    background-color: @checkbox_ok_bg;
+    &:before {
+      background-color: @checkbox_ok_color;
+      left: @checkbox_width/2;
     }
   }
 }
@@ -193,6 +259,8 @@ input:not([type]), input[type='text'] {
     }
   }
   .result-wrapper {
+    .border-radius(@input_border_radius);
+    overflow: hidden;
     width: 62px;
     height: @controls_row;
     margin-top: 0px;
@@ -310,7 +378,7 @@ input:not([type]), input[type='text'] {
         max-height: 100%;
         max-width: 100%;
         height: auto;
-        box-sizing: border-box;
+        .box-sizing(border-box);
         pointer-events: none;
       }
       button, &:hover button {
@@ -443,8 +511,10 @@ input:not([type]), input[type='text'] {
     }
   }
   .canvas-options {
+    position: relative;
+    .user-select(none);
     .autofill-checkbox label {
-      width: 80px;
+      width: 135px;
       cursor: pointer;
     }
     .controls.color {
@@ -456,6 +526,10 @@ input:not([type]), input[type='text'] {
         right: 0px;
         height: 27px;
       }
+    }
+    .lock-origin-ratio {
+      top: 142px;
+      left: 32px;
     }
     .download-image {
       margin-bottom: @controls_bot_margin;
@@ -509,19 +583,9 @@ input:not([type]), input[type='text'] {
       }
     }
   }
-  .lock-origin-ratio {
-    position: absolute;
+  .tab-pane .lock-origin-ratio {
     top: 56px;
     left: 30px;
-    font-size: 10px;
-    color: #dbdbdb;
-    &:hover {
-      cursor: pointer;
-      color: #7d7d7d;
-    }
-    &.locked {
-      color: #3b3b3b;
-    }
   }
   .infolinks {
     color: #bcbcbc;
@@ -587,6 +651,7 @@ input:not([type]), input[type='text'] {
 
 //COLLECTION MODAL
 #collections_modal {
+  overflow: hidden;
   .modal-content {
     position: absolute;
     @margin: 50px;
@@ -906,3 +971,9 @@ h1, h2, h3, h4, h5, h6, input, label {
 .keyframes(~'addTab, 0% {width: 0;transform: translateY(2000px);} 30%{width: @{tab_width}; transform: translateY(@{tab_height});} 100% {transform: translateY(0);}');
 .keyframes(~'removeTab, 0% {transform: translateY(0px);} 70%{width: @{tab_width}; transform: translateY(@{tab_height});} 100% {transform: translateY(2000px);width: 0;}');
 //.keyframes(~'hideAllControls, 0% {bottom: 0px;} 100% {bottom: -320px;}');
+
+* {
+  .transition-property(background-color, color);
+  .transition-duration(0.25s);
+  .transition-timing-function(ease);
+}

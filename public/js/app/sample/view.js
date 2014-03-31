@@ -40,8 +40,7 @@ var SampleView = Backbone.View.extend({
         this.$tabHeader.find('a[data-toggle="tab"]').on('show.bs.tab', _.bind(function () {
             this.colorpicker.view.removeVisClass();
         }, this));
-        //this.$tabHeader.draggable({ axis: "x", drag: _.bind(this.on_drag, this)});
-        //this.j.colorpicker.colorPicker("init", {opacity: 1, position: "top"}).colorPicker("setRGBA", this.model.get("overlay"));
+        this.bump_opacity = _.once(this.bump_opacity);
         this.colorpicker = new Colorpicker(null, {el: this.$el.find('.color-picker').eq(0), alpha: true});
         this.colorpicker.setRGBA(this.model.get("overlay"));
         this.colorpicker.on("change:color", _.bind(this.color_changed, this));
@@ -204,11 +203,16 @@ var SampleView = Backbone.View.extend({
     ratio_changed: function () {
         this.j.origin_ratio.toggleClass("locked");
         this.model.set("lock_ratio", !(this.model.get("lock_ratio")));
-
     },
     color_changed: function (ev) {
         this.model.set("overlay", this.colorpicker.getRGBA());
+        this.bump_opacity();
         this.model.model_changed({changed: {overlay: null}});
+    },
+    bump_opacity: function () {
+        var rgba = this.colorpicker.getRGBA();
+        rgba.a = 1;
+        this.colorpicker.setRGBA(rgba);
     }
 });
 

@@ -4,7 +4,14 @@ body.unselectable {
 }
 .color-picker .picker_window_style {
   position: absolute;
-  background-color: #ECF0F1;
+  background-color: white;
+  border: 1px solid #ecf0f1;
+  -webkit-border-radius: 5px;
+  -webkit-background-clip: padding-box;
+  border-radius: 5px;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
   -webkit-backface-visibility: visible;
@@ -17,15 +24,22 @@ body.unselectable {
 }
 .color-picker .picker {
   position: absolute;
-  background-color: #ECF0F1;
+  background-color: white;
+  border: 1px solid #ecf0f1;
+  -webkit-border-radius: 5px;
+  -webkit-background-clip: padding-box;
+  border-radius: 5px;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
   -webkit-backface-visibility: visible;
   backface-visibility: visible;
   display: none;
   z-index: 9998;
-  width: 155px;
-  height: 130px;
+  width: 157px;
+  height: 132px;
 }
 .color-picker .picker > div {
   height: 120px;
@@ -86,15 +100,22 @@ body.unselectable {
 }
 .color-picker .op-picker {
   position: absolute;
-  background-color: #ECF0F1;
+  background-color: white;
+  border: 1px solid #ecf0f1;
+  -webkit-border-radius: 5px;
+  -webkit-background-clip: padding-box;
+  border-radius: 5px;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
   -webkit-backface-visibility: visible;
   backface-visibility: visible;
   display: none;
   z-index: 9998;
-  width: 30px;
-  height: 130px;
+  width: 32px;
+  height: 132px;
 }
 .color-picker .op-picker > div {
   height: 120px;

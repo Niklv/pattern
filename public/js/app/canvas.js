@@ -4,6 +4,7 @@ var Canvas = Backbone.Model.extend({
         autoupdate: false,
         height: 300,
         width: 300,
+        lock_ratio: true,
         range: {
             width: {
                 min: 0,
@@ -44,12 +45,13 @@ var Canvas = Backbone.Model.extend({
             var cnv_off = APP.$cnv.offset();
             //console.log(cnv_off.left,cnv_off.top, s * canvas_w + 'px ' + s * canvas_h + 'px');
             $('.pattern-preview-area').css({
-             'background-position': cnv_off.left+'px '+cnv_off.top+ 'px',
-             'background-size': s * canvas_w + 'px ' + s * canvas_h + 'px'
-             });
+                'background-position': cnv_off.left + 'px ' + cnv_off.top + 'px',
+                'background-size': s * canvas_w + 'px ' + s * canvas_h + 'px'
+            });
         }).resize();
         new CanvasView({model: this});
         this.on("change", this.update);
+        this.on("change:lock_ratio", this.lock_ratio);
         this.on("change:width", this.width);
         this.on("change:height", this.height);
         this.on("change:color", this.color);
@@ -73,15 +75,27 @@ var Canvas = Backbone.Model.extend({
     width: function () {
         this.canvas.setWidth(this.get("width"));
         $('#canvas-wrapper').width(this.get("width"));
+        if (this.get('lock_ratio') && (this.get('width') != this.get('height')))
+            this.set('height', this.get('width'));
         $(window).resize();
     },
     height: function () {
         this.canvas.setHeight(this.get("height"));
         $('#canvas-wrapper').height(this.get("height"));
-        $(window).resize();
+        if (this.get('lock_ratio') && (this.get('width') != this.get('height')))
+            this.set('width', this.get('height'));
+        else
+            $(window).resize();
     },
     removeAll: function () {
         this.canvas._objects = [];
+    },
+    lock_ratio: function () {
+        var max = Math.max(this.get('width'), this.get('height'));
+        this.set({
+            width: max,
+            height: max
+        });
     },
     update: function () {
         this.canvas._objects = _.sortBy(this.canvas._objects, function (obj) {
@@ -138,7 +152,9 @@ var Canvas = Backbone.Model.extend({
 var CanvasView = Backbone.View.extend({
     initialize: function () {
         this.$el = $('.canvas-options');
-        //this.$el.find('.colorpicker').colorPicker("init", {}).colorPicker("setHEX", this.model.get("color"));
+        $('.autofill-checkbox span').tooltip();
+        if (this.model.get("lock_ratio"))
+            this.$el.find(".lock-origin-ratio").addClass("locked");
         this.colorpicker = new Colorpicker(null, {el: this.$el.find('.color-picker').eq(0), alpha: false});
         this.colorpicker.set("hex", this.model.get("color"));
         this.colorpicker.view.update_all();
@@ -147,10 +163,14 @@ var CanvasView = Backbone.View.extend({
         new Slider({model: this.model, name: "height", jquery_object: this.$el.find(".height")});
     },
     events: {
-
         "input .colorpicker": "color_changed",
         "change #autofill-checkbox": "autoupdate_changed",
+        "click .lock-origin-ratio": "ratio_changed",
         "click .download": "download_image"
+    },
+    ratio_changed: function () {
+        this.$el.find(".lock-origin-ratio").toggleClass("locked");
+        this.model.set("lock_ratio", !(this.model.get("lock_ratio")));
     },
     color_changed: function (ev) {
         this.model.set("color", this.colorpicker.get("hex"));

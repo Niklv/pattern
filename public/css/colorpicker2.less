@@ -12,6 +12,9 @@
 @color_col_w: 20px;
 @def_margin: 5px;
 @opacity-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAIAAABLbSncAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6ODk4MUJFQjE0RDAwMTFFMzlFQzFBMDYyQkFBRjhDNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6ODk4MUJFQjI0RDAwMTFFMzlFQzFBMDYyQkFBRjhDNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4OTgxQkVBRjREMDAxMUUzOUVDMUEwNjJCQUFGOEM0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4OTgxQkVCMDREMDAxMUUzOUVDMUEwNjJCQUFGOEM0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pq8N0cwAAAAoSURBVHjaYty+fTsDDHh4eMDZTAw4AOkSjP///4dzduzYQQs7AAIMACq4CDGfius/AAAAAElFTkSuQmCC');
+@cp_border_color: #ECF0F1;
+@cp_border_radius: 5px;
+@cp_border_size: 1px;
 
 @circle_radius: 5px;
 @circle_border_size: 2px;
@@ -25,8 +28,10 @@ body.unselectable {
 .color-picker {
   .picker_window_style {
     position: absolute;
-    background-color: #ECF0F1;
-    //.box-shadow(0 0 3px rgba(0, 0, 0, 0.4));
+    background-color: white;
+    border: @cp_border_size solid @cp_border_color;
+    .border-radius(@cp_border_radius);
+    .box-shadow(0 0 30px rgba(0, 0, 0, 0.2));
     //.transition(all .5s);
     .transform-origin(0, 0);
     .backface-visibility(visible);
@@ -68,8 +73,8 @@ body.unselectable {
   }
   .picker {
     .picker_window_style;
-    width: @color_sq_area_size+@color_col_w+3*@def_margin;
-    height: @color_sq_area_size+2*@def_margin;
+    width: @color_sq_area_size+@color_col_w+3*@def_margin + 2*@cp_border_size;
+    height: @color_sq_area_size+2*@def_margin+2*@cp_border_size;
     > div {
       height: @color_sq_area_size;
       margin-top: @def_margin;
@@ -103,8 +108,8 @@ body.unselectable {
   }
   .op-picker {
     .picker_window_style;
-    width: @color_col_w+2*@def_margin;
-    height: @color_sq_area_size+2*@def_margin;
+    width: @color_col_w+2*@def_margin+2*@cp_border_size;
+    height: @color_sq_area_size+2*@def_margin+2*@cp_border_size;
     > div {
       height: @color_sq_area_size;
       margin-top: @def_margin;
