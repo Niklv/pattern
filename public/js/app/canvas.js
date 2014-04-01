@@ -24,7 +24,7 @@ var Canvas = Backbone.Model.extend({
         APP.$cnv = $('.canvas-container');
         APP.$prvbtn = $('.preview-button');
         APP.$cntr_sec = $('.controls-section')
-        $(window).resize(function () {
+        $(window).resize(_.debounce(function () {
             var preview_h = APP.$prvbtn.height(),
                 view_h = APP.$cntr_sec.position().top,
                 canvas_w = APP.$cnv.width(),
@@ -48,8 +48,9 @@ var Canvas = Backbone.Model.extend({
                 'background-position': cnv_off.left + 'px ' + cnv_off.top + 'px',
                 'background-size': s * canvas_w + 'px ' + s * canvas_h + 'px'
             });
-        }).resize();
+        }, 100)).resize();
         new CanvasView({model: this});
+        this.update = _.throttle(this.update, 20);
         this.on("change", this.update);
         this.on("change:lock_ratio", this.lock_ratio);
         this.on("change:width", this.width);
@@ -106,37 +107,9 @@ var Canvas = Backbone.Model.extend({
         } else {
             this.canvas.renderAll(false);
         }
-
     },
     render_to_bg: function () {
-        $(window).resize();
         $('.pattern-preview-area').css('background-image', 'url(' + this.canvas.toDataURL({format: "png", quality: 1}) + ')');
-
-
-        /*
-         this.canvas.renderAll(false);
-         var ctx = this.canvas.getContext("2d");
-         var myImageData = ctx.getImageData(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
-         var bg = document.getElementById('bg_canvas');
-         var bgCtx = bg.getContext("2d");
-         var w = $(window).width(), h = $(window).height();
-         bg.width = w;
-         bg.height = h;
-         while(w>0){
-         w-=this.canvas.getWidth();
-         var oldh=h;
-         while(oldh>0){
-         oldh-=this.canvas.getHeight();
-         bgCtx.putImageData(myImageData, w, oldh);
-         }
-         }
-         /*bgCtx.putImageData(myImageData, 0, 0);
-         bgCtx.putImageData(myImageData, 300, 0);
-         bgCtx.putImageData(myImageData, 600, 0);
-         bgCtx.putImageData(myImageData, 900, 0);
-         bgCtx.putImageData(myImageData, 1200, 0);
-         bgCtx.putImageData(myImageData, 1500, 0);
-         bgCtx.putImageData(myImageData, 1800, 0);*/
     },
     download_image: function () {
         var data = this.canvas.toDataURL({format: "png", quality: 1});

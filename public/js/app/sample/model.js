@@ -276,6 +276,8 @@ var Sample = Backbone.Model.extend({
     },
     remove: function () {
         this.events.trigger("remove:fabric");
+        this.off(null, null, this);
+        APP.Canvas.off(null, null, this);
     },
     randomize: function () {
         var r = this.get("range");
@@ -383,8 +385,12 @@ var Grid = Backbone.Model.extend({
         this.calculateGrid();
         this.sample_events.on("visible", this.visible, this);
         this.sample_events.on("change:grid", this.calculateGrid, this);
+        this.sample_events.on("change:layer", this.changeLayer, this);
         this.sample_events.on("change:fabric_element", this.updateElement, this);
         this.sample_events.on("change:canvas", this.updateBoundingPoints, this);
+    },
+    changeLayer: function(layer){
+        this.set("layer", layer);
     },
     calculateGrid: function () {
         var g = this.get("grid"),
@@ -458,11 +464,12 @@ var Grid = Backbone.Model.extend({
                 }
             }
             R++;
-            if (R > 40) break; //limit to 40 radius items
+            if (R > 40 || opt.length > 200) break; //limit to 40 radius items or to to 200 visible items
         }
         i = 0;
         var vis = opt.toArray();
         this.visible_parts = vis.length;
+        console.log(this.visible_parts);
         //console.log(vis.length);
         while (this.objects.length < this.visible_parts)
             this.objects.add(this.attributes, {sample_events: this.sample_events, grid_events: this.events, el: this.fabric_element});
@@ -563,7 +570,9 @@ var Fabric = Backbone.Model.extend({
         this.sample_events.on("change:canvas", this.updateFabricProperties, this);
         this.sample_events.on("change:layer", this.changeLayer, this);
         this.sample_events.on("remove:fabric", function () {
+            this.off(null, null, this);
             APP.Events.off(null, null, this);
+            this.grid_events.off(null, null, this);
             this.sample_events.off(null, null, this);
         }, this);
         APP.Events.on("reinitialize", this.add, this);

@@ -31,12 +31,13 @@ var SampleCollection = Backbone.Collection.extend({
         this.models[b].set("layer", b);
         APP.Canvas.update();
     },
-    remove_model: function () {
+    remove_model: function (model) {
         APP.Canvas.removeAll();
         this.each(function (sample, i) {
             sample.set("layer", i);
         });
         APP.Events.trigger("reinitialize");
         APP.Canvas.update();
+        model.off();
     }
 });

@@ -71,7 +71,7 @@
                     <div>
                         <div class="slider" data-option="width"></div>
                     </div>
-                    <input id="canvas-width" class="filter-field input-sm" data-option="width"/>
+                    <input id="canvas-width" class="filter-field input-sm" data-option="width" tabindex="11"/>
                     <span class="lock-origin-ratio glyphicon glyphicon-lock"></span>
                 </div>
 
@@ -81,7 +81,7 @@
                     <div>
                         <div class="slider" data-option="height"></div>
                     </div>
-                    <input id="canvas-height" class="filter-field input-sm" data-option="height"/>
+                    <input id="canvas-height" class="filter-field input-sm" data-option="height" tabindex="12"/>
 
                 </div>
                 <div class="download-image">
@@ -192,7 +192,7 @@
         <div>
             <div class="slider" data-option="<%=class_name%>"></div>
         </div>
-        <input id="part-<%=class_name%>" class="input-sm" data-option="<%=class_name%>"/>
+        <input id="part-<%=class_name%>" class="input-sm" tabindex="<%=tabindex%>" data-option="<%=class_name%>"/>
     </div>
 </script>
 
@@ -218,10 +218,10 @@
         </div>
     </div>
     <div class="col-sm-12 col-lg-6">
-        <%= control({class_name:"opacity", name:"Opacity"}) %>
-        <%= control({class_name:"width", name:"Width"}) %>
+        <%= control({class_name:"opacity", name:"Opacity", tabindex:1}) %>
+        <%= control({class_name:"width", name:"Width", tabindex:2}) %>
         <span class="lock-origin-ratio glyphicon glyphicon-lock"></span>
-        <%= control({class_name:"height", name:"Height"}) %>
+        <%= control({class_name:"height", name:"Height", tabindex:3}) %>
         <div class="control grid">
             <label>Grid</label>
 
@@ -243,7 +243,7 @@
 
             </div>
         </div>
-        <%= control({class_name:"angle", name:"Angle"}) %>
+        <%= control({class_name:"angle", name:"Angle", tabindex:4}) %>
         <div class="control overlay">
             <label for="picker">Overlay</label>
 
@@ -251,27 +251,18 @@
         </div>
     </div>
     <div class="col-sm-12 col-lg-6">
-        <%= control({class_name:"count", name:"Count"}) %>
-        <%= control({class_name:"x", name:"X"}) %>
-        <%= control({class_name:"y", name:"Y"}) %>
-        <%= control({class_name:"radius", name:"Radius"}) %>
-        <%= control({class_name:"offset", name:"Offset"}) %>
-        <%= control({class_name:"angle-delta", name:"Angle+"}) %>
+        <%= control({class_name:"count", name:"Count", tabindex:5}) %>
+        <%= control({class_name:"x", name:"X", tabindex:6}) %>
+        <%= control({class_name:"y", name:"Y", tabindex:7}) %>
+        <%= control({class_name:"radius", name:"Radius", tabindex:8}) %>
+        <%= control({class_name:"offset", name:"Offset", tabindex:9}) %>
+        <%= control({class_name:"angle-delta", name:"Angle+", tabindex:10}) %>
     </div>
 </script>
 
 
 <!-- SCRIPTS -->
 <!-- LIBS -->
-<!--<script src="js/jquery.js"></script>
-<script src="js/jquery-ui-1.10.3.custom.js"></script>
-<script src="js/FileSaver.js"></script>
-<script src="js/json2.js"></script>
-<script src="js/underscore.js"></script>
-<script src="js/backbone.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/colorpicker.js"></script>
-<script src="js/fabric.js"></script>-->
 
 <script src="bower/jquery/dist/jquery.js"></script>
 <script src="js/jquery-ui-1.10.3.custom.js"></script>
@@ -286,7 +277,6 @@
 <!-- APP -->
 <script src="js/app/const.js"></script>
 <script src="js/app/utils.js"></script>
-<!--<script src="js/app/colorpicker.js"></script>-->
 <script src="js/app/slider.js"></script>
 <script src="js/app/canvas.js"></script>
 <script src="js/app/colorpicker/model.js"></script>

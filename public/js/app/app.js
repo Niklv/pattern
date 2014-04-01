@@ -102,13 +102,13 @@ var APP = {
         alert.click(nice_hide);
         setTimeout(nice_hide, 5000);
     },
-    onResize: function(){
+    onResize: _.debounce(function(){
         recalculate_tab_width();
         dropdown_add_align();
         //var st = $('.sample-tabs');
         //var plus = $('.add-new-sample');
         //st.css('max-width', $(window).width() - plus.width() + "px");
-    }
+    }, 100)
 };
 
 $(function() {
