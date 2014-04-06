@@ -4,8 +4,7 @@ var utils = require('./utils');
 var app = express();
 
 console.log("Starting patter.net server");
-//app.use(express.favicon());
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/source'));
 
 app.all('/imgtob64', function (req, res) {
     var url = req.param("img_url");
