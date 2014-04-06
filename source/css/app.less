@@ -498,12 +498,13 @@ input:not([type]), input[type='text'] {
   background-repeat: no-repeat;
   background-color: white;
   z-index: 1100;
+  min-height: 320px;
   .tab-content {
-    min-height: 280px;
     .user-select(none);
     .transition(height .5s);
     padding: 0;
     .tab-pane {
+      min-height: 280px;
       //.animation(addTabContent .5s);
       //.transition(display 5s);
       //.transform(translateX(1000px));

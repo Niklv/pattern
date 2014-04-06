@@ -70,7 +70,8 @@ module.exports = function (grunt) {
         processhtml: {
             index: {
                 files: {
-                    'build/index.html': 'source/index.html'
+                    'build/index.html': 'source/index.html',
+                    'build/404.html': 'source/404.html'
                 }
             }
         },
@@ -83,7 +84,8 @@ module.exports = function (grunt) {
                     useShortDoctype: true
                 },
                 files: {
-                    'build/index.html': 'build/index.html'
+                    'build/index.html': 'build/index.html',
+                    'build/404.html': 'build/404.html'
                 }
             }
         },

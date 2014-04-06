@@ -1,0 +1,32 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400&subset=latin,cyrillic);
+
+body {
+  background-color: #34495E;
+}
+
+.cntr {
+  margin: 0 auto;
+  text-align: center;
+  H1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
+    font-size: 200px;
+    color: #1ABC9C;
+    //.longShadow(#2C3E50, 1000);
+  }
+}
+
+.longShadow(@color, @size, @spread: 100, @flag: 1, @tmp: '') when (@size > 0) {
+  @percent: round(@flag / @size * 100) * @spread;
+  @shadowColor: fade(@color, @percent);
+  @shadow: ~"@{size}px @{size}px 0 @{shadowColor}";
+  @ends: ~"@{shadow}, @{tmp}";
+  @shadowString: ~"@{ends} 0 0 0 rgba(0,0,0,0)";
+
+  .longShadowLoop(@string, @index) when (@index < 1) {
+    text-shadow: @string;
+  }
+
+  .longShadowLoop(@shadowString, @size - 1);
+  .longShadow(@color, @size - 1, @spread, @flag + 1, @ends);
+}

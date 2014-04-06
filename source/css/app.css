@@ -457,14 +457,17 @@ input[type='text']:focus {
   background-repeat: no-repeat;
   background-color: white;
   z-index: 1100;
+  min-height: 320px;
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .tab-content {
-  min-height: 280px;
   -webkit-user-select: none;
   user-select: none;
   -webkit-transition: height 0.5s;
   transition: height 0.5s;
   padding: 0;
+}
+.controls-section .bottom-section-wrapper .settings-wrapper .tab-content .tab-pane {
+  min-height: 280px;
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .tab-content .tab-pane button.random {
   font-size: 14px;
