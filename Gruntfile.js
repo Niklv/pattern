@@ -2,13 +2,16 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         clean: {
+            build: {
+                src: 'build/*'
+            },
             fonts: {
-                src: 'public/fonts/*'
+                src: 'source/fonts/*'
             }
         },
         copy: {
             bootstrap: {
-                cwd: 'public/bower/bootstrap/fonts/',
+                cwd: 'source/bower/bootstrap/fonts/',
                 src: '**',
                 dest: 'public/fonts/',
                 expand: true,
@@ -16,7 +19,7 @@ module.exports = function (grunt) {
                 filter: 'isFile'
             },
             font_awesome: {
-                cwd: 'public/bower/font-awesome/fonts/',
+                cwd: 'source/bower/font-awesome/fonts/',
                 src: '**',
                 dest: 'public/fonts/',
                 expand: true,
