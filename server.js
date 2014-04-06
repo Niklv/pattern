@@ -1,10 +1,17 @@
 var express = require('express');
+var compression = require('compression');
 var utils = require('./utils');
 
 var app = express();
 
 console.log("Starting patter.net server");
-app.use(express.static(__dirname + '/source'));
+if (app.get('env') === 'development') {
+    app.use(express.static(__dirname + '/source'));
+} else {
+    app.use(compression());
+    app.use(express.static(__dirname + '/build'));
+}
+
 
 app.all('/imgtob64', function (req, res) {
     var url = req.param("img_url");
@@ -57,13 +64,11 @@ app.all('/imgtob64', function (req, res) {
  }
  });*/
 
-app.configure("production", function () {
-    app.listen(20200);
-    console.log("Listen on 20200!");
-});
 
-app.configure("development", function () {
+if (app.get('env') === 'development') {
     app.listen(20201);
     console.log("Listen on 20201!");
-});
-
+} else {
+    app.listen(20200);
+    console.log("Listen on 20200!");
+}
