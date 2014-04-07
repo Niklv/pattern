@@ -6,6 +6,7 @@ var app = express();
 
 console.log("Starting patter.net server");
 if (app.get('env') === 'development') {
+    app.use(compression());
     app.use(express.static(__dirname + '/source'));
 } else {
     app.use(compression());
@@ -26,6 +27,18 @@ app.all('/imgtob64', function (req, res) {
     } else {
         res.json({err: "check parameters"});
     }
+});
+
+app.use(function (req, res, next) {
+    res.status(404);
+
+    if (req.accepts('html'))
+        return res.redirect('/404.html');
+
+    if (req.accepts('json'))
+        return res.send(404);
+
+    res.type('txt').send('Not found');
 });
 
 //for convertation to b64 large count of images

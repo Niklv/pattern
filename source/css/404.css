@@ -1,14 +1,31 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400&subset=latin,cyrillic);
 body {
   background-color: #34495E;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: normal;
+  color: #1ABC9C;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 .cntr {
   margin: 0 auto;
   text-align: center;
 }
 .cntr H1 {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: normal;
   font-size: 200px;
+}
+.cntr H3 a {
+  ouline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.cntr H3 a:visited,
+.cntr H3 a:active,
+.cntr H3 a:focus {
   color: #1ABC9C;
+}
+.cntr H3 a:hover {
+  color: #16a085;
 }

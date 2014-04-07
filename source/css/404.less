@@ -1,18 +1,39 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400&subset=latin,cyrillic);
+//LESS
+@import "../bower/lesshat/build/lesshat";
+
+//LESSHAT properties
+@w3c: true;
+@webkit: true;
+@moz: true;
+@opera: false;
+@ms: false;
+@oldWebkit: false;
 
 body {
   background-color: #34495E;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: normal;
+  color: #1ABC9C;
+  .user-select(none);
 }
 
 .cntr {
   margin: 0 auto;
   text-align: center;
   H1 {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: normal;
     font-size: 200px;
-    color: #1ABC9C;
     //.longShadow(#2C3E50, 1000);
+  }
+  H3 a {
+    ouline: none;
+    .user-select(none);
+    &:visited, &:active, &:focus {
+      color: #1ABC9C;
+    }
+    &:hover {
+      color: #16a085;
+    }
   }
 }
 

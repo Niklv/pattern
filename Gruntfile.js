@@ -102,8 +102,8 @@ module.exports = function (grunt) {
                         "source/bower/bootstrap/dist/css/bootstrap-theme.css",
                         "source/css/colorpicker2.less",
                         "source/css/app.less"
-
-                    ]
+                    ],
+                    "build/css/404.min.css": "source/css/404.less"
                 }
             }
         },

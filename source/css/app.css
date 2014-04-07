@@ -28,6 +28,8 @@
   background-color: #ecf0f1;
   -webkit-border-radius: 32px;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 32px;
+  -moz-background-clip: padding;
   border-radius: 32px;
   background-clip: padding-box;
 }
@@ -53,6 +55,8 @@
   margin-left: -8px;
   -webkit-border-radius: 30px;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 30px;
+  -moz-background-clip: padding;
   border-radius: 30px;
   background-clip: padding-box;
 }
@@ -68,6 +72,7 @@ input[type="radio"] {
 input[type="radio"] + label span:first-child {
   cursor: pointer;
   -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
 }
 input[type="radio"] + label {
@@ -127,6 +132,8 @@ input[type="checkbox"] + label span {
   height: 27px;
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -moz-background-clip: padding;
   border-radius: 5px;
   background-clip: padding-box;
   display: inline-block;
@@ -143,6 +150,7 @@ input[type="checkbox"] + label span {
 input[type="checkbox"] + label span:first-child {
   cursor: pointer;
   -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
 }
 input[type="checkbox"] + label span:before {
@@ -150,12 +158,15 @@ input[type="checkbox"] + label span:before {
 }
 input[type="checkbox"] + label span:before {
   -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   background-color: #c0392b;
   display: block;
   position: absolute;
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -moz-background-clip: padding;
   border-radius: 5px;
   background-clip: padding-box;
   text-align: center;
@@ -204,6 +215,8 @@ input:not([type]),
 input[type='text'] {
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -moz-background-clip: padding;
   border-radius: 5px;
   background-clip: padding-box;
   background-color: #ffffff;
@@ -222,6 +235,8 @@ input[type='text']:focus {
   background-image: none;
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -moz-background-clip: padding;
   border-radius: 5px;
   background-clip: padding-box;
   border: none;
@@ -241,6 +256,8 @@ input[type='text']:focus {
 .color-picker .result-wrapper {
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -moz-background-clip: padding;
   border-radius: 5px;
   background-clip: padding-box;
   overflow: hidden;
@@ -257,24 +274,32 @@ input[type='text']:focus {
   right: -30px;
   bottom: 0;
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   -webkit-transition-property: opacity, bottom;
+  -moz-transition-property: opacity, bottom;
   transition-property: opacity, bottom;
   -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
   transition-duration: 0.5s;
   -webkit-transition-timing-function: ease-in-out;
+  -moz-transition-timing-function: ease-in-out;
   transition-timing-function: ease-in-out;
   -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
   backface-visibility: hidden;
   height: auto;
   -webkit-opacity: 1;
+  -moz-opacity: 1;
   opacity: 1;
 }
 .controls-section.flow-down {
   bottom: -320px;
   -webkit-opacity: 0.3;
+  -moz-opacity: 0.3;
   opacity: 0.3;
 }
 .controls-section .bottom-section-wrapper {
@@ -294,6 +319,7 @@ input[type='text']:focus {
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li {
   -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
   transform-origin: 0 0;
   float: left;
   background-color: #2f4154;
@@ -306,10 +332,12 @@ input[type='text']:focus {
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li.onAdd {
   -webkit-animation: addTab 0.5s;
+  -moz-animation: addTab 0.5s;
   animation: addTab 0.5s;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li.onRemove {
   -webkit-animation: removeTab 0.5s;
+  -moz-animation: removeTab 0.5s;
   animation: removeTab 0.5s;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li.ui-draggable-dragging {
@@ -330,6 +358,8 @@ input[type='text']:focus {
   max-width: 100%;
   -webkit-border-radius: 0;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 0;
+  -moz-background-clip: padding;
   background-clip: padding-box;
   margin-right: 0;
   padding: 0;
@@ -352,6 +382,7 @@ input[type='text']:focus {
   max-width: 100%;
   height: auto;
   -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   pointer-events: none;
 }
@@ -424,6 +455,7 @@ input[type='text']:focus {
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .add-new-sample > .dropdown-menu {
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   border-radius: 0;
   top: 50px;
@@ -453,6 +485,7 @@ input[type='text']:focus {
   background: linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)) 0 100%;
   background-attachment: local, local, scroll, scroll;
   -webkit-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+  -moz-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
   background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
   background-repeat: no-repeat;
   background-color: white;
@@ -461,8 +494,10 @@ input[type='text']:focus {
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .tab-content {
   -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
   -webkit-transition: height 0.5s;
+  -moz-transition: height 0.5s;
   transition: height 0.5s;
   padding: 0;
 }
@@ -473,6 +508,8 @@ input[type='text']:focus {
   font-size: 14px;
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -moz-background-clip: padding;
   border-radius: 5px;
   background-clip: padding-box;
   height: 28px;
@@ -485,6 +522,7 @@ input[type='text']:focus {
 .controls-section .bottom-section-wrapper .settings-wrapper .canvas-options {
   position: relative;
   -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .canvas-options .autofill-checkbox label {
@@ -515,6 +553,7 @@ input[type='text']:focus {
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .canvas-options .download-image .download:hover {
   -webkit-animation: tada 1s both;
+  -moz-animation: tada 1s both;
   animation: tada 1s both;
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .control {
@@ -622,6 +661,8 @@ input[type='text']:focus {
   overflow: hidden;
   -webkit-border-radius: 0;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 0;
+  -moz-background-clip: padding;
   border-radius: 0;
   background-clip: padding-box;
   border: none;
@@ -655,6 +696,7 @@ input[type='text']:focus {
   background: linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
   background-attachment: local, local, scroll, scroll;
   -webkit-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+  -moz-background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
   background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
   background-repeat: no-repeat;
   background-color: white;
@@ -671,6 +713,8 @@ input[type='text']:focus {
   margin: 0px;
   -webkit-border-radius: 0;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 0;
+  -moz-background-clip: padding;
   border-radius: 0;
   background-clip: padding-box;
   border-top: none;
@@ -718,6 +762,7 @@ input[type='text']:focus {
   border: 1px solid #ecf0f1;
   background-color: white;
   -webkit-transition: all 0.17s ease-In-Out;
+  -moz-transition: all 0.17s ease-In-Out;
   transition: all 0.17s ease-In-Out;
 }
 .box .innerContent img {
@@ -734,6 +779,7 @@ input[type='text']:focus {
 }
 .box .innerContent:hover {
   -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   top: 0px;
   left: 0px;
@@ -830,25 +876,32 @@ input[type='text']:focus {
   width: 300px;
   height: 300px;
   -webkit-transition: -webkit-transform 0.3s;
+  -moz-transition: -moz-transform 0.3s;
   transition: -webkit-transform 0.3s,-moz-transform 0.3s,-o-transform 0.3s,transform 0.3s;
   -webkit-transform-origin: 50% 0;
+  -moz-transform-origin: 50% 0;
   transform-origin: 50% 0;
 }
 #canvas-wrapper .canvas-container {
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
   -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
   transition-duration: 0.5s;
   -webkit-transition-property: -webkit-box-shadow;
+  -moz-transition-property: -moz-box-shadow;
   transition-property: box-shadow;
 }
 #canvas-wrapper .canvas-container.preview {
   -webkit-box-shadow: none;
+  -moz-box-shadow: none;
   box-shadow: none;
 }
 #canvas-wrapper .canvas-container canvas {
   pointer-events: none;
   -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
 }
 .alerts {
@@ -867,26 +920,34 @@ input[type='text']:focus {
   margin: 10px 10px 0px 10px;
   padding: 10px;
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   -webkit-border-radius: 3px;
   -webkit-background-clip: padding-box;
+  -moz-border-radius: 3px;
+  -moz-background-clip: padding;
   border-radius: 3px;
   background-clip: padding-box;
   width: 250px;
   cursor: pointer;
   -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
   animation-fill-mode: both;
 }
 .alerts .auto-hidden-alert.new {
   -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-name: alertShow;
+  -moz-animation-name: alertShow;
   animation-name: alertShow;
 }
 .alerts .auto-hidden-alert.deleted {
   -webkit-animation-duration: 1.5s;
+  -moz-animation-duration: 1.5s;
   animation-duration: 1.5s;
   -webkit-animation-name: alertHide;
+  -moz-animation-name: alertHide;
   animation-name: alertHide;
 }
 .pattern-preview-area {
@@ -931,12 +992,16 @@ label {
 }
 #loading-hover {
   -webkit-transition: opacity 0.5s linear;
+  -moz-transition: opacity 0.5s linear;
   transition: opacity 0.5s linear;
   -webkit-transform: translateZ(0px);
+  -moz-transform: translateZ(0px);
   transform: translateZ(0px);
   -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
   backface-visibility: hidden;
   -webkit-opacity: 1;
+  -moz-opacity: 1;
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -944,13 +1009,16 @@ label {
   right: 0px;
   bottom: 0px;
   background-image: -webkit-radial-gradient(50 ,circle% 50%, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
+  background-image: -moz-radial-gradient(50 ,circle% 50%, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
   background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
   z-index: 501;
   -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
 }
 #loading-hover.non-visible {
   -webkit-opacity: 0;
+  -moz-opacity: 0;
   opacity: 0;
   pointer-events: none;
   z-index: -1;
@@ -969,6 +1037,7 @@ label {
   cursor: wait;
   background-color: rgba(0, 0, 0, 0);
   -webkit-opacity: 0.8;
+  -moz-opacity: 0.8;
   opacity: 0.8;
   border-radius: 75px;
   border-right: 10px solid #1abc9c;
@@ -978,8 +1047,10 @@ label {
   width: 75px;
   height: 75px;
   -webkit-animation: loading 1s infinite linear;
+  -moz-animation: loading 1s infinite linear;
   animation: loading 1s infinite linear;
   -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 lesshat-selector {
@@ -1026,9 +1097,12 @@ lesshat-selector {
 }
 * {
   -webkit-transition-property: background-color, color;
+  -moz-transition-property: background-color, color;
   transition-property: background-color, color;
   -webkit-transition-duration: 0.25s;
+  -moz-transition-duration: 0.25s;
   transition-duration: 0.25s;
   -webkit-transition-timing-function: ease;
+  -moz-transition-timing-function: ease;
   transition-timing-function: ease;
 }
