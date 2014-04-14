@@ -20,13 +20,13 @@
   },
   "dependencies": {
     "express": "^4.0.0",
-    "async": "^0.2.10",
+    "async": "^0.7.0",
     "request": "2.*.*",
     "compression": "^1.0.1"
   },
   "engines": {
     "node": ">=0.10",
-    "npm": ">=1.2"
+    "npm": ">=1.4"
   },
   "devDependencies": {
     "grunt": "^0.4.4",
