@@ -13,8 +13,7 @@ if (app.get('env') === 'development') {
     app.use(express.static(__dirname + '/build'));
 }
 
-
-app.all('/imgtob64', function (req, res) {
+app.post('/imgtob64', function (req, res) {
     var url = req.param("img_url");
     if (url != null) {
         try {
@@ -30,6 +29,7 @@ app.all('/imgtob64', function (req, res) {
 });
 
 app.use(function (req, res, next) {
+    next(404);
     res.status(404);
 
     if (req.accepts('html'))

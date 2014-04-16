@@ -78,6 +78,7 @@ function select_from_internet(e) {
     var src = $(e.currentTarget).val();
     ga('send', 'event', 'select_from_internet', 'select', src);
     $.ajax({
+        type:'post',
         url: "/imgtob64?img_url=" + src,
         success: function (data) {
             if (data.err != null) {

@@ -71,7 +71,8 @@ module.exports = function (grunt) {
             index: {
                 files: {
                     'build/index.html': 'source/index.html',
-                    'build/404.html': 'source/404.html'
+                    'build/404.html': 'source/404.html',
+                    'build/500.html': 'source/500.html'
                 }
             }
         },
@@ -85,7 +86,8 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'build/index.html': 'build/index.html',
-                    'build/404.html': 'build/404.html'
+                    'build/404.html': 'build/404.html',
+                    'build/500.html': 'build/500.html'
                 }
             }
         },
@@ -103,7 +105,7 @@ module.exports = function (grunt) {
                         "source/css/colorpicker2.less",
                         "source/css/app.less"
                     ],
-                    "build/css/404.min.css": "source/css/404.less"
+                    "build/css/error.min.css": "source/css/error.less"
                 }
             }
         },
