@@ -95,7 +95,9 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     paths: ["source/css"],
-                    cleancss: true,
+                    cleancss: {
+                        keepSpecialComments: 0
+                    },
                     compress: true
                 },
                 files: {
