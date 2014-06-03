@@ -1,6 +1,6 @@
 (function(global){
 
-  "use strict";
+  'use strict';
 
   var fabric = global.fabric || (global.fabric = { }),
       extend = fabric.util.object.extend,
@@ -416,11 +416,10 @@
      */
     _setOpacityIfSame: function() {
       var objects = this.getObjects(),
-          firstValue = objects[0] ? objects[0].get('opacity') : 1;
-
-      var isSameOpacity = objects.every(function(o) {
-        return o.get('opacity') === firstValue;
-      });
+          firstValue = objects[0] ? objects[0].get('opacity') : 1,
+          isSameOpacity = objects.every(function(o) {
+            return o.get('opacity') === firstValue;
+          });
 
       if (isSameOpacity) {
         this.opacity = firstValue;
@@ -430,7 +429,7 @@
     /**
      * @private
      */
-    _calcBounds: function() {
+    _calcBounds: function(onlyWidthHeight) {
       var aX = [],
           aY = [],
           o;
@@ -444,26 +443,29 @@
         }
       }
 
-      this.set(this._getBounds(aX, aY));
+      this.set(this._getBounds(aX, aY, onlyWidthHeight));
     },
 
     /**
      * @private
      */
-    _getBounds: function(aX, aY) {
+    _getBounds: function(aX, aY, onlyWidthHeight) {
       var minX = min(aX),
           maxX = max(aX),
           minY = min(aY),
           maxY = max(aY),
           width = (maxX - minX) || 0,
-          height = (maxY - minY) || 0;
+          height = (maxY - minY) || 0,
+          obj =  {
+            width: width,
+            height: height
+          };
 
-      return {
-        width: width,
-        height: height,
-        left: (minX + width / 2) || 0,
-        top: (minY + height / 2) || 0
-      };
+      if (!onlyWidthHeight) {
+        obj.left = (minX + width / 2) || 0;
+        obj.top = (minY + height / 2) || 0;
+      }
+      return obj;
     },
 
     /* _TO_SVG_START_ */

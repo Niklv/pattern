@@ -10,7 +10,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
     // for triple click
     this.__lastLastClickTime = +new Date();
 
-    this.lastPointer = { };
+    this.__lastPointer = { };
 
     this.on('mousedown', this.onMouseDown.bind(this));
   },
@@ -210,8 +210,8 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
 
       height += this._getHeightOfLine(this.ctx, i) * this.scaleY;
 
-      var widthOfLine = this._getWidthOfLine(this.ctx, i, textLines);
-      var lineLeftOffset = this._getLineLeftOffset(widthOfLine);
+      var widthOfLine = this._getWidthOfLine(this.ctx, i, textLines),
+          lineLeftOffset = this._getLineLeftOffset(widthOfLine);
 
       width = lineLeftOffset * this.scaleX;
 

@@ -8,7 +8,6 @@
      * Initializes all the interactive behavior of IText
      */
     initBehavior: function() {
-      this.initKeyHandlers();
       this.initCursorSelectionHandlers();
       this.initDoubleClickSimulation();
     },
@@ -107,8 +106,8 @@
      * Initializes delayed cursor
      */
     initDelayedCursor: function(restart) {
-      var _this = this;
-      var delay = restart ? 0 : this.cursorDelay;
+      var _this = this,
+          delay = restart ? 0 : this.cursorDelay;
 
       if (restart) {
         this._abortCursorAnimation = true;
@@ -241,8 +240,9 @@
      * @return {Number} Number of newlines in selected text
      */
     getNumNewLinesInSelectedText: function() {
-      var selectedText = this.getSelectedText();
-      var numNewLines = 0;
+      var selectedText = this.getSelectedText(),
+          numNewLines = 0;
+
       for (var i = 0, chars = selectedText.split(''), len = chars.length; i < len; i++) {
         if (chars[i] === '\n') {
           numNewLines++;
@@ -257,9 +257,9 @@
      * @param {Number} direction: 1 or -1
      */
     searchWordBoundary: function(selectionStart, direction) {
-      var index = this._reSpace.test(this.text.charAt(selectionStart)) ? selectionStart-1 : selectionStart;
-      var _char = this.text.charAt(index);
-      var reNonWord = /[ \n\.,;!\?\-]/;
+      var index = this._reSpace.test(this.text.charAt(selectionStart)) ? selectionStart - 1 : selectionStart,
+          _char = this.text.charAt(index),
+          reNonWord = /[ \n\.,;!\?\-]/;
 
       while (!reNonWord.test(_char) && index > 0 && index < this.text.length) {
         index += direction;
@@ -276,8 +276,8 @@
      * @param {Number} selectionStart Index of a character
      */
     selectWord: function(selectionStart) {
-      var newSelectionStart = this.searchWordBoundary(selectionStart, -1); /* search backwards */
-      var newSelectionEnd = this.searchWordBoundary(selectionStart, 1); /* search forward */
+      var newSelectionStart = this.searchWordBoundary(selectionStart, -1), /* search backwards */
+          newSelectionEnd = this.searchWordBoundary(selectionStart, 1); /* search forward */
 
       this.setSelectionStart(newSelectionStart);
       this.setSelectionEnd(newSelectionEnd);
@@ -289,8 +289,8 @@
      * @param {Number} selectionStart Index of a character
      */
     selectLine: function(selectionStart) {
-      var newSelectionStart = this.findLineBoundaryLeft(selectionStart);
-      var newSelectionEnd = this.findLineBoundaryRight(selectionStart);
+      var newSelectionStart = this.findLineBoundaryLeft(selectionStart),
+          newSelectionEnd = this.findLineBoundaryRight(selectionStart);
 
       this.setSelectionStart(newSelectionStart);
       this.setSelectionEnd(newSelectionEnd);
@@ -308,7 +308,7 @@
       this.exitEditingOnOthers();
 
       this.isEditing = true;
-      
+
       this.initHiddenTextarea();
       this._updateTextarea();
       this._saveEditingProps();
@@ -438,8 +438,9 @@
 
         var prevIndex = this.get2DCursorLocation(i).charIndex;
         i--;
-        var index = this.get2DCursorLocation(i).charIndex;
-        var isNewline = index > prevIndex;
+
+        var index = this.get2DCursorLocation(i).charIndex,
+            isNewline = index > prevIndex;
 
         if (isNewline) {
           this.removeStyleObject(isNewline, i + 1);
@@ -468,10 +469,10 @@
       if (this.selectionStart === this.selectionEnd) {
         this.insertStyleObjects(_chars, isEndOfLine, this.copiedStyles);
       }
-      else if (this.selectionEnd - this.selectionStart > 1) {
+      // else if (this.selectionEnd - this.selectionStart > 1) {
         // TODO: replace styles properly
         // console.log('replacing MORE than 1 char');
-      }
+      // }
 
       this.selectionStart += _chars.length;
       this.selectionEnd = this.selectionStart;

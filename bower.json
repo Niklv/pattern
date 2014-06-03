@@ -14,7 +14,7 @@
     "underscore": "1.*.*",
     "backbone": "1.*.*",
     "jquery": "2.*.*",
-    "fabric": "1.*.*",
+    "fabric": "1.4.5",
     "FileSaver": "*",
     "lesshat": "2.*.*",
     "json2": "*",
