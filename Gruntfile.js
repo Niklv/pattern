@@ -71,7 +71,6 @@ module.exports = function (grunt) {
             index: {
                 files: {
                     'build/index.html': 'source/index.html',
-                    'build/googlefce0945a129a883d.html': 'source/googlefce0945a129a883d.html',
                     'build/404.html': 'source/404.html',
                     'build/500.html': 'source/500.html'
                 }
