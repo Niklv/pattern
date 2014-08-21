@@ -16,9 +16,9 @@
     "jquery": "2.*.*",
     "fabric": "1.4.5",
     "FileSaver": "*",
-    "lesshat": "2.*.*",
     "json2": "*",
     "requirejs": "2.*.*",
-    "font-awesome": "~4.0.3"
+    "font-awesome": "4.1.0",
+    "lodash": "~2.4.1"
   }
 }

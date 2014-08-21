@@ -125,7 +125,7 @@ module.exports = function (grunt) {
                         'source/js/jquery-ui-1.10.3.custom.js',
                         'source/bower/FileSaver/FileSaver.js',
                         'source/bower/json2/json2.js',
-                        'source/bower/underscore/underscore.js',
+                        'source/bower/lodash/dist/lodash.compat.min.js',
                         'source/bower/backbone/backbone.js',
                         'source/bower/bootstrap/dist/js/bootstrap.min.js',
                         'source/bower/fabric/dist/fabric.min.js',

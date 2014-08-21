@@ -3,8 +3,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('../fonts/fontawesome-webfont.eot?v=4.0.3');
-  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.0.3') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.0.3') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
+  src: url('../fonts/fontawesome-webfont.eot?v=4.1.0');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.1.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.1.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.1.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -73,6 +73,7 @@ input[type="radio"] + label span:first-child {
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 input[type="radio"] + label {
@@ -151,6 +152,7 @@ input[type="checkbox"] + label span:first-child {
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 input[type="checkbox"] + label span:before {
@@ -159,6 +161,7 @@ input[type="checkbox"] + label span:before {
 input[type="checkbox"] + label span:before {
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   background-color: #c0392b;
   display: block;
@@ -278,26 +281,37 @@ input[type='text']:focus {
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   -webkit-transition-property: opacity, bottom;
   -moz-transition-property: opacity, bottom;
+  -o-transition-property: opacity, bottom;
   transition-property: opacity, bottom;
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
   transition-duration: 0.5s;
   -webkit-transition-timing-function: ease-in-out;
   -moz-transition-timing-function: ease-in-out;
+  -o-transition-timing-function: ease-in-out;
   transition-timing-function: ease-in-out;
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
   transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
   backface-visibility: hidden;
   height: auto;
+  zoom: 1;
+  filter: alpha(opacity=100);
   -webkit-opacity: 1;
   -moz-opacity: 1;
   opacity: 1;
 }
 .controls-section.flow-down {
   bottom: -320px;
+  zoom: 1;
+  filter: alpha(opacity=30);
   -webkit-opacity: 0.3;
   -moz-opacity: 0.3;
   opacity: 0.3;
@@ -320,6 +334,8 @@ input[type='text']:focus {
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li {
   -webkit-transform-origin: 0 0;
   -moz-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
   transform-origin: 0 0;
   float: left;
   background-color: #2f4154;
@@ -333,11 +349,13 @@ input[type='text']:focus {
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li.onAdd {
   -webkit-animation: addTab 0.5s;
   -moz-animation: addTab 0.5s;
+  -o-animation: addTab 0.5s;
   animation: addTab 0.5s;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li.onRemove {
   -webkit-animation: removeTab 0.5s;
   -moz-animation: removeTab 0.5s;
+  -o-animation: removeTab 0.5s;
   animation: removeTab 0.5s;
 }
 .controls-section .bottom-section-wrapper .tab-header-wrapper .tabs-header > li.ui-draggable-dragging {
@@ -495,9 +513,11 @@ input[type='text']:focus {
 .controls-section .bottom-section-wrapper .settings-wrapper .tab-content {
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   -webkit-transition: height 0.5s;
   -moz-transition: height 0.5s;
+  -o-transition: height 0.5s;
   transition: height 0.5s;
   padding: 0;
 }
@@ -523,6 +543,7 @@ input[type='text']:focus {
   position: relative;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .canvas-options .autofill-checkbox label {
@@ -554,6 +575,7 @@ input[type='text']:focus {
 .controls-section .bottom-section-wrapper .settings-wrapper .canvas-options .download-image .download:hover {
   -webkit-animation: tada 1s both;
   -moz-animation: tada 1s both;
+  -o-animation: tada 1s both;
   animation: tada 1s both;
 }
 .controls-section .bottom-section-wrapper .settings-wrapper .control {
@@ -763,6 +785,7 @@ input[type='text']:focus {
   background-color: white;
   -webkit-transition: all 0.17s ease-In-Out;
   -moz-transition: all 0.17s ease-In-Out;
+  -o-transition: all 0.17s ease-In-Out;
   transition: all 0.17s ease-In-Out;
 }
 .box .innerContent img {
@@ -877,9 +900,12 @@ input[type='text']:focus {
   height: 300px;
   -webkit-transition: -webkit-transform 0.3s;
   -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
   transition: -webkit-transform 0.3s,-moz-transform 0.3s,-o-transform 0.3s,transform 0.3s;
   -webkit-transform-origin: 50% 0;
   -moz-transform-origin: 50% 0;
+  -o-transform-origin: 50% 0;
+  -ms-transform-origin: 50% 0;
   transform-origin: 50% 0;
 }
 #canvas-wrapper .canvas-container {
@@ -888,9 +914,11 @@ input[type='text']:focus {
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
   transition-duration: 0.5s;
   -webkit-transition-property: -webkit-box-shadow;
   -moz-transition-property: -moz-box-shadow;
+  -o-transition-property: box-shadow;
   transition-property: box-shadow;
 }
 #canvas-wrapper .canvas-container.preview {
@@ -902,6 +930,7 @@ input[type='text']:focus {
   pointer-events: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .alerts {
@@ -932,22 +961,27 @@ input[type='text']:focus {
   cursor: pointer;
   -webkit-animation-fill-mode: both;
   -moz-animation-fill-mode: both;
+  -o-animation-fill-mode: both;
   animation-fill-mode: both;
 }
 .alerts .auto-hidden-alert.new {
   -webkit-animation-duration: 1s;
   -moz-animation-duration: 1s;
+  -o-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-name: alertShow;
   -moz-animation-name: alertShow;
+  -o-animation-name: alertShow;
   animation-name: alertShow;
 }
 .alerts .auto-hidden-alert.deleted {
   -webkit-animation-duration: 1.5s;
   -moz-animation-duration: 1.5s;
+  -o-animation-duration: 1.5s;
   animation-duration: 1.5s;
   -webkit-animation-name: alertHide;
   -moz-animation-name: alertHide;
+  -o-animation-name: alertHide;
   animation-name: alertHide;
 }
 .pattern-preview-area {
@@ -993,13 +1027,20 @@ label {
 #loading-hover {
   -webkit-transition: opacity 0.5s linear;
   -moz-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
   transition: opacity 0.5s linear;
   -webkit-transform: translateZ(0px);
   -moz-transform: translateZ(0px);
+  -o-transform: translateZ(0px);
+  -ms-transform: translateZ(0px);
   transform: translateZ(0px);
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
   backface-visibility: hidden;
+  zoom: 1;
+  filter: alpha(opacity=100);
   -webkit-opacity: 1;
   -moz-opacity: 1;
   opacity: 1;
@@ -1008,15 +1049,20 @@ label {
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background-image: -webkit-radial-gradient(50 ,circle% 50%, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
-  background-image: -moz-radial-gradient(50 ,circle% 50%, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
+  background-image: 8121991;
+  background-image: -webkit-radial-gradient(50% 50%,circle, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
+  background-image: -moz-radial-gradient(50% 50%,circle, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
+  background-image: -o-radial-gradient(50% 50%,circle, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
   background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
   z-index: 501;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 #loading-hover.non-visible {
+  zoom: 1;
+  filter: alpha(opacity=0);
   -webkit-opacity: 0;
   -moz-opacity: 0;
   opacity: 0;
@@ -1036,6 +1082,8 @@ label {
 #loading-hover .spin {
   cursor: wait;
   background-color: rgba(0, 0, 0, 0);
+  zoom: 1;
+  filter: alpha(opacity=80);
   -webkit-opacity: 0.8;
   -moz-opacity: 0.8;
   opacity: 0.8;
@@ -1048,9 +1096,12 @@ label {
   height: 75px;
   -webkit-animation: loading 1s infinite linear;
   -moz-animation: loading 1s infinite linear;
+  -o-animation: loading 1s infinite linear;
   animation: loading 1s infinite linear;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 lesshat-selector {
@@ -1098,11 +1149,14 @@ lesshat-selector {
 * {
   -webkit-transition-property: background-color, color;
   -moz-transition-property: background-color, color;
+  -o-transition-property: background-color, color;
   transition-property: background-color, color;
   -webkit-transition-duration: 0.25s;
   -moz-transition-duration: 0.25s;
+  -o-transition-duration: 0.25s;
   transition-duration: 0.25s;
   -webkit-transition-timing-function: ease;
   -moz-transition-timing-function: ease;
+  -o-transition-timing-function: ease;
   transition-timing-function: ease;
 }

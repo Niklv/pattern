@@ -6,6 +6,7 @@ body {
   color: #1ABC9C;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .cntr {
@@ -19,6 +20,7 @@ body {
   ouline: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .cntr H3 a:visited,

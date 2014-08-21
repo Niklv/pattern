@@ -2,13 +2,13 @@ function isInt(n) {
     return n % 1 === 0;
 }
 
+function charCodeFromCharacter(c) {
+    return c.charCodeAt(0);
+}
+
 function b64toBlob(b64Data, contentType, sliceSize) {
     contentType = contentType || '';
     sliceSize = sliceSize || 1024;
-
-    function charCodeFromCharacter(c) {
-        return c.charCodeAt(0);
-    }
 
     var byteCharacters = atob(b64Data);
     var byteArrays = [];

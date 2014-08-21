@@ -469,8 +469,6 @@ var Grid = Backbone.Model.extend({
         i = 0;
         var vis = opt.toArray();
         this.visible_parts = vis.length;
-        console.log(this.visible_parts);
-        //console.log(vis.length);
         while (this.objects.length < this.visible_parts)
             this.objects.add(this.attributes, {sample_events: this.sample_events, grid_events: this.events, el: this.fabric_element});
         while (i < this.visible_parts)
