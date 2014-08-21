@@ -179,7 +179,9 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: 'build/',
                 src: ['**/*'],
-                dest: 'build/'
+                dest: 'build/',
+                extDot: 'last',
+                ext: '.gz'
             }
         }
     });
