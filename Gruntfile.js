@@ -2,12 +2,8 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         clean: {
-            build: {
-                src: 'build/*'
-            },
-            fonts: {
-                src: 'source/fonts/*'
-            }
+            build: ['build/**'],
+            fonts: ['source/fonts/**']
         },
         copy: {
             bootstrap: {
@@ -180,8 +176,9 @@ module.exports = function (grunt) {
                 cwd: 'build/',
                 src: ['**/*'],
                 dest: 'build/',
-                extDot: 'last',
-                ext: '.gz'
+                rename: function (base, path) {
+                    return base + path + '.gz';
+                }
             }
         }
     });
