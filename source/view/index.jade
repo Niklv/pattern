@@ -1,0 +1,86 @@
+- css = css || [];
+- js = js || [];
+
+doctype
+html
+    head
+        include ./meta
+        each file in css
+            link(href=file, rel='stylesheet', media='screen')
+        script
+            include ../js/ga.js
+
+body
+    button.preview-button= $i.index.preview
+    .pattern-preview-area
+    #loading-hover
+        .outer
+            #loading.spin.inner
+        .clearfix
+    .alerts
+    #canvas-wrapper
+        canvas#canvas
+    .controls-section
+        .bottom-section-wrapper
+            .tab-header-wrapper
+                ul.nav.nav-tabs.tabs-header.sample-tabs
+                .add-new-sample.dropdown
+                    a#add_new_menu.dropdown-toggle(data-toggle='dropdown')
+                        div
+                    input#file-uploader(type='file', style='display: none;')
+                    ul.dropdown-menu(role='menu', aria-labelledby='add_new_menu')
+                        li(role='presentation')
+                            a.upload-file(role='menuitem', tabindex='-1', href='#')
+                                span.glyphicon.glyphicon-upload
+                                = $i.index.menu.upload
+                        li(role='presentation')
+                            a.show-samples(role='menuitem', tabindex='-1', data-toggle='modal', href='#collections_modal')
+                                span.glyphicon.glyphicon-star
+                                = $i.index.menu.collection
+                        li(role='presentation')
+                            a.show-paste-link(role='menuitem', tabindex='-1', data-toggle='modal', href='#paste_link_modal')
+                                span.glyphicon.glyphicon-file
+                                = $i.index.menu.paste_link
+            .settings-wrapper
+                .tab-content.col-sm-8
+                .canvas-options.controls.col-sm-4
+                    h3= $i.index.canvas.panel_title
+                    .autofill-checkbox
+                        input#autofill-checkbox(type='checkbox')
+                        label.checkbox(for='autofill-checkbox')
+                            = $i.index.canvas.autofill.name
+                            span(data-toggle='tooltip', data-placement='right', title=$i.index.canvas.autofill.tooltip)
+                    .control.color
+                        label(for='hex-color'): = $i.index.canvas.color
+                        .color-picker
+                    .control.width
+                        label(for='canvas-width'): = $i.index.canvas.width
+                        div
+                            .slider(data-option='width')
+                        input#canvas-width.filter-field.input-sm(data-option='width', tabindex='11')
+                        span.lock-origin-ratio.glyphicon.glyphicon-lock
+                    .control.height
+                        label(for='canvas-height'): = $i.index.canvas.height
+                        div
+                            .slider(data-option='height')
+                        input#canvas-height.filter-field.input-sm(data-option='height', tabindex='12')
+                    .download-image
+                        button.col-md-12.green-button.download
+                            span.glyphicon.glyphicon-download-alt
+                            = $i.index.canvas.download
+                .col-sm-12.infolinks.text-right
+                    = $i.index.developed + ' '
+                    a(href='http://purplelemon.ru', target='_blank') PurpleLemon
+                    | &nbsp;&amp;&nbsp;
+                    a(href='http://niklv.ru', target='_blank') Niklv
+                    | .
+
+    include modal/paste_link
+    include modal/collection
+
+    //script(id='localeString' type='application/json', src= 'locale/#{$localeName}.json')
+    script!= 'var localeStrings = ' + JSON.stringify($i)
+    each file in js
+        script(src=file)
+    script
+        include copyright.txt

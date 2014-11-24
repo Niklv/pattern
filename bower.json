@@ -1,24 +1,24 @@
 {
-  "name": "pattern",
-  "version": "0.0.3",
-  "homepage": "https://github.com/Niklv/pattern",
-  "authors": [
-    "Nikita Lvov <niklvov@gmail.com>"
-  ],
-  "ignore": [
-    "**/.*",
-    "node_modules"
-  ],
-  "dependencies": {
-    "bootstrap": "3.*.*",
-    "underscore": "1.*.*",
-    "backbone": "1.*.*",
-    "jquery": "2.*.*",
-    "fabric": "1.4.5",
-    "FileSaver": "*",
-    "json2": "*",
-    "requirejs": "2.*.*",
-    "font-awesome": "4.1.0",
-    "lodash": "~2.4.1"
-  }
+    "name": "pattern",
+    "version": "0.0.3",
+    "homepage": "https://github.com/Niklv/pattern",
+    "authors": [
+        "Nikita Lvov <niklvov@gmail.com>"
+    ],
+    "ignore": [
+        "**/.*",
+        "node_modules"
+    ],
+    "dependencies": {
+        "bootstrap": "3.*.*",
+        "underscore": "1.7.*",
+        "backbone": "1.*.*",
+        "jquery": "2.*.*",
+        "FileSaver": "*",
+        "json2": "*",
+        "font-awesome": "4.*.*",
+        "lodash": "2.4.*",
+        "fabric": "1.4.*",
+        "lesshat": "3.*.*"
+    }
 }

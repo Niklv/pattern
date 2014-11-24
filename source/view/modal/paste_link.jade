@@ -1,0 +1,12 @@
+#paste_link_modal.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+    .modal-dialog
+        .modal-content
+            .modal-body
+                .form-horizontal
+                    .form-group
+                        label(for='input-link')= $i.index.modal_paste.title + ':'
+                        div
+                            input#input-link.input-sm(type='text')
+                        button#paste-link-button.btn.btn-success(type='button')
+                            span.glyphicon.glyphicon-ok
+

@@ -1,0 +1,17 @@
+doctype
+html
+    head(lang='en')
+        meta(charset='UTF-8')
+        title= $i[page].title
+        if css
+            each css_file in css
+                link(href=css_file, rel='stylesheet', media='screen')
+    body
+        .cntr
+            h1=title || 500
+            if $i[page].msg
+                h3= $i[page].msg + " Go"
+                a(href='/')= $i[page].link_msg + '.'
+            else
+                h3 Uh... Unknown error. Go
+                a(href='/') back.

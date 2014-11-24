@@ -3,9 +3,8 @@ var SampleView = Backbone.View.extend({
     $tabHeader: null,
     tagName: "div",
     className: "tab-pane fade",
-    template: _.template($("#part-settings-tmpl").remove().text()),
-    tabHeaderTemplate: _.template($("#part-settings-tab-header-tmpl").remove().text()),
-    controlTemplate: _.template($("#part-settings-control").remove().text()),
+    template: templates.part_settings,
+    tabHeaderTemplate: templates.part_settings_tab_header,
     colorpicker: null,
     j: {
         x: null,
@@ -139,7 +138,7 @@ var SampleView = Backbone.View.extend({
         return this;
     },
     render: function () {
-        this.$el.html(this.template(_.extend(this.model.attributes, {control: this.controlTemplate})));
+        this.$el.html(this.template(_.assign({$i:localeStrings}, this.model.attributes)));
         this.$el.attr('id', "settings-panel-" + this.model.get("id"));
         this.$tabHeader = $(this.tabHeaderTemplate(this.model.attributes));
         return this;

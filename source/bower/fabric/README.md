@@ -10,6 +10,8 @@
 [![Dependency Status](https://david-dm.org/kangax/fabric.js.png?theme=shields.io)](https://david-dm.org/kangax/fabric.js)
 [![devDependency Status](https://david-dm.org/kangax/fabric.js/dev-status.png?theme=shields.io)](https://david-dm.org/kangax/fabric.js#info=devDependencies)
 
+[![Bountysource](https://api.bountysource.com/badge/tracker?tracker_id=23217)](https://www.bountysource.com/trackers/23217-fabric-js?utm_source=23217&utm_medium=shield&utm_campaign=TRACKER_BADGE)
+
 
 **Fabric.js** is a framework that makes it easy to work with HTML5 canvas element. It is an **interactive object model** on top of canvas element. It is also an **SVG-to-canvas parser**.
 
@@ -116,6 +118,21 @@ Fabric.js started as a foundation for design editor on [printio.ru](http://print
 7. Ensure code guidelines are met (prerequisite: `npm -g install jscs`)
 
         $ jscs src
+
+<h3 id="fabric-building">Testing</h3>
+
+1. [Install Node.js](https://github.com/joyent/node/wiki/Installation)
+
+2. [Install NPM, if necessary](https://github.com/npm/npm#super-easy-install)
+
+3. Install NPM packages
+
+        $ npm install
+
+4. Run test suite
+
+        $ npm test
+
 
 ### Demos
 

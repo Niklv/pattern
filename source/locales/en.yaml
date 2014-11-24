@@ -1,0 +1,50 @@
+index:
+  title: Patter.net
+  menu:
+    upload: Upload
+    collection: Collection
+    paste_link: Paste Link
+  preview: Preview
+  canvas:
+    panel_title: Pattern settings panel
+    autofill:
+      name: Autofill
+      tooltip: Autofill may slow rendering performance
+    color: Color
+    width: Width
+    height: Height
+    download: Download pattern!
+  developed: Developed by
+  modal_paste:
+    title: Paste link here
+  sample:
+    title: Control panel
+    all_random: Random
+    type: Type!!!
+    types:
+      one: One
+      random: Random
+      circle: Circle
+    opacity: Opacity
+    width: Width
+    height: Height
+    grid: Grid
+    angle: Angle
+    overlay: Overlay
+    count: Count
+    x: X
+    y: Y
+    radius: Radius
+    offset: Offset
+    angle-delta: Angle+
+library:
+  test: Test
+  sample_1: Sample 1
+404:
+  title: 404
+  msg: Nothing to do here. Go
+  link_msg: back
+500:
+  title: 500
+  msg: Uh. I am sorry. Go
+  link_msg: back

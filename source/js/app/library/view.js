@@ -22,12 +22,12 @@ var LibraryView = Backbone.View.extend({
 var ItemView = Backbone.View.extend({
     tagName: "div",
     className: "box generated",
-    template: _.template($("#library-item-tmpl").remove().text()),
+    template: templates.library_item,
     initialize: function () {
         this.model.on("change render", this.render, this);
     },
     render: function () {
-        this.$el.html(this.template(this.model.attributes));
+        this.$el.html(this.template(_.assign({$i:localeStrings}, this.model.attributes)));
         return this;
     },
     events: {

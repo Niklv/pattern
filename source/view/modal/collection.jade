@@ -1,0 +1,26 @@
+#collections_modal.modal(tabindex='-1', role='dialog', aria-hidden='true')
+    .modal-content
+        .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            ul#sample-collections-tabs.nav
+                li.dropdown.open.active
+                    a.dropdown-toggle(href='#', data-toggle='dropdown')
+                        h4.modal-title
+                            | Test
+                            b.caret
+                    ul.dropdown-menu(role='menu')
+                        li
+                            a(href='#test', tabindex='-1', data-toggle='tab') Test
+        .modal-body
+            #sample-tabs-content.tab-content
+                #test.tab-pane
+                    .box
+                        a.innerContent(href='#')
+                            img(src='/img/samples/lfm_Logo.png')
+                    .box
+                        a.innerContent(href='#')
+                            img(src='/img/samples/vk_logo.png')
+                    .box
+                        a.innerContent(href='#')
+                            img(src='/img/samples/controls.png')
+

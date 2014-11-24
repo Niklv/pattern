@@ -1,0 +1,54 @@
+mixin control(class_name, tabindex)
+    include ./part_settings_control
+
+mixin layout-radio(id, layout)
+    input.placement-of-obj(id=layout + '-' + id, type='radio', name='placement-of-obj-' + id, value=layout)
+    label(for=layout + '-' + id)
+        span
+        span(class='type-' + layout)
+
+
+mixin grid-radio(id, number)
+    input.grid-of-obj(id='grid-' + number + '-' + id, type='radio', name='grid-of-obj-' + id, value=number)
+    label(for='grid-' + number + '-' + id)
+        span
+        //TODO:AUTOFORMAT
+        =number
+
+h3.col-sm-12
+    = $i.index.sample.title
+    button.random.green-button(type='button')
+        i.glyphicon.glyphicon-refresh
+        = $i.index.sample.all_random
+
+.col-sm-12: .control.placement
+    label= $i.index.sample.type
+    .radio-case
+        +layout-radio(id, 'one')
+        +layout-radio(id, 'random')
+        +layout-radio(id, 'circle')
+
+.col-sm-12.col-lg-6
+    +control("opacity", 1)
+    +control("width", 2)
+    span.lock-origin-ratio.glyphicon.glyphicon-lock
+    +control("height", 3)
+    .control.grid
+        label= $i.index.sample.grid
+        .radio-case
+            +grid-radio(id, 1)
+            +grid-radio(id, 4)
+            +grid-radio(id, 9)
+            +grid-radio(id, 16)
+            +grid-radio(id, 25)
+    +control("angle", 4)
+    .control.overlay
+        label(for="picker")= $i.index.sample.overlay
+        .color-picker
+.col-sm-12.col-lg-6
+    +control("count", 5)
+    +control("x", 6)
+    +control("y", 7)
+    +control("radius", 8)
+    +control("offset", 9)
+    +control("angle-delta", 10)

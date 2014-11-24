@@ -1,0 +1,9 @@
+index:
+  title: Patter.net
+404:
+  title: 404
+  msg: Тут ничего нет.
+500:
+  title: 500
+  msg: Упс. Что-то пошло не так. Назад на
+  link_msg: главную
