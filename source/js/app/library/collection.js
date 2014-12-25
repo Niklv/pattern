@@ -12,6 +12,16 @@ var Libraries = Backbone.Collection.extend({
             height: 8,
             item_width: 150,
             item_height: 150});
+        this.add({
+            name: "New Year :3",
+            id_name: "sample_2",
+            sprite_path: "/img/samples/",
+            sprite_name: "sample_2.sprite.png"
+        }, {total: 56,
+            width: 13,
+            height: 5,
+            item_width: 150,
+            item_height: 150});
         this.initUI();
     },
     initUI: function () {
