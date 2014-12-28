@@ -47,9 +47,9 @@ app.use(function (req, res, next) {
  for (var i = 0; i < arr.length; i++)
  arr[i] = i + 1;
  async.forEach(arr, function (val, cb) {
- utils.imgtob64("http://localhost:20201/img/calculated/sample_" + val + ".png", function (image, prefix) {
+ utils.imgtob64("http://localhost:20201/img/calculated/Untitled-2_" + val + ".png", function (image, prefix) {
  var str_to_save = JSON.stringify({image: image, prefix: prefix, err: null});
- fs.writeFile("public/img/calculated/sample_1_file_" + val + ".png.json", str_to_save, function (err) {
+ fs.writeFile("source/img/calculated/sample_2_" + val + ".png.json", str_to_save, function (err) {
  if (err)
  console.log(err);
  cb();
@@ -59,7 +59,6 @@ app.use(function (req, res, next) {
  res.send(200);
  });
  });*/
-
 
 
 /*app.get('/library', function (req, res) {
