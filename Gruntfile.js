@@ -147,28 +147,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        imagemin: {
-            dist: {
-                options: {
-                    optimizationLevel: 7,
-                    pngquant: true
-                },
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'source/img/samples/',
-                        src: ['*.{png,jpg,gif}'],
-                        dest: 'build/img/samples/'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'source/img/',
-                        src: ['*.{png,jpg,gif}'],
-                        dest: 'build/img/'
-                    }
-                ]
-            }
-        },
         compress: {
             dist: {
                 options: {
@@ -189,9 +167,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-processhtml');
     grunt.registerTask('copy fonts', ['clean:fonts', 'copy:bootstrap', 'copy:font_awesome']);
-    grunt.registerTask('default', ['clean:build', 'copy', 'processhtml:index', 'htmlmin:index', 'less:dist', 'uglify:dist', 'imagemin:dist', 'compress:dist']);
+    grunt.registerTask('default', ['clean:build', 'copy', 'processhtml:index', 'htmlmin:index', 'less:dist', 'uglify:dist', 'compress:dist']);
 };
