@@ -77,10 +77,5 @@ app.use(function (req, res, next) {
  });*/
 
 
-if (app.get('env') === 'development') {
-    app.listen(20201);
-    console.log("Listen on 20201!");
-} else {
-    app.listen(20200);
-    console.log("Listen on 20200!");
-}
+app.listen(20200);
+console.log("Listen on 20200!");

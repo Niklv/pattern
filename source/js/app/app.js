@@ -105,7 +105,7 @@ var APP = {
 
 $(function() {
     APP.init();
-    test();
+    //test();
     //APP.alert("WOW!");
 });
 

@@ -124,7 +124,7 @@ var Canvas = Backbone.Model.extend({
 
 var CanvasView = Backbone.View.extend({
     initialize: function () {
-        this.$el = $('.canvas-options');
+        this.setElement('.canvas-options');
         $('.autofill-checkbox span').tooltip();
         if (this.model.get("lock_ratio"))
             this.$el.find(".lock-origin-ratio").addClass("locked");

@@ -5,7 +5,7 @@ var Slider = Backbone.View.extend({
     initialize: function (opt) {
         var range = this.range = this.model.get("range")[opt.name];
         this.name = opt.name;
-        this.$el = opt.jquery_object;
+        this.setElement(opt.jquery_object);
         this.$input = this.$el.find('input');
         this.$slider = this.$el.find(".slider");
         this.$input.val(this.model.get(opt.name));
