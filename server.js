@@ -1,15 +1,12 @@
 var express = require('express');
-var compression = require('compression');
 var utils = require('./utils');
 
 var app = express();
 
 console.log("Starting patter.net server");
 if (app.get('env') === 'development') {
-    app.use(compression());
     app.use(express.static(__dirname + '/source'));
 } else {
-    app.use(compression());
     app.use(express.static(__dirname + '/build'));
 }
 
