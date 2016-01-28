@@ -146,19 +146,6 @@ module.exports = function (grunt) {
                     ]
                 }
             }
-        },
-        compress: {
-            dist: {
-                options: {
-                    mode: 'gzip',
-                    level: 9,
-                    pretty: true
-                },
-                expand: true,
-                cwd: 'build/',
-                src: ['**/*'],
-                dest: 'build/'
-            }
         }
     });
 
@@ -167,8 +154,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-processhtml');
     grunt.registerTask('copy fonts', ['clean:fonts', 'copy:bootstrap', 'copy:font_awesome']);
-    grunt.registerTask('default', ['clean:build', 'copy', 'processhtml:index', 'htmlmin:index', 'less:dist', 'uglify:dist', 'compress:dist']);
+    grunt.registerTask('default', ['clean:build', 'copy', 'processhtml:index', 'htmlmin:index', 'less:dist', 'uglify:dist']);
 };
