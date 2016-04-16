@@ -11,7 +11,7 @@ if (app.get('env') === 'development') {
 }
 
 app.post('/imgtob64', function (req, res) {
-    var url = req.param("img_url");
+    var url = req.query.img_url;
     if (url != null) {
         try {
             utils.imgtob64(url, function (image, prefix) {

@@ -16,7 +16,6 @@
         "url": "https://github.com/Niklv/pattern.git"
     },
     "scripts": {
-        "start": "node server.js",
 	"build": "grunt"
     },
     "dependencies": {
